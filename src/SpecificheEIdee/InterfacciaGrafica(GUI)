@@ -1,0 +1,24 @@
+==PARTE INIZIALE==
+1. apertura del file .jar con schermata iniziale (nome del progetto), della durata di 3/4 secondi
+
+2. fase di costruzione della configurazione iniziale:
+   2.1. determinare la grandezza della matrice
+   2.2. costruzione delle nazioni. Di ogni nazione si decide:
+        2.2.1. nome
+        2.2.2. colore
+        2.2.3. disposizione nella matrice -> da cui si ricava il numero di abitanti per nazione
+        => nella disposizione delle nazioni se una casella è occupata da una nazione allora un'altra nazione
+           non potrà occupare quella stessa casella.
+
+3. fase di esecuzione:
+   3.1. PLAY -> premendo il pulsante play si da inizio all'esecuzione (oppure si riprende l'esecuzione dal punto in cui ci si era fermati),
+                permettendo l'esecuzione dei threads
+   3.2. STOP -> premendo il pulsante stop si "fotografa" la situazione fornendo statistiche provvisorie
+                dell'attuale situazione (di ogni nazione si può visualizzare il numero di persone appartenenti ad essa, la quantità di risorse, l'economia, etc...).
+                Da qui si può riprendere l'esecuzione tramite play o terminare del tutto l'esecuzione (pulsante interrompi???)
+   3.3. FINE ESECUZIONE -> l'esecuzione arriva al termine (tutte le nazioni sono morte). Si passa direttamente al punto 4
+
+4. fase di terminazione:
+   4.1. viene visualizzata a schermo la finestra con le statistiche globali dell'esecuzione (magari evidenziando
+        la nazione che ha vissuto più a lungo, quella che ha vinto più scontri, etc...)
+   4.2  Pulsante che permette di ritornare alla fase 2) di configurazione iniziale
