@@ -1,5 +1,5 @@
 ==PARTE INIZIALE==
-1. apertura del file .jar con schermata iniziale (nome del progetto), della durata di 3/4 secondi
+1. interfacciaGrafica del file .jar con schermata iniziale (nome del progetto), della durata di 3/4 secondi
 
 2. fase di costruzione della configurazione iniziale:
    2.1. determinare la grandezza della matrice
