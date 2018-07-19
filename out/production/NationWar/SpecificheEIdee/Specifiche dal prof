@@ -1,0 +1,95 @@
+ARGOMENTO PRINCIPALE PROGETTO: Gioco della vita (un tipo di Automa cellulare)
+
+https://it.wikipedia.org/wiki/Automa_cellulare
+AUTOMA CELLULARE(CELLULAR AUTOMATION) = e' una versione a GRIGLIA di un agente di calcolo collettivo, dove la griglia e' costituita da CELLE(CELLS)
+ tutte uguali, e dove ogni cella sa fare ognuna una cosa semplice. Si puo' immaginare come una griglia bidimensionale, tridimensionale
+o multidimensionale e c'e' una nozione di vicinanza, cioe' ogni cella rappresenta una determinata posizione ed e' un unita' di processo
+perche' sa fare determinate cose. Tutte le celle sono uguali, diciamo copie della stessa copia e questa cosa ha uno "STATO" come vivo o
+ morto,bianco o nero, in esecuzione in attesa ecc.. Poi c'e' la nozione di TRANSIZIONE, dove una transizione e' un cambiamento di stato:
+ sono in un certo stato e decido di entrare in uno stato diverso, un esempio puo' essere che cambio stato sulla base di chi ho intorno.
+ Inoltre nella griglia si avra' uno STATO INIZIALE dove ogni cella avra' un certo stato. Ci saranno quindi delle REGOLE DELLE TRANSIZIONI,
+  ad esempio se io sono in uno stato blu e vicino a me c'e' qualcuno nello stato rosso allora divento rosso anch'io, oppure se sono rosso
+  o ho vicino tutti rossi allora divento blu, oppure se ho intorno almento 3 blu divento nero. Si ha una partenza nello stato iniziale in
+   cui le celle sono al loro stato iniziale, poi si guardano intorno e in base alle regole delle transizioni incominciano a variare di
+   stato. Un esempio di automa cellulare e' il GIOCO DELLA VITA.
+
+https://it.wikipedia.org/wiki/Gioco_della_vita
+GIOCO DELLA VITA = e' un particolare tipo di automa cellulare nel quale ci sono 2 STATI, cioe' vivo o morto. REGOLE:
+1)se ho intorno a me o due o 3 persone continuo a stare vivo
+2)se ho meno di due persone (cioe' 0 o 1 persone) muoio perche' sono isolato
+3)mentre se ho piu' di 3 persone intorno muoio per mancanza di risorse perche' mi soffocano
+4)se una cella ha intorno almeno 3 persone, se non c'e' nessuno dentro allora diventa viva perche' e' come se facessero dei figli.
+Si ha una configurazione iniziale, diciamo una scacchiera in cui mettiamo delle crocette che rappresentano le posizioni vive, mentre
+dove non ci sono crocette sono posizioi morte, successivamente PARTIAMO:
+ fase numero 1) di ciascuna cella devo vedere se quella cella deve continuare a vivere, morire o nascere
+ fase numero 2) faccio la stessa cosa di 1)
+ fase numero 3) faccio la stessa cosa di 1)
+ e cosi' via...
+
+GRAFICAMENTE la scacchiera del gioco della vita la possiamo vedere come un animazione su schermo in cui ho una prima fase, poi successivamente
+una seconda fase, una terza e cosi' via visualizzando i risultati su schermo, e variando la velocita' di esecuzione vedendo cosi' l'
+evoluzione della scacchiera.
+
+Ci si possono porre delle DOMANDE per esempio:
+-se la popolazione cresce troppo, per la regola 3) si ha che la scacchiera si riempe e poi man mano incomincia a svuotarsi per via delle
+ morti?
+-la scacchiera si svuota sempre? perche' a un certo punto incomincia a morire la gente e tutti gli individui rimangono isolati allora
+muoiono tutti.
+-esistono delle CONFIGURAZIONI iniziali che non portano a niente? per esempio la configurazione iniziale in cui c'e' un unico elemento
+isolato all'interno della scacchiera dove si sa che muore. Oppure una configurazione in cui faccio 5 passi ma dopo 5 passi muoiono tutti.
+-ci sono delle configurazioni con le quali la scacchiera si riempe completamente? NO!.
+-pero' delle configurazioni con le quali non si muore mai? Si!. ma chi l'ha detto? dimostratelo, e' vero?
+-esistono dei pattern(dei modelli) che si ripetono all'infinito? esistono degli oggetti che viaggiano sulla scacchiera? cioe' delle
+forme che si riproducono sempre uguali(graficamente sulla scacchiera) o meglio un pattern ciclico che si ripete e viaggia nella
+scacchiera? (vedere esempio del cannone di Gospers https://it.wikipedia.org/wiki/Automa_cellulare#/media/File:Gospers_glider_gun.gif)
+-riuscite ad inventarvi appunto un PATTERN CICLICO in base alla configurazione iniziale? (in virtu' delle regole della scacchiera di
+quando si nasce e si muore)
+
+IPOTESI
+-realizzo un automa cellulare e invento una configurazione iniziale dove quando vado ad eseguire ottengo un elica che gira
+-le celle inoltre potrebbero non essere quadrate ma esagonali e quindi cambia il numero di vicini
+
+ENUNCIATO DEL PROGETTO
+Implementare in java un ambiente di sviluppo per automi cellulari, cioe' un interprete per automi cellulari: pensiamo a qualcosa di
+simile ad Intellij che pero' invece di essere come Intellij di java e' un Intellij per automi cellulari, cioe' consente di programmare
+automi cellulari. Per programmare automi cellulari:
+1) si fornisce la forma della griglia
+2) si danno le regole(quelle del gioco della vita), ma si possono inventare anche regole diverse
+3)gli automi cellulari sono concorrenti: ho una struttura dati che e' una griglia e casella per casella calcolo quale sara' lo stato
+ successivo. Ogni stato successivo viene passato a un metodo per stampare l'automa cellulare e vedere l'evoluzione. Questa e' una
+ possibilita', mentre potrei usare anche i thread e ho che ogni automa e' un thread separato: con la concorrenza ho che ogni cella e' un
+ unita' di calcolo. Non avrei quindi un esecuzione sincronizzata e parallela ma concorrente ma non necessariamente in parallelo.
+ Quello che avviene in una zona della griglia e' indipendente e avviene in parallelo rispetto ad altre cose, pero' anche localmente
+ le cose possono andare in modo diverso: ad esempio si ha una particolare cellula che sta lavorando furiosamente perche' ha sempre il
+ processore e ce ne e' un'altra che sta in quella zona ed e' attiva ma sta ferma perche' non gli viene dato il processore. In questa
+ maniera si puo' arrivare ad esempio al caso in cui la cella che lavora furiosamente arriva al 26esimo ciclo mentre quella a cui non
+ viene dato il processore e' ancora al 6esto ciclo.
+
+ TESTO DEL PROGETTO
+ Implementare in java un ambiente di sviluppo per automi cellulari. L'ambiente di sviluppo consiste in un unico automa cellulare e deve
+ permettere di implementare il gioco della vita. Trovare inoltre una configurazione iniziale che crea un certo pattern ciclico (possibilmente
+ figo) ad esempio un fiore che nasce.
+
+*Il programma non e' quindi un automa cellulare ma serve a creare automi cellulari dando delle regole e eseguendole con un interfaccia che
+ fa l'animazione*
+
+ SPECIFICHE DEL PROF DA PDF SUL SITO
+ Implementazione in Java di un ambiente
+ di sviluppo per automi cellulari
+ Speciche del progetto
+ Implementare in Java un ambiente di sviluppo per automi cellulari, ovvero
+ un sistema che metta a disposizione del programmatore strumenti di supporto
+ allo sviluppo di automi cellulari. Sono consentite \variazioni sul tema". Ad
+ esempio, invece che un ambiente di sviluppo, e possibile produrre uno specifico
+ automa cellulare, ad esempio il gioco della vita, eventualmente corredato di una
+ o più configurazioni iniziali interessanti, ad esempio un pattern ciclico. E
+ anche
+ possibile, ma non necessario, concentrare i propri sforzi nella programmazione di
+ un'interfaccia grafica che consenta di visualizzare l'evoluzione del gioco mediante
+ un'animazione.
+ Si richiede la consegna di un programma funzionante, scritto in Java, accom-
+ pagnato da un caso studio, anche semplice, che ne metta in luce gli aspetti piu
+ significativi. Scelte progettuali, implementative e caso studio andranno discusse
+ in una breve relazione, alla quale andra allegato il sorgente Java, corredato di
+ commenti.
+ Buon lavoro!

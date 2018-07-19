@@ -17,10 +17,6 @@ public class titoloController implements Initializable {
     @FXML
     private StackPane root;
 
-    @FXML
-    void initialize() {
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

@@ -1,0 +1,74 @@
+PROGETTO JAVA
+NOME PROGETTO:
+SPECIFICHE:
+Ci sarà uno stato iniziale in cui viene definita la grandezza della griglia (la quale avrà le celle
+quadrate) ed ogni cella è un certo numero di persone.
+Un automa cellulare formato da celle che interagiscono tra loro e più celle corrispondono a nazioni
+*1
+Le varie nazioni saranno caratterizzate da una certa età (età antica, età intermedia, età moderna) e
+sarà associato un nome ad ogni nazione.
+Due nazioni si scontreranno perché in base all’età in cui si trova la nazione assume certi fattori, cioè
+più l’età della nazione è arretrata e più la nazione è bellicosa, mentre se l’età è moderna la nazione è
+più propensa a stringere rapporti economici con altre nazioni.
+Ogni nazione è caratterizzata dalla sua economia, e se c’è uno scontro la sua economia cambierà:
+- economia in perdita in caso di entrata in guerra
+- economia in piccolo aumento in caso di vittoria
+- economia in perdita in caso di perdita
+In caso di guerra a parità di età vince la nazione che ha più risorse e più economia (perché ha più
+armi), mentre a differenza di età vince la nazione che ha l’età più evoluta.
+Quando c’è una guerra la nazione attaccante se vince si prende il territorio della nazione che
+difende, mentre se la nazione che attacca perde allora la nazione che difende non conquisterà niente
+(perché la nazione sta difendendo il suo territorio).
+In base all’età:
+- se si trova nell’età antica si attaccante
+- se si trova nell’età intermedia se la nazione attaccante ha un economia maggiore di un certo valore
+attacca, altrimenti no
+- se si trova nell’età moderna si stringe un accordo, se la nazione che riceve la richiesta di accordo
+accetta allora vengono spartite le risorse, se non accetta la nazione richiedente l’accordo se ha
+altri accordi con quella nazione vengono sciolti e la prossima volta tra le due nazioni non ci
+saranno richieste, ma si andrà in guerra.
+Il motivo per cui viene accettato l’accordo è se si ha un numero sufficiente di risorse da spartire
+con l’altra nazione, altrimenti viene rifiutato.
+La nazione che riceve l’accodo, se accetta in cambio un somma in denaro (che verrà sommato alla
+sua economia).
+Inoltre ogni nazione e ogni territorio hanno associato un certo numero di risorse.
+Si cambia età in base alla risorse e alla demografia della nazione, e ad ogni turno per ogni nazione
+aumentano le risorse e l’economia, in base alle caratteristiche dei territori che la nazione possiede.
+Il numero di risorse della nazione verrà incrementato del numero di risorse quando la nazione
+conquista quel dato territorio, cosi la nazione attaccante si espanderà.
+All’interno di una nazione le persone si possono riprodurre:
+- una cella vivente può sopravvivere nella prossima generazione se e solo se ha 2 o 3 celle vivente
+nel proprio vicinato.
+- una cella morta può tornare in vita nella prossima generazione se e solo se ha 3 celle viventi nel
+proprio vicinato
+In base al valore delle risorse del dato territorio conquistato possiamo definire ambiente sterile se il
+numero di risorse è minore di un certo valore, mentre se il numero di risorse è maggiore di un certo
+valore possiamo definire ambiente fertile.
+In base all’ambiente (fertile o sterile) si determinerà il numero di persone che vivranno su quel
+territorio. I due ambienti saranno rappresentati graficamente con colori diversi.
+Ci sono 3 casi nelle regole di transizione:
+- se il territorio è sterile ed ha un numero di territori attaccati maggiori di 3 e almeno la metà di
+questi sono fertili allora quel territorio continua a vivere
+- se il territorio è sterile ed ha un numero di territori attaccati maggiori di 3 e almeno la metà di
+questi sono sterili allora consideriamo i territori circostanti che non sono di nessuno e se la meta di
+questi sono fertili continua a vivere, altrimenti muore
+- se il territorio è fertile ed ha un numero di territori attaccati minori di 3 (sia fertili che sterili)
+allora quel territorio continua a vivere
+- se il territorio è sterile ed ha un numero di territori attaccati minori di 3 (sia fertili che sterili)
+allora consideriamo i territori circostanti che non sono di nessuno e se la meta di questi sono fertili
+continua a vivere, altrimenti muore
+Ogni nazione è caratterizzata anche dalla demografia e questo valore verrà incrementato quando la
+nazione si espande in base al territorio conquistato (fertile o sterile) che ci dirà quante persone
+vivranno su quel territorio, e anche quando dopo una guerra, se la nazione attaccante vince.
+Una nazione può anche morire a causa di un abbassamento del livello demografico.
+*1, mentre alcune celle particolari sono gli esploratori, uno per nazione, se muore l’esploratore
+dopo un certo tempo viene generato un altro esploratore.
+Gli esploratori si muovono randomicamente, però hanno un senso dell’orientamento che non va in
+contro a territorio nemico.
+IDEA AGGIUNTIVA 1:
+Se un pezzo di terra di una nazione è confinante con un certo numero di pezzi di terra nemici allora
+si allea con l’altra nazione (traditore).
+REQUISITI TECNICI
+Per permettere ad una nazione di fare un’azione si usa una coda con priorità, e al momento che gli
+viene assegnato l’opportunità di fare una azione viene scelto randomicamente un pezzo confinante
+che è terra di nessuno e gli viene assegnata l’esecuzione

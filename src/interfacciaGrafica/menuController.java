@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class menuController implements Initializable {
@@ -24,7 +25,8 @@ public class menuController implements Initializable {
     @FXML
     private URL location;
 
-    private AnchorPane root;
+    @FXML
+    private AnchorPane rootPane;
 
     @FXML
     private Button buttonPlay;
@@ -33,21 +35,24 @@ public class menuController implements Initializable {
     private Button buttonExit;
 
     @FXML
+    //cliccando sul pulsante Exit si esce dall'applicazione
     void clickExit(ActionEvent event) {
-
+        Stage stage = (Stage) buttonExit.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
+    //cliccando sul pulsante Play si inizia una nuova partita
     void clickPlay(ActionEvent event) {
 
     }
 
-    @FXML
+    /*@FXML
     void initialize() {
         assert buttonPlay != null : "fx:id=\"buttonNewGame\" was not injected: check your FXML file 'menu.fxml'.";
         assert buttonExit != null : "fx:id=\"buttonExit\" was not injected: check your FXML file 'menu.fxml'.";
 
-    }
+    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,8 +65,8 @@ public class menuController implements Initializable {
         try {
             Main.isShowed = true;
 
-            StackPane pane = FXMLLoader.load(getClass().getResource("/interfacciaGrafica/titolo.fxml"));
-            root.getChildren().setAll(pane);
+            StackPane pane = FXMLLoader.load(getClass().getResource("titolo.fxml"));
+            rootPane.getChildren().setAll(pane);
 
             //transizione sfumata in entrata
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), pane);
@@ -83,8 +88,8 @@ public class menuController implements Initializable {
 
             fadeOut.setOnFinished((e) -> {
                 try {
-                    AnchorPane parentContent = FXMLLoader.load(getClass().getResource("/interfacciaGrafica/menu.fxml"));
-                    root.getChildren().setAll(parentContent);
+                    AnchorPane parentContent = FXMLLoader.load(getClass().getResource("menu.fxml"));
+                    rootPane.getChildren().setAll(parentContent);
                 } catch (IOException ex) {
                     Logger.getLogger(menuController.class.getName()).log(Level.SEVERE, null, ex);
                 }
