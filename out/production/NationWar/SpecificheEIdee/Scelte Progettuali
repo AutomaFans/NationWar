@@ -1,0 +1,4 @@
+-Trovare il modo di variare la velocità dei esecuzione cosi' da vedere in velocità diverse l'evoluzione della scacchiera
+-Per gestire la sincronizzazione si puo' pensare a una specie di coda in cui i thread(celle) vengono in capsulati in una certa maniera,
+e cosi' da permettere al processore di eseguire tutti i thread(passare per tutte le celle)
+-Usare excel per tener conto dei task(prendo spunto da quello usato a lavoro)
