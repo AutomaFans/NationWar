@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -37,22 +38,21 @@ public class menuController implements Initializable {
     @FXML
     //cliccando sul pulsante Exit si esce dall'applicazione
     void clickExit(ActionEvent event) {
-        Stage stage = (Stage) buttonExit.getScene().getWindow();
-        stage.close();
+        Stage stageExit = (Stage) buttonExit.getScene().getWindow();
+        stageExit.close();
     }
 
     @FXML
     //cliccando sul pulsante Play si inizia una nuova partita
     void clickPlay(ActionEvent event) {
+        try {
+            BorderPane impostazioniGriglia = FXMLLoader.load(getClass().getResource("impostazioniGriglia.fxml"));
+            rootPane.getChildren().setAll(impostazioniGriglia);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-    /*@FXML
-    void initialize() {
-        assert buttonPlay != null : "fx:id=\"buttonNewGame\" was not injected: check your FXML file 'menu.fxml'.";
-        assert buttonExit != null : "fx:id=\"buttonExit\" was not injected: check your FXML file 'menu.fxml'.";
-
-    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,17 +65,17 @@ public class menuController implements Initializable {
         try {
             Main.isShowed = true;
 
-            StackPane pane = FXMLLoader.load(getClass().getResource("titolo.fxml"));
-            rootPane.getChildren().setAll(pane);
+            StackPane titolo = FXMLLoader.load(getClass().getResource("titolo.fxml"));
+            rootPane.getChildren().setAll(titolo);
 
             //transizione sfumata in entrata
-            FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), pane);
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), titolo);
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.setCycleCount(1);
 
             //transizione sfumata in uscita
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3),pane);
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), titolo);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
             fadeOut.setCycleCount(1);
@@ -88,8 +88,8 @@ public class menuController implements Initializable {
 
             fadeOut.setOnFinished((e) -> {
                 try {
-                    AnchorPane parentContent = FXMLLoader.load(getClass().getResource("menu.fxml"));
-                    rootPane.getChildren().setAll(parentContent);
+                    AnchorPane menu = FXMLLoader.load(getClass().getResource("menu.fxml"));
+                    rootPane.getChildren().setAll(menu);
                 } catch (IOException ex) {
                     Logger.getLogger(menuController.class.getName()).log(Level.SEVERE, null, ex);
                 }

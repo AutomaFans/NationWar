@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.helpController">
+   <children>
+      <TextField editable="false" prefHeight="329.0" prefWidth="600.0" text="Descrizione di ciò che si deve fare per giocare, ossia come aggiungere nazioni e come iniziare a giocare" />
+      <Button fx:id="buttonClose" layoutX="455.0" layoutY="354.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="112.0" text="Close" />
+   </children>
+</AnchorPane>
