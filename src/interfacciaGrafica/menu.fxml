@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.menuController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.menuController">
+   <ImageView fitHeight="375.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@sfondo3.png" />
+      </image>
+   </ImageView>
    <Button fx:id="buttonPlay" layoutX="97.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="50.0" prefWidth="107.0" text="Play" />
    <Button fx:id="buttonExit" layoutX="385.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="50.0" prefWidth="107.0" text="Exit" />
 </AnchorPane>
