@@ -5,13 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.impostazioniGrigliaController">
+<BorderPane prefHeight="375.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.impostazioniGrigliaController">
    <bottom>
       <AnchorPane BorderPane.alignment="BOTTOM_CENTER">
-         <children>
-            <Button fx:id="buttonStart" layoutX="440.0" layoutY="6.0" mnemonicParsing="false" onAction="#clickStart" prefHeight="25.0" prefWidth="62.0" text="Start" />
-            <Button fx:id="buttonExit" layoutX="533.0" layoutY="6.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="25.0" prefWidth="53.0" text="Exit" />
-         </children>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
@@ -21,11 +17,15 @@
       <AnchorPane prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="buttonAddNation" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#clickAddNation" prefHeight="25.0" prefWidth="106.0" text="Add Nation" />
-            <Button fx:id="buttonHelp" layoutX="524.0" layoutY="4.0" mnemonicParsing="false" onAction="#clickHelp" prefHeight="25.0" prefWidth="62.0" text="Help" />
+            <Button fx:id="buttonExit" layoutX="439.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="16.0" prefWidth="29.0" text="X" />
          </children>
       </AnchorPane>
    </top>
    <center>
-      <AnchorPane prefHeight="298.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="298.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonStart" layoutX="37.0" layoutY="295.0" mnemonicParsing="false" onAction="#clickStart" prefHeight="25.0" prefWidth="62.0" text="Start" />
+            <Button fx:id="buttonHelp" layoutX="386.0" layoutY="295.0" mnemonicParsing="false" onAction="#clickHelp" prefHeight="25.0" prefWidth="62.0" text="Help" />
+         </children></AnchorPane>
    </center>
 </BorderPane>
