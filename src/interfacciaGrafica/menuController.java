@@ -65,7 +65,7 @@ public class menuController implements Initializable {
         try {
             Main.isShowed = true;
 
-            StackPane titolo = FXMLLoader.load(getClass().getResource("titolo.fxml"));
+            AnchorPane titolo = FXMLLoader.load(getClass().getResource("titolo.fxml"));
             rootPane.getChildren().setAll(titolo);
 
             //transizione sfumata in entrata

@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.menuController">
-   <ImageView fitHeight="375.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.menuController">
+   <ImageView fitHeight="375.0" fitWidth="520.0" pickOnBounds="true" preserveRatio="true">
       <image>
-         <Image url="@sfondo3.png" />
+         <Image url="@sfondo.jpg" />
       </image>
    </ImageView>
-   <Button fx:id="buttonPlay" layoutX="97.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="50.0" prefWidth="107.0" text="Play" />
-   <Button fx:id="buttonExit" layoutX="385.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="50.0" prefWidth="107.0" text="Exit" />
+   <Button fx:id="buttonPlay" contentDisplay="CENTER" layoutX="181.0" layoutY="86.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="50.0" prefWidth="107.0" text="Play">
+      <cursor>
+         <Cursor fx:constant="OPEN_HAND" />
+      </cursor></Button>
+   <Button fx:id="buttonExit" layoutX="442.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="8.0" prefWidth="27.0" text="x" textOverrun="LEADING_WORD_ELLIPSIS" />
 </AnchorPane>
