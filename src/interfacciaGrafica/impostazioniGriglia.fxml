@@ -92,7 +92,7 @@
             <Label layoutX="21.0" layoutY="5.0" style="-fx-opacity: 1;" text="Larghezza" />
             <Label layoutX="207.0" layoutY="5.0" style="-fx-opacity: 1;" text="Altezza" />
             <TextArea fx:id="txtHeight" layoutX="273.0" layoutY="-1.0" maxHeight="26.0" maxWidth="91.0" minHeight="26.0" minWidth="91.0" prefHeight="26.0" prefWidth="91.0" style="-fx-opacity: 1;" text="2" />
-            <Button fx:id="btnGridDimesions" layoutX="389.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="154.0" style="-fx-opacity: 1;" text="Imposta grandezza griglia" />
+            <Button fx:id="btnGridDimensions" layoutX="389.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickAddDimensions" prefHeight="20.0" prefWidth="154.0" style="-fx-opacity: 1;" text="Imposta grandezza griglia" />
          </children></AnchorPane>
    </bottom>
 </BorderPane>
