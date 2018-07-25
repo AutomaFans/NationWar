@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.deleteNationController">
+   <children>
+      <Label layoutX="83.0" layoutY="112.0" prefHeight="44.0" prefWidth="80.0" text="Nazione:">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label prefHeight="34.0" prefWidth="600.0" text="SCEGLIERE LA NAZIONE CHE SI DESIDERA ELIMINARE.">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonElimina" layoutX="387.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickEliminaNazione" prefHeight="25.0" prefWidth="67.0" text="Elimina" />
+      <Button fx:id="buttonAnnulla" layoutX="490.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickAnnulla" prefHeight="25.0" prefWidth="67.0" text="Annulla" />
+      <MenuButton fx:id="buttonSelectNation" layoutX="174.0" layoutY="122.0" mnemonicParsing="false" onAction="#clickSelectNation" prefHeight="25.0" prefWidth="142.0" />
+   </children>
+</AnchorPane>
