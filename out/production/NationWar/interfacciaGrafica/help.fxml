@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.Help">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.helpController">
    <children>
       <TextField alignment="TOP_LEFT" layoutY="-2.0" prefHeight="324.0" prefWidth="601.0" text="istruzioni gioco">
          <font>

@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="12fbb57f-282b-4ed0-bf6c-1efb1e4dcc30" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGriglia.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGrigliaController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/help.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/help.fxml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,7 +15,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
@@ -28,10 +27,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="impostazioniGrigliaController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="impostazioniGrigliaController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGrigliaController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
+            <state relative-caret-position="-18">
               <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
@@ -43,15 +42,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="137">
               <caret line="31" selection-start-line="31" selection-end-line="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="menuController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/menuController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -85,18 +75,18 @@
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/Help.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/helpController.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGriglia.fxml" />
-        <option value="$PROJECT_DIR$/src/interfacciaGrafica/help.fxml" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/Main.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGrigliaController.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/menuController.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/help.fxml" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1386" />
-    <option name="height" value="788" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="3" />
+    <option name="y" value="24" />
+    <option name="width" value="749" />
+    <option name="height" value="654" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -596,14 +586,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/helpControlle.java" />
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/help.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="173" selection-start-line="7" selection-start-column="173" selection-end-line="7" selection-end-column="173" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/helpController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -615,13 +597,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGrigliaController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>
@@ -640,6 +615,21 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/help.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="174" selection-start-line="8" selection-start-column="174" selection-end-line="8" selection-end-column="174" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGrigliaController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>
