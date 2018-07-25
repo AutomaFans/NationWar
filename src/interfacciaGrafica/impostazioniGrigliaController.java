@@ -33,7 +33,14 @@ public class impostazioniGrigliaController {
 
     @FXML
     void clickAddNation(ActionEvent event) {
-
+        try {
+            AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("addNation.fxml"));
+            Stage addNationStage = new Stage();
+            addNationStage.setScene(new Scene(addNationPane));
+            addNationStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
