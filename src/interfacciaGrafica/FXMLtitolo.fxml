@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" rotate="180.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
+    <children>
+        <Label layoutX="140.0" layoutY="140.0" prefHeight="120.0" prefWidth="103.0" rotate="180.0" text="Loading..." StackPane.alignment="CENTER_LEFT" />
+        <ProgressBar accessibleRole="TEXT" cache="true" layoutX="265.0" layoutY="190.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="176.0" StackPane.alignment="CENTER">
+            <cursor>
+                <Cursor fx:constant="E_RESIZE" />
+            </cursor>
+        </ProgressBar>
+        <ImageView fitHeight="112.0" fitWidth="124.0" layoutX="300.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
+            <image>
+                <Image url="@IMG-MondoNazioni.jpg" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>
+
+
+        <!-- COMMENTO -->
+        <!--
+        Mette un AnchorPane, poi dentro questo AnchorPane posiziona una label e una progressBar, al centro.
+        Poi imposta il testo della label con la scritta "Loading...".
+        Infine, dentro l'AnchorPane posiziona l'immagine chiamata IMG-MondoNAzioni.
+        -->
