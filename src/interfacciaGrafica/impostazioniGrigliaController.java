@@ -78,6 +78,8 @@ public class impostazioniGrigliaController {
     @FXML
     void clickAddDimensions(ActionEvent event) {
 
+    }
+
     @FXML
     void clickMenu(ActionEvent event) {
         try {
