@@ -14,7 +14,8 @@ import java.io.IOException;
 
 public class impostazioniGrigliaController {
 
-    private BorderPane impostazioniGriglia;
+    @FXML
+    private BorderPane borderPane;
 
     @FXML
     private Button buttonAddNation;
@@ -29,7 +30,7 @@ public class impostazioniGrigliaController {
     private Button buttonHelp;
 
     @FXML
-    private Button buttonExit;
+    private Button buttonMenu;
 
     @FXML
     private Button btnGridDimensions;
@@ -42,13 +43,14 @@ public class impostazioniGrigliaController {
 
     @FXML
     void clickAddNation(ActionEvent event) {
-
-    }
-
-    @FXML
-    void clickButtonExit(ActionEvent event) {
-        Stage exitStage = (Stage) buttonExit.getScene().getWindow();
-        exitStage.close();
+        try {
+            AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("addNation.fxml"));
+            Stage addNationStage = new Stage();
+            addNationStage.setScene(new Scene(addNationPane));
+            addNationStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -75,6 +77,15 @@ public class impostazioniGrigliaController {
 
     @FXML
     void clickAddDimensions(ActionEvent event) {
+
+    @FXML
+    void clickMenu(ActionEvent event) {
+        try {
+            AnchorPane menu = FXMLLoader.load(getClass().getResource("menu.fxml"));
+            borderPane.getChildren().setAll(menu);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
