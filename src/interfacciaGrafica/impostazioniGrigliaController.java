@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 
@@ -30,6 +31,15 @@ public class impostazioniGrigliaController {
 
     @FXML
     private Button buttonMenu;
+
+    @FXML
+    private Button btnGridDimensions;
+
+    @FXML
+    private TextArea txtWidth;
+
+    @FXML
+    private TextArea txtHeight;
 
     @FXML
     void clickAddNation(ActionEvent event) {
@@ -65,6 +75,8 @@ public class impostazioniGrigliaController {
 
     }
 
+    @FXML
+    void clickAddDimensions(ActionEvent event) {
 
     @FXML
     void clickMenu(ActionEvent event) {
