@@ -55,7 +55,14 @@ public class impostazioniGrigliaController {
 
     @FXML
     void clickDeleteNation(ActionEvent event) {
-
+        try {
+            AnchorPane deleteNationPane = FXMLLoader.load(getClass().getResource("deleteNation.fxml"));
+            Stage deleteNationStage = new Stage();
+            deleteNationStage.setScene(new Scene(deleteNationPane));
+            deleteNationStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
