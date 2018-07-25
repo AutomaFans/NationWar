@@ -156,7 +156,6 @@ public class ControllerImpostazioniGriglia {
         this.txtColumns.setEditable(false);
         this.buttonAddNation.setDisable(false); /*vengono abilitati i pulsanti di addNation e start, ma non ancora
                                                 quello di deleteNation perche' non e' stata ancora inserita alcuna nazione*/
-        this.buttonStart.setDisable(false);
 
         double columnPercentual = 582/gridColumns;   /*percentuale di spazio che deve occupare una colonna nella griglia
                                                      per potersi adattare(582 e' la larghezza fissa della griglia)*/
