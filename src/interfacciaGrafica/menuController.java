@@ -33,16 +33,6 @@ public class menuController implements Initializable {
     private Button buttonPlay;
 
     @FXML
-    private Button buttonExit;
-
-    @FXML
-    //cliccando sul pulsante Exit si esce dall'applicazione
-    void clickExit(ActionEvent event) {
-        Stage stageExit = (Stage) buttonExit.getScene().getWindow();
-        stageExit.close();
-    }
-
-    @FXML
     //cliccando sul pulsante Play si inizia una nuova partita
     void clickPlay(ActionEvent event) {
         try {
