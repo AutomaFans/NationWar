@@ -9,6 +9,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
 
 import java.io.IOException;
 
@@ -36,10 +41,17 @@ public class ControllerImpostazioniGriglia {
     private Button btnGridDimensions;		//Bottone chiamato btnGridDimensions, per impostare la grandezza della griglia
 
     @FXML
-    private TextArea txtWidth;				//Area di testo chiamata txtWidth, per impostare la larghezza delle celle della griglia
+    private TextArea txtColumns;				//Area di testo chiamata txtColumns, per impostare il numero di colonne della griglia
 
     @FXML
-    private TextArea txtHeight;				//Area di testo chiamata txtHeight, per impostare l'altezza delle celle della griglia
+    private TextArea txtRows;				//Area di testo chiamata txtRows, per impostare il numero di righe della griglia della griglia
+
+    @FXML
+    private Label msgError;      /*identificatore del label nell'angolo in basso a destra che serve per avvisare
+                                 l'utente di errori o altri messaggi*/
+
+    @FXML
+    private GridPane automaGrid; //identificatore della griglia in cui si visualizzera la simulazione
 
 
     //METODO CLICK ADD NATION
@@ -111,9 +123,56 @@ public class ControllerImpostazioniGriglia {
     }
 
 
-    //METODO CLICK START
+    //METODO CLICK ADD DIMENSIONS
+    //Vieni utilizzato quando si preme il bottone "Imposta grandezza griglia": permette quindi di impostare la grandezza della griglia
     @FXML
     void clickAddDimensions(ActionEvent event) {
+        int gridColumns;                                        //numero di colonne della griglia desiderato dall'utente
+        int gridRows;                                           //numero di righe della griglia desiderato dall'utente
+        try{
+            gridColumns = Integer.parseInt(txtColumns.getText());   //prende il numero di colonne sottomesso dall'utente
+            gridRows = Integer.parseInt(txtRows.getText());         //prende il numero di righe sottomesso dall'utente
+        }
+        catch(NumberFormatException n){                         //se l'utente non inserisce un intero si ha un eccezione
+            this.msgError.setText("Inserire un intero!");
+            return;     //esce dal metodo cosi' da non generare errori
+        }
+        if(gridColumns > 100 || gridRows > 100){                //se il numero di righe o colonne e' maggiore di 100
+                                                                //si puo' inserire un numero massimo di 100 righe o colonne
+            if(gridColumns > 100 && gridRows > 100){ //se si supera il numero di righe e colonne
+                this.msgError.setText("Troppe righe e colonne!");
+            }
+            else if(gridColumns > 100){ //se si supera il numero di colonne
+                this.msgError.setText("Troppe colonne!");
+            }
+            else { //se si supera il numero di righe
+                this.msgError.setText("Troppe righe!");
+            }
+            return;     //esce dal metodo cosi' da non aggiungere troppe colonne o righe(o entrambi)
+        }
+        this.msgError.setText("Inserisci nazione"); //se vengono inseriti dati coerenti si puo' proseguire
+        this.btnGridDimensions.setDisable(true);   //viene disabilitata ora la possibilita' di ridimensionare la griglia
+        this.txtRows.setEditable(false);
+        this.txtColumns.setEditable(false);
+        this.buttonAddNation.setDisable(false); /*vengono abilitati i pulsanti di addNation e start, ma non ancora
+                                                quello di deleteNation perche' non e' stata ancora inserita alcuna nazione*/
+        this.buttonStart.setDisable(false);
+
+        double columnPercentual = 582/gridColumns;   /*percentuale di spazio che deve occupare una colonna nella griglia
+                                                     per potersi adattare(582 e' la larghezza fissa della griglia)*/
+        ColumnConstraints col = new ColumnConstraints();   //crea una nuova colonna
+        col.setPercentWidth(columnPercentual);             //setta la percentuale di larghezza che la colonna deve occupare
+        for(int i=0; i < gridColumns; i++){
+            this.automaGrid.getColumnConstraints().add(col); //aggiunge la colonna alla griglia
+        }
+
+        double rowPercentual = 517/gridRows;   /*percentuale di spazio che deve occupare una riga nella griglia per
+                                               potersi adattare(517 e' l'altezza fissa della griglia)*/
+        RowConstraints row = new RowConstraints(); //crea una nuova riga
+        row.setPercentHeight(rowPercentual);       //setta la percentuale di altezza che la riga deve occupare
+        for(int i=0; i < gridRows; i++){
+            this.automaGrid.getRowConstraints().add(row); //aggiunge la riga alla griglia
+        }
     }
 
 
