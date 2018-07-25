@@ -6,17 +6,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 
-public class titoloController implements Initializable {
+public class ControllerTitolo implements Initializable {
+
 
     @FXML
-    private ResourceBundle resources;
+    private StackPane root;			//StackPane chiamato root
 
-    @FXML
-    private URL location;
 
-    @FXML
-    private StackPane root;
-
+    //METODO INITIALIZE
+    //Questo metodo è vuoto
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
