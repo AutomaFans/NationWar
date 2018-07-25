@@ -26,6 +26,7 @@ public class Main extends Application {
         Scene scene = new Scene(rootP);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Progetto: NATION WAR");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
