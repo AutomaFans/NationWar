@@ -25,7 +25,8 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private Button buttonPlay;				//Bottone chiamato buttonPlay
-
+    @FXML
+    private Button buttonExit;
 
     //METODO CLICK PLAY
     //Crea un oggetto di tipo BorderPane chiamato impostazioniGriglia facendo riferimento e richiamando
@@ -41,6 +42,11 @@ public class ControllerMenu implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    void clickExit(ActionEvent event){ //creo stageExit
+        Stage stageExit = (Stage) buttonExit.getScene().getWindow();
+        stageExit.close(); //gli do una funzione (di chiusura)
     }
 
 

@@ -7,7 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
+<!-- COMMENTO -->
+<!--
+        Mette un AnchorPane, poi dentro questo AnchorPane posiziona un' immagine e un bottone, al centro.
+        Poi imposta il testo del bottone con la scritta "Play".
+        Infine, dentro l'AnchorPane posiziona l'immagine di sfondo, chiamata IMG-Sfondo.
+        -->
+
+<AnchorPane fx:id="rootPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
     <children>
         <ImageView fitHeight="618.0" fitWidth="739.0" layoutX="-24.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -22,13 +29,6 @@
                 <Font size="21.0" />
             </font>
         </Button>
+      <Button fx:id="buttonExit" layoutX="671.0" layoutY="543.0" mnemonicParsing="false" onAction="#clickExit" text="Exit" />
     </children>
 </AnchorPane>
-
-
-        <!-- COMMENTO -->
-        <!--
-        Mette un AnchorPane, poi dentro questo AnchorPane posiziona un' immagine e un bottone, al centro.
-        Poi imposta il testo del bottone con la scritta "Play".
-        Infine, dentro l'AnchorPane posiziona l'immagine di sfondo, chiamata IMG-Sfondo.
-        -->
