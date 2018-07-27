@@ -127,8 +127,6 @@ public class ControllerImpostazioniGriglia {
     //Vieni utilizzato quando si preme il bottone "Imposta grandezza griglia": permette quindi di impostare la grandezza della griglia
     @FXML
     void clickAddDimensions(ActionEvent event) {
-        int numeroColonne=0;
-        int numeroRighe=0;
         int gridColumns;                                        //numero di colonne della griglia desiderato dall'utente
         int gridRows;                                           //numero di righe della griglia desiderato dall'utente
         try{
@@ -158,11 +156,11 @@ public class ControllerImpostazioniGriglia {
         this.txtColumns.setEditable(false);
         this.buttonAddNation.setDisable(false); /*vengono abilitati i pulsanti di addNation e start, ma non ancora
                                                 quello di deleteNation perche' non e' stata ancora inserita alcuna nazione*/
-        double columnPercentual = 582/gridColumns;   /*percentuale di spazio che deve occupare una colonna nella griglia
+        double columnPercentual = 582.0/gridColumns;   /*percentuale di spazio che deve occupare una colonna nella griglia
                                                      per potersi adattare(582 e' la larghezza fissa della griglia)*/
         ColumnConstraints col = new ColumnConstraints();   //crea una nuova colonna
         col.setPercentWidth(columnPercentual);             //setta la percentuale di larghezza che la colonna deve occupare
-        double rowPercentual = 517/gridRows;   /*percentuale di spazio che deve occupare una riga nella griglia per
+        double rowPercentual = 517.0/gridRows;   /*percentuale di spazio che deve occupare una riga nella griglia per
                                                potersi adattare(517 e' l'altezza fissa della griglia)*/
         RowConstraints row = new RowConstraints(); //crea una nuova riga
         row.setPercentHeight(rowPercentual);       //setta la percentuale di altezza che la riga deve occupare
