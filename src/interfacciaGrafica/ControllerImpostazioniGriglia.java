@@ -179,13 +179,6 @@ public class ControllerImpostazioniGriglia {
             }
         }
     }
-    //METODO MENU
-    //Quando il bottone buttonMenu viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
-    //menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi menu sarà l'interfaccia definita in FXMLmenu.fxml.
-    //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
-    //precedentemente, ovvero con menu.
-
 
     //METODO MENU
     //Quando il bottone buttonMenu viene premuto, viene creato un oggetto di tipo AnchorPane chiamato

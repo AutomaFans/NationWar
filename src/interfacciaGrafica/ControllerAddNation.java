@@ -26,7 +26,7 @@ public class ControllerAddNation {
 
     @FXML
     private ChoiceBox<String> coloreNazione;	//ChoiceBox (menu a tendina) chiamato coloreNazione che conterrà tutti i
-    //colori che potranno essere scelti quando si crea una nazione
+                                                //colori che potranno essere scelti quando si crea una nazione
 
 
 
