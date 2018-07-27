@@ -127,6 +127,8 @@ public class ControllerImpostazioniGriglia {
     //Vieni utilizzato quando si preme il bottone "Imposta grandezza griglia": permette quindi di impostare la grandezza della griglia
     @FXML
     void clickAddDimensions(ActionEvent event) {
+        int numeroColonne=0;
+        int numeroRighe=0;
         int gridColumns;                                        //numero di colonne della griglia desiderato dall'utente
         int gridRows;                                           //numero di righe della griglia desiderato dall'utente
         try{
@@ -138,7 +140,7 @@ public class ControllerImpostazioniGriglia {
             return;     //esce dal metodo cosi' da non generare errori
         }
         if(gridColumns > 100 || gridRows > 100){                //se il numero di righe o colonne e' maggiore di 100
-                                                                //si puo' inserire un numero massimo di 100 righe o colonne
+            //si puo' inserire un numero massimo di 100 righe o colonne
             if(gridColumns > 100 && gridRows > 100){ //se si supera il numero di righe e colonne
                 this.msgError.setText("Troppe righe e colonne!");
             }
@@ -156,23 +158,33 @@ public class ControllerImpostazioniGriglia {
         this.txtColumns.setEditable(false);
         this.buttonAddNation.setDisable(false); /*vengono abilitati i pulsanti di addNation e start, ma non ancora
                                                 quello di deleteNation perche' non e' stata ancora inserita alcuna nazione*/
-
         double columnPercentual = 582/gridColumns;   /*percentuale di spazio che deve occupare una colonna nella griglia
                                                      per potersi adattare(582 e' la larghezza fissa della griglia)*/
         ColumnConstraints col = new ColumnConstraints();   //crea una nuova colonna
         col.setPercentWidth(columnPercentual);             //setta la percentuale di larghezza che la colonna deve occupare
-        for(int i=0; i < gridColumns; i++){
-            this.automaGrid.getColumnConstraints().add(col); //aggiunge la colonna alla griglia
-        }
-
         double rowPercentual = 517/gridRows;   /*percentuale di spazio che deve occupare una riga nella griglia per
                                                potersi adattare(517 e' l'altezza fissa della griglia)*/
         RowConstraints row = new RowConstraints(); //crea una nuova riga
         row.setPercentHeight(rowPercentual);       //setta la percentuale di altezza che la riga deve occupare
-        for(int i=0; i < gridRows; i++){
-            this.automaGrid.getRowConstraints().add(row); //aggiunge la riga alla griglia
+
+        for (int y=0; y< gridRows; y++ ){
+            for (int x=0; x<gridColumns; x++){
+                Button bottone=new Button();  //cosa scrivere all'interno di ogni bottone
+                bottone.setMinHeight(rowPercentual);  //do le dimensioni ai bottoni in modo ch ricoprano tutto l'automaGrid
+                bottone.setMaxHeight(rowPercentual);
+                bottone.setMaxWidth(columnPercentual);
+                bottone.setMinWidth(columnPercentual);
+                automaGrid.add(bottone,x,y); //aggiunge il bottone alla griglia
+
+            }
         }
     }
+    //METODO MENU
+    //Quando il bottone buttonMenu viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
+    //menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
+    //Quindi menu sarà l'interfaccia definita in FXMLmenu.fxml.
+    //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
+    //precedentemente, ovvero con menu.
 
 
     //METODO MENU
