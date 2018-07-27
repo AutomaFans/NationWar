@@ -13,7 +13,7 @@ public class Main extends Application {
 
     //METODO START
     //Crea un oggetto di tipo Parent chiamato rootP facendo riferimento e richiamando
-    //l'intefaccia definita in FFXMLmenu.fxml.
+    //l'intefaccia definita in FXMLmenu.fxml.
     //Quindi rootP sarà l'interfaccia definita in FXMLmenu.fxml.
     //Poi crea una Scene (contenitore più  interno) chiamata scene per il nodo radice
     //specificato (rootP), specifica la scena da usare sullo Stage chiamato primaryStage
