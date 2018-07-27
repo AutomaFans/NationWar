@@ -18,6 +18,22 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<!-- COMMENTO -->
+<!--
+        Mette un BorderPane, poi dentro questo BorderPane posiziona un contenitore per i tab, ovvero un TabPane.
+        Questo TabPane a sua volta ha dentro due tab: il Tab Nations e il Tab Statistics.
+        All'interno del Tab Nations pero' c'è un AnchorPane e dentro l'AnchorPane c'è la griglia.
+        Poi, all'interno del BorderPane, sulla destra, c'è un VBox (per disporre gli oggetti verticalmente) e
+        dentro questo Vbox sono presenti i vari bottoni chiamati: buttonAddNation, buttonDeleteNation,
+        buttonStart, buttonHelp e buttonMenu.
+        Dentro questi bottoni ci sono delle immagini.
+        Poi, all'interno del BorderPane, in basso, c'è un AnchorPane e dentro questo AnchorPane sono presenti
+        le due label: una con la scritta "Larghezza"  e l'altra con la scritta "Altezza",
+        le due aree di testo: una chiamata txtWidth per inserire la larghezza e l'altra chiamata txtHeight
+        per inserire l'altezza, ed infine c'è il bottone chiamato btnGridDimensions per impostare le dimensioni
+        della griglia specificate dentro l'aree di testo.
+        -->
+
 <BorderPane fx:id="borderPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerImpostazioniGriglia">
     <center>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -91,25 +107,7 @@
                 <Label layoutX="207.0" layoutY="5.0" style="-fx-opacity: 1;" text="N. righe" />
                 <TextArea fx:id="txtRows" layoutX="273.0" layoutY="-1.0" maxHeight="26.0" maxWidth="91.0" minHeight="26.0" minWidth="91.0" prefHeight="26.0" prefWidth="91.0" style="-fx-opacity: 1;" text="2" />
                 <Button fx:id="btnGridDimensions" layoutX="389.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickAddDimensions" prefHeight="20.0" prefWidth="154.0" style="-fx-opacity: 1;" text="Imposta grandezza griglia" />
-                <Label fx:id="msgError" layoutX="566.0" layoutY="4.0" prefHeight="20.0" prefWidth="145.0" text="Max 100 righe e colonne"/>
+                <Label fx:id="msgError" layoutX="566.0" layoutY="4.0" prefHeight="20.0" prefWidth="145.0" text="Max 100 righe e colonne" />
             </children></AnchorPane>
     </bottom>
 </BorderPane>
-
-
-
-        <!-- COMMENTO -->
-        <!--
-        Mette un BorderPane, poi dentro questo BorderPane posiziona un contenitore per i tab, ovvero un TabPane.
-        Questo TabPane a sua volta ha dentro due tab: il Tab Nations e il Tab Statistics.
-        All'interno del Tab Nations pero' c'è un AnchorPane e dentro l'AnchorPane c'è la griglia.
-        Poi, all'interno del BorderPane, sulla destra, c'è un VBox (per disporre gli oggetti verticalmente) e
-        dentro questo Vbox sono presenti i vari bottoni chiamati: buttonAddNation, buttonDeleteNation,
-        buttonStart, buttonHelp e buttonMenu.
-        Dentro questi bottoni ci sono delle immagini.
-        Poi, all'interno del BorderPane, in basso, c'è un AnchorPane e dentro questo AnchorPane sono presenti
-        le due label: una con la scritta "Larghezza"  e l'altra con la scritta "Altezza",
-        le due aree di testo: una chiamata txtWidth per inserire la larghezza e l'altra chiamata txtHeight
-        per inserire l'altezza, ed infine c'è il bottone chiamato btnGridDimensions per impostare le dimensioni
-        della griglia specificate dentro l'aree di testo.
-        -->
