@@ -27,10 +27,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <GridPane fx:id="automaGrid" gridLinesVisible="true" maxHeight="517.0" maxWidth="582.0" minHeight="517.0" minWidth="582.0" prefHeight="517.0" prefWidth="582.0">
-                                    <columnConstraints>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                    </rowConstraints>
+
                                 </GridPane>
                             </children></AnchorPane>
                     </content>
