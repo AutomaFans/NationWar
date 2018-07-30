@@ -10,7 +10,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
@@ -124,59 +123,90 @@ public class ControllerImpostazioniGriglia {
 
 
     //METODO CLICK ADD DIMENSIONS
-    //Vieni utilizzato quando si preme il bottone "Imposta grandezza griglia": permette quindi di impostare la grandezza della griglia
+    //Viene utilizzato quando si preme il bottone "Imposta grandezza griglia": permette
+    //quindi di impostare la grandezza della griglia.
+    //Definisce due variabili intere per il numero di colonne della griglia e per il
+    //numero di righe della griglia.
+    //Poi (con il metoto getText) prende il numero di colonne e il numero di righe che
+    //l'utente ha inserito nelle aree di testo txtColumns e txtRows.
+    //Se l'utente non inserisce nelle due aree un  numero intero, viene lanciata l'eccezione
+    //per cui la label msgError sara' impostata con la scritta "Inserisci un intero!"
+    //Siccome si può inserire un massimo numero di 50 righe e 50 colonne, se il numero
+    //di righe e colonne e' maggiore di 50 allora la label msgError sara' impostata con
+    //la scritta "Troppe righe e colonne!".
+    //Altrimenti, se il numero di colonne e' maggiore di 50 allora la label msgError
+    //sara' impostata con la scritta "Troppe colonne!", mentre  se il numero di righe e'
+    //maggiore di 50 allora la label msgError sara' impostata con la scritta "Troppe righe!"
+    //Se vengono inseriti tutti i dati corretti si puo' proseguire.
+    //Quindi la label msgError sara' impostata con la scritta "Inserisci Nazione".
+    //Viene disabilitato il bottone btnGridDimensions per togliere la possibilita'
+    //di ridimensionare la griglia e per lo stesso motivo sono disabilitate le arre di testo
+    //txtRows e txtColumns per togliere la possibilita di inserire un altro numero di righe e di colonne.
+    //Invece viene abilitato il bottone buttonAddNation per dare la possibilita di aggiungere una nazione.
+    //Poi si passa ad aggiungere i bottoni sulle righe e sulle colonne alla griglia.
+    //Viene creata una variabile columnPercentual che è la percentuale di spazio che deve occupare
+    //una colonna nella griglia per potersi adattare, cosi viene creata una nuova colonna.
+    //e viene settata la percentuale di larghezza che la colonna deve occupare (con il metodo setPercentWidth).
+    //Viene creata una variabile rowPercentual che è la percentuale di spazio che deve occupare
+    //una riga nella griglia per potersi adattare, cosi viene creata una nuova riga
+    //e viene settata la percentuale di larghezza che la riga deve occupare (con il metodo setPercentWidth)
+    //Per il numero di righe e di colonne specificate dall'utente, vengono creati i bottoni
+    //e viene impostata l'altezza massima e minima del bottone e la grandezza massima e minima
+    //del bottone, cosi da riempire tutta la griglia e vengono aggiunti i bottoni alla griglia.
     @FXML
     void clickAddDimensions(ActionEvent event) {
-        int gridColumns;                                        //numero di colonne della griglia desiderato dall'utente
-        int gridRows;                                           //numero di righe della griglia desiderato dall'utente
+        int gridColumns;                                        	//Numero di colonne della griglia desiderato dall'utente
+        int gridRows;                                           	//Numero di righe della griglia desiderato dall'utente
         try{
-            gridColumns = Integer.parseInt(txtColumns.getText());   //prende il numero di colonne sottomesso dall'utente
-            gridRows = Integer.parseInt(txtRows.getText());         //prende il numero di righe sottomesso dall'utente
+            gridColumns = Integer.parseInt(txtColumns.getText());  //Prende il numero di colonne inserito dall'utente
+            gridRows = Integer.parseInt(txtRows.getText());        //Prende il numero di righe inserito dall'utente
         }
-        catch(NumberFormatException n){                         //se l'utente non inserisce un intero si ha un eccezione
-            this.msgError.setText("Inserire un intero!");
-            return;     //esce dal metodo cosi' da non generare errori
+        catch(NumberFormatException n){                         	//Se l'utente non inserisce un intero si ha un eccezione
+            this.msgError.setText("Inserire un intero!");			//Label impostata con la scritta "Inserisci un intero"
+            return;     											//Esce dal metodo cosi' da non generare errori
         }
-        if(gridColumns > 50 || gridRows > 50){                //se il numero di righe o colonne e' maggiore di 50
-            //si puo' inserire un numero massimo di 50 righe o colonne
-            if(gridColumns > 50 && gridRows > 50){ //se si supera il numero di righe e colonne
-                this.msgError.setText("Troppe righe e colonne!");
+        if(gridColumns > 50 || gridRows > 50){                	    //Se il numero di righe o colonne e' maggiore di 50
+            if(gridColumns > 50 && gridRows > 50){ 				    //Se il numero di righe e colonne e' maggiore di 50
+                this.msgError.setText("Troppe righe e colonne!");	//Label impostata con la scritta "Troppe righe e colonne!"
             }
-            else if(gridColumns > 50){ //se si supera il numero di colonne
-                this.msgError.setText("Troppe colonne!");
+            else if(gridColumns > 50){ 							    //Altrimenti, se il numero di colonne e' maggiore di 50
+                this.msgError.setText("Troppe colonne!");			//Label impostata con la scritta "Troppe colonne!"
             }
-            else { //se si supera il numero di righe
-                this.msgError.setText("Troppe righe!");
+            else { 												    //Altrimenti, se il numero di righe e' maggiore di 50
+                this.msgError.setText("Troppe righe!");			    //Label impostata con la scritta "Troppe righe!"
             }
-            return;     //esce dal metodo cosi' da non aggiungere troppe colonne o righe(o entrambi)
+            return;    											    //Esce dal metodo cosi' da non aggiungere troppe colonne o righe(o entrambi)
         }
-        this.msgError.setText("Inserisci nazione"); //se vengono inseriti dati coerenti si puo' proseguire
-        this.btnGridDimensions.setDisable(true);   //viene disabilitata ora la possibilita' di ridimensionare la griglia
-        this.txtRows.setEditable(false);
-        this.txtColumns.setEditable(false);
-        this.buttonAddNation.setDisable(false); /*vengono abilitati i pulsanti di addNation e start, ma non ancora
-                                                quello di deleteNation perche' non e' stata ancora inserita alcuna nazione*/
-        double columnPercentual = 582.0/gridColumns;   /*percentuale di spazio che deve occupare una colonna nella griglia
-                                                     per potersi adattare(582 e' la larghezza fissa della griglia)*/
-        ColumnConstraints col = new ColumnConstraints();   //crea una nuova colonna
-        col.setPercentWidth(columnPercentual);             //setta la percentuale di larghezza che la colonna deve occupare
-        double rowPercentual = 517.0/gridRows;   /*percentuale di spazio che deve occupare una riga nella griglia per
-                                               potersi adattare(517 e' l'altezza fissa della griglia)*/
-        RowConstraints row = new RowConstraints(); //crea una nuova riga
-        row.setPercentHeight(rowPercentual);       //setta la percentuale di altezza che la riga deve occupare
+        //Se vengono inseriti dati coerenti si puo' proseguire
+        this.msgError.setText("Inserisci nazione"); 				//Label impostta con la scritta "Inserisci Nazione"
+        this.btnGridDimensions.setDisable(true);   				    //Viene disabilitato il bottone btnGridDimensions
+        this.txtRows.setEditable(false);							//Viene disabilitata l'area di testo per specificare il numero di righe
+        this.txtColumns.setEditable(false);						    //Viene disabilitata l'area di testo per specificare il numero di colonne
+        this.buttonAddNation.setDisable(false); 					//Viene abilitato il bottone buttonAddNation
 
-        for (int y=0; y< gridRows; y++ ){
-            for (int x=0; x<gridColumns; x++){
-                Button bottone=new Button();  //cosa scrivere all'interno di ogni bottone
-                bottone.setMinHeight(rowPercentual);  //do le dimensioni ai bottoni in modo ch ricoprano tutto l'automaGrid
-                bottone.setMaxHeight(rowPercentual);
-                bottone.setMaxWidth(columnPercentual);
-                bottone.setMinWidth(columnPercentual);
-                automaGrid.add(bottone,x,y); //aggiunge il bottone alla griglia
+        double columnPercentual = 582.0/gridColumns;  				//Percentuale di spazio che deve occupare una colonna nella griglia
+                                                                    //per potersi adattare(582.0 e' la larghezza fissa della griglia)
+        ColumnConstraints col = new ColumnConstraints();   		    //Crea una nuova colonna
+        col.setPercentWidth(columnPercentual);             		    //Setta la percentuale di larghezza che la colonna deve occupare
+
+        double rowPercentual = 517.0/gridRows;  					//Percentuale di spazio che deve occupare una riga nella griglia per
+                                                                    //potersi adattare(517.0 e' l'altezza fissa della griglia)
+        RowConstraints row = new RowConstraints(); 				    //Crea una nuova riga
+        row.setPercentHeight(rowPercentual);       				    //Setta la percentuale di altezza che la riga deve occupare
+
+        for (int i=0; i< gridRows; i++ ){							//Per i che va da 0 fino a  al numero di righe inserito dall'utente
+            for (int y=0; y<gridColumns; y++){						//Per y che va da 0 fino a  al numero di colonne inserito dall'utente
+                Button bottone=new Button();  						//Crea un bottone (uno per ogni incrocio riga - colonna)
+                bottone.setMinHeight(rowPercentual);  				//Imposta l'altezza minima del bottone a rowPercentual
+                bottone.setMaxHeight(rowPercentual);				//Imposta l'altezza massima del bottone a rowPercentual
+                bottone.setMaxWidth(columnPercentual);				//Imposta la grandezza minima del bottone a columnPercentual
+                bottone.setMinWidth(columnPercentual);				//Imposta la grandezza massima del bottone a columnPercentual
+                automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
 
             }
         }
     }
+
 
     //METODO MENU
     //Quando il bottone buttonMenu viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
