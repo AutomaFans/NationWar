@@ -67,6 +67,7 @@ public class ControllerImpostazioniGriglia {
             AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("FXMLaddNation.fxml"));
             Stage addNationStage = new Stage();
             addNationStage.setScene(new Scene(addNationPane));
+            addNationStage.setResizable(false);
             addNationStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,6 +89,7 @@ public class ControllerImpostazioniGriglia {
             AnchorPane deleteNationPane = FXMLLoader.load(getClass().getResource("FXMLdeleteNation.fxml"));
             Stage deleteNationStage = new Stage();
             deleteNationStage.setScene(new Scene(deleteNationPane));
+            deleteNationStage.setResizable(false);
             deleteNationStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,6 +111,7 @@ public class ControllerImpostazioniGriglia {
             AnchorPane helpPane = FXMLLoader.load(getClass().getResource("FXMLhelp.fxml"));
             Stage helpStage = new Stage();
             helpStage.setScene(new Scene(helpPane));
+            helpStage.setResizable(false);
             helpStage.show();
         } catch (IOException e) {
             e.printStackTrace();

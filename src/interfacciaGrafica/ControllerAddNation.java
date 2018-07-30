@@ -9,11 +9,16 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class ControllerAddNation {
 
     //Crea una lista di stringhe chiamata ListaNomiNazioni che conterra' tutti i nomi delle nazioni che
     //saranno presenti durante il gioco
-    ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "Verde", "Blu", "Giallo", "Arancio", "Rosso");
+    ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "GREEN", "BLUE", "YELLOW", "ORANGE", "RED");
+
+    //Crea la lista che conterrà le nazioni di tipo Nation che verranno create
+    ArrayList<Nation> listaNazioni = new ArrayList<Nation>();
 
     @FXML
     private Button buttonAggiungi;				//Bottone chiamato buttonAggiungi , per aggiungere la nazione
@@ -53,8 +58,18 @@ public class ControllerAddNation {
 
 
     //METODO CLICK AGGIUNGI NAZIONE
+    //Quando viene premuto il bottone buttonAggiungi, viene creato un nuovo oggetto di tipo Nation
+    //con nome txtNomeNazione (nome inserito dall'utente) e colore scelto tra i colori del ChoiceBox.
+    //Inoltre aggiunge questa nuova nazione alla listaNazioni (in posizione 0).
+    //Una volta creata la nazione e aggiunta alla lista, la finestra viene chiusa e si torna sulla griglia.
     @FXML
     void clickAggiungiNazione(ActionEvent event) {
+        String c = coloreNazione.getSelectionModel().getSelectedItem();
+        String s = txtNomeNazione.getText();
+        Nation nazione = new Nation(s,c);
+        listaNazioni.add(0,nazione);
+        Stage stage = (Stage) buttonAggiungi.getScene().getWindow();
+        stage.close();
     }
 
 }
