@@ -137,12 +137,12 @@ public class ControllerImpostazioniGriglia {
             this.msgError.setText("Inserire un intero!");
             return;     //esce dal metodo cosi' da non generare errori
         }
-        if(gridColumns > 100 || gridRows > 100){                //se il numero di righe o colonne e' maggiore di 100
-            //si puo' inserire un numero massimo di 100 righe o colonne
-            if(gridColumns > 100 && gridRows > 100){ //se si supera il numero di righe e colonne
+        if(gridColumns > 50 || gridRows > 50){                //se il numero di righe o colonne e' maggiore di 50
+            //si puo' inserire un numero massimo di 50 righe o colonne
+            if(gridColumns > 50 && gridRows > 50){ //se si supera il numero di righe e colonne
                 this.msgError.setText("Troppe righe e colonne!");
             }
-            else if(gridColumns > 100){ //se si supera il numero di colonne
+            else if(gridColumns > 50){ //se si supera il numero di colonne
                 this.msgError.setText("Troppe colonne!");
             }
             else { //se si supera il numero di righe
