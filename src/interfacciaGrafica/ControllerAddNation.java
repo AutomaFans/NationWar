@@ -17,8 +17,6 @@ public class ControllerAddNation {
     //saranno presenti durante il gioco
     ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "GREEN", "BLUE", "YELLOW", "ORANGE", "RED");
 
-    //Crea la lista che conterrà le nazioni di tipo Nation che verranno create
-    ArrayList<Nation> listaNazioni = new ArrayList<Nation>();
 
     @FXML
     private Button buttonAggiungi;				//Bottone chiamato buttonAggiungi , per aggiungere la nazione
@@ -67,7 +65,8 @@ public class ControllerAddNation {
         String c = coloreNazione.getSelectionModel().getSelectedItem();
         String s = txtNomeNazione.getText();
         Nation nazione = new Nation(s,c);
-        listaNazioni.add(0,nazione);
+        new ControllerImpostazioniGriglia().nationList.add(0,nazione); /*viene creata una nuova istanza di ControllerImpostazioniGriglia
+                                                                              in maniera da aggiungere alla sua ArrayList statica la nazione*/
         Stage stage = (Stage) buttonAggiungi.getScene().getWindow();
         stage.close();
     }

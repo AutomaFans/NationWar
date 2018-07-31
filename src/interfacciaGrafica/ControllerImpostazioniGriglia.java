@@ -13,10 +13,19 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
+import java.util.ArrayList;
 
 import java.io.IOException;
 
 public class ControllerImpostazioniGriglia {
+
+    //Crea la lista che conterrà le nazioni di tipo Nation che verranno create
+    static ArrayList<Nation> nationList = new ArrayList<Nation>(); /*L'ArrayList e' statica perche' quando aggiungiamo dal
+                                                                    ControllerAddNation una nazione con clickAggiungiNazione vogliamo che
+                                                                    quest'ultima sia mantenuta in memoria(nationList rimane lo
+                                                                    stesso oggetto per ogni istanza creata da ControllerAddNation per
+                                                                    aggiungere una nazione). Se non fosse statica il dato del inserimento
+                                                                    andrebbe perso.*/
 
     @FXML
     private BorderPane borderPane;			//BorderPane chiamato borderPane
@@ -154,8 +163,8 @@ public class ControllerImpostazioniGriglia {
     //una riga nella griglia per potersi adattare, cosi viene creata una nuova riga
     //e viene settata la percentuale di larghezza che la riga deve occupare (con il metodo setPercentWidth)
     //Per il numero di righe e di colonne specificate dall'utente, vengono creati i bottoni
-    //e viene impostata l'altezza massima e minima del bottone e la grandezza massima e minima
-    //del bottone, cosi da riempire tutta la griglia e vengono aggiunti i bottoni alla griglia.
+    //e viene impostata l'altezza massima e minima del bottone, larghezza massima e minima
+    //del bottone, identificatore e event handler cosi da riempire tutta la griglia e vengono aggiunti i bottoni alla griglia.
     @FXML
     void clickAddDimensions(ActionEvent event) {
         int gridColumns;                                        	//Numero di colonne della griglia desiderato dall'utente
@@ -204,6 +213,9 @@ public class ControllerImpostazioniGriglia {
                 bottone.setMaxHeight(rowPercentual);				//Imposta l'altezza massima del bottone a rowPercentual
                 bottone.setMaxWidth(columnPercentual);				//Imposta la grandezza minima del bottone a columnPercentual
                 bottone.setMinWidth(columnPercentual);				//Imposta la grandezza massima del bottone a columnPercentual
+                bottone.setId("btn" + i + y);                       //Aggiunge un identificatore(ID) al bottone
+                bottone.setOnAction(this::clickAndColorCell);       /*Aggiunge un event handler al bottone che e' quello per colorare
+                                                                    la cella in base al'ultima nazione inserita*/
                 automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
 
             }
@@ -226,6 +238,18 @@ public class ControllerImpostazioniGriglia {
             e.printStackTrace();
         }
 
+    }
+
+    //METODO CLICK AND COLOR CELL
+    /*Quando si clicca su una cella mentre si stanno aggiungendo nazioni alla griglia per la simulazione, questo metodo assegna
+    alla cella il colore dell'ultima nazione inserita.
+    Applicando getSource() all'evento individuato(click sulla cella della griglia) si ottiene il bottone su cui si e' verificato l'evento,
+    ma viene restituito come un tipo Object e quindi applichiamo un cast esplicito ((Button)event.getSource())).
+    Al bottone viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
+    applicato un background color e cioe' il colore di sfondo che sara' quello dell'ultima nazione inserita nel sistema.*/
+    @FXML
+    void clickAndColorCell(ActionEvent event){
+        ((Button)event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
     }
 
 }
