@@ -11,11 +11,13 @@ public class Nation {
         this.nome = nome;
         this.color = color;
     }
-     //METODO GETCOLOT()
+     //METODO GET COLOR
     //Metodo che restituisce il colore della nazione sulla quale viene chiamato il metodo
     public String getColor(){
         return this.color;
     }
 
+    //METODO GET NAME
+    //Metodo che restituisce il nome della nazione
     public String getName() { return this.nome; }
 }

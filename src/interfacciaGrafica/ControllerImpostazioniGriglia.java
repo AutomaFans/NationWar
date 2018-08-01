@@ -50,13 +50,13 @@ public class ControllerImpostazioniGriglia {
     private Button buttonMenu;				//Bottone chiamato buttonMenu, per tornare al menu principale (FXMLmenu.fxml)
 
     @FXML
-    static BarChart<String,Integer> barChart;
+    static BarChart<String,Integer> barChart;  //BarChart chiamato barChart, base per le statistiche
 
     @FXML
-    private CategoryAxis nNation;
+    private CategoryAxis nNation;          //nazioni coinvolte nelle statistiche
 
     @FXML
-    private NumberAxis nPeople;
+    private NumberAxis nPeople;            //valore (numero di persone) per nazione
 
     @FXML
     private Button btnGridDimensions;		//Bottone chiamato btnGridDimensions, per impostare la grandezza della griglia
@@ -84,14 +84,26 @@ public class ControllerImpostazioniGriglia {
     //Infine mostra l'addNationStage impostando la visibilita' a true (con il metodo show).
     @FXML
     void clickAddNation(ActionEvent event) {
-        try {
-            AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("FXMLaddNation.fxml"));
-            Stage addNationStage = new Stage();
-            addNationStage.setScene(new Scene(addNationPane));
-            addNationStage.setResizable(false);
-            addNationStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (nationList.size() < ControllerAddNation.ListaColori.size() - 1) {
+            try {
+                AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("FXMLaddNation.fxml"));
+                Stage addNationStage = new Stage();
+                addNationStage.setScene(new Scene(addNationPane));
+                addNationStage.setResizable(false);
+                addNationStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                AnchorPane limitPane = FXMLLoader.load(getClass().getResource("FXMLlimite.fxml"));
+                Stage limitStage = new Stage();
+                limitStage.setScene(new Scene(limitPane));
+                limitStage.setResizable(false);
+                limitStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

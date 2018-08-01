@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12fbb57f-282b-4ed0-bf6c-1efb1e4dcc30" name="Default" comment="" />
+    <list default="true" id="12fbb57f-282b-4ed0-bf6c-1efb1e4dcc30" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerLimite.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/interfacciaGrafica/FXMLlimite.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerAddNation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerAddNation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerErrore.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerErrore.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerImpostazioniGriglia.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerImpostazioniGriglia.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/Nation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/Nation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerErrore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerErrore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,11 +24,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ControllerImpostazioniGriglia.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ControllerImpostazioniGriglia.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+            <state relative-caret-position="133">
+              <caret line="86" column="74" selection-start-line="86" selection-start-column="74" selection-end-line="86" selection-end-column="74" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#872#880#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FXMLlimite.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/FXMLlimite.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="175" selection-start-line="7" selection-start-column="175" selection-end-line="7" selection-end-column="175" />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+        </entry>
+      </file>
+      <file leaf-file-name="ControllerLimite.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerLimite.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
@@ -24,39 +59,8 @@
       <file leaf-file-name="ControllerAddNation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="84" column="142" selection-start-line="84" selection-start-column="142" selection-end-line="84" selection-end-column="142" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FXMLerrore.fxml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/FXMLerrore.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="167" lean-forward="true" selection-start-line="8" selection-start-column="167" selection-end-line="8" selection-end-column="167" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ControllerErrore.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerErrore.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Nation.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="19" column="48" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
+            <state relative-caret-position="102">
+              <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -97,12 +101,14 @@
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/deleteNationController.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/impostazioniGrigliaController.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/Main.java" />
-        <option value="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" />
-        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" />
-        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java" />
         <option value="$PROJECT_DIR$/src/ControllerErrore.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/FXMLerrore.fxml" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerErrore.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/FXMLlimite.fxml" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerLimite.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" />
       </list>
     </option>
   </component>
@@ -118,23 +124,22 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Progetto2018" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Progetto2018" type="462c0819:PsiDirectoryNode" />
+              <item name="NationWar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NationWar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Progetto2018" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Progetto2018" type="462c0819:PsiDirectoryNode" />
+              <item name="NationWar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NationWar" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Progetto2018" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Progetto2018" type="462c0819:PsiDirectoryNode" />
+              <item name="NationWar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NationWar" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="interfacciaGrafica" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -142,6 +147,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -246,7 +252,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="7" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -256,12 +263,12 @@
       <window_info anchor="right" id="Capture Analysis" order="7" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.22575517" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22575517" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="6" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29721814" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29648608" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="6" />
@@ -277,28 +284,28 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3290938" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.22575517" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24231333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3290938" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990461" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Capture Tool" order="5" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info id="Favorites" order="6" side_tool="true" />
@@ -308,20 +315,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/SpecificheEIdee/Scelte Progettuali">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="77" selection-start-line="3" selection-start-column="77" selection-end-line="3" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SpecificheEIdee/InterfacciaGrafica(GUI)">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="82" selection-start-line="23" selection-start-column="82" selection-end-line="23" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SpecificheEIdee/Specifica dei requisiti">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1241">
@@ -533,52 +526,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" column="48" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerErrore.java" />
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/FXMLerrore.fxml" />
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerErrore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="18" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="187">
+          <caret line="14" column="101" selection-start-line="14" selection-start-column="101" selection-end-line="14" selection-end-column="101" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java">
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+        <state relative-caret-position="306">
+          <caret line="20" column="50" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/FXMLlimite.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="175" selection-start-line="7" selection-start-column="175" selection-end-line="7" selection-end-column="175" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerLimite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="84" column="142" selection-start-line="84" selection-start-column="142" selection-end-line="84" selection-end-column="142" />
+        <state relative-caret-position="102">
+          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerErrore.java">
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+        <state relative-caret-position="133">
+          <caret line="86" column="74" selection-start-line="86" selection-start-column="74" selection-end-line="86" selection-end-column="74" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#872#880#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/FXMLerrore.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="167" lean-forward="true" selection-start-line="8" selection-start-column="167" selection-end-line="8" selection-end-column="167" />
         </state>
       </provider>
     </entry>
