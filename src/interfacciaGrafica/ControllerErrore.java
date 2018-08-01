@@ -11,6 +11,8 @@ public class ControllerErrore {
     private Button buttonClose;
 
     @FXML
+    //METODO CLICK CLOSE
+    //metodo che chiude la finestra aperta nel caso in cui una nazione non viene creata correttamente
     void clickClose(ActionEvent event) {
         Stage stage = (Stage) buttonClose.getScene().getWindow();
         stage.close();

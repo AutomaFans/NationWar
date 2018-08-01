@@ -21,7 +21,8 @@ import static interfacciaGrafica.ControllerImpostazioniGriglia.nationList;
 
 public class ControllerAddNation {
 
-    ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "GREEN", "BLUE", "YELLOW", "ORANGE", "RED", "MAROON", "CORAL","FIREBRICK", "INDIANRED", "TOMATO", "DARKRED", "DARKORANGE", "THISTLE", "TURQUOISE", "DARKCYAN", "DEEPSKYBLUE", "KHAKI", "CADETBLUE", "OLIVE", "LIGHTSLATEGREY", "DARKSLATEGRAY", "PALEGREEN", "CYAN", "YELLOWGREEN", "PURPLE", "BLUEVIOLET", "INDIGO", "FUCHSIA", "SIENNA", "BROWN", "CHOCOLATE", "PINK", "ORCHID", "LIME", "TEAL", "AQUA", "STEELBLUE", "NAVY", "GRAY", "BLACK");
+    static ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "GREEN", "BLUE", "YELLOW", "ORANGE", "RED", "MAROON", "CORAL","FIREBRICK", "INDIANRED", "TOMATO", "DARKRED", "DARKORANGE", "THISTLE", "TURQUOISE", "DARKCYAN", "DEEPSKYBLUE", "KHAKI", "CADETBLUE", "OLIVE", "LIGHTSLATEGREY", "DARKSLATEGRAY", "PALEGREEN", "CYAN", "YELLOWGREEN", "PURPLE", "BLUEVIOLET", "INDIGO", "FUCHSIA", "SIENNA", "BROWN", "CHOCOLATE", "PINK", "ORCHID", "LIME", "TEAL", "AQUA", "STEELBLUE", "NAVY", "GRAY", "BLACK");
+
 
     @FXML
     private Button buttonAggiungi;				//Bottone chiamato buttonAggiungi , per aggiungere la nazione
@@ -65,6 +66,8 @@ public class ControllerAddNation {
     //con nome txtNomeNazione (nome inserito dall'utente) e colore scelto tra i colori del ChoiceBox.
     //Inoltre aggiunge questa nuova nazione alla listaNazioni (in posizione 0).
     //Una volta creata la nazione e aggiunta alla lista, la finestra viene chiusa e si torna sulla griglia.
+    //Se la nazione non viene creata correttamente si apre un pagina che indica la presenza di un errore, altrimenti la
+    //nazione viene aggiunta alla lista delle nazioni e si passa alla griglia.
     @FXML
     void clickAggiungiNazione(ActionEvent event) {
         String c = coloreNazione.getSelectionModel().getSelectedItem();
