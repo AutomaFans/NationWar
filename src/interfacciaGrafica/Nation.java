@@ -16,4 +16,6 @@ public class Nation {
     public String getColor(){
         return this.color;
     }
+
+    public String getName() { return this.nome; }
 }

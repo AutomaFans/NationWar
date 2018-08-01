@@ -4,6 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -46,6 +50,15 @@ public class ControllerImpostazioniGriglia {
     private Button buttonMenu;				//Bottone chiamato buttonMenu, per tornare al menu principale (FXMLmenu.fxml)
 
     @FXML
+    static BarChart<String,Integer> barChart;
+
+    @FXML
+    private CategoryAxis nNation;
+
+    @FXML
+    private NumberAxis nPeople;
+
+    @FXML
     private Button btnGridDimensions;		//Bottone chiamato btnGridDimensions, per impostare la grandezza della griglia
 
     @FXML
@@ -60,7 +73,6 @@ public class ControllerImpostazioniGriglia {
 
     @FXML
     private GridPane automaGrid; //identificatore della griglia in cui si visualizzera la simulazione
-
 
     //METODO CLICK ADD NATION
     //Quando il bottone buttonAddNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
@@ -250,6 +262,7 @@ public class ControllerImpostazioniGriglia {
     @FXML
     void clickAndColorCell(ActionEvent event){
         ((Button)event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
+
     }
 
 }
