@@ -9,6 +9,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -31,6 +32,8 @@ public class ControllerImpostazioniGriglia {
                                                                     aggiungere una nazione). Se non fosse statica il dato del inserimento
                                                                     andrebbe perso.*/
 
+     @FXML
+     private TextField txtNomeNazione; //dove inseriamo il nome della Nazione
     @FXML
     private BorderPane borderPane;			//BorderPane chiamato borderPane
 
@@ -73,6 +76,7 @@ public class ControllerImpostazioniGriglia {
 
     @FXML
     private GridPane automaGrid; //identificatore della griglia in cui si visualizzera la simulazione
+    int contaNumeroCelleUsate;
 
     //METODO CLICK ADD NATION
     //Quando il bottone buttonAddNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
@@ -87,13 +91,20 @@ public class ControllerImpostazioniGriglia {
         if (nationList.size() < ControllerAddNation.ListaColori.size() - 1) {
             try {
                 AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("FXMLaddNation.fxml"));
+
+
+
                 Stage addNationStage = new Stage();
                 addNationStage.setScene(new Scene(addNationPane));
                 addNationStage.setResizable(false);
                 addNationStage.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
+
         } else {
             try {
                 AnchorPane limitPane = FXMLLoader.load(getClass().getResource("FXMLlimite.fxml"));
@@ -274,6 +285,20 @@ public class ControllerImpostazioniGriglia {
     @FXML
     void clickAndColorCell(ActionEvent event){
         ((Button)event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
+        //questa parte serve per disabilitare il bottone AddNation quando le celle sono state tutte utilizzate
+        int gridColumns = 0;                                        	//Numero di colonne della griglia desiderato dall'utente
+        int gridRows=0;
+        try{
+            gridColumns = Integer.parseInt(txtColumns.getText());  //Prende il numero di colonne inserito dall'utente
+            gridRows = Integer.parseInt(txtRows.getText());        //Prende il numero di righe inserito dall'utente
+        }
+        catch(NumberFormatException n){                         	//Se l'utente non inserisce un intero si ha un eccezione
+               											//Esce dal metodo cosi' da non generare errori
+        }
+        contaNumeroCelleUsate++;
+        if (contaNumeroCelleUsate>=(gridColumns*gridRows)){
+            this.buttonAddNation.setDisable(true);
+}
 
     }
 
