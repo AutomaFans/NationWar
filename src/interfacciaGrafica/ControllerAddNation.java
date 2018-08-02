@@ -23,7 +23,7 @@ public class ControllerAddNation {
 
     static ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "GREEN", "BLUE", "YELLOW", "ORANGE", "RED", "MAROON", "CORAL","FIREBRICK", "INDIANRED", "TOMATO", "DARKRED", "DARKORANGE", "THISTLE", "TURQUOISE", "DARKCYAN", "DEEPSKYBLUE", "KHAKI", "CADETBLUE", "OLIVE", "LIGHTSLATEGREY", "DARKSLATEGRAY", "PALEGREEN", "CYAN", "YELLOWGREEN", "PURPLE", "BLUEVIOLET", "INDIGO", "FUCHSIA", "SIENNA", "BROWN", "CHOCOLATE", "PINK", "ORCHID", "LIME", "TEAL", "AQUA", "STEELBLUE", "NAVY", "GRAY", "BLACK");
 
-
+    static ArrayList<String> nomiNazioni = new ArrayList<>();
     @FXML
     private Button buttonAggiungi;				//Bottone chiamato buttonAggiungi , per aggiungere la nazione
 
@@ -72,7 +72,7 @@ public class ControllerAddNation {
     void clickAggiungiNazione(ActionEvent event) {
         String c = coloreNazione.getSelectionModel().getSelectedItem();
         String s = txtNomeNazione.getText();
-        if (s.isEmpty() || c.contentEquals("Seleziona Colore") || s.contentEquals("Inserisci nome della nazione che vuoi aggiungere")) {
+        if (s.isEmpty() || c.contentEquals("Seleziona Colore") || s.contentEquals("Inserisci nome della nazione che vuoi aggiungere") ) {
             try {
                 AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLerrore.fxml"));
                 Stage errorStage = new Stage();
@@ -82,10 +82,27 @@ public class ControllerAddNation {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-        } else {
+
+
+        }
+        if (nomiNazioni.contains(s)==true){ //tutti i nomi delle Nazioni create si trovano in nomiNazioni, quindi se l'utente sta provando ad aggiungere una nuova nazione controllo se è gia presente nell'array
+            try {
+                AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLnazExist.fxml"));
+                Stage errorStage = new Stage();
+                errorStage.setScene(new Scene(errorPane));
+                errorStage.setResizable(false);
+                errorStage.show();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+        }
+        else {
             Nation nazione = new Nation(s,c);
             new ControllerImpostazioniGriglia().nationList.add(0,nazione); /*viene creata una nuova istanza di ControllerImpostazioniGriglia
                                                                               in maniera da aggiungere alla sua ArrayList statica la nazione*/
+            nomiNazioni.add(s);
+            System.out.println(nomiNazioni);
             Stage stage = (Stage) buttonAggiungi.getScene().getWindow();
             stage.close();
         }
