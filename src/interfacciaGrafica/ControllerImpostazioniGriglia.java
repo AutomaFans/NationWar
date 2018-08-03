@@ -283,23 +283,26 @@ public class ControllerImpostazioniGriglia {
     Al bottone viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
     applicato un background color e cioe' il colore di sfondo che sara' quello dell'ultima nazione inserita nel sistema.*/
     @FXML
-    void clickAndColorCell(ActionEvent event){
-        ((Button)event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
-        //questa parte serve per disabilitare il bottone AddNation quando le celle sono state tutte utilizzate
-        int gridColumns = 0;                                        	//Numero di colonne della griglia desiderato dall'utente
-        int gridRows=0;
-        try{
-            gridColumns = Integer.parseInt(txtColumns.getText());  //Prende il numero di colonne inserito dall'utente
-            gridRows = Integer.parseInt(txtRows.getText());        //Prende il numero di righe inserito dall'utente
-        }
-        catch(NumberFormatException n){                         	//Se l'utente non inserisce un intero si ha un eccezione
-               											//Esce dal metodo cosi' da non generare errori
-        }
-        contaNumeroCelleUsate++;
-        if (contaNumeroCelleUsate>=(gridColumns*gridRows)){
-            this.buttonAddNation.setDisable(true);
-}
+    void clickAndColorCell(ActionEvent event) {
+        if (nationList.isEmpty() == true) { //se non abbiamo creato ancora nessuna Nazione e clicchiamo su una cella il programma non deve fare nulla
+            buttonAddNation.setDisable(false);
+        } else { //altrimenti colora la cella
+            ((Button) event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
+            //questa parte serve per disabilitare il bottone AddNation quando le celle sono state tutte utilizzate
+            int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
+            int gridRows = 0;
+            try {
+                gridColumns = Integer.parseInt(txtColumns.getText());  //Prende il numero di colonne inserito dall'utente
+                gridRows = Integer.parseInt(txtRows.getText());        //Prende il numero di righe inserito dall'utente
+            } catch (NumberFormatException n) {                            //Se l'utente non inserisce un intero si ha un eccezione
+                //Esce dal metodo cosi' da non generare errori
+            }
+            contaNumeroCelleUsate++;
+            if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {
+                this.buttonAddNation.setDisable(true);
+            }
 
+        }
     }
 
 }
