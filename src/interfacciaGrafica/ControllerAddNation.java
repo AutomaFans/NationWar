@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -24,6 +25,7 @@ public class ControllerAddNation {
     static ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "GREEN", "BLUE", "YELLOW", "ORANGE", "RED", "MAROON", "CORAL","FIREBRICK", "INDIANRED", "TOMATO", "DARKRED", "DARKORANGE", "THISTLE", "TURQUOISE", "DARKCYAN", "DEEPSKYBLUE", "KHAKI", "CADETBLUE", "OLIVE", "LIGHTSLATEGREY", "DARKSLATEGRAY", "PALEGREEN", "CYAN", "YELLOWGREEN", "PURPLE", "BLUEVIOLET", "INDIGO", "FUCHSIA", "SIENNA", "BROWN", "CHOCOLATE", "PINK", "ORCHID", "LIME", "TEAL", "AQUA", "STEELBLUE", "NAVY", "GRAY", "BLACK");
 
     static ArrayList<String> nomiNazioni = new ArrayList<>();
+
     @FXML
     private Button buttonAggiungi;				//Bottone chiamato buttonAggiungi , per aggiungere la nazione
 

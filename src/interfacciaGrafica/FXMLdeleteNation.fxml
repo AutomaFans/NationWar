@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerDeleteNation">
+<!-- COMMENTO -->
+<!--
+        Mette un AnchorPane, poi dentro questo AnchorPane posiziona una label e imposta la il testo di questa label
+        con la scritta "SCEGLIERE LA NAZIONE CHE SI DESIDERA ELIMINARE." e posiziona questa label in alto.
+        Poi posiziona un'altra label e imposta la il testo di questa label con la scritta "Nazione" e vicino a
+        questa label posiziona un ChoiceBox (menu a tendina).
+        Infine posiziona in basso due bottoni e imposta il testo dei due bottoni con la scritta "Elimina Nazione"
+        per il bottone a sinistra,  e con la scritta "Close" per il bottone a destra
+        -->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerDeleteNation">
     <children>
         <Label layoutX="83.0" layoutY="112.0" prefHeight="44.0" prefWidth="80.0" text="Nazione:">
             <font>
@@ -22,19 +29,14 @@
                 <Font size="16.0" />
             </font>
         </Label>
-        <Button fx:id="buttonElimina" layoutX="342.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickEliminaNazione" prefHeight="25.0" prefWidth="112.0" text="Elimina Nazione" />
-        <Button fx:id="buttonClose" layoutX="490.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="67.0" text="Close" />
+        <Button fx:id="buttonElimina" layoutX="342.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickEliminaNazione" prefHeight="25.0" prefWidth="112.0" text="Elimina Nazione">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor></Button>
+        <Button fx:id="buttonClose" layoutX="490.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="67.0" text="Close">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor></Button>
         <ChoiceBox fx:id="nomeNazione" layoutX="163.0" layoutY="122.0" prefWidth="150.0" />
     </children>
 </AnchorPane>
-
-
-        <!-- COMMENTO -->
-        <!--
-        Mette un AnchorPane, poi dentro questo AnchorPane posiziona una label e imposta la il testo di questa label
-        con la scritta "SCEGLIERE LA NAZIONE CHE SI DESIDERA ELIMINARE." e posiziona questa label in alto.
-        Poi posiziona un'altra label e imposta la il testo di questa label con la scritta "Nazione" e vicino a
-        questa label posiziona un ChoiceBox (menu a tendina).
-        Infine posiziona in basso due bottoni e imposta il testo dei due bottoni con la scritta "Elimina Nazione"
-        per il bottone a sinistra,  e con la scritta "Close" per il bottone a destra
-        -->

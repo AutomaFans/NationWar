@@ -34,6 +34,7 @@ public class ControllerImpostazioniGriglia {
 
      @FXML
      private TextField txtNomeNazione; //dove inseriamo il nome della Nazione
+
     @FXML
     private BorderPane borderPane;			//BorderPane chiamato borderPane
 

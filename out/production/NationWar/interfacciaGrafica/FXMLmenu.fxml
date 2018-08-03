@@ -29,6 +29,9 @@
                 <Font size="21.0" />
             </font>
         </Button>
-      <Button fx:id="buttonExit" layoutX="671.0" layoutY="543.0" mnemonicParsing="false" onAction="#clickExit" text="Exit" />
+      <Button fx:id="buttonExit" layoutX="671.0" layoutY="543.0" mnemonicParsing="false" onAction="#clickExit" text="Exit">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></Button>
     </children>
 </AnchorPane>

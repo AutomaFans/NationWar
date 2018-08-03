@@ -27,6 +27,12 @@
             <image>
                 <Image url="@IMG-MondoNazioni.jpg" />
             </image>
+         <cursor>
+            <Cursor fx:constant="WAIT" />
+         </cursor>
         </ImageView>
     </children>
+   <cursor>
+      <Cursor fx:constant="WAIT" />
+   </cursor>
 </AnchorPane>
