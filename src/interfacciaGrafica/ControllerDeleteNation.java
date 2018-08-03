@@ -6,14 +6,28 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.MenuButton;
 import javafx.stage.Stage;
+
+
+import java.util.Iterator;
+
+import static interfacciaGrafica.ControllerAddNation.ListaColori;
+import static interfacciaGrafica.ControllerAddNation.nomiNazioni;
+import static interfacciaGrafica.ControllerImpostazioniGriglia.nationList;
+
 
 public class ControllerDeleteNation {
 
+
     //Crea una lista di stringhe chiamata ListaNomiNazioni che conterra' tutti i nomi delle nazioni che
     //saranno presenti durante il gioco
-    ObservableList<String> ListaNomiNazioni = FXCollections.observableArrayList("Seleziona Nome", "Verde", "Blu", "Giallo", "Arancio", "Rosso");
+
+    ObservableList<String> ListaNomiNazioni = FXCollections.observableArrayList(nomiNazioni);
+
+
+
+
+
 
     @FXML
     private Button buttonElimina;				//Bottone chiamato buttonElimina , per eliminare la nazione selezionata
@@ -51,9 +65,43 @@ public class ControllerDeleteNation {
     }
 
 
+
+
+
+
+
+
     //METODO CLICK ELIMINA NAZIONE
     @FXML
     void clickEliminaNazione(ActionEvent event) {
+        for(Iterator<String> i = nomiNazioni.iterator(); i.hasNext();) { //elimino la Nazione dalla lista nomiNazioni
+            String num = i.next();
+            if(num == nomeNazione.getValue()) {
+                i.remove();
+
+
+            }
+
+            System.out.println("lista delle nazioni " + nomiNazioni);
+        }
+        for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //elimino la Nazione dalla lista nationList
+            Nation num = i.next();
+            if (num.nome == nomeNazione.getValue()) {
+                ListaColori.add(num.color); //rendo il colore della Nazione che ho eliminato di nuovo disponibile
+                i.remove();
+
+
+
+
+            }
+        }
+        ListaNomiNazioni.removeAll(nomeNazione.getValue()); //rimuovo la Nazione anche dalla ListaNomiNazioni ( ovvero da dove ho selezionato la Nazione che volevo eliminare)
+        Stage stage = (Stage) buttonElimina.getScene().getWindow();
+        stage.close();
+
+
+
     }
+
 
 }
