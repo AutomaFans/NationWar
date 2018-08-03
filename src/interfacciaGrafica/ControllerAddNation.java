@@ -102,7 +102,7 @@ public class ControllerAddNation {
             new ControllerImpostazioniGriglia().nationList.add(0,nazione); /*viene creata una nuova istanza di ControllerImpostazioniGriglia
                                                                               in maniera da aggiungere alla sua ArrayList statica la nazione*/
             nomiNazioni.add(s);
-            System.out.println(nomiNazioni);
+            ListaColori.remove(c);
             Stage stage = (Stage) buttonAggiungi.getScene().getWindow();
             stage.close();
         }
