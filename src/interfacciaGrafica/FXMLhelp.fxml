@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -14,28 +15,40 @@
         campo con la scritta "Istruzioni del gioco".
         -->
 
-<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerHelp">
+<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerHelp">
     <children>
         <Button fx:id="buttonClose" layoutX="585.0" layoutY="526.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="38.0" prefWidth="89.0" text="Close" />
         <TextField editable="false" layoutX="14.0" layoutY="31.0" prefHeight="57.0" prefWidth="563.0" text="1. Cos'è NationWar? Da dove nasce quest'idea?">
             <font>
                 <Font size="25.0" />
             </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </TextField>
         <TextArea editable="false" layoutX="13.0" layoutY="88.0" prefHeight="170.0" prefWidth="690.0" text="NationWar è un gioco in cui due o più nazioni create dall'utente si espandono,&#10;si scontrano, nascono e muoiono. &#10;Quest'applicazione prende spunto dal funzionamento degli auotmi cellulari e &#10;dal Gioco della Vita, con l'aggiunta della fantasia e dell'impegno degli studenti &#10;che lo hanno sviluppato.">
             <font>
                 <Font size="18.0" />
             </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </TextArea>
         <TextField editable="false" layoutX="14.0" layoutY="279.0" prefHeight="57.0" prefWidth="563.0" text="2. Come si gioca?">
             <font>
                 <Font size="25.0" />
             </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </TextField>
         <TextArea editable="false" layoutX="13.0" layoutY="336.0" prefHeight="170.0" prefWidth="690.0" text="Primo passo: crea la griglia! La prima cosa da stabilire è lo schema di gioco, &#10;quindi indica il numero di righe e colonne che la tua griglia deve contenere &#10;per poi cliccare su &quot;Imposta grandezza griglia&quot;. A questo punto puoi creare &#10;le nazioni che si scontreranno cliccando su &quot;Add Nation&quot;. Di ogni nazione potrai&#10;inventare un nome e scegliere il colore, per poi disporla sulla griglia. Inoltre, &#10;se vuoi rimuovere una delle nazioni che hai creato, basta cliccare su &quot;Delete &#10;Nation&quot; e selezionare la nazione da eliminare, per poi cliccare su &quot;Elimina&quot;. Una&#10; volta create le nazioni, potrai vedere le statistiche di gioco cliccando su &#10;&quot;Statistics&quot;. Per iniziare a giocare clicca su &quot;Start&quot; e.....Buon divertimento!">
             <font>
                 <Font size="18.0" />
             </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </TextArea>
     </children>
 </AnchorPane>

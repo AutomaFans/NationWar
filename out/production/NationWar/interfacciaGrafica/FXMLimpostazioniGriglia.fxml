@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -32,7 +33,7 @@
         della griglia specificate dentro l'aree di testo.
         -->
 
-<BorderPane fx:id="borderPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerImpostazioniGriglia">
+<BorderPane fx:id="borderPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerImpostazioniGriglia">
     <center>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
@@ -79,6 +80,9 @@
                             </image>
                         </ImageView>
                     </graphic>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
                 </Button>
                 <Button fx:id="buttonDeleteNation" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickDeleteNation" prefHeight="150.0" prefWidth="150.0" text="Delete Nation">
                     <graphic>
@@ -88,6 +92,9 @@
                             </image>
                         </ImageView>
                     </graphic>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
                 </Button>
                 <Button fx:id="buttonStart" disable="true" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#clickStart" prefHeight="150.0" prefWidth="150.0" text="  Start">
                     <graphic>
@@ -97,6 +104,9 @@
                             </image>
                         </ImageView>
                     </graphic>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
                 </Button>
                 <Button fx:id="buttonHelp" mnemonicParsing="false" onAction="#clickHelp" prefHeight="150.0" prefWidth="150.0" text="   Help">
                     <graphic>
@@ -106,20 +116,38 @@
                             </image>
                         </ImageView>
                     </graphic>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
                 </Button>
-                <Button fx:id="buttonMenu" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onAction="#clickMenu" prefHeight="150.0" prefWidth="150.0" text="Main Menu" />
+                <Button fx:id="buttonMenu" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onAction="#clickMenu" prefHeight="150.0" prefWidth="150.0" text="Main Menu">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor></Button>
             </children>
         </VBox>
     </right>
     <bottom>
         <AnchorPane prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
             <children>
-                <TextArea fx:id="txtColumns" layoutX="94.0" layoutY="-1.0" maxHeight="26.0" maxWidth="85.0" minHeight="26.0" minWidth="85.0" prefHeight="26.0" prefWidth="85.0" style="-fx-opacity: 1;" text="2" />
+                <TextArea fx:id="txtColumns" layoutX="94.0" layoutY="-1.0" maxHeight="26.0" maxWidth="85.0" minHeight="26.0" minWidth="85.0" prefHeight="26.0" prefWidth="85.0" style="-fx-opacity: 1;" text="2">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextArea>
                 <Label layoutX="21.0" layoutY="5.0" style="-fx-opacity: 1;" text="N. colonne" />
                 <Label layoutX="207.0" layoutY="5.0" style="-fx-opacity: 1;" text="N. righe" />
-                <TextArea fx:id="txtRows" layoutX="273.0" layoutY="-1.0" maxHeight="26.0" maxWidth="91.0" minHeight="26.0" minWidth="91.0" prefHeight="26.0" prefWidth="91.0" style="-fx-opacity: 1;" text="2" />
-                <Button fx:id="btnGridDimensions" layoutX="389.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickAddDimensions" prefHeight="20.0" prefWidth="154.0" style="-fx-opacity: 1;" text="Imposta grandezza griglia" />
-                <Label fx:id="msgError" layoutX="566.0" layoutY="4.0" prefHeight="20.0" prefWidth="145.0" text="Max 50 righe e colonne" />
+                <TextArea fx:id="txtRows" layoutX="273.0" layoutY="-1.0" maxHeight="26.0" maxWidth="91.0" minHeight="26.0" minWidth="91.0" prefHeight="26.0" prefWidth="91.0" style="-fx-opacity: 1;" text="2">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextArea>
+                <Button fx:id="btnGridDimensions" layoutX="389.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickAddDimensions" prefHeight="20.0" prefWidth="154.0" style="-fx-opacity: 1;" text="Imposta grandezza griglia">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor></Button>
+                <Label fx:id="msgError" layoutX="566.0" layoutY="4.0" prefHeight="20.0" prefWidth="145.0" text="Max 50 righe e colonne">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             </children></AnchorPane>
     </bottom>
 </BorderPane>
