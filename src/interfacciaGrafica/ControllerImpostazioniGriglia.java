@@ -82,15 +82,30 @@ public class ControllerImpostazioniGriglia {
 
 
     //METODO CLICK ADD NATION
-    //Quando il bottone buttonAddNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
-    //addNationPane facendo riferimento e richiamando l'intefaccia definita in FXMLaddNation.fxml.
-    //Quindi addNAtionPane sara'  l'interfaccia definita in FXMLaddNation.fxml.
+    //Se il numero  di elementi  della lista chiamata nationList e' minore del numero di elementi
+    //della lista chiamata ListaColori -1 allora quando il bottone buttonAddNation viene premuto,
+    //viene creato un oggetto di tipo AnchorPane chiamato addNationPane facendo riferimento
+    //e richiamando l'intefaccia definita in FXMLaddNation.fxml.
+    //Quindi addNationPane sara' l'interfaccia definita in FXMLaddNation.fxml.
     //Poi viene creato un nuovo Stage, chiamato addNationStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA addNationPane SULLO STAGE addNationStage.
     //Infine mostra l'addNationStage impostando la visibilita' a true (con il metodo show).
+    //Altrimenti, se il numero  di elementi  della lista chiamata nationList non e' minore del numero di elementi
+    //della lista chiamata ListaColori -1 allora significa che non si possono aggiunere piu' nazioni
+    //(perche' ogni volta che si crea una nuova nazione, in CoontrollerAddNation, viene tolto
+    //dalla ListaColori il colore usato per la nazione creata, in tal modo non possono essere
+    //create piu' nazioni con lo stesso colore), allora viene creato un oggetto di tipo AnchorPane
+    //chiamato limitPane facendo riferimento e richiamando l'intefaccia definita in FXMlimite.fxml.
+    //Quindi limitPane sara' l'interfaccia definita in FXMLlimite.fxml.
+    //Poi viene creato un nuovo Stage, chiamato limitStage, e specifica la scena da usare
+    //su quello stage (con il metodo setScene).
+    //QUINDI MOSTRA LA SCENA limitPane SULLO STAGE limitStage.
+    //Infine mostra il limitStage impostando la visibilita' a true (con il metodo show).
     @FXML
     void clickAddNation(ActionEvent event) {
+        //SE IL NUMERO DI ELEMENTI DI NATION LIST E' MINORE DEL NUMERO DI ELEMENTI DI LISTA COLORI -1
+        //ALLORA SI POSSONO AGGIUNGERE ALTRE NAZONI
         if (nationList.size() < ControllerAddNation.ListaColori.size() - 1) {
             try {
                 AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("FXMLaddNation.fxml"));
@@ -102,6 +117,9 @@ public class ControllerImpostazioniGriglia {
                 e.printStackTrace();
             }
         }
+        //ALTRIMENTI, SE IL NUMERO DI ELEMENTI DI NATION LIST NON E' MINORE DEL NUMERO DI ELEMENTI DI
+        //LISTA COLORI -1 ALLORA NON SI POSSONO AGGIUNGERE ALTRE NAZONI PERCHE' SI E' RAGGIUNTO IL
+        //LIMITE MASSIMO DI COLORI.
         else {
             try {
                 AnchorPane limitPane = FXMLLoader.load(getClass().getResource("FXMLlimite.fxml"));
@@ -119,7 +137,7 @@ public class ControllerImpostazioniGriglia {
     //METODO CLICK DELETE NATION
     //Quando il bottone buttonDeleteNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //deleteNationPane facendo riferimento e richiamando l'intefaccia definita in FXMLdeleteNation.fxml.
-    //Quindi deleteNationPane sara'  l'interfaccia definita in FXMLdeleteNation.fxml.
+    //Quindi deleteNationPane sara'Â  l'interfaccia definita in FXMLdeleteNation.fxml.
     //Poi viene creato un nuovo Stage, chiamato deleteNationStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA deleteNationPane SULLO STAGE deleteNationStage.
@@ -141,7 +159,7 @@ public class ControllerImpostazioniGriglia {
     //METODO HELP
     //Quando il bottone buttonHelp viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //helpPane facendo riferimento e richiamando l'intefaccia definita in FXMLhelp.fxml.
-    //Quindi helpPane sara'  l'interfaccia definita in FXMLhelp.fxml.
+    //Quindi helpPane sara'Â  l'interfaccia definita in FXMLhelp.fxml.
     //Poi viene creato un nuovo Stage, chiamato helpStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA helpPane SULLO STAGE helpStage.
@@ -246,8 +264,8 @@ public class ControllerImpostazioniGriglia {
                 bottone.setMaxWidth(columnPercentual);				//Imposta la grandezza minima del bottone a columnPercentual
                 bottone.setMinWidth(columnPercentual);				//Imposta la grandezza massima del bottone a columnPercentual
                 bottone.setId("btn" + i + y);                       //Aggiunge un identificatore(ID) al bottone
-                bottone.setOnAction(this::clickAndColorCell);       /*Aggiunge un event handler al bottone che e' quello per colorare
-                                                                    la cella in base al'ultima nazione inserita*/
+                bottone.setOnAction(this::clickAndColorCell);       //Aggiunge un event handler al bottone che e' quello per colorare
+                //la cella in base al'ultima nazione inserita
                 automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
 
             }
@@ -258,7 +276,7 @@ public class ControllerImpostazioniGriglia {
     //METODO MENU
     //Quando il bottone buttonMenu viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi menu sara'  l'interfaccia definita in FXMLmenu.fxml.
+    //Quindi menu sara'Â  l'interfaccia definita in FXMLmenu.fxml.
     //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con menu.
     @FXML
@@ -273,32 +291,50 @@ public class ControllerImpostazioniGriglia {
     }
 
     //METODO CLICK AND COLOR CELL
-    /*Quando si clicca su una cella mentre si stanno aggiungendo nazioni alla griglia per la simulazione, questo metodo assegna
-    alla cella il colore dell'ultima nazione inserita.
-    Applicando getSource() all'evento individuato(click sulla cella della griglia) si ottiene il bottone su cui si e' verificato l'evento,
-    ma viene restituito come un tipo Object e quindi applichiamo un cast esplicito ((Button)event.getSource())).
-    Al bottone viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
-    applicato un background color e cioe' il colore di sfondo che sara' quello dell'ultima nazione inserita nel sistema.*/
+    //Quando si clicca su una cella mentre si stanno aggiungendo nazioni alla griglia, questo metodo assegna
+    //alla cella cliccata il colore dell'ultima nazione inserita.
+    //Se la lista chiamata nationList è vuota, quindi se non e' stat creata nessuna nazione,
+    //allora viene soltanto abilitato il bottone chiamato buttonAddNation e non succede nient'altro,
+    //perchè se non abbiamo creato nessuna nazione e clicchiamo su una cella della griglia il programma
+    //non deve fare nulla.
+    //Altrimenti, se abbiamo creato una nazione e clicchiamo su una cella della griglia allora la
+    //cella deve colorarsi del colore scelto.
+    //Applicando getSource() all'evento individuato (click sulla cella della griglia) si ottiene il bottone
+    //su cui si e' verificato l'evento, ma viene restituito come un tipo Object e quindi applichiamo un cast
+    //esplicito ((Button)event.getSource())).
+    //Al bottone viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
+    //applicato un background color e cioe' il colore di sfondo che sara' quello dell'ultima nazione inserita nel sistema.
+    //Inoltre, siccome siamo nel caso in cui e' stata creata almeno una nazione, vine abilitato il bottone buttonDeleteNation
+    //e viene abilitato anche il bottone buttonStart.
+    //Inoltre, ogni volta che si clicca e quindi si colora una cella viene incrementata la variabile che tiene conto
+    //del numero di celle utilizzate e se questo numero di celle utilizzate e' maggiore o uguale al prodotto
+    //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
+    //allora significa che la griglia è piena e che sono state usate tgutte le celle per cui viene disabilitato il
+    //bottone chiamato buttonAddNation, cosi che non e' piu' possibile inserire un'altra nazione.
     @FXML
     void clickAndColorCell(ActionEvent event) {
-        if (nationList.isEmpty() == true) { //se non abbiamo creato ancora nessuna Nazione e clicchiamo su una cella il programma non deve fare nulla
+        //SE NON ABBIAMO CREATO NESSUNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLLIA
+        //IL PROGRAMMA NON DEVE FARE NULLA
+        if (nationList.isEmpty() == true) {
             buttonAddNation.setDisable(false);
-        } else { //altrimenti colora la cella
+            //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
+            //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO
+        } else {
             ((Button) event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
-            //questa parte serve per disabilitare il bottone AddNation quando le celle sono state tutte utilizzate
+            //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
             int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
-            int gridRows = 0;
-            this.buttonDeleteNation.setDisable(false);
-            this.buttonStart.setDisable(false);
+            int gridRows = 0;												//Numero di righe della griglia desiderato dall'utente
+            this.buttonDeleteNation.setDisable(false);						//Viene abilitato il bottone buttonDeleteNation
+            this.buttonStart.setDisable(false);								//Viene abilitato il bottone buttonStart
             try {
-                gridColumns = Integer.parseInt(txtColumns.getText());  //Prende il numero di colonne inserito dall'utente
-                gridRows = Integer.parseInt(txtRows.getText());        //Prende il numero di righe inserito dall'utente
-            } catch (NumberFormatException n) {                        //Se l'utente non inserisce un intero si ha un eccezione
+                gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
+                gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
+            } catch (NumberFormatException n) {                       		//Se l'utente non inserisce un intero si ha un eccezione
                 //Esce dal metodo cosi' da non generare errori
             }
-            contaNumeroCelleUsate++;
-            if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {
-                this.buttonAddNation.setDisable(true);
+            contaNumeroCelleUsate++;										//Incrementa il numero di celle utilizzate
+            if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {		//Se sono state usate tutte le celle
+                this.buttonAddNation.setDisable(true);						//Viene disabilitato il botttone buttonAddNation
             }
 
         }
