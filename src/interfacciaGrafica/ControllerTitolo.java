@@ -14,7 +14,7 @@ public class ControllerTitolo implements Initializable {
 
 
     //METODO INITIALIZE
-    //Questo metodo è vuoto
+    //Questo metodo e' vuoto
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
