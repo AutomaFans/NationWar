@@ -227,7 +227,6 @@ public class ControllerImpostazioniGriglia {
         this.txtRows.setEditable(false);							//Viene disabilitata l'area di testo per specificare il numero di righe
         this.txtColumns.setEditable(false);						    //Viene disabilitata l'area di testo per specificare il numero di colonne
         this.buttonAddNation.setDisable(false); 					//Viene abilitato il bottone buttonAddNation
-        this.buttonDeleteNation.setDisable(false);
 
         double columnPercentual = 582.0/gridColumns;  				//Percentuale di spazio che deve occupare una colonna nella griglia
         //per potersi adattare(582.0 e' la larghezza fissa della griglia)
@@ -289,6 +288,8 @@ public class ControllerImpostazioniGriglia {
             //questa parte serve per disabilitare il bottone AddNation quando le celle sono state tutte utilizzate
             int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
             int gridRows = 0;
+            this.buttonDeleteNation.setDisable(false);
+            this.buttonStart.setDisable(false);
             try {
                 gridColumns = Integer.parseInt(txtColumns.getText());  //Prende il numero di colonne inserito dall'utente
                 gridRows = Integer.parseInt(txtRows.getText());        //Prende il numero di righe inserito dall'utente

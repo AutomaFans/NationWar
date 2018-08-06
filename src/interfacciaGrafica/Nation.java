@@ -6,8 +6,8 @@ package interfacciaGrafica;
 public class Nation {
 
 
-    public String nome;					//Stringa nome per il nome della nazione
-    public String color;				//Stringa color peril colore della nazione
+    private String nome;					//Stringa nome per il nome della nazione
+    private String color;				//Stringa color peril colore della nazione
 
 
     //COSTRUTTORE CON DUE PARAMETRI
