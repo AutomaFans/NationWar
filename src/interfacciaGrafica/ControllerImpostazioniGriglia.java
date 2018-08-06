@@ -24,16 +24,17 @@ import java.io.IOException;
 
 public class ControllerImpostazioniGriglia {
 
-    //Crea la lista che conterrà le nazioni di tipo Nation che verranno create
-    static ArrayList<Nation> nationList = new ArrayList<Nation>(); /*L'ArrayList e' statica perche' quando aggiungiamo dal
-                                                                    ControllerAddNation una nazione con clickAggiungiNazione vogliamo che
-                                                                    quest'ultima sia mantenuta in memoria(nationList rimane lo
-                                                                    stesso oggetto per ogni istanza creata da ControllerAddNation per
-                                                                    aggiungere una nazione). Se non fosse statica il dato del inserimento
-                                                                    andrebbe perso.*/
+    //Crea una lista di Nazioni che conterra' tutte le nazioni che verranno create
+    //L'ArrayList e' statica perche' quando aggiungiamo dal
+    //ControllerAddNation una nazione con clickAggiungiNazione vogliamo che
+    //quest'ultima sia mantenuta in memoria(nationList rimane lo
+    //stesso oggetto per ogni istanza creata da ControllerAddNation per
+    //aggiungere una nazione). Se non fosse statica il dato del inserimento
+    //andrebbe perso.
+    static ArrayList<Nation> nationList = new ArrayList<Nation>();
 
-     @FXML
-     private TextField txtNomeNazione; //dove inseriamo il nome della Nazione
+    @FXML
+    private TextField txtNomeNazione; 		//Area di testo chiamata txtNomeNAzione per inserire il nome della Nazione
 
     @FXML
     private BorderPane borderPane;			//BorderPane chiamato borderPane
@@ -54,35 +55,36 @@ public class ControllerImpostazioniGriglia {
     private Button buttonMenu;				//Bottone chiamato buttonMenu, per tornare al menu principale (FXMLmenu.fxml)
 
     @FXML
-    static BarChart<String,Integer> barChart;  //BarChart chiamato barChart, base per le statistiche
+    static BarChart<String,Integer> barChart;  //Grafico chiamato barChart, base per le statistiche
 
     @FXML
-    private CategoryAxis nNation;          //nazioni coinvolte nelle statistiche
+    private CategoryAxis nNation;          	//Nazioni coinvolte nelle statistiche (sul grafico)
 
     @FXML
-    private NumberAxis nPeople;            //valore (numero di persone) per nazione
+    private NumberAxis nPeople;            	//Valore (numero di persone) per nazione (sul grafico)
 
     @FXML
     private Button btnGridDimensions;		//Bottone chiamato btnGridDimensions, per impostare la grandezza della griglia
 
     @FXML
-    private TextArea txtColumns;				//Area di testo chiamata txtColumns, per impostare il numero di colonne della griglia
+    private TextArea txtColumns;			//Area di testo chiamata txtColumns, per impostare il numero di colonne della griglia
 
     @FXML
     private TextArea txtRows;				//Area di testo chiamata txtRows, per impostare il numero di righe della griglia della griglia
 
     @FXML
-    private Label msgError;      /*identificatore del label nell'angolo in basso a destra che serve per avvisare
-                                 l'utente di errori o altri messaggi*/
+    private Label msgError;     			//Label chiamata msgError che serve ad avvisare l'utente di errori o altri messaggi
 
     @FXML
-    private GridPane automaGrid; //identificatore della griglia in cui si visualizzera la simulazione
-    int contaNumeroCelleUsate;
+    private GridPane automaGrid; 			//Griglia chiamata automaGrid che serve per la griglia del gioco
+
+    int contaNumeroCelleUsate;				//Variabile di tipo intera per sapere il numero di celle della griglia che sono state usate
+
 
     //METODO CLICK ADD NATION
     //Quando il bottone buttonAddNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //addNationPane facendo riferimento e richiamando l'intefaccia definita in FXMLaddNation.fxml.
-    //Quindi addNAtionPane sarà l'interfaccia definita in FXMLaddNation.fxml.
+    //Quindi addNAtionPane sara'  l'interfaccia definita in FXMLaddNation.fxml.
     //Poi viene creato un nuovo Stage, chiamato addNationStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA addNationPane SULLO STAGE addNationStage.
@@ -92,21 +94,15 @@ public class ControllerImpostazioniGriglia {
         if (nationList.size() < ControllerAddNation.ListaColori.size() - 1) {
             try {
                 AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("FXMLaddNation.fxml"));
-
-
-
                 Stage addNationStage = new Stage();
                 addNationStage.setScene(new Scene(addNationPane));
                 addNationStage.setResizable(false);
                 addNationStage.show();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-
-        } else {
+        }
+        else {
             try {
                 AnchorPane limitPane = FXMLLoader.load(getClass().getResource("FXMLlimite.fxml"));
                 Stage limitStage = new Stage();
@@ -123,7 +119,7 @@ public class ControllerImpostazioniGriglia {
     //METODO CLICK DELETE NATION
     //Quando il bottone buttonDeleteNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //deleteNationPane facendo riferimento e richiamando l'intefaccia definita in FXMLdeleteNation.fxml.
-    //Quindi deleteNationPane sarà l'interfaccia definita in FXMLdeleteNation.fxml.
+    //Quindi deleteNationPane sara'  l'interfaccia definita in FXMLdeleteNation.fxml.
     //Poi viene creato un nuovo Stage, chiamato deleteNationStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA deleteNationPane SULLO STAGE deleteNationStage.
@@ -145,7 +141,7 @@ public class ControllerImpostazioniGriglia {
     //METODO HELP
     //Quando il bottone buttonHelp viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //helpPane facendo riferimento e richiamando l'intefaccia definita in FXMLhelp.fxml.
-    //Quindi helpPane sarà l'interfaccia definita in FXMLhelp.fxml.
+    //Quindi helpPane sara'  l'interfaccia definita in FXMLhelp.fxml.
     //Poi viene creato un nuovo Stage, chiamato helpStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA helpPane SULLO STAGE helpStage.
@@ -179,7 +175,7 @@ public class ControllerImpostazioniGriglia {
     //l'utente ha inserito nelle aree di testo txtColumns e txtRows.
     //Se l'utente non inserisce nelle due aree un  numero intero, viene lanciata l'eccezione
     //per cui la label msgError sara' impostata con la scritta "Inserisci un intero!"
-    //Siccome si può inserire un massimo numero di 50 righe e 50 colonne, se il numero
+    //Siccome si puo' inserire un massimo numero di 50 righe e 50 colonne, se il numero
     //di righe e colonne e' maggiore di 50 allora la label msgError sara' impostata con
     //la scritta "Troppe righe e colonne!".
     //Altrimenti, se il numero di colonne e' maggiore di 50 allora la label msgError
@@ -192,10 +188,10 @@ public class ControllerImpostazioniGriglia {
     //txtRows e txtColumns per togliere la possibilita di inserire un altro numero di righe e di colonne.
     //Invece viene abilitato il bottone buttonAddNation per dare la possibilita di aggiungere una nazione.
     //Poi si passa ad aggiungere i bottoni sulle righe e sulle colonne alla griglia.
-    //Viene creata una variabile columnPercentual che è la percentuale di spazio che deve occupare
+    //Viene creata una variabile columnPercentual che e' la percentuale di spazio che deve occupare
     //una colonna nella griglia per potersi adattare, cosi viene creata una nuova colonna.
     //e viene settata la percentuale di larghezza che la colonna deve occupare (con il metodo setPercentWidth).
-    //Viene creata una variabile rowPercentual che è la percentuale di spazio che deve occupare
+    //Viene creata una variabile rowPercentual che e' la percentuale di spazio che deve occupare
     //una riga nella griglia per potersi adattare, cosi viene creata una nuova riga
     //e viene settata la percentuale di larghezza che la riga deve occupare (con il metodo setPercentWidth)
     //Per il numero di righe e di colonne specificate dall'utente, vengono creati i bottoni
@@ -234,12 +230,12 @@ public class ControllerImpostazioniGriglia {
         this.buttonDeleteNation.setDisable(false);
 
         double columnPercentual = 582.0/gridColumns;  				//Percentuale di spazio che deve occupare una colonna nella griglia
-                                                                    //per potersi adattare(582.0 e' la larghezza fissa della griglia)
+        //per potersi adattare(582.0 e' la larghezza fissa della griglia)
         ColumnConstraints col = new ColumnConstraints();   		    //Crea una nuova colonna
         col.setPercentWidth(columnPercentual);             		    //Setta la percentuale di larghezza che la colonna deve occupare
 
         double rowPercentual = 517.0/gridRows;  					//Percentuale di spazio che deve occupare una riga nella griglia per
-                                                                    //potersi adattare(517.0 e' l'altezza fissa della griglia)
+        //potersi adattare(517.0 e' l'altezza fissa della griglia)
         RowConstraints row = new RowConstraints(); 				    //Crea una nuova riga
         row.setPercentHeight(rowPercentual);       				    //Setta la percentuale di altezza che la riga deve occupare
 
@@ -263,7 +259,7 @@ public class ControllerImpostazioniGriglia {
     //METODO MENU
     //Quando il bottone buttonMenu viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi menu sarà l'interfaccia definita in FXMLmenu.fxml.
+    //Quindi menu sara'  l'interfaccia definita in FXMLmenu.fxml.
     //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con menu.
     @FXML
@@ -296,7 +292,7 @@ public class ControllerImpostazioniGriglia {
             try {
                 gridColumns = Integer.parseInt(txtColumns.getText());  //Prende il numero di colonne inserito dall'utente
                 gridRows = Integer.parseInt(txtRows.getText());        //Prende il numero di righe inserito dall'utente
-            } catch (NumberFormatException n) {                            //Se l'utente non inserisce un intero si ha un eccezione
+            } catch (NumberFormatException n) {                        //Se l'utente non inserisce un intero si ha un eccezione
                 //Esce dal metodo cosi' da non generare errori
             }
             contaNumeroCelleUsate++;

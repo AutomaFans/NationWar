@@ -7,48 +7,36 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
-
-
 import java.util.Iterator;
 
-import static interfacciaGrafica.ControllerAddNation.ListaColori;
-import static interfacciaGrafica.ControllerAddNation.nomiNazioni;
-import static interfacciaGrafica.ControllerImpostazioniGriglia.nationList;
+import static interfacciaGrafica.ControllerAddNation.ListaColori;					//Prende la lista chiamata ListaColori creata nella classe ControllerAddNation
+import static interfacciaGrafica.ControllerAddNation.nomiNazioni;					//Prende la lista chiamata nomiNazioni creata nella classe ControllerAddNation
+import static interfacciaGrafica.ControllerImpostazioniGriglia.nationList;			//Prende la lista chiamata nationList creata nella classe ControllerImpostazioniGriglia
 
 
 public class ControllerDeleteNation {
-
-
-    //Crea una lista di stringhe chiamata ListaNomiNazioni che conterra' tutti i nomi delle nazioni che
-    //saranno presenti durante il gioco
-
-    ObservableList<String> ListaNomiNazioni = FXCollections.observableArrayList(nomiNazioni);
-
-
-
-
 
 
     @FXML
     private Button buttonElimina;				//Bottone chiamato buttonElimina , per eliminare la nazione selezionata
 
     @FXML
-    private Button buttonClose;					//Bottone chiamato buttonClose, per chiudere la finestra di aiuto
-
- /*   @FXML
-    private MenuButton buttonSelectNation;*/
+    private Button buttonClose;					//Bottone chiamato buttonClose, per chiudere la finestra di eliminazione della nazione
 
     @FXML
-    private ChoiceBox<String> nomeNazione;		//ChoiceBox (menu a tendina) chiamato nomeNazione che conterrà tutti i nomi
+    private ChoiceBox<String> nomeNazione;		//ChoiceBox (menu a tendina) chiamato nomeNazione che conterra'  tutti i nomi
     //delle nazione che potranno essere selezionate per essere eliminate
 
 
     //METODO INITIALIZE
+    //La lista nomiNazioni è creata nella classe ControllerAddNation e contiene tutti i nomi
+    //delle nazioni che sono state create.
     //Aggiunge al choice box chimato nomeNazione tutti gli elementi che sono contenuti dentro la lista
-    //ListaNomiNazioni, poi imposta di default la stringa "Seleziona Nome" della lista.
+    //nomiNazioni, quindi nel menu a tendina ci saranno tutti i nomi delle nazioni che sono state create.
+    //Poi imposta di default la stringa "Seleziona Nome" della lista.
     @FXML
     public void initialize() {
-        nomeNazione.getItems().addAll(ListaNomiNazioni);
+        nomeNazione.getItems().addAll(nomiNazioni);
         nomeNazione.setValue("Seleziona Nome");
     }
 
@@ -65,37 +53,39 @@ public class ControllerDeleteNation {
     }
 
 
-
-
-
-
-
-
     //METODO CLICK ELIMINA NAZIONE
+    //Dal menu a tendina chiamato nomeNazione l'utente seleziona il nome della nazione che vuole
+    //eliminare.
+    //Cosi con un for itera sulla lista di stringhe nomiNazioni e mette la stringa iterata dentro
+    //la variabile num, di tipo stinga.
+    //Se num è uguale alla nazione che l'utente ha selezionato per eliminare allora rimuove la stringa
+    //dalla lista nomi Nazioni.
+    //Allo stesso modo, con un for itera sulla lista di Nazioni nationList e mette la Nazione iterata dentro
+    //la variabile num, di tipo Nation.
+    //Ogni oggetto di tipo Nation è composto da un nome e da un colore, cosi se num è uguale
+    //al nome della nazione che l'utente ha selezionato per eliminare allora rimuove la nazione
+    //dalla lista nomi nationList e aggiunge il colore usato per quella nazione alla lista ListaColori
+    //(cosi che questo colore e' di nuovo disponibile) perche' in controllerAddNation quando si creava una
+    //nuova nazione veniva eliminato anche il colore dalla lista Lista Colori per non creare nazioni con lo stesso colore.
+    //Dopo di che' quando si preme il bottone chiamato buttonElimina la finestra viene chiusa
+    //e si torna sulla griglia.
     @FXML
     void clickEliminaNazione(ActionEvent event) {
-        for(Iterator<String> i = nomiNazioni.iterator(); i.hasNext();) { //elimino la Nazione dalla lista nomiNazioni
+        //ELIMINA LA NAZIONE DALLA STRINGA NOMI NAZIONI
+        for(Iterator<String> i = nomiNazioni.iterator(); i.hasNext();) {
             String num = i.next();
             if(num == nomeNazione.getValue()) {
                 i.remove();
-
-
             }
-
-            System.out.println("lista delle nazioni " + nomiNazioni);
         }
-        for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //elimino la Nazione dalla lista nationList
+        //ELIMINA LA NAZIONE DALLA LISTA NATIONLIST
+        for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) {
             Nation num = i.next();
             if (num.nome == nomeNazione.getValue()) {
-                ListaColori.add(num.color); //rendo il colore della Nazione che ho eliminato di nuovo disponibile
+                ListaColori.add(num.color);
                 i.remove();
-
-
-
-
             }
         }
-        ListaNomiNazioni.removeAll(nomeNazione.getValue()); //rimuovo la Nazione anche dalla ListaNomiNazioni ( ovvero da dove ho selezionato la Nazione che volevo eliminare)
         Stage stage = (Stage) buttonElimina.getScene().getWindow();
         stage.close();
 
