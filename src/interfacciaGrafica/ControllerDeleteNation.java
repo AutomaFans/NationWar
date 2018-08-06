@@ -81,8 +81,8 @@ public class ControllerDeleteNation {
         //ELIMINA LA NAZIONE DALLA LISTA NATIONLIST
         for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) {
             Nation num = i.next();
-            if (num.nome == nomeNazione.getValue()) {
-                ListaColori.add(num.color);
+            if (num.getName() == nomeNazione.getValue()) {
+                ListaColori.add(num.getName());
                 i.remove();
             }
         }
