@@ -282,6 +282,7 @@ public class ControllerImpostazioniGriglia {
     @FXML
     void clickMenu(ActionEvent event) {
         try {
+            nationList.clear();
             AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
             borderPane.getChildren().setAll(menu);
         } catch (IOException e) {
