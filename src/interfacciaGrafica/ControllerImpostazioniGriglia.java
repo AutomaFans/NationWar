@@ -282,6 +282,7 @@ public class ControllerImpostazioniGriglia {
     @FXML
     void clickMenu(ActionEvent event) {
         try {
+            nationList.clear();              //se si ritorna al menu principale allora vengono eliminate tutte le nazioni dalla lista
             AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
             borderPane.getChildren().setAll(menu);
         } catch (IOException e) {
