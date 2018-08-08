@@ -346,8 +346,8 @@ public class ControllerImpostazioniGriglia {
     //allora viene soltanto abilitato il bottone chiamato buttonAddNation e non succede nient'altro,
     //perchè se non abbiamo creato nessuna nazione e clicchiamo su una cella della griglia il programma
     //non deve fare nulla.
-    //Altrimenti, se abbiamo creato una nazione e clicchiamo su una cella della griglia allora la
-    //cella deve colorarsi del colore scelto.
+    //Altrimenti, controlla se quella cella non e' stata assegnata a nessuna nazione: se non e' stata assegnata la assegna
+    // e verra' colorata in base al colore scelto, mentre se e' stata assegnata gia' ad un nazione non fa nulla.
     //Applicando getSource() all'evento individuato (click sulla cella della griglia) si ottiene il bottone
     //su cui si e' verificato l'evento, ma viene restituito come un tipo Object e quindi applichiamo un cast
     //esplicito ((Button)event.getSource())).
@@ -371,31 +371,38 @@ public class ControllerImpostazioniGriglia {
             buttonAddNation.setDisable(false);
             //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
             //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO
-        } else {
-            ((Regione) event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
-            //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
-            int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
-            int gridRows = 0;												//Numero di righe della griglia desiderato dall'utente
-            this.buttonDeleteNation.setDisable(false);						//Viene abilitato il bottone buttonDeleteNation
-            this.buttonStart.setDisable(false);								//Viene abilitato il bottone buttonStart
+        }
+        else {
+            if(((Regione) event.getSource()).getNazione().equals("")){    //se la cella su cui si clicca non fa gia'
+                                                                          // parte di una nazione si assegna quella
+                                                                          // regione alla nazione
+                ((Regione) event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
+                //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
+                int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
+                int gridRows = 0;												//Numero di righe della griglia desiderato dall'utente
+                this.buttonDeleteNation.setDisable(false);						//Viene abilitato il bottone buttonDeleteNation
+                this.buttonStart.setDisable(false);								//Viene abilitato il bottone buttonStart
 
-            ((Regione) event.getSource()).setNazione(nationList.get(0).getName()); //setta la nazione di appartenenza
-            nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
-                                                                                   //aumenta il numero di abitanti, le risorse
-                                                                                   //e il denaro della nazione in base alle
-                                                                                   //caratteristiche del territorio assegnato
+                ((Regione) event.getSource()).setNazione(nationList.get(0).getName()); //setta la nazione di appartenenza
+                nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
+                //aumenta il numero di abitanti, le risorse
+                //e il denaro della nazione in base alle
+                //caratteristiche del territorio assegnato
 
-            try {
-                gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
-                gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
-            } catch (NumberFormatException n) {                       		//Se l'utente non inserisce un intero si ha un eccezione
-                //Esce dal metodo cosi' da non generare errori
+                try {
+                    gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
+                    gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
+                } catch (NumberFormatException n) {                       		//Se l'utente non inserisce un intero si ha un eccezione
+                    //Esce dal metodo cosi' da non generare errori
+                }
+                contaNumeroCelleUsate++;										//Incrementa il numero di celle utilizzate
+                if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {		//Se sono state usate tutte le celle
+                    this.buttonAddNation.setDisable(true);						//Viene disabilitato il botttone buttonAddNation
+                }
             }
-            contaNumeroCelleUsate++;										//Incrementa il numero di celle utilizzate
-            if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {		//Se sono state usate tutte le celle
-                this.buttonAddNation.setDisable(true);						//Viene disabilitato il botttone buttonAddNation
+            else{                                                         //altrimenti non succede nulla
+                return;
             }
-
         }
     }
 
