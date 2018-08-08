@@ -65,6 +65,17 @@ Una nazione può anche morire a causa di un abbassamento del livello demografico
 dopo un certo tempo viene generato un altro esploratore.
 Gli esploratori si muovono randomicamente, però hanno un senso dell’orientamento che non va in
 contro a territorio nemico.
+Nelle impostazioni iniziali in cui si assegnano celle e quindi territorio ad una nazione, appena si assegna una cella:
+-le risorse della regione(cella) vengono sommate a quelle totali della nazione
+-il denaro sommato alle casse di denaro totali della nazione saranno ugualu al numero di risorse diviso 2
+-il numero di abitanti aumenta di 100 se si tratta di un terreno fertile, altrimenti di 10 se sterile
+In ogni fase e per ogni turno di azione per una nazione:
+ -le sue risorse totali diminuiscono di un quinto, cio' significa
+che un terreno puo' cambiare stato da "fertile" a "sterile"(non viceversa perche' le risorse sono solo esauribili e
+accumulabili solo dalla nazione e non dalla regione stessa).
+-il denaro aumenta in base a questa formula: (risorseNazioneTotali / 2) + (numAbitantiNazione * 2)
+-la popolazione totale della nazione..la maniera e' da definire
+Con il denaro si comprano regioni(celle) e si usa per rapporti tra nazioni.
 IDEA AGGIUNTIVA 1:
 Se un pezzo di terra di una nazione è confinante con un certo numero di pezzi di terra nemici allora
 si allea con l’altra nazione (traditore).

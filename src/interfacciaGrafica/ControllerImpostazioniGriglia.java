@@ -29,7 +29,7 @@ public class ControllerImpostazioniGriglia {
     //ControllerAddNation una nazione con clickAggiungiNazione vogliamo che
     //quest'ultima sia mantenuta in memoria(nationList rimane lo
     //stesso oggetto per ogni istanza creata da ControllerAddNation per
-    //aggiungere una nazione). Se non fosse statica il dato del inserimento
+    //aggiungere una nazione). Se non fosse statica il dato dell' inserimento
     //andrebbe perso.
     static ArrayList<Nation> nationList = new ArrayList<Nation>();
 
@@ -206,6 +206,9 @@ public class ControllerImpostazioniGriglia {
     //txtRows e txtColumns per togliere la possibilita di inserire un altro numero di righe e di colonne.
     //Invece viene abilitato il bottone buttonAddNation per dare la possibilita di aggiungere una nazione.
     //Poi si passa ad aggiungere i bottoni sulle righe e sulle colonne alla griglia.
+    //Ogni bottone rappresenta nella griglia una regione e pertanto gli verra' assegnato un certo valore in denaro che la
+    //nazione dovra' spendere se vorra' acquistarlo: tutto cio' usando il metodo setValore(numero righe, numero colonne) di
+    // Regione.
     //Viene creata una variabile columnPercentual che e' la percentuale di spazio che deve occupare
     //una colonna nella griglia per potersi adattare, cosi viene creata una nuova colonna.
     //e viene settata la percentuale di larghezza che la colonna deve occupare (con il metodo setPercentWidth).
@@ -256,9 +259,13 @@ public class ControllerImpostazioniGriglia {
         RowConstraints row = new RowConstraints(); 				    //Crea una nuova riga
         row.setPercentHeight(rowPercentual);       				    //Setta la percentuale di altezza che la riga deve occupare
 
+        //Crea regioni randomiche nella griglia in base al numero di righe e di colonne desiderate dall'utente
+        //Queste regioni sono istanze della classe Regione che estende la classe Button
         for (int i=0; i< gridRows; i++ ){							//Per i che va da 0 fino a  al numero di righe inserito dall'utente
             for (int y=0; y<gridColumns; y++){						//Per y che va da 0 fino a  al numero di colonne inserito dall'utente
-                Button bottone=new Button();  						//Crea un bottone (uno per ogni incrocio riga - colonna)
+                Regione bottone = new Regione();  					//Crea un bottone (uno per ogni incrocio riga - colonna)
+                bottone.setValore(gridRows, gridColumns);           //Setta il valore in denaro della regione(cella)
+
                 bottone.setMinHeight(rowPercentual);  				//Imposta l'altezza minima del bottone a rowPercentual
                 bottone.setMaxHeight(rowPercentual);				//Imposta l'altezza massima del bottone a rowPercentual
                 bottone.setMaxWidth(columnPercentual);				//Imposta la grandezza minima del bottone a columnPercentual
@@ -274,7 +281,8 @@ public class ControllerImpostazioniGriglia {
 
 
     //METODO MENU
-    //Quando il bottone buttonMenu viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
+    //Quando il bottone buttonMenu viene premuto, si svuota la lista delle nazioni in maniera da non
+    // tenere memorizzate le vecchie nazioni create, poi viene creato un oggetto di tipo AnchorPane chiamato
     //menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
     //Quindi menu sara'Â  l'interfaccia definita in FXMLmenu.fxml.
     //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
@@ -307,6 +315,9 @@ public class ControllerImpostazioniGriglia {
     //applicato un background color e cioe' il colore di sfondo che sara' quello dell'ultima nazione inserita nel sistema.
     //Inoltre, siccome siamo nel caso in cui e' stata creata almeno una nazione, vine abilitato il bottone buttonDeleteNation
     //e viene abilitato anche il bottone buttonStart.
+    //Per la cella su cui si clicca che rappresenta una Regione viene anche associata la Nazione per la quale si sta
+    //assegnando territorio sulla griglia. Inoltre assegnando una certa regione ad una nazione la nazione in base alle
+    //caratteristiche dela regione prende un certo numero di risorse e denaro. Aumenta inoltre la sua popolazione.
     //Inoltre, ogni volta che si clicca e quindi si colora una cella viene incrementata la variabile che tiene conto
     //del numero di celle utilizzate e se questo numero di celle utilizzate e' maggiore o uguale al prodotto
     //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
@@ -321,12 +332,19 @@ public class ControllerImpostazioniGriglia {
             //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
             //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO
         } else {
-            ((Button) event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
+            ((Regione) event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
             //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
             int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
             int gridRows = 0;												//Numero di righe della griglia desiderato dall'utente
             this.buttonDeleteNation.setDisable(false);						//Viene abilitato il bottone buttonDeleteNation
             this.buttonStart.setDisable(false);								//Viene abilitato il bottone buttonStart
+
+            ((Regione) event.getSource()).setNazione(nationList.get(0).getName()); //setta la nazione di appartenenza
+            nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
+                                                                                   //aumenta il numero di abitanti, le risorse
+                                                                                   //e il denaro della nazione in base alle
+                                                                                   //caratteristiche del territorio assegnato
+
             try {
                 gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
                 gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
