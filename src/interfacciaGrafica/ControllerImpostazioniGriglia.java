@@ -193,8 +193,17 @@ public class ControllerImpostazioniGriglia {
 
     //METODO CLICK START
     //Se non ci sono nazioni allora il gioco non può iniziare, percui genera errore, altrimenti inizia il gioco.
+    //Quando viene premuto il bottone start, viene disabilitato il bottone buttonAddNation,
+    //(cosi da togliera la possibilita' di aggiungere altre nazioni dopo aver premuto Start),
+    //viene disabilitato il bottone buttonDeleteNation,(cosi da togliera la possibilita'
+    //di cancellare nazioni dopo aver premuto Start) e viene disabilitata anche la grigllia
+    //chiamata automaGrid (cosi da togliere la possibilita' di cliccare i bottoni che compongono
+    //la griglia)
     @FXML
     void clickStart(ActionEvent event) {
+        this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
+        this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
+        this.automaGrid.setDisable(true);							//Viene disabilitato la griglia automaGrid
         if (nationList.size() == 0){
             try {
                 AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
