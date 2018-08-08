@@ -104,7 +104,7 @@ public class ControllerAddNation {
     void clickAggiungiNazione(ActionEvent event) {
         String coloreNaz = coloreNazione.getSelectionModel().getSelectedItem();
         String nomeNaz = txtNomeNazione.getText();
-        //CONTROLLA SE TUTTI I VALORI INSERITI QUANDO VIENE SI CREA UNA NAZIONE SONO GIUSTI
+        //CONTROLLA SE TUTTI I VALORI INSERITI QUANDO VIENE CREATA UNA NAZIONE SONO GIUSTI
         if (nomeNaz.isEmpty() || coloreNaz.contentEquals("Seleziona Colore") || nomeNaz.contentEquals("Inserisci nome della nazione che vuoi aggiungere") ) {
             try {
                 AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLerrore.fxml"));
@@ -117,7 +117,7 @@ public class ControllerAddNation {
             }
         }
         //CONTROLLA SE IL NOME DELLA NAZIONE CHE SI STA CREANDO NON E' GIA' STATO USATO
-        if (nomiNazioni.contains(nomeNaz)==true){
+        else if (nomiNazioni.contains(nomeNaz)==true){
             try {
                 AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLnazExist.fxml"));
                 Stage errorStage = new Stage();
