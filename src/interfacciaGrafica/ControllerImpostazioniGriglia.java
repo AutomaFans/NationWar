@@ -201,12 +201,16 @@ public class ControllerImpostazioniGriglia {
     //la griglia)
     @FXML
     void clickStart(ActionEvent event) {
+
         this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
         this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
         this.automaGrid.setDisable(true);							//Viene disabilitato la griglia automaGrid
         if (nationList.size() == 0){
             try {
                 AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
+                buttonAddNation.setDisable(false);
+                buttonDeleteNation.setDisable(false);
+                automaGrid.setDisable(false);
                 Stage noStartStage = new Stage();
                 noStartStage.setScene(new Scene(noStartPane));
                 noStartStage.setResizable(false);
