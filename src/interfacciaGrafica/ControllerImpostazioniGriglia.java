@@ -144,14 +144,27 @@ public class ControllerImpostazioniGriglia {
     //Infine mostra il deleteNationStage impostando la visibilita' a true (con il metodo show).
     @FXML
     void clickDeleteNation(ActionEvent event) {
-        try {
-            AnchorPane deleteNationPane = FXMLLoader.load(getClass().getResource("FXMLdeleteNation.fxml"));
-            Stage deleteNationStage = new Stage();
-            deleteNationStage.setScene(new Scene(deleteNationPane));
-            deleteNationStage.setResizable(false);
-            deleteNationStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (nationList.size() == 0) {
+            try {
+                AnchorPane noDeletePane = FXMLLoader.load(getClass().getResource("FXMLnoDelete.fxml"));
+                Stage noDeleteStage = new Stage();
+                noDeleteStage.setScene(new Scene(noDeletePane));
+                noDeleteStage.setResizable(false);
+                noDeleteStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            buttonAddNation.setDisable(false);      //se viene eliminata l'ultima nazione disponibile si riattiva il pulsante addNation
+            try {
+                AnchorPane deleteNationPane = FXMLLoader.load(getClass().getResource("FXMLdeleteNation.fxml"));
+                Stage deleteNationStage = new Stage();
+                deleteNationStage.setScene(new Scene(deleteNationPane));
+                deleteNationStage.setResizable(false);
+                deleteNationStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -179,8 +192,22 @@ public class ControllerImpostazioniGriglia {
 
 
     //METODO CLICK START
+    //Se non ci sono nazioni allora il gioco non può iniziare, percui genera errore, altrimenti inizia il gioco.
     @FXML
     void clickStart(ActionEvent event) {
+        if (nationList.size() == 0){
+            try {
+                AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
+                Stage noStartStage = new Stage();
+                noStartStage.setScene(new Scene(noStartPane));
+                noStartStage.setResizable(false);
+                noStartStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            //altrimenti inizia il gioco
+        }
     }
 
 

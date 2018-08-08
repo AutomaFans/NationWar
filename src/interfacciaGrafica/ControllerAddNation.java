@@ -104,7 +104,7 @@ public class ControllerAddNation {
     void clickAggiungiNazione(ActionEvent event) {
         String coloreNaz = coloreNazione.getSelectionModel().getSelectedItem();
         String nomeNaz = txtNomeNazione.getText();
-        //CONTROLLA SE TUTTI I VALORI INSERITI QUANDO VIENE CREATA UNA NAZIONE SONO GIUSTI
+        //CONTROLLA SE TUTTI I VALORI INSERITI QUANDO SI CREA UNA NAZIONE SONO GIUSTI
         if (nomeNaz.isEmpty() || coloreNaz.contentEquals("Seleziona Colore") || nomeNaz.contentEquals("Inserisci nome della nazione che vuoi aggiungere") ) {
             try {
                 AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLerrore.fxml"));
@@ -117,7 +117,7 @@ public class ControllerAddNation {
             }
         }
         //CONTROLLA SE IL NOME DELLA NAZIONE CHE SI STA CREANDO NON E' GIA' STATO USATO
-        else if (nomiNazioni.contains(nomeNaz)==true){
+        if (nomiNazioni.contains(nomeNaz)==true){
             try {
                 AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLnazExist.fxml"));
                 Stage errorStage = new Stage();
@@ -127,17 +127,20 @@ public class ControllerAddNation {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-
         }
         //ALTRIMENTI, AGGIUNGI NAZIONE
         else {
-            Nation nazione = new Nation(nomeNaz,coloreNaz);
-            new ControllerImpostazioniGriglia().nationList.add(0,nazione); //Viene creata una nuova istanza di ControllerImpostazioniGriglia
-            //in maniera da aggiungere alla sua ArrayList statica la nazione
-            nomiNazioni.add(nomeNaz);
-            ListaColori.remove(coloreNaz);
-            Stage stage = (Stage) buttonAggiungi.getScene().getWindow();
-            stage.close();
+            if (nomeNaz.isEmpty() || coloreNaz.contentEquals("Seleziona Colore") || nomeNaz.contentEquals("Inserisci nome della nazione che vuoi aggiungere")){
+                //non aggiunge la nazione (non ha un nome valido)
+            } else{
+                Nation nazione = new Nation(nomeNaz, coloreNaz);
+                new ControllerImpostazioniGriglia().nationList.add(0, nazione); //Viene creata una nuova istanza di ControllerImpostazioniGriglia
+                //in maniera da aggiungere alla sua ArrayList statica la nazione
+                nomiNazioni.add(nomeNaz);
+                ListaColori.remove(coloreNaz);
+                Stage stage = (Stage) buttonAggiungi.getScene().getWindow();
+                stage.close();
+            }
         }
     }
 
