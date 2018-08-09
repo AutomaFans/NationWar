@@ -24,12 +24,12 @@ public class ControllerDeleteNation {
     private Button buttonClose;					//Bottone chiamato buttonClose, per chiudere la finestra di eliminazione della nazione
 
     @FXML
-    private ChoiceBox<String> nomeNazione;		//ChoiceBox (menu a tendina) chiamato nomeNazione che conterra'  tutti i nomi
+    private ChoiceBox<String> nomeNazione;		//ChoiceBox (menu a tendina) chiamato nomeNazione che conterra'Â  tutti i nomi
     //delle nazione che potranno essere selezionate per essere eliminate
 
 
     //METODO INITIALIZE
-    //La lista nomiNazioni è creata nella classe ControllerAddNation e contiene tutti i nomi
+    //La lista nomiNazioni Ã¨ creata nella classe ControllerAddNation e contiene tutti i nomi
     //delle nazioni che sono state create.
     //Aggiunge al choice box chimato nomeNazione tutti gli elementi che sono contenuti dentro la lista
     //nomiNazioni, quindi nel menu a tendina ci saranno tutti i nomi delle nazioni che sono state create.
@@ -58,11 +58,11 @@ public class ControllerDeleteNation {
     //eliminare.
     //Cosi con un for itera sulla lista di stringhe nomiNazioni e mette la stringa iterata dentro
     //la variabile num, di tipo stinga.
-    //Se num è uguale alla nazione che l'utente ha selezionato per eliminare allora rimuove la stringa
+    //Se num Ã¨ uguale alla nazione che l'utente ha selezionato per eliminare allora rimuove la stringa
     //dalla lista nomi Nazioni.
     //Allo stesso modo, con un for itera sulla lista di Nazioni nationList e mette la Nazione iterata dentro
     //la variabile num, di tipo Nation.
-    //Ogni oggetto di tipo Nation è composto da un nome e da un colore, cosi se num è uguale
+    //Ogni oggetto di tipo Nation Ã¨ composto da un nome e da un colore, cosi se num Ã¨ uguale
     //al nome della nazione che l'utente ha selezionato per eliminare allora rimuove la nazione
     //dalla lista nomi nationList e aggiunge il colore usato per quella nazione alla lista ListaColori
     //(cosi che questo colore e' di nuovo disponibile) perche' in controllerAddNation quando si creava una

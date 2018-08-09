@@ -14,8 +14,8 @@ public class Main extends Application {
     //METODO START
     //Crea un oggetto di tipo Parent chiamato rootP facendo riferimento e richiamando
     //l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi rootP sara'  l'interfaccia definita in FXMLmenu.fxml.
-    //Poi crea una Scene (contenitore piÃ¹  interno) chiamata scene per il nodo radice
+    //Quindi rootP sara'Â  l'interfaccia definita in FXMLmenu.fxml.
+    //Poi crea una Scene (contenitore piÃƒÂ¹  interno) chiamata scene per il nodo radice
     //specificato (rootP), specifica la scena da usare sullo Stage chiamato primaryStage
     //(con il metodo setScene), poi imposta il titolo dello Stage primaryStage con la scritta
     //"Progetto: NATION WAR", ed infine mostra la window impostando la visibilita' a true

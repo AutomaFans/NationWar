@@ -139,15 +139,26 @@ public class ControllerImpostazioniGriglia {
 
 
     //METODO CLICK DELETE NATION
-    //Quando il bottone buttonDeleteNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
-    //deleteNationPane facendo riferimento e richiamando l'intefaccia definita in FXMLdeleteNation.fxml.
-    //Quindi deleteNationPane sara'Â  l'interfaccia definita in FXMLdeleteNation.fxml.
-    //Poi viene creato un nuovo Stage, chiamato deleteNationStage, e specifica la scena da usare
+    //Quando il bottone buttonDeleteNation viene premuto, se la lista chiamata nationList
+    //che contiene tutte le nazioni che sono state create è vuota (quindi se ci sono nazioni)
+    //viene creato un oggetto di tipo AnchorPane chiamato noDeletePane facendo riferimento
+    //e richiamando l'intefaccia definita in FXMLnoDelete.fxml.
+    //Quindi noDeletePane sara' l'interfaccia definita in FXMLnoDelete.fxml
+    //Poi viene creato un nuovo Stage, chiamato NoDeleteStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
+    //QUINDI MOSTRA LA SCENA noDeletePane SULLO STAGE noDeleteStage.
+    //Infine mostra il noDeleteStage impostando la visibilita' a true (con il metodo show).
+    //Altrimenti,se c'e' almeno una nazione disponibile si riattiva il bottone
+    //buttonAddNation e poi viene creato un oggetto di tipo AnchorPane chiamato deleteNationPane
+    //facendo riferimento e richiamando l'intefaccia definita in FXMLdeleteNation.fxml.
+    //Quindi deleteNationPane sara' l'interfaccia definita in FXMLdeleteNation.fxml
+    //Poi viene creato un nuovo Stage, chiamato deleteNatiionStage, e specifica la scena da
+    //usare su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA deleteNationPane SULLO STAGE deleteNationStage.
     //Infine mostra il deleteNationStage impostando la visibilita' a true (con il metodo show).
     @FXML
     void clickDeleteNation(ActionEvent event) {
+        //SE NATION LIST E' VUOTA NON E' POSSIBILE CANCELLARE LE NAZIONI
         if (nationList.size() == 0) {
             try {
                 AnchorPane noDeletePane = FXMLLoader.load(getClass().getResource("FXMLnoDelete.fxml"));
@@ -158,8 +169,10 @@ public class ControllerImpostazioniGriglia {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //SE INVECE C'E' ALMENO UNA NAZIONE SI RIABILITA IL BOTTONE ADDNATION ED E' ANCHE
+            //POSSIBILE CANCELLARE LA NAZIONE
         } else {
-            buttonAddNation.setDisable(false);      //se viene eliminata l'ultima nazione disponibile si riattiva il pulsante addNation
+            buttonAddNation.setDisable(false);
             try {
                 AnchorPane deleteNationPane = FXMLLoader.load(getClass().getResource("FXMLdeleteNation.fxml"));
                 Stage deleteNationStage = new Stage();
@@ -172,11 +185,10 @@ public class ControllerImpostazioniGriglia {
         }
     }
 
-
     //METODO HELP
     //Quando il bottone buttonHelp viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //helpPane facendo riferimento e richiamando l'intefaccia definita in FXMLhelp.fxml.
-    //Quindi helpPane sara'Â  l'interfaccia definita in FXMLhelp.fxml.
+    //Quindi helpPane sara'Ã‚Â  l'interfaccia definita in FXMLhelp.fxml.
     //Poi viene creato un nuovo Stage, chiamato helpStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA helpPane SULLO STAGE helpStage.
@@ -196,19 +208,32 @@ public class ControllerImpostazioniGriglia {
 
 
     //METODO CLICK START
-    //Se non ci sono nazioni allora il gioco non può iniziare, percui genera errore, altrimenti inizia il gioco.
     //Quando viene premuto il bottone start, viene disabilitato il bottone buttonAddNation,
     //(cosi da togliera la possibilita' di aggiungere altre nazioni dopo aver premuto Start),
     //viene disabilitato il bottone buttonDeleteNation,(cosi da togliera la possibilita'
     //di cancellare nazioni dopo aver premuto Start) e viene disabilitata anche la grigllia
     //chiamata automaGrid (cosi da togliere la possibilita' di cliccare i bottoni che compongono
-    //la griglia)
+    //la griglia).
+    //Se la lista chiamata nationList che contiene tutte le nazioni che sono state create
+    //è vuota (quindi se non ci sono nazioni) allora il gioco non puo' iniziare per cui
+    //vengono riabilitati il bottone buttonAddNation e il bottone buttonDeleteNation e
+    //viene riabilitata la  griglia automaGrid, in seguito viene creato un oggetto di tipo
+    //AnchorPane chiamato noStartPane facendo riferimento e richiamando l'intefaccia
+    //definita in FXMLnoStart.fxml.
+    //Quindi noStartPane sara' l'interfaccia definita in FXMLnoStart.fxml
+    //Poi viene creato un nuovo Stage, chiamato noStartStage, e specifica la scena da usare
+    //su quello stage (con il metodo setScene).
+    //QUINDI MOSTRA LA SCENA noStartPane SULLO STAGE noStartStage.
+    //Infine mostra il noDeleteStage impostando la visibilita' a true (con il metodo show).
+    //Altrimenti,se la lista chiamata nationList che contiene tutte le nazioni che sono state
+    //create non e' vuota (quindi se ci sono nazioni) allora il gioco puo' iniziare
     @FXML
     void clickStart(ActionEvent event) {
 
         this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
         this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
         this.automaGrid.setDisable(true);							//Viene disabilitato la griglia automaGrid
+        //SE NATION LIST E' VUOTA NON E' POSSIBILE INIZIARE IL GIOCO
         if (nationList.size() == 0){
             try {
                 AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
@@ -223,10 +248,9 @@ public class ControllerImpostazioniGriglia {
                 e.printStackTrace();
             }
         }else{
-            //altrimenti inizia il gioco
+            //ALTRIMENTI INIZIA IL GIOCO
         }
     }
-
 
     //METODO CLICK ADD DIMENSIONS
     //Viene utilizzato quando si preme il bottone "Imposta grandezza griglia": permette
@@ -326,55 +350,58 @@ public class ControllerImpostazioniGriglia {
 
     //METODO MENU
     //Quando il bottone buttonMenu viene premuto, si svuota la lista delle nazioni in maniera da non
-    // tenere memorizzate le vecchie nazioni create, poi viene creato un oggetto di tipo AnchorPane chiamato
+    //tenere memorizzate le vecchie nazioni create, ed inoltre viene riaggiunto alla listaColori il
+    //colore usato per la nazione che si sta eliminando, poi viene creato un oggetto di tipo AnchorPane chiamato
     //menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi menu sara'Â  l'interfaccia definita in FXMLmenu.fxml.
+    //Quindi menu sara' l'interfaccia definita in FXMLmenu.fxml.
     //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con menu.
     @FXML
     void clickMenu(ActionEvent event) {
-        //premendo il pulsante MainMenu andiamo a cancellare tutto. Quindi occorre (prima di cancellare le Nazioni) andare a rimettere in ListaColori i coloti delle Nazioni ch esto per cancellare.
-        for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //Iterator permette di iterare all'interno di una lista di oggetti in modo semplice
+        for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) {
             Nation nazione = i.next();
             ListaColori.add(nazione.getColor());
         }
-
-        nomiNazioni.clear(); //cancello tutto ciò che si trova in nomiNazioni
-        nationList.clear(); //cancello tutti gli oggetti Nation di nationList.
+        nomiNazioni.clear(); 			//Cancello tutto cio' che si trova in nomiNazioni
+        nationList.clear(); 			//Cancello tutti gli oggetti Nation di nationList.
         try {
-            nationList.clear();              //se si ritorna al menu principale allora vengono eliminate tutte le nazioni dalla lista
+            nationList.clear();
             AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
             borderPane.getChildren().setAll(menu);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    //METODO CLICK AND COLOR CELL
+    //METODO ADD REGION TO NATION
     //Quando si clicca su una cella mentre si stanno aggiungendo nazioni alla griglia, questo metodo assegna
     //alla cella cliccata il colore dell'ultima nazione inserita.
-    //Se la lista chiamata nationList è vuota, quindi se non e' stat creata nessuna nazione,
+    //Se la lista chiamata nationList e' vuota, quindi se non e' stat creata nessuna nazione,
     //allora viene soltanto abilitato il bottone chiamato buttonAddNation e non succede nient'altro,
-    //perchè se non abbiamo creato nessuna nazione e clicchiamo su una cella della griglia il programma
+    //perche' se non abbiamo creato nessuna nazione e clicchiamo su una cella della griglia il programma
     //non deve fare nulla.
-    //Altrimenti, controlla se quella cella non e' stata assegnata a nessuna nazione: se non e' stata assegnata la assegna,
-    // mentre se e' stata assegnata gia' ad un nazione non fa nulla.
+    //Altrimenti, controlla se quella cella non e' stata assegnata a nessuna nazione:
+    //e se non e' stata assegnata (quindi se la cella su cui si clicca non fa gia' parte
+    //di una nazione si assegna quella regione, quindi quella cella, alla nazione)
+    //e verra' colorata in base al colore scelto.
+    //Mentre se e' stata assegnata gia' ad un nazione non fa nulla.
     //Siccome siamo nel caso in cui e' stata creata almeno una nazione, viene abilitato il bottone buttonDeleteNation
     //e viene abilitato anche il bottone buttonStart.
     //Applicando getSource() all'evento individuato (click sulla cella della griglia) si ottiene il bottone
     //su cui si e' verificato l'evento, ma viene restituito come un tipo Object e quindi applichiamo un cast
     //esplicito ((Regione)event.getSource())).
-    //Per la cella su cui si clicca che rappresenta una Regione viene anche associata la Nazione per la quale si sta
-    //assegnando territorio sulla griglia e il colore inerente. Inoltre assegnando una certa regione ad una nazione la
-    // nazione in base alle caratteristiche dela regione prende un certo numero di risorse e denaro. Aumenta inoltre la
-    // sua popolazione.
-    //Si va ad assegnare in maniera definitiva la cella alla nazione aggiungendo l'id della cella alla lista di id delle
-    //regioni della nazione(che rappresentano quindi i territori posseduti).
+    //Per la cella su cui si clicca che rappresenta una Regione viene anche associata la Nazione
+    //per la quale si sta assegnando territorio sulla griglia, richiamando il metodo getName della
+    //classe Nation.
+    //Inoltre assegnando una certa regione ad una nazione la nazione in base alle caratteristiche
+    //della regione prende un certo numero di risorse e denaro e aumenta inoltre la sua popolazione.
+    //Si va ad assegnare in maniera definitiva la cella alla nazione aggiungendo l'id della cella
+    //alla lista degli id, chiamata addRegionId, delle regioni della nazione(che rappresentano
+    //le coordinate dei territori posseduti da quella nazione).
     //Inoltre, ogni volta che si clicca e quindi si colora una cella viene incrementata la variabile che tiene conto
     //del numero di celle utilizzate e se questo numero di celle utilizzate e' maggiore o uguale al prodotto
     //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
-    //allora significa che la griglia è piena e che sono state usate tgutte le celle per cui viene disabilitato il
+    //allora significa che la griglia Ã¨ piena e che sono state usate tgutte le celle per cui viene disabilitato il
     //bottone chiamato buttonAddNation, cosi che non e' piu' possibile inserire un'altra nazione.
     @FXML
     void addRegionToNation(ActionEvent event) {
@@ -388,24 +415,21 @@ public class ControllerImpostazioniGriglia {
         //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO E DEVE ESSERE ASSEGNATA ALLA NAZIONE
         else {
             if(((Regione) event.getSource()).getNazione().equals("")){    //se la cella su cui si clicca non fa gia'
-                                                                          // parte di una nazione si assegna quella
-                                                                          // regione alla nazione
+                // parte di una nazione si assegna quella
+                // regione alla nazione
                 //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
                 int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
                 int gridRows = 0;												//Numero di righe della griglia desiderato dall'utente
                 this.buttonDeleteNation.setDisable(false);						//Viene abilitato il bottone buttonDeleteNation
                 this.buttonStart.setDisable(false);								//Viene abilitato il bottone buttonStart
-
-                //setta la nazione di appartenenza e il colore della nazione sulla cella
+                //SETTA LA NAZIONE DI APPARTENENZA E ILCOLORE DELLA NAZIONE SULLA CELLA
                 ((Regione) event.getSource()).setNazione(nationList.get(0).getName(), nationList.get(0).getColor());
-
-                //Aumenta il numero di abitanti, le risorse e il denaro della nazione in base alle caratteristiche del territorio assegnato
+                //AUMENTA IL NUMERO DI ABITANTI, LE RISORSE E IL DENARO DELLA NAZIONE IN BASE ALLE CARATTERISTICCHE DEL TERRITORIO ASSEGNATO
                 nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
-
-                nationList.get(0).addRegionId(((Regione) event.getSource()).getId());  //aggiunge l'id della regione agli id delle regioni
-                                                                                       // assegnate alla nazione
+                //AGGIUNGE L'ID DELLA REGIONE (DELLA CELLA) ALLA LISTA DEGLI ID DELLE CELLE ASSEGANTE ALLA NAZIONE
+                //QUINDI AGGIUNGE L'ID DELLA CELLA ALLA LISTA ADDREGIONID
+                nationList.get(0).addRegionId(((Regione) event.getSource()).getId());
                 System.out.println(nationList.get(0).getIdRegioni().get(nationList.get(0).getIdRegioni().size()-1)); //stampo l'ultimo id inserito
-
                 try {
                     gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
                     gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
@@ -417,8 +441,9 @@ public class ControllerImpostazioniGriglia {
                     this.buttonAddNation.setDisable(true);						//Viene disabilitato il botttone buttonAddNation
                 }
             }
-            else{                                                         //altrimenti non succede nulla perche' la cella e' gia' stata
-                                                                          //assegnata ad un'altra nazione
+            //
+            //ALTRIMENTI NON SUCCEDE NULLA
+            else{
                 return;
             }
         }
