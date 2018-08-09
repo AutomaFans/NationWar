@@ -67,14 +67,24 @@ public class Nation {
     //METODO REFRESH AGE
     //Metodo che permette di aggiornare l'eta' attuale della nazione
     public void refreshAge(){
-
+        if(this.risorse < 3000 && this.numAbitanti < 1000 && this.denaro < 5000){
+            this.age = Eta.ANTICA;     //se si hanno questi valori che vediamo nelle condizioni dell'if allora si ha
+                                       // un eta' antica
+        }
+        else if((this.risorse >= 3000 && this.numAbitanti >= 1000 && this.denaro >= 5000) &&
+                (this.risorse < 5000 && this.numAbitanti < 2000 && this.denaro < 10000)){
+            this.age = Eta.INTERMEDIA; //se si hanno questi valori si ha un eta' intermedia
+        }
+        else{
+            this.age = Eta.MODERNA;    //se si superano i valori di un eta' intermedia si ha un eta' moderna
+        }
     }
 
     //METODO CONSUMA RISORSE
-    //Viene sottratto un quinto del numero di risorse ad ogni fase di gioco che interessa la nazione: cio' succede perche'
+    //Viene sottratto un decimo del numero di risorse ad ogni fase di gioco che interessa la nazione: cio' succede perche'
     // la nazione occupa una certa regione e quindi consuma le risorse.
     public void consumaRisorse(){
-        this.risorse = risorse - (risorse / 5); //viene consumato un quinto delle risorse
+        this.risorse = risorse - (risorse / 10); //viene consumato un decimo delle risorse
         //this.refreshAge();                     //viene aggiornata l'eta' attuale della nazione(antica, intermedia, moderna)
     }
 
