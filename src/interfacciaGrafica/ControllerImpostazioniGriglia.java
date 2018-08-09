@@ -21,6 +21,10 @@ import javafx.scene.layout.RowConstraints;
 import java.util.ArrayList;
 
 import java.io.IOException;
+import java.util.Iterator;
+
+import static interfacciaGrafica.ControllerAddNation.ListaColori;
+import static interfacciaGrafica.ControllerAddNation.nomiNazioni;
 
 public class ControllerImpostazioniGriglia {
 
@@ -329,6 +333,14 @@ public class ControllerImpostazioniGriglia {
     //precedentemente, ovvero con menu.
     @FXML
     void clickMenu(ActionEvent event) {
+        //premendo il pulsante MainMenu andiamo a cancellare tutto. Quindi occorre (prima di cancellare le Nazioni) andare a rimettere in ListaColori i coloti delle Nazioni ch esto per cancellare.
+        for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //Iterator permette di iterare all'interno di una lista di oggetti in modo semplice
+            Nation nazione = i.next();
+            ListaColori.add(nazione.getColor());
+        }
+
+        nomiNazioni.clear(); //cancello tutto ciò che si trova in nomiNazioni
+        nationList.clear(); //cancello tutti gli oggetti Nation di nationList.
         try {
             nationList.clear();              //se si ritorna al menu principale allora vengono eliminate tutte le nazioni dalla lista
             AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
