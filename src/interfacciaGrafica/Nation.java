@@ -1,20 +1,21 @@
 package interfacciaGrafica;
 import java.util.ArrayList;
 
-//Ogni nazione è composta dal nome, dal colore, dall'eta', dal denaro, dalle risorse e dal numero di abitanti.
+//Ogni nazione e' composta dal nome, dal colore, dall'eta', dal denaro, dalle risorse e dal numero di abitanti.
 //Il colore sara' utilizzato per colorare i bottoni nella griglia.
 public class Nation {
 
-
-    private String nome;					//Stringa nome per il nome della nazione
+    private String nome;						//Stringa nome per il nome della nazione
     private String color;				    //Stringa color peril colore della nazione
     private Eta age;                        //age conterra' l'eta' in cui si trova la nazione
-    private double denaro;                     //denaro corrente della nazione
-    private double risorse;                    //risorse naturali della nazione
+    private double denaro;                  //denaro corrente della nazione
+    private double risorse;                 //risorse naturali della nazione
     private int numAbitanti;                //numero di abitanti della nazione
 
-    private  ArrayList<String> idRegioni = new ArrayList<>(); //array list di stringhe che rappresentano gli id delle ragioni assegnate e
-                                                              //conquistate dalla nazione
+    //Lista di stringhe che rappresentano gli id delle celle assegnate e conquistate dalla nazione
+    //Quindi ogni nazione avra i suoi territorri e questa lista contiene le coordinate dei territori
+    //posseduti dalla nazione
+    private  ArrayList<String> idRegioni = new ArrayList<>();
 
 
     //COSTRUTTORE CON DUE PARAMETRI
@@ -22,14 +23,14 @@ public class Nation {
         this.nome = nome;
         this.color = color;
         this.age = Eta.ANTICA;              //L'eta' di default della nazione e' antica, e antica viene
-                                            // scelta dal dominio enumerativo di "Eta"
-        this.denaro = 0.0;                    //Di default denaro e risorse sono a 0 e assumono
-                                            // un valore iniziale in base alle celle(pezzi di territorio) assegnati
-                                            // sulla griglia
+        //scelta dal dominio enumerativo di "Eta"
+        this.denaro = 0.0;                  //Di default denaro e risorse sono a 0 e assumono
+        //un valore iniziale in base alle celle(pezzi di territorio) assegnati
+        //sulla griglia
         this.risorse = 0.0;
         this.numAbitanti = 1;
-
     }
+
 
 
     //METODO GETCOLOR()
@@ -69,27 +70,38 @@ public class Nation {
     }
 
     //METODO REFRESH AGE
-    //Metodo che permette di aggiornare l'eta' attuale della nazione
+    //Metodo che permette di aggiornare l'eta' attuale della nazione.
+    //Se le risorse della nazione sono minori di 3000, il numero di abitanti della nazione
+    //sono minori di 1000 e il denaro della nazione e' minore di 5000 allora
+    //viene impostata l'eta' della nazione come eta' antica.
+    //Altrimenti se le risorse della nazione sono maggiori o uguali di 3000 e minori di 5000,
+    //il numero di abitanti della nazione sono maggiori o uguali di 1000 e minori di 2000 e
+    //il denaro della nazione e' maggiore o uguale di 5000 e minore di 10000 allora
+    //viene impostata l'eta' della nazione come eta' intermedia.
+    //Altrimenti le risorse della nazione sono maggiori o uguali di 5000, il numero
+    //di abitanti della nazione sono maggiori o uguali di 2000 e il denaro dellanazione
+    //e' maggiore o uguale a 10000 allora vine impostata l'eta' della nazion come
+    //erta' moderna.
     public void refreshAge(){
         if(this.risorse < 3000 && this.numAbitanti < 1000 && this.denaro < 5000){
-            this.age = Eta.ANTICA;     //se si hanno questi valori che vediamo nelle condizioni dell'if allora si ha
-                                       // un eta' antica
+            this.age = Eta.ANTICA;
         }
         else if((this.risorse >= 3000 && this.numAbitanti >= 1000 && this.denaro >= 5000) &&
                 (this.risorse < 5000 && this.numAbitanti < 2000 && this.denaro < 10000)){
-            this.age = Eta.INTERMEDIA; //se si hanno questi valori si ha un eta' intermedia
+            this.age = Eta.INTERMEDIA;
         }
         else{
-            this.age = Eta.MODERNA;    //se si superano i valori di un eta' intermedia si ha un eta' moderna
+            this.age = Eta.MODERNA;
         }
     }
+
 
     //METODO CONSUMA RISORSE
     //Viene sottratto un decimo del numero di risorse ad ogni fase di gioco che interessa la nazione: cio' succede perche'
     // la nazione occupa una certa regione e quindi consuma le risorse.
     public void consumaRisorse(){
-        this.risorse = risorse - (risorse / 10); //viene consumato un decimo delle risorse
-        //this.refreshAge();                     //viene aggiornata l'eta' attuale della nazione(antica, intermedia, moderna)
+        this.risorse = risorse - (risorse / 10); //Viene consumato un decimo delle risorse
+        //this.refreshAge();                     //Viene aggiornata l'eta' attuale della nazione(antica, intermedia, moderna)
     }
 
     //METODO INCASSA DENARO
@@ -101,8 +113,8 @@ public class Nation {
 
     //METODO TAKE PROFIT
     //Metodo per aumentare il numero di abitanti, il denaro e le risorse della nazione in base al tipo di regione assegnata
-    // durante l'assegnazione di territori nella fase di impostazione della griglia.
-    // Utilizzato nel caso in cui si assegna una regione alla nazione nelle impostazioni iniziali.
+    //durante l'assegnazione di territori nella fase di impostazione della griglia.
+    //Utilizzato nel caso in cui si assegna una regione alla nazione nelle impostazioni iniziali.
     public void takeProfit(String tipoRegione, Double risorseRegione){
         if(tipoRegione.equals("fertile")){ //se la regione e' fertile aumenta il numero di abitanti di 100
             this.numAbitanti += 100;
@@ -131,13 +143,15 @@ public class Nation {
     */
 
     //METODO GET ID REGIONI
-    //Restituisce l'array list di stringhe che rappresentano gli id delle regioni assegnate alla nazione
+    //Restituisce l'array list di stringhe che rappresentano gli id delle regioni
+    //assegnate alla nazione
     public ArrayList<String> getIdRegioni(){
         return idRegioni;
     }
 
     //METODO ADD REGION ID
-    //Assegna una regione alla nazione: inserisce l'id della regione che assegnamo alla nazione sotto forma di stringa.
+    //Assegna una cella alla nazione: inserisce l'id della cella che assegnamo alla
+    //nazione sotto forma di stringa.
     public void addRegionId(String id){
         this.idRegioni.add(id);
     }

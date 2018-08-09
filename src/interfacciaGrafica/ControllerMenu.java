@@ -32,7 +32,7 @@ public class ControllerMenu implements Initializable {
     //METODO CLICK PLAY
     //Crea un oggetto di tipo BorderPane chiamato impostazioniGriglia facendo riferimento e richiamando
     //l'intefaccia definita in FXMLimpostazioniGriglia.fxml.
-    //Quindi impostazioniGriglia sara'  l'interfaccia definita in FXMLimpostazioniGriglia.fxml.
+    //Quindi impostazioniGriglia sara'Â  l'interfaccia definita in FXMLimpostazioniGriglia.fxml.
     //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con impostazioniGriglia.
     @FXML
@@ -72,7 +72,7 @@ public class ControllerMenu implements Initializable {
     //Mette la variabile isShowe definita nel main a true.
     //Poi crea un oggetto di tipo AnchorPane chiamato titolo facendo riferimento e richiamando
     //l'intefaccia definita in FXMLtitolo.fxml.
-    //Quindi titolo sara'  l'interfaccia definita in FXMLtitolo.fxml.
+    //Quindi titolo sara'Â  l'interfaccia definita in FXMLtitolo.fxml.
     //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con titolo.
     //Poi crea un oggetto di tipo FadeTransition, chiamato fadeIn, per la transazione sfumata in entrata
@@ -83,7 +83,7 @@ public class ControllerMenu implements Initializable {
     //finita inizia la transazione in uscita (con il metodo setOnFinished).
     //Poi, quando anche la transazione in uscita e' finita, crea un oggetto di tipo AnchorPane
     //chiamato menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi menu sara'  l'interfaccia definita in FXMLmenu.fxml.
+    //Quindi menu sara'Â  l'interfaccia definita in FXMLmenu.fxml.
     //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con menu.
     private void loadTitle(){
