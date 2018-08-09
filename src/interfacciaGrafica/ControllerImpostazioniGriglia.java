@@ -315,7 +315,7 @@ public class ControllerImpostazioniGriglia {
                 bottone.setMaxWidth(columnPercentual);				//Imposta la grandezza minima del bottone a columnPercentual
                 bottone.setMinWidth(columnPercentual);				//Imposta la grandezza massima del bottone a columnPercentual
                 bottone.setId("btn" + i + y);                       //Aggiunge un identificatore(ID) al bottone
-                bottone.setOnAction(this::clickAndColorCell);       //Aggiunge un event handler al bottone che e' quello per colorare
+                bottone.setOnAction(this::addRegionToNation);       //Aggiunge un event handler al bottone che e' quello per colorare
                 //la cella in base al'ultima nazione inserita
                 automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
 
@@ -358,48 +358,53 @@ public class ControllerImpostazioniGriglia {
     //allora viene soltanto abilitato il bottone chiamato buttonAddNation e non succede nient'altro,
     //perchè se non abbiamo creato nessuna nazione e clicchiamo su una cella della griglia il programma
     //non deve fare nulla.
-    //Altrimenti, controlla se quella cella non e' stata assegnata a nessuna nazione: se non e' stata assegnata la assegna
-    // e verra' colorata in base al colore scelto, mentre se e' stata assegnata gia' ad un nazione non fa nulla.
+    //Altrimenti, controlla se quella cella non e' stata assegnata a nessuna nazione: se non e' stata assegnata la assegna,
+    // mentre se e' stata assegnata gia' ad un nazione non fa nulla.
+    //Siccome siamo nel caso in cui e' stata creata almeno una nazione, viene abilitato il bottone buttonDeleteNation
+    //e viene abilitato anche il bottone buttonStart.
     //Applicando getSource() all'evento individuato (click sulla cella della griglia) si ottiene il bottone
     //su cui si e' verificato l'evento, ma viene restituito come un tipo Object e quindi applichiamo un cast
-    //esplicito ((Button)event.getSource())).
-    //Al bottone viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
-    //applicato un background color e cioe' il colore di sfondo che sara' quello dell'ultima nazione inserita nel sistema.
-    //Inoltre, siccome siamo nel caso in cui e' stata creata almeno una nazione, vine abilitato il bottone buttonDeleteNation
-    //e viene abilitato anche il bottone buttonStart.
+    //esplicito ((Regione)event.getSource())).
     //Per la cella su cui si clicca che rappresenta una Regione viene anche associata la Nazione per la quale si sta
-    //assegnando territorio sulla griglia. Inoltre assegnando una certa regione ad una nazione la nazione in base alle
-    //caratteristiche dela regione prende un certo numero di risorse e denaro. Aumenta inoltre la sua popolazione.
+    //assegnando territorio sulla griglia e il colore inerente. Inoltre assegnando una certa regione ad una nazione la
+    // nazione in base alle caratteristiche dela regione prende un certo numero di risorse e denaro. Aumenta inoltre la
+    // sua popolazione.
+    //Si va ad assegnare in maniera definitiva la cella alla nazione aggiungendo l'id della cella alla lista di id delle
+    //regioni della nazione(che rappresentano quindi i territori posseduti).
     //Inoltre, ogni volta che si clicca e quindi si colora una cella viene incrementata la variabile che tiene conto
     //del numero di celle utilizzate e se questo numero di celle utilizzate e' maggiore o uguale al prodotto
     //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
     //allora significa che la griglia è piena e che sono state usate tgutte le celle per cui viene disabilitato il
     //bottone chiamato buttonAddNation, cosi che non e' piu' possibile inserire un'altra nazione.
     @FXML
-    void clickAndColorCell(ActionEvent event) {
+    void addRegionToNation(ActionEvent event) {
         //SE NON ABBIAMO CREATO NESSUNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLLIA
         //IL PROGRAMMA NON DEVE FARE NULLA
         if (nationList.isEmpty() == true) {
             buttonAddNation.setDisable(false);
-            //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
-            //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO
+
         }
+        //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
+        //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO E DEVE ESSERE ASSEGNATA ALLA NAZIONE
         else {
             if(((Regione) event.getSource()).getNazione().equals("")){    //se la cella su cui si clicca non fa gia'
                                                                           // parte di una nazione si assegna quella
                                                                           // regione alla nazione
-                ((Regione) event.getSource()).setStyle("-fx-background-color: " + nationList.get(0).getColor());
                 //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
                 int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
                 int gridRows = 0;												//Numero di righe della griglia desiderato dall'utente
                 this.buttonDeleteNation.setDisable(false);						//Viene abilitato il bottone buttonDeleteNation
                 this.buttonStart.setDisable(false);								//Viene abilitato il bottone buttonStart
 
-                ((Regione) event.getSource()).setNazione(nationList.get(0).getName()); //setta la nazione di appartenenza
+                //setta la nazione di appartenenza e il colore della nazione sulla cella
+                ((Regione) event.getSource()).setNazione(nationList.get(0).getName(), nationList.get(0).getColor());
+
+                //Aumenta il numero di abitanti, le risorse e il denaro della nazione in base alle caratteristiche del territorio assegnato
                 nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
-                //aumenta il numero di abitanti, le risorse
-                //e il denaro della nazione in base alle
-                //caratteristiche del territorio assegnato
+
+                nationList.get(0).addRegionId(((Regione) event.getSource()).getId());  //aggiunge l'id della regione agli id delle regioni
+                                                                                       // assegnate alla nazione
+                System.out.println(nationList.get(0).getIdRegioni().get(nationList.get(0).getIdRegioni().size()-1)); //stampo l'ultimo id inserito
 
                 try {
                     gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
@@ -412,7 +417,8 @@ public class ControllerImpostazioniGriglia {
                     this.buttonAddNation.setDisable(true);						//Viene disabilitato il botttone buttonAddNation
                 }
             }
-            else{                                                         //altrimenti non succede nulla
+            else{                                                         //altrimenti non succede nulla perche' la cella e' gia' stata
+                                                                          //assegnata ad un'altra nazione
                 return;
             }
         }

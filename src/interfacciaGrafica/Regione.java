@@ -54,10 +54,15 @@ public class Regione extends Button{ //una Regione rappresenta un Button esteso
     }
 
     //METODO SET NAZIONE
-    //Permette di assegnare alla regione la nazione di appartenenza passata come parametro. Metodo usato quando si assegna una
-    //regione ad una nazione durante le impostazioni iniziali e durante la simulazione quando una nazione conquista un territorio.
-    public void setNazione(String nomeNazione){
+    //Permette di assegnare alla regione la nazione di appartenenza passata come parametro e il colore della nazione. Metodo usato quando
+    // si assegna una regione ad una nazione durante le impostazioni iniziali e durante la simulazione quando una nazione conquista un
+    // territorio.
+    //Alla regione viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
+    //applicato un background color e cioe' il colore di sfondo che sara' quello passato al metodo. Nel caso in cui si sta impostando
+    // la griglia si tratta de colore dell'ultima nazione inserita nel sistema.
+    public void setNazione(String nomeNazione, String colore){
         this.nazione = nomeNazione;
+        this.setStyle("-fx-background-color: " + colore);
     }
 
     //METODO REFRESH TYPE

@@ -1,4 +1,5 @@
 package interfacciaGrafica;
+import java.util.ArrayList;
 
 //Ogni nazione è composta dal nome, dal colore, dall'eta', dal denaro, dalle risorse e dal numero di abitanti.
 //Il colore sara' utilizzato per colorare i bottoni nella griglia.
@@ -11,6 +12,9 @@ public class Nation {
     private double denaro;                     //denaro corrente della nazione
     private double risorse;                    //risorse naturali della nazione
     private int numAbitanti;                //numero di abitanti della nazione
+
+    private  ArrayList<String> idRegioni = new ArrayList<>(); //array list di stringhe che rappresentano gli id delle ragioni assegnate e
+                                                              //conquistate dalla nazione
 
 
     //COSTRUTTORE CON DUE PARAMETRI
@@ -125,5 +129,17 @@ public class Nation {
             this.numAbitanti = numAbitanti - dieciPerCentoPopolazione; //sottrae il 10% della popolazione
         }
     */
+
+    //METODO GET ID REGIONI
+    //Restituisce l'array list di stringhe che rappresentano gli id delle regioni assegnate alla nazione
+    public ArrayList<String> getIdRegioni(){
+        return idRegioni;
+    }
+
+    //METODO ADD REGION ID
+    //Assegna una regione alla nazione: inserisce l'id della regione che assegnamo alla nazione sotto forma di stringa.
+    public void addRegionId(String id){
+        this.idRegioni.add(id);
+    }
 
 }
