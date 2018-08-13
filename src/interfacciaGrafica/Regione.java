@@ -15,11 +15,11 @@ public class Regione extends Button{
     //- assegna alle risorse un numero casuale compreso tra 0 e 1000
     //- la nazione di appartenenza inizialmente e' vuota perche' quando generato il territorio non e' di nessuno
     //Inoltre se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
-    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse è minore
-    //di 350 allora la regione è sterile per cui viene impostato il tipo = sterile
+    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse e' minore
+    //di 350 allora la regione Ã¨ sterile per cui viene impostato il tipo = sterile
     //Poi in base al tipo di territorio viene impostato lo sfondo della cella della griglia.
-    //Se il tipo è fertile allora lo sfondo della cella sara' l'immagine IMG-Fertile.jpg,
-    //alrimenti, se il tipo è sterile allora lo sfondo della cella sara' l'immagine
+    //Se il tipo Ã¨ fertile allora lo sfondo della cella sara' l'immagine IMG-Fertile.jpg,
+    //alrimenti, se il tipo Ã¨ sterile allora lo sfondo della cella sara' l'immagine
     //IMG-Sterile.jpg.
     //Il valore reale verra' valorizzato al momento in cui si aggiunge la regione alla griglia.
     public Regione(){
@@ -44,8 +44,12 @@ public class Regione extends Button{
     }
 
     //METODO RESET REGION
-    //Permette di resettare la regione: toglie la nazione di appartenza e imposta lo sfondo di default. Inoltre aggiorna
-    //il tipo della regione.
+    //Permette di resettare la regione.
+    //Ovvero toglie la nazione di appartenza su quella cella e imposta lo sfondo di default.
+    //Quindi aggiorna il tipo della regione, richiamando il metodo refreshType della classe
+    //Regione.
+    //In seguito se la regione è di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
+    //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
     public void resetRegion(){
         this.nazione = "";
         this.refreshType();
@@ -57,6 +61,7 @@ public class Regione extends Button{
             this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Sterile.jpg')");
         }
     }
+
 
 
     //METODO GET RISORSE
@@ -93,8 +98,8 @@ public class Regione extends Button{
     //METODO REFRESH TYPE
     //Setta il terreno al suo tipo di stato attuale(fertile o sterile)
     //se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
-    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse è minore
-    //di 350 allora la regione è sterile per cui viene impostato il tipo = sterile
+    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse Ã¨ minore
+    //di 350 allora la regione Ã¨ sterile per cui viene impostato il tipo = sterile
     public void refreshType(){
         if(risorse >= 350.0){                   //Se il numero di risorse e' maggiore uguale a 350
             tipo = "fertile";					//Allora la regione e' fertile
@@ -117,15 +122,15 @@ public class Regione extends Button{
     //Metodo per settare il valore reale in denaro della regione
     //Il valore cambiera' in base al numero di risorse e di righe e colonne della griglia.
     //Se si ha una griglia abbastanza grande il valore sara' piu' basso per permettere
-    //una maggiore espansione nella tabella, per cui il valore sarà la meta'' delle risorse
+    //una maggiore espansione nella tabella, per cui il valore sarÃ  la meta'' delle risorse
     //(risorse/2).
     //Altrimenti, se si ha una griglia di piccole dimensioni il valore sara' piu' alto
     //per contenere l'espansione, per cui il valore e' uguale alle risorse (valore = risorse).
     public void setValore(int righe, int colonne){
-        if(righe > 20 && colonne > 20){          	//Se il numero di righe e di colonne della griglia è maggiore di 20
+        if(righe > 20 && colonne > 20){          	//Se il numero di righe e di colonne della griglia Ã¨ maggiore di 20
             this.valore = risorse / 2;				//Il valore e' uguale alla meta' delle risorse
         }
-        else{                                      //Altrimenti, se il numero di righe e di colonne della griglia è minore o uguale di 20
+        else{                                      //Altrimenti, se il numero di righe e di colonne della griglia Ã¨ minore o uguale di 20
             this.valore = risorse;				   //Il valore e' uguale alle risorse
         }
     }

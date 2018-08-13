@@ -22,7 +22,7 @@ import static interfacciaGrafica.ControllerImpostazioniGriglia.nationList;			//P
 public class ControllerAddNation {
 
     //Crea una lista di stringhe chiamata ListaColori che conterra' tutti i colori delle nazioni che
-    //potranno essere scelti quando si crea una nuovca nazione
+    //potranno essere scelti quando si crea una nuova nazione
     static ObservableList<String> ListaColori = FXCollections.observableArrayList("Seleziona Colore", "GREEN", "BLUE", "YELLOW", "ORANGE", "RED", "MAROON", "CORAL","FIREBRICK", "INDIANRED", "TOMATO", "DARKRED", "DARKORANGE", "THISTLE", "TURQUOISE", "DARKCYAN", "DEEPSKYBLUE", "KHAKI", "CADETBLUE", "OLIVE", "LIGHTSLATEGREY", "DARKSLATEGRAY", "PALEGREEN", "CYAN", "YELLOWGREEN", "PURPLE", "BLUEVIOLET", "INDIGO", "FUCHSIA", "SIENNA", "BROWN", "CHOCOLATE", "PINK", "ORCHID", "LIME", "TEAL", "AQUA", "STEELBLUE", "NAVY", "GRAY", "BLACK");
 
     //Crea una lista di stringhe chiamata nomiNazioni che conterra' tutti i nomi delle nazioni che
@@ -39,7 +39,7 @@ public class ControllerAddNation {
     private TextField txtNomeNazione;			//Area di testo chiamata txtNomeNazione per inserire il nome della nazione che si vuole aggiungere
 
     @FXML
-    private ChoiceBox<String> coloreNazione;	//ChoiceBox (menu a tendina) chiamato coloreNazione che conterra'Â  tutti i
+    private ChoiceBox<String> coloreNazione;	//ChoiceBox (menu a tendina) chiamato coloreNazione che conterra'Ã‚Â  tutti i
     //colori che potranno essere scelti quando si crea una nazione
 
 
@@ -77,7 +77,7 @@ public class ControllerAddNation {
     //nazione che vuoi aggiungere" (quindi se l'utente ha inserito un nome sbagliato)
     //allora viene creato un oggetto di tipo AnchorPane chiamato errorPane facendo riferimento
     //e richiamando l'intefaccia definita in FXMLerrore.fxml.
-    //Quindi errorPane sara'  l'interfaccia definita in FXMLerror.fxml.
+    //Quindi errorPane sara'Â  l'interfaccia definita in FXMLerror.fxml.
     //Poi viene creato un nuovo Stage, chiamato errorStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA errorPane SULLO STAGE errorStage.

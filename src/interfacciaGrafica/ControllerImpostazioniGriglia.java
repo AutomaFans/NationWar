@@ -81,7 +81,7 @@ public class ControllerImpostazioniGriglia {
     private GridPane automaGrid; 			//Griglia chiamata automaGrid che serve per la griglia del gioco
 
     int contaNumeroCelleUsate;				//Variabile di tipo intera per sapere il numero di celle della griglia che sono state usate
-    static ArrayList<String> arrayForStart = new ArrayList<>(); //mi serve per capire se Start è stato premuto o no nel metodo ClickMenu
+    static ArrayList<String> arrayForStart = new ArrayList<>(); //mi serve per capire se Start Ã¨ stato premuto o no nel metodo ClickMenu
 
 
 
@@ -140,7 +140,7 @@ public class ControllerImpostazioniGriglia {
 
     //METODO CLICK DELETE NATION
     //Quando il bottone buttonDeleteNation viene premuto, se la lista chiamata nationList
-    //che contiene tutte le nazioni che sono state create è vuota (quindi se ci sono nazioni)
+    //che contiene tutte le nazioni che sono state create Ã¨ vuota (quindi se ci sono nazioni)
     //viene creato un oggetto di tipo AnchorPane chiamato noDeletePane facendo riferimento
     //e richiamando l'intefaccia definita in FXMLnoDelete.fxml.
     //Quindi noDeletePane sara' l'interfaccia definita in FXMLnoDelete.fxml
@@ -188,7 +188,7 @@ public class ControllerImpostazioniGriglia {
     //METODO HELP
     //Quando il bottone buttonHelp viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //helpPane facendo riferimento e richiamando l'intefaccia definita in FXMLhelp.fxml.
-    //Quindi helpPane sara'Ã‚Â  l'interfaccia definita in FXMLhelp.fxml.
+    //Quindi helpPane sara'Ãƒâ€šÃ‚Â  l'interfaccia definita in FXMLhelp.fxml.
     //Poi viene creato un nuovo Stage, chiamato helpStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA helpPane SULLO STAGE helpStage.
@@ -215,7 +215,7 @@ public class ControllerImpostazioniGriglia {
     //chiamata automaGrid (cosi da togliere la possibilita' di cliccare i bottoni che compongono
     //la griglia).
     //Se la lista chiamata nationList che contiene tutte le nazioni che sono state create
-    //è vuota (quindi se non ci sono nazioni) allora il gioco non puo' iniziare per cui
+    //Ã¨ vuota (quindi se non ci sono nazioni) allora il gioco non puo' iniziare per cui
     //vengono riabilitati il bottone buttonAddNation e il bottone buttonDeleteNation e
     //viene riabilitata la  griglia automaGrid, in seguito viene creato un oggetto di tipo
     //AnchorPane chiamato noStartPane facendo riferimento e richiamando l'intefaccia
@@ -248,7 +248,7 @@ public class ControllerImpostazioniGriglia {
                 e.printStackTrace();
             }
         }else{
-            arrayForStart.add("Start è stato premuto");
+            arrayForStart.add("Start Ã¨ stato premuto");
             //ALTRIMENTI INIZIA IL GIOCO
         }
     }
@@ -359,17 +359,17 @@ public class ControllerImpostazioniGriglia {
     //precedentemente, ovvero con menu.
     @FXML
     void clickMenu(ActionEvent event) {
-        if(arrayForStart.size()>=1){ // se è stato premuto Start
+        if(arrayForStart.size()>=1){ // se Ã¨ stato premuto Start
             Stage stageFinestra = new Stage();  //creo un nuovo stage che chiamo StageFinestra
             stageFinestra.setTitle("ATTENZIONE"); //imposto il titolo della Finestra
             //ora creo i vari elementi da mettere all'interno della finestra
             Label label = new Label(); //ovvero un label
-            label.setText("Tutto ciò che hai fatto fin ora verrà perso. Sicuro di voler interrompere la simulazione?"); //che conterrà questo testo
+            label.setText("Tutto ciÃ² che hai fatto fin ora verrÃ  perso. Sicuro di voler interrompere la simulazione?"); //che conterrÃ  questo testo
             Button yesButton = new Button(); //un bottone
-            yesButton.setText("Si"); //che conterrà questo testo
+            yesButton.setText("Si"); //che conterrÃ  questo testo
             Button noButton = new Button(); //un altro bottone
-            noButton.setText("No"); //che conterrà questo testo
-            yesButton.setOnAction(e -> { //imposto ciò che deve accadere se premo il bottone yesButton
+            noButton.setText("No"); //che conterrÃ  questo testo
+            yesButton.setOnAction(e -> { //imposto ciÃ² che deve accadere se premo il bottone yesButton
                 for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //prendo tutti i coloti delle Nazioni che avevo creato e li rimetto nella ListaColori
                     Nation nazione = i.next();
                     ListaColori.add(nazione.getColor());
@@ -385,22 +385,22 @@ public class ControllerImpostazioniGriglia {
                 }
                 stageFinestra.close(); //e chiudo la finestra
             });
-            noButton.setOnAction(e -> { //imposto ciò che deve accadere se premo su noButton
+            noButton.setOnAction(e -> { //imposto ciÃ² che deve accadere se premo su noButton
 
                 stageFinestra.close(); //chiudo la finestra
             });
             //Dopo di che ritorna il valore della variabile Conferma.
-            VBox layout = new VBox(10);//Poi creo un VBox chiamato layout (per disporre i componenti verticalmente), spacing è la spaziatura tra un componente e l'altro
+            VBox layout = new VBox(10);//Poi creo un VBox chiamato layout (per disporre i componenti verticalmente), spacing Ã¨ la spaziatura tra un componente e l'altro
             layout.getChildren().addAll(label, yesButton, noButton); //e aggiunge i componenti
             layout.setAlignment(Pos.CENTER);//posiziona questi due componenti al centro (richiamando il metodo setAlignment)
-            Scene scene = new Scene(layout); //Infine crea una Scene (contenitore più  interno) chiamata scene per il nodo radice
+            Scene scene = new Scene(layout); //Infine crea una Scene (contenitore piÃ¹  interno) chiamata scene per il nodo radice
             stageFinestra.setScene(scene);//specifica la scena da usare sullo stage stageS1
             stageFinestra.show();
             arrayForStart.clear(); //svuoto l'arrayForStart che mi indicava se il pulsante star era stato premuto.
 
 
         }
-        else{ //ALTRIMENTI, ovvero se il bottone MainMenu è stato premuto prima di premere start
+        else{ //ALTRIMENTI, ovvero se il bottone MainMenu Ã¨ stato premuto prima di premere start
             for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //rimetto in NationList tutti i colori delle nazioni che avevo usato
                 Nation nazione = i.next();
                 ListaColori.add(nazione.getColor());
@@ -444,7 +444,7 @@ public class ControllerImpostazioniGriglia {
     //Inoltre, ogni volta che si clicca e quindi si colora una cella viene incrementata la variabile che tiene conto
     //del numero di celle utilizzate e se questo numero di celle utilizzate e' maggiore o uguale al prodotto
     //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
-    //allora significa che la griglia Ã¨ piena e che sono state usate tgutte le celle per cui viene disabilitato il
+    //allora significa che la griglia ÃƒÂ¨ piena e che sono state usate tgutte le celle per cui viene disabilitato il
     //bottone chiamato buttonAddNation, cosi che non e' piu' possibile inserire un'altra nazione.
     @FXML
     void addRegionToNation(ActionEvent event) {
@@ -472,7 +472,7 @@ public class ControllerImpostazioniGriglia {
                 //AGGIUNGE L'OBJECT REGIONE (LA CELLA) ALLA LISTA DELLE REGIONI(LE CELLE) ASSEGNATE ALLA NAZIONE
                 //QUINDI AGGIUNGE LA CELLA ALLA LISTA REGIONI DI Nation
                 nationList.get(0).addRegion((Regione) event.getSource());
-                System.out.println(nationList.get(0).getRegioni().get(nationList.get(0).getRegioni().size()-1)); //stampo l'ultimo id inserito
+                //System.out.println(nationList.get(0).getRegioni().get(nationList.get(0).getRegioni().size()-1)); //stampo l'ultimo id inserito
                 try {
                     gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
                     gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
