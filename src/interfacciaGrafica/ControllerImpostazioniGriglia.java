@@ -3,6 +3,7 @@ package interfacciaGrafica;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -10,14 +11,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.RowConstraints;
+
 import java.util.ArrayList;
 
 import java.io.IOException;
@@ -83,6 +81,8 @@ public class ControllerImpostazioniGriglia {
     private GridPane automaGrid; 			//Griglia chiamata automaGrid che serve per la griglia del gioco
 
     int contaNumeroCelleUsate;				//Variabile di tipo intera per sapere il numero di celle della griglia che sono state usate
+    static ArrayList<String> arrayForStart = new ArrayList<>(); //mi serve per capire se Start è stato premuto o no nel metodo ClickMenu
+
 
 
     //METODO CLICK ADD NATION
@@ -248,6 +248,7 @@ public class ControllerImpostazioniGriglia {
                 e.printStackTrace();
             }
         }else{
+            arrayForStart.add("Start è stato premuto");
             //ALTRIMENTI INIZIA IL GIOCO
         }
     }
@@ -358,19 +359,62 @@ public class ControllerImpostazioniGriglia {
     //precedentemente, ovvero con menu.
     @FXML
     void clickMenu(ActionEvent event) {
-        for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) {
-            Nation nazione = i.next();
-            ListaColori.add(nazione.getColor());
+        if(arrayForStart.size()>=1){ // se è stato premuto Start
+            Stage stageFinestra = new Stage();  //creo un nuovo stage che chiamo StageFinestra
+            stageFinestra.setTitle("ATTENZIONE"); //imposto il titolo della Finestra
+            //ora creo i vari elementi da mettere all'interno della finestra
+            Label label = new Label(); //ovvero un label
+            label.setText("Tutto ciò che hai fatto fin ora verrà perso. Sicuro di voler interrompere la simulazione?"); //che conterrà questo testo
+            Button yesButton = new Button(); //un bottone
+            yesButton.setText("Si"); //che conterrà questo testo
+            Button noButton = new Button(); //un altro bottone
+            noButton.setText("No"); //che conterrà questo testo
+            yesButton.setOnAction(e -> { //imposto ciò che deve accadere se premo il bottone yesButton
+                for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //prendo tutti i coloti delle Nazioni che avevo creato e li rimetto nella ListaColori
+                    Nation nazione = i.next();
+                    ListaColori.add(nazione.getColor());
+                }
+                nomiNazioni.clear(); 			//Cancello tutto cio' che si trova in nomiNazioni
+                nationList.clear(); 			//Cancello tutti gli oggetti Nation di nationList.
+
+                try {
+                    AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml")); //restituisco il menu
+                    borderPane.getChildren().setAll(menu); //sul BorderPane
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                stageFinestra.close(); //e chiudo la finestra
+            });
+            noButton.setOnAction(e -> { //imposto ciò che deve accadere se premo su noButton
+
+                stageFinestra.close(); //chiudo la finestra
+            });
+            //Dopo di che ritorna il valore della variabile Conferma.
+            VBox layout = new VBox(10);//Poi creo un VBox chiamato layout (per disporre i componenti verticalmente), spacing è la spaziatura tra un componente e l'altro
+            layout.getChildren().addAll(label, yesButton, noButton); //e aggiunge i componenti
+            layout.setAlignment(Pos.CENTER);//posiziona questi due componenti al centro (richiamando il metodo setAlignment)
+            Scene scene = new Scene(layout); //Infine crea una Scene (contenitore più  interno) chiamata scene per il nodo radice
+            stageFinestra.setScene(scene);//specifica la scena da usare sullo stage stageS1
+            stageFinestra.show();
+            arrayForStart.clear(); //svuoto l'arrayForStart che mi indicava se il pulsante star era stato premuto.
+
+
         }
-        nomiNazioni.clear(); 			//Cancello tutto cio' che si trova in nomiNazioni
-        nationList.clear(); 			//Cancello tutti gli oggetti Nation di nationList.
-        try {
-            nationList.clear();
-            AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
-            borderPane.getChildren().setAll(menu);
-        } catch (IOException e) {
-            e.printStackTrace();
+        else{ //ALTRIMENTI, ovvero se il bottone MainMenu è stato premuto prima di premere start
+            for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //rimetto in NationList tutti i colori delle nazioni che avevo usato
+                Nation nazione = i.next();
+                ListaColori.add(nazione.getColor());
+            }
+            nomiNazioni.clear(); 			//Cancello tutto cio' che si trova in nomiNazioni
+            nationList.clear(); 			//Cancello tutti gli oggetti Nation di nationList.
+            try {
+                AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml")); //restituisco il menu
+                borderPane.getChildren().setAll(menu); //sul BorderPane
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     //METODO ADD REGION TO NATION
