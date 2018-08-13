@@ -1,5 +1,6 @@
 package interfacciaGrafica;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 //Ogni nazione e' composta dal nome, dal colore, dall'eta', dal denaro, dalle risorse e dal numero di abitanti.
 //Il colore sara' utilizzato per colorare i bottoni nella griglia.
@@ -12,10 +13,10 @@ public class Nation {
     private double risorse;                 //risorse naturali della nazione
     private int numAbitanti;                //numero di abitanti della nazione
 
-    //Lista di stringhe che rappresentano gli id delle celle assegnate e conquistate dalla nazione
-    //Quindi ogni nazione avra i suoi territorri e questa lista contiene le coordinate dei territori
+    //Lista di regioni che rappresentano le celle assegnate e conquistate dalla nazione
+    //Quindi ogni nazione avra i suoi territori e questa lista contiene i territori
     //posseduti dalla nazione
-    private  ArrayList<String> idRegioni = new ArrayList<>();
+    private  ArrayList<Regione> regioni = new ArrayList<>();
 
 
     //COSTRUTTORE CON DUE PARAMETRI
@@ -143,17 +144,25 @@ public class Nation {
     */
 
     //METODO GET ID REGIONI
-    //Restituisce l'array list di stringhe che rappresentano gli id delle regioni
-    //assegnate alla nazione
-    public ArrayList<String> getIdRegioni(){
-        return idRegioni;
+    //Restituisce l'array list di regioni assegnate alla nazione
+    public ArrayList<Regione> getRegioni(){
+        return regioni;
     }
 
-    //METODO ADD REGION ID
-    //Assegna una cella alla nazione: inserisce l'id della cella che assegnamo alla
-    //nazione sotto forma di stringa.
-    public void addRegionId(String id){
-        this.idRegioni.add(id);
+    //METODO ADD REGION
+    //Assegna una cella alla nazione: inserisce la cella(la regione) che assegnamo alla nazione
+    public void addRegion(Regione region){
+        this.regioni.add(region);
     }
 
+    //METODO REMOVE ALL REGIONS
+    //Rimuove tutte le regioni resettandole, o meglio togliendo nazione di appartenenza e colore della nazione e
+    //togliendole dall'array list regioni
+    public void removeAllRegions(){
+        for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
+            Regione num = i.next();
+            num.resetRegion();      //toglie nazione di appartenza e colore della nazione alla regione
+            i.remove();             //toglie la regione dalla lista di quelle appartenenti alla nazione
+        }
+    }
 }

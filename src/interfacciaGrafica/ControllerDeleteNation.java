@@ -83,6 +83,8 @@ public class ControllerDeleteNation {
             Nation num = i.next();
             if (num.getName() == nomeNazione.getValue()) {
                 ListaColori.add(num.getName());
+                num.removeAllRegions();   //tolgo nazione di appartenenza e colore della nazione alle celle che erano state
+                                          //assegnate alla nazione
                 i.remove();
             }
         }
