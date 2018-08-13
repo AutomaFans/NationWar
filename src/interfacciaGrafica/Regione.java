@@ -43,6 +43,21 @@ public class Regione extends Button{
         this.valore = 0.0;
     }
 
+    //METODO RESET REGION
+    //Permette di resettare la regione: toglie la nazione di appartenza e imposta lo sfondo di default. Inoltre aggiorna
+    //il tipo della regione.
+    public void resetRegion(){
+        this.nazione = "";
+        this.refreshType();
+        //Resetta lo sfondo in base al suo tipo(sterile o fertile) e togliendo il colore della nazione
+        if(tipo.equals("fertile")){
+            this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Fertile.jpg')");
+        }
+        else{
+            this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Sterile.jpg')");
+        }
+    }
+
 
     //METODO GET RISORSE
     //Restituisce il numero di risorse naturali attuali della nazione

@@ -439,9 +439,8 @@ public class ControllerImpostazioniGriglia {
     //classe Nation.
     //Inoltre assegnando una certa regione ad una nazione la nazione in base alle caratteristiche
     //della regione prende un certo numero di risorse e denaro e aumenta inoltre la sua popolazione.
-    //Si va ad assegnare in maniera definitiva la cella alla nazione aggiungendo l'id della cella
-    //alla lista degli id, chiamata addRegionId, delle regioni della nazione(che rappresentano
-    //le coordinate dei territori posseduti da quella nazione).
+    //Si va ad assegnare in maniera definitiva la cella alla nazione aggiungendo l'object Regione(la cella)
+    //alla lista delle regioni possedute dalla nazione (si tratta di un array list chiamato regioni della classe Nation).
     //Inoltre, ogni volta che si clicca e quindi si colora una cella viene incrementata la variabile che tiene conto
     //del numero di celle utilizzate e se questo numero di celle utilizzate e' maggiore o uguale al prodotto
     //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
@@ -470,10 +469,10 @@ public class ControllerImpostazioniGriglia {
                 ((Regione) event.getSource()).setNazione(nationList.get(0).getName(), nationList.get(0).getColor());
                 //AUMENTA IL NUMERO DI ABITANTI, LE RISORSE E IL DENARO DELLA NAZIONE IN BASE ALLE CARATTERISTICCHE DEL TERRITORIO ASSEGNATO
                 nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
-                //AGGIUNGE L'ID DELLA REGIONE (DELLA CELLA) ALLA LISTA DEGLI ID DELLE CELLE ASSEGANTE ALLA NAZIONE
-                //QUINDI AGGIUNGE L'ID DELLA CELLA ALLA LISTA ADDREGIONID
-                nationList.get(0).addRegionId(((Regione) event.getSource()).getId());
-                System.out.println(nationList.get(0).getIdRegioni().get(nationList.get(0).getIdRegioni().size()-1)); //stampo l'ultimo id inserito
+                //AGGIUNGE L'OBJECT REGIONE (LA CELLA) ALLA LISTA DELLE REGIONI(LE CELLE) ASSEGNATE ALLA NAZIONE
+                //QUINDI AGGIUNGE LA CELLA ALLA LISTA REGIONI DI Nation
+                nationList.get(0).addRegion((Regione) event.getSource());
+                System.out.println(nationList.get(0).getRegioni().get(nationList.get(0).getRegioni().size()-1)); //stampo l'ultimo id inserito
                 try {
                     gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
                     gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
