@@ -6,7 +6,7 @@ import java.util.Iterator;
 //Il colore sara' utilizzato per colorare i bottoni nella griglia.
 public class Nation {
 
-    private String nome;						//Stringa nome per il nome della nazione
+    private String nome;					//Stringa nome per il nome della nazione
     private String color;				    //Stringa color peril colore della nazione
     private Eta age;                        //age conterra' l'eta' in cui si trova la nazione
     private double denaro;                  //denaro corrente della nazione
@@ -14,7 +14,7 @@ public class Nation {
     private int numAbitanti;                //numero di abitanti della nazione
 
     //Lista di regioni che rappresentano le celle assegnate e conquistate dalla nazione
-    //Quindi ogni nazione avra i suoi territori e questa lista contiene i territori
+    //Quindi ogni nazione avra i suoi territori e questa lista contiene i territori (le celle)
     //posseduti dalla nazione
     private  ArrayList<Regione> regioni = new ArrayList<>();
 
@@ -130,18 +130,23 @@ public class Nation {
     }
 
     //METODO INCREASE POPULATION
-    //Ad ogni turno se richiamato aumenta il numero degli abitanti della nazione in base ai terreni posseduti. Per ogni
-    // terreno fertile aumentera' la popolazione di 100 mentre per ogni terreno sterile la popolazione diminuira' BO' E' DA VEDE
-    /*CODICE DI SPUNTO PER SINGOLA REGIONE
-    if(tipoRegione.equals("fertile")){ //se la regione e' fertile aumenta il numero di abitanti
-            this.numAbitanti += 100;
+    //Ad ogni turno se richiamato aumenta il numero degli abitanti della nazione in base ai terreni posseduti.
+    //Quindi per ogni regione nella lista regioni che contiene tutte le regioni (celle) assegnate asd una nazione
+    //se quella regione e' fertile aumentera' la popolazione di 100 mentre se quella regione e'
+    //sterile la popolazione diminuira' di 20 abitanti.
+    //Per vedere il tipo di territorio viene richiamato il metodo getTipo della classe Regione.
+    public void increasePopulation() {
+        for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
+            Regione num = i.next();
+            if (num.getTipo()=="fertile") {
+                this.numAbitanti += 100;
+            }
+            else {
+                this.numAbitanti -=20;
+            }
         }
-        else{                              //se la regione e' sterile il numero di abitanti diminuisce del 10%
-            int dieciPerCentoPopolazione = (numAbitanti * 10)/100; //numero di abitanti che rappresentano il 10%
-                                                                   // della popolazione
-            this.numAbitanti = numAbitanti - dieciPerCentoPopolazione; //sottrae il 10% della popolazione
-        }
-    */
+    }
+
 
     //METODO GET ID REGIONI
     //Restituisce l'array list di regioni assegnate alla nazione
@@ -150,14 +155,17 @@ public class Nation {
     }
 
     //METODO ADD REGION
-    //Assegna una cella alla nazione: inserisce la cella(la regione) che assegnamo alla nazione
+    //Assegna una cella alla nazione: inserisce la cella (la regione) che assegnamo alla nazione
     public void addRegion(Regione region){
         this.regioni.add(region);
     }
 
     //METODO REMOVE ALL REGIONS
-    //Rimuove tutte le regioni resettandole, o meglio togliendo nazione di appartenenza e colore della nazione e
-    //togliendole dall'array list regioni
+    //Rimuove tutte le regioni resettandole, o meglio togliendo nazione di appartenenza
+    //su quella cella e togliendo il colore della nazione, richiamando il metodo resetRegion
+    //della classe Region.
+    //Inoltre toglie le celle  dalla lista regioni, la quale contiene tutte
+    //le regioni (le celle) assegnate ad una determinata nazione
     public void removeAllRegions(){
         for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
             Regione num = i.next();
