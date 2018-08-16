@@ -231,12 +231,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Infine mostra il noDeleteStage impostando la visibilita' a true (con il metodo show).
     //Altrimenti,se la lista chiamata nationList che contiene tutte le nazioni che sono state
     //create non e' vuota (quindi se ci sono nazioni) allora il gioco puo' iniziare
+    boolean useStart= false;
     @FXML
     void clickStart(ActionEvent event) {
 
         this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
         this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
-        this.automaGrid.setDisable(true);							//Viene disabilitato la griglia automaGrid
+
         //SE NATION LIST E' VUOTA NON E' POSSIBILE INIZIARE IL GIOCO
         if (nationList.size() == 0){
             try {
@@ -252,6 +253,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 e.printStackTrace();
             }
         }else{
+            useStart=true;
+
             arrayForStart.add("Start Ã¨ stato premuto");
             //ALTRIMENTI INIZIA IL GIOCO
         }
@@ -456,6 +459,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
     double valAttualeDenaro=0;
     @FXML
     void addRegionToNation(ActionEvent event) {
+        if (useStart==true){
+            return;
+        }
         //SE NON ABBIAMO CREATO NESSUNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLLIA
         //IL PROGRAMMA NON DEVE FARE NULLA
         if (nationList.isEmpty() == true) {
@@ -519,6 +525,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 return;
             }
         }
+
     }
 
     @Override
