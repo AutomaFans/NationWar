@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <!-- COMMENTO -->
 <!--
@@ -47,23 +46,51 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Statistics">
+                <Tab text="Statistiche Nazioni">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <BarChart fx:id="barChart" layoutX="82.0" layoutY="42.0" prefHeight="416.0" prefWidth="459.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <xAxis>
-                            <CategoryAxis fx:id="nNation" label="Nations">
-                                 <tickLabelFont>
-                                    <Font size="15.0" />
-                                 </tickLabelFont>
-                              </CategoryAxis>
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis fx:id="nPeople" label="Population" side="LEFT" />
-                          </yAxis>
-                        </BarChart>
-                     </children></AnchorPane>
+                            <children>
+                                <StackedBarChart fx:id="barChart" layoutX="41.0" layoutY="44.0" title="Grafico delle Nazioni">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </StackedBarChart>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Statistiche risorse">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <StackedBarChart fx:id="barChartR" layoutX="41.0" layoutY="44.0" title="Grafico delle risorse">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </StackedBarChart>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Statistiche denaro">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <StackedBarChart fx:id="barCharD" layoutX="41.0" layoutY="44.0" title="Grafico delle Denaro">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </StackedBarChart>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
@@ -80,9 +107,9 @@
                             </image>
                         </ImageView>
                     </graphic>
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                    </cursor>
                 </Button>
                 <Button fx:id="buttonDeleteNation" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickDeleteNation" prefHeight="150.0" prefWidth="150.0" text="Delete Nation">
                     <graphic>
@@ -92,9 +119,9 @@
                             </image>
                         </ImageView>
                     </graphic>
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                    </cursor>
                 </Button>
                 <Button fx:id="buttonStart" disable="true" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#clickStart" prefHeight="150.0" prefWidth="150.0" text="  Start">
                     <graphic>
@@ -104,9 +131,9 @@
                             </image>
                         </ImageView>
                     </graphic>
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                    </cursor>
                 </Button>
                 <Button fx:id="buttonHelp" mnemonicParsing="false" onAction="#clickHelp" prefHeight="150.0" prefWidth="150.0" text="   Help">
                     <graphic>
@@ -116,14 +143,14 @@
                             </image>
                         </ImageView>
                     </graphic>
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                    </cursor>
                 </Button>
                 <Button fx:id="buttonMenu" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onAction="#clickMenu" prefHeight="150.0" prefWidth="150.0" text="Main Menu">
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor></Button>
+                    <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                    </cursor></Button>
             </children>
         </VBox>
     </right>
@@ -131,23 +158,23 @@
         <AnchorPane prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
             <children>
                 <TextArea fx:id="txtColumns" layoutX="94.0" layoutY="-1.0" maxHeight="26.0" maxWidth="85.0" minHeight="26.0" minWidth="85.0" prefHeight="26.0" prefWidth="85.0" style="-fx-opacity: 1;" text="2">
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor></TextArea>
+                    <cursor>
+                        <Cursor fx:constant="TEXT" />
+                    </cursor></TextArea>
                 <Label layoutX="21.0" layoutY="5.0" style="-fx-opacity: 1;" text="N. colonne" />
                 <Label layoutX="207.0" layoutY="5.0" style="-fx-opacity: 1;" text="N. righe" />
                 <TextArea fx:id="txtRows" layoutX="273.0" layoutY="-1.0" maxHeight="26.0" maxWidth="91.0" minHeight="26.0" minWidth="91.0" prefHeight="26.0" prefWidth="91.0" style="-fx-opacity: 1;" text="2">
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor></TextArea>
+                    <cursor>
+                        <Cursor fx:constant="TEXT" />
+                    </cursor></TextArea>
                 <Button fx:id="btnGridDimensions" layoutX="389.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickAddDimensions" prefHeight="20.0" prefWidth="154.0" style="-fx-opacity: 1;" text="Imposta grandezza griglia">
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor></Button>
+                    <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                    </cursor></Button>
                 <Label fx:id="msgError" layoutX="566.0" layoutY="4.0" prefHeight="20.0" prefWidth="145.0" text="Max 50 righe e colonne">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Label>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Label>
             </children></AnchorPane>
     </bottom>
 </BorderPane>

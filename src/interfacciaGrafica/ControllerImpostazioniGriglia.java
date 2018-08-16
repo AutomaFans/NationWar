@@ -3,12 +3,10 @@ package interfacciaGrafica;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -16,15 +14,17 @@ import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.ResourceBundle;
 
 import static interfacciaGrafica.ControllerAddNation.ListaColori;
 import static interfacciaGrafica.ControllerAddNation.nomiNazioni;
 
-public class ControllerImpostazioniGriglia {
+public class ControllerImpostazioniGriglia implements Initializable {
 
     //Crea una lista di Nazioni che conterra' tutte le nazioni che verranno create
     //L'ArrayList e' statica perche' quando aggiungiamo dal
@@ -57,7 +57,11 @@ public class ControllerImpostazioniGriglia {
     private Button buttonMenu;				//Bottone chiamato buttonMenu, per tornare al menu principale (FXMLmenu.fxml)
 
     @FXML
-    static BarChart<String,Integer> barChart;  //Grafico chiamato barChart, base per le statistiche
+    private StackedBarChart barChart;  //Grafico chiamato barChart, base per le statistiche degli abitanti
+    @FXML
+    private StackedBarChart barChartR; //Grafico chiamato barChartR, base per le statistiche delle risorse
+    @FXML
+    private StackedBarChart barCharD; //Grafico chiamato barChartD, base per le statistiche del denaro
 
     @FXML
     private CategoryAxis nNation;          	//Nazioni coinvolte nelle statistiche (sul grafico)
@@ -446,6 +450,10 @@ public class ControllerImpostazioniGriglia {
     //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
     //allora significa che la griglia ÃƒÂ¨ piena e che sono state usate tgutte le celle per cui viene disabilitato il
     //bottone chiamato buttonAddNation, cosi che non e' piu' possibile inserire un'altra nazione.
+    double valAttualeRisorse=0;
+    ArrayList<String> NomiNazioniCopia = new ArrayList<>(); //Questa lista i serve per verificare se la regione per cui sto costruendo il grafico è già presente o se è appena stata creata
+    int valAttualeAbitanti=0;
+    double valAttualeDenaro=0;
     @FXML
     void addRegionToNation(ActionEvent event) {
         //SE NON ABBIAMO CREATO NESSUNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLLIA
@@ -483,7 +491,28 @@ public class ControllerImpostazioniGriglia {
                 if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {		//Se sono state usate tutte le celle
                     this.buttonAddNation.setDisable(true);						//Viene disabilitato il botttone buttonAddNation
                 }
+                XYChart.Series set = new XYChart.Series<>(); //creo set per il grafico degli Abitanti
+                XYChart.Series risorse = new XYChart.Series<>();//creo risorse per il grafico delle risorse
+                XYChart.Series denaro = new XYChart.Series<>(); //creo denaro per il grafico sul denaro (sono tutte delle basi vuote per poi costruire il mio grafico)
+                if (!(NomiNazioniCopia.contains(nationList.get(0).getName()))){ //se il nome della nazione che sto aggiornardo non è presente in NomiNazioniCopia significa che è la prima volta che la creo quindi devo mettere a 0 tutti i valori  che contenevano il numero di risorse , abitanti e denaro della nazione precedente.
+                    valAttualeAbitanti=0;
+                    valAttualeRisorse=0;
+                    valAttualeDenaro=0;
+                    NomiNazioniCopia.add(nationList.get(0).getName()); //aggiungo alla lista NomiNazioniCopia la nuova Nazione così finche lavorerò su questa nazione posso tenermi i valori aggiornati delle sue risorse, dei suoi abitanti e del denaro.
+
+                }
+                set.getData().add(new XYChart.Data<String, Number>(nationList.get(0).getName(), (nationList.get(0).getNumAbitanti()-valAttualeAbitanti ))); //creo un mattone che ha sotto il nome della nazione ed è alto quanti sono gli abitanti di quella nazione
+                valAttualeAbitanti=(nationList.get(0).getNumAbitanti()); //aggiorno k sul numero di abitanti di questa nazione
+                risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(0).getName(), nationList.get(0).getRisorse()-valAttualeRisorse)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quante sono el risorse della nazione
+                valAttualeRisorse = (nationList.get(0).getRisorse()); //aggiorno il valore delle risorse di quella nazione
+                denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(0).getName(), nationList.get(0).getDenaro()-valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quanto è il denaro di quella nazione
+                valAttualeDenaro= nationList.get(0).getDenaro(); //aggiorno il valore del denaro di quella nazione
+                barCharD.getData().addAll(denaro); //aggiungo il rispettivo mattone alla barChart
+                barChart.getData().addAll(set);//anche qui
+                barChartR.getData().addAll(risorse); //anche qui
             }
+
+
             //
             //ALTRIMENTI NON SUCCEDE NULLA
             else{
@@ -492,4 +521,8 @@ public class ControllerImpostazioniGriglia {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
