@@ -371,7 +371,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
             stageFinestra.setTitle("ATTENZIONE"); //imposto il titolo della Finestra
             //ora creo i vari elementi da mettere all'interno della finestra
             Label label = new Label(); //ovvero un label
-            label.setText("Tutto ciÃ² che hai fatto fin ora verrÃ  perso. Sicuro di voler interrompere la simulazione?"); //che conterrÃ  questo testo
+            label.setText("Perderai tutto quello che hai fatto fino ad ora. Sicuro di voler interrompere la simulazione?"); //che conterrÃ  questo testo
             Button yesButton = new Button(); //un bottone
             yesButton.setText("Si"); //che conterrÃ  questo testo
             Button noButton = new Button(); //un altro bottone
