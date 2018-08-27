@@ -32,7 +32,7 @@ public class ControllerMenu implements Initializable {
     //METODO CLICK PLAY
     //Crea un oggetto di tipo BorderPane chiamato impostazioniGriglia facendo riferimento e richiamando
     //l'intefaccia definita in FXMLimpostazioniGriglia.fxml.
-    //Quindi impostazioniGriglia sara'Â  l'interfaccia definita in FXMLimpostazioniGriglia.fxml.
+    //Quindi impostazioniGriglia sara'  l'interfaccia definita in FXMLimpostazioniGriglia.fxml.
     //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con impostazioniGriglia.
     @FXML

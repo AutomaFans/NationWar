@@ -26,7 +26,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
         <Label layoutX="78.0" layoutY="198.0" text="Colore Nazione" />
-        <Button fx:id="buttonClose" layoutX="505.0" layoutY="354.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="71.0" text="Close">
+        <Button fx:id="buttonClose" layoutX="505.0" layoutY="354.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="71.0" text="Chiudi">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>

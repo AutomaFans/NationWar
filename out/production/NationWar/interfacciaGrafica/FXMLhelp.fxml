@@ -17,7 +17,7 @@
 
 <AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerHelp">
     <children>
-        <Button fx:id="buttonClose" layoutX="585.0" layoutY="526.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="38.0" prefWidth="89.0" text="Close" />
+        <Button fx:id="buttonClose" layoutX="585.0" layoutY="526.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="38.0" prefWidth="89.0" text="Chiudi" />
         <TextField editable="false" layoutX="14.0" layoutY="31.0" prefHeight="57.0" prefWidth="563.0" text="1. Cos'è NationWar? Da dove nasce quest'idea?">
             <font>
                 <Font size="25.0" />
