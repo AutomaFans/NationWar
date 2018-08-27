@@ -255,6 +255,29 @@ public class ControllerImpostazioniGriglia implements Initializable {
             }
         }else{
             useStart=true;
+            for(int indice = 0; indice <nationList.size(); indice++) {
+                useStart = true;
+                XYChart.Series set = new XYChart.Series<>(); //creo set per il grafico degli Abitanti
+                XYChart.Series risorse = new XYChart.Series<>();//creo risorse per il grafico delle risorse
+                XYChart.Series denaro = new XYChart.Series<>(); //creo denaro per il grafico sul denaro (sono tutte delle basi vuote per poi costruire il mio grafico)
+                if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) { //se il nome della nazione che sto aggiornardo non è presente in NomiNazioniCopia significa che è la prima volta che la creo quindi devo mettere a 0 tutti i valori  che contenevano il numero di risorse , abitanti e denaro della nazione precedente.
+                    valAttualeAbitanti = 0;
+                    valAttualeRisorse = 0;
+                    valAttualeDenaro = 0;
+                    NomiNazioniCopia.add(nationList.get(indice).getName()); //aggiungo alla lista NomiNazioniCopia la nuova Nazione così finche lavorerò su questa nazione posso tenermi i valori aggiornati delle sue risorse, dei suoi abitanti e del denaro.
+
+                }
+                set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti))); //creo un mattone che ha sotto il nome della nazione ed è alto quanti sono gli abitanti di quella nazione
+                valAttualeAbitanti = (nationList.get(indice).getNumAbitanti()); //aggiorno k sul numero di abitanti di questa nazione
+                risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quante sono el risorse della nazione
+                valAttualeRisorse = (nationList.get(indice).getRisorse()); //aggiorno il valore delle risorse di quella nazione
+                denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quanto è il denaro di quella nazione
+                valAttualeDenaro = nationList.get(indice).getDenaro(); //aggiorno il valore del denaro di quella nazione
+                barCharD.getData().addAll(denaro); //aggiungo il rispettivo mattone alla barChart
+                barChart.getData().addAll(set);//anche qui
+                barChartR.getData().addAll(risorse); //anche qui
+
+            }
 
             arrayForStart.add("Start è stato premuto");
             //ALTRIMENTI INIZIA IL GIOCO
@@ -468,14 +491,14 @@ public class ControllerImpostazioniGriglia implements Initializable {
         //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
         //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO E DEVE ESSERE ASSEGNATA ALLA NAZIONE
         else {
-            if(((Regione) event.getSource()).getNazione().equals("")){    //se la cella su cui si clicca non fa gia'
+            if(((Regione) event.getSource()).getNazione().equals("")) {    //se la cella su cui si clicca non fa gia'
                 // parte di una nazione si assegna quella
                 // regione alla nazione
                 //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
                 int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
-                int gridRows = 0;												//Numero di righe della griglia desiderato dall'utente
-                this.buttonDeleteNation.setDisable(false);						//Viene abilitato il bottone buttonDeleteNation
-                this.buttonStart.setDisable(false);								//Viene abilitato il bottone buttonStart
+                int gridRows = 0;                                                //Numero di righe della griglia desiderato dall'utente
+                this.buttonDeleteNation.setDisable(false);                        //Viene abilitato il bottone buttonDeleteNation
+                this.buttonStart.setDisable(false);                                //Viene abilitato il bottone buttonStart
                 //SETTA LA NAZIONE DI APPARTENENZA E ILCOLORE DELLA NAZIONE SULLA CELLA
                 ((Regione) event.getSource()).setNazione(nationList.get(0).getName(), nationList.get(0).getColor());
                 //AUMENTA IL NUMERO DI ABITANTI, LE RISORSE E IL DENARO DELLA NAZIONE IN BASE ALLE CARATTERISTICCHE DEL TERRITORIO ASSEGNATO
@@ -485,34 +508,15 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 nationList.get(0).addRegion((Regione) event.getSource());
                 //System.out.println(nationList.get(0).getRegioni().get(nationList.get(0).getRegioni().size()-1)); //stampo l'ultimo id inserito
                 try {
-                    gridColumns = Integer.parseInt(txtColumns.getText());  		//Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
-                    gridRows = Integer.parseInt(txtRows.getText());        		//Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
-                } catch (NumberFormatException n) {                       		//Se l'utente non inserisce un intero si ha un eccezione
+                    gridColumns = Integer.parseInt(txtColumns.getText());        //Prende il numero di colonne inserito dall'utente nell'area di testo chiamata txtColumns
+                    gridRows = Integer.parseInt(txtRows.getText());                //Prende il numero di righe inserito dall'utente nell'area di testo chiamata txtRows
+                } catch (NumberFormatException n) {                            //Se l'utente non inserisce un intero si ha un eccezione
                     //Esce dal metodo cosi' da non generare errori
                 }
-                contaNumeroCelleUsate++;										//Incrementa il numero di celle utilizzate
-                if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {		//Se sono state usate tutte le celle
-                    this.buttonAddNation.setDisable(true);						//Viene disabilitato il botttone buttonAddNation
+                contaNumeroCelleUsate++;                                        //Incrementa il numero di celle utilizzate
+                if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {        //Se sono state usate tutte le celle
+                    this.buttonAddNation.setDisable(true);                        //Viene disabilitato il botttone buttonAddNation
                 }
-                XYChart.Series set = new XYChart.Series<>(); //creo set per il grafico degli Abitanti
-                XYChart.Series risorse = new XYChart.Series<>();//creo risorse per il grafico delle risorse
-                XYChart.Series denaro = new XYChart.Series<>(); //creo denaro per il grafico sul denaro (sono tutte delle basi vuote per poi costruire il mio grafico)
-                if (!(NomiNazioniCopia.contains(nationList.get(0).getName()))){ //se il nome della nazione che sto aggiornardo non è presente in NomiNazioniCopia significa che è la prima volta che la creo quindi devo mettere a 0 tutti i valori  che contenevano il numero di risorse , abitanti e denaro della nazione precedente.
-                    valAttualeAbitanti=0;
-                    valAttualeRisorse=0;
-                    valAttualeDenaro=0;
-                    NomiNazioniCopia.add(nationList.get(0).getName()); //aggiungo alla lista NomiNazioniCopia la nuova Nazione così finche lavorerò su questa nazione posso tenermi i valori aggiornati delle sue risorse, dei suoi abitanti e del denaro.
-
-                }
-                set.getData().add(new XYChart.Data<String, Number>(nationList.get(0).getName(), (nationList.get(0).getNumAbitanti()-valAttualeAbitanti ))); //creo un mattone che ha sotto il nome della nazione ed è alto quanti sono gli abitanti di quella nazione
-                valAttualeAbitanti=(nationList.get(0).getNumAbitanti()); //aggiorno k sul numero di abitanti di questa nazione
-                risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(0).getName(), nationList.get(0).getRisorse()-valAttualeRisorse)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quante sono el risorse della nazione
-                valAttualeRisorse = (nationList.get(0).getRisorse()); //aggiorno il valore delle risorse di quella nazione
-                denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(0).getName(), nationList.get(0).getDenaro()-valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quanto è il denaro di quella nazione
-                valAttualeDenaro= nationList.get(0).getDenaro(); //aggiorno il valore del denaro di quella nazione
-                barCharD.getData().addAll(denaro); //aggiungo il rispettivo mattone alla barChart
-                barChart.getData().addAll(set);//anche qui
-                barChartR.getData().addAll(risorse); //anche qui
             }
             //
             //ALTRIMENTI NON SUCCEDE NULLA
@@ -526,6 +530,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
             PopOver pop = new PopOver(verticalBox);  //creo l'oggetto pop che è un PopOver, ossia una specie di finetra (senza però titolo e bottoni)
             //il popover verrà visualizzato quando si passerà sopra una regione che è già stata assegnata ad una regione
             bottone.setOnMouseEntered(MouseEvent -> {
+
                 pop.show(((Regione) event.getSource()));
             });
             //il popover si chiuderà non appena verrà spostato il mouse
