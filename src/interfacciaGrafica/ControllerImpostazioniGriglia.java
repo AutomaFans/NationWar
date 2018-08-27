@@ -7,13 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Popup;
+import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Label;
+import org.controlsfx.control.PopOver;
 
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -462,7 +463,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
         if (useStart==true){
             return;
         }
-        //SE NON ABBIAMO CREATO NESSUNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLLIA
+        //SE NON ABBIAMO CREATO NESSUNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
         //IL PROGRAMMA NON DEVE FARE NULLA
         if (nationList.isEmpty() == true) {
             buttonAddNation.setDisable(false);
@@ -517,13 +518,24 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 barChart.getData().addAll(set);//anche qui
                 barChartR.getData().addAll(risorse); //anche qui
             }
-
-
             //
             //ALTRIMENTI NON SUCCEDE NULLA
             else{
                 return;
             }
+            Regione bottone = ((Regione) event.getSource());  //identifico con la variabile locale la regione su cui ho cliccato
+            Label appartenezaNazione = new Label("Nazione: " + bottone.getNazione());  //creo una Label che contiene il nome della nazione di apparteneza della regione
+            Label risorseRegione = new Label("Valore risorse: " + bottone.getRisorse());  //creo una Label con il valore delle risorse relative a quella specifica regione
+            VBox verticalBox = new VBox(appartenezaNazione,risorseRegione);  //creo un verticalBox che contiene le due Label create precedentemente
+            PopOver pop = new PopOver(verticalBox);  //creo l'oggetto pop che è un PopOver, ossia una specie di finetra (senza però titolo e bottoni)  
+            //il popover verrà visualizzato quando si passerà sopra una regione che è già stata assegnata ad una regione
+            bottone.setOnMouseEntered(MouseEvent -> {
+                pop.show(((Regione) event.getSource()));
+            });
+            //il popover si chiuderà non appena verrà spostato il mouse
+            bottone.setOnMouseExited(MouseEvent -> {
+                pop.hide();
+            });
         }
 
     }
