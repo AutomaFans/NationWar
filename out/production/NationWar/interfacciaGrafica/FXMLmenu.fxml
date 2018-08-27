@@ -21,7 +21,7 @@
                 <Image url="@IMG-Sfondo.jpg" />
             </image>
         </ImageView>
-        <Button fx:id="buttonPlay" contentDisplay="CENTER" layoutX="304.0" layoutY="429.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="60.0" prefWidth="144.0" text="Play">
+        <Button fx:id="buttonPlay" contentDisplay="CENTER" layoutX="304.0" layoutY="429.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="60.0" prefWidth="144.0" text="Gioca">
             <cursor>
                 <Cursor fx:constant="OPEN_HAND" />
             </cursor>
@@ -29,7 +29,7 @@
                 <Font size="21.0" />
             </font>
         </Button>
-      <Button fx:id="buttonExit" layoutX="671.0" layoutY="543.0" mnemonicParsing="false" onAction="#clickExit" text="Exit">
+      <Button fx:id="buttonExit" layoutX="671.0" layoutY="543.0" mnemonicParsing="false" onAction="#clickExit" text="Esci">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor></Button>

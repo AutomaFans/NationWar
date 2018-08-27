@@ -18,6 +18,6 @@
             <Font size="22.0" />
          </font>
       </TextArea>
-      <Button fx:id="buttonClose" layoutX="436.0" layoutY="338.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="94.0" text="Close" />
+      <Button fx:id="buttonClose" layoutX="436.0" layoutY="338.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="94.0" text="Chiudi" />
    </children>
 </AnchorPane>

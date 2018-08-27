@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerErrore">
    <children>
-      <Button fx:id="buttonClose" layoutX="425.0" layoutY="335.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="32.0" prefWidth="99.0" text="Close">
+      <Button fx:id="buttonClose" layoutX="425.0" layoutY="335.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="32.0" prefWidth="99.0" text="Chiudi">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>

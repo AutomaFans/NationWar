@@ -255,7 +255,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
         }else{
             useStart=true;
 
-            arrayForStart.add("Start Ã¨ stato premuto");
+            arrayForStart.add("Start è stato premuto");
             //ALTRIMENTI INIZIA IL GIOCO
         }
     }
@@ -392,7 +392,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 }
                 stageFinestra.close(); //e chiudo la finestra
             });
-            noButton.setOnAction(e -> { //imposto ciÃ² che deve accadere se premo su noButton
+            noButton.setOnAction(e -> { //imposto ciò che deve accadere se premo su noButton
 
                 stageFinestra.close(); //chiudo la finestra
             });
@@ -407,7 +407,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
 
         }
-        else{ //ALTRIMENTI, ovvero se il bottone MainMenu Ã¨ stato premuto prima di premere start
+        else{ //ALTRIMENTI, ovvero se il bottone MainMenu è stato premuto prima di premere start
             for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //rimetto in NationList tutti i colori delle nazioni che avevo usato
                 Nation nazione = i.next();
                 ListaColori.add(nazione.getColor());

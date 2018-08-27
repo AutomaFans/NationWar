@@ -33,7 +33,7 @@
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>
-        <Button fx:id="buttonClose" layoutX="490.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="67.0" text="Close">
+        <Button fx:id="buttonClose" layoutX="490.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="67.0" text="Chiudi">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>
