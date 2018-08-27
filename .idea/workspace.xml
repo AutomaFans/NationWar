@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2fb928f-6efc-419f-a686-fb1b8a1a2473" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NationWar.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NationWar.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerImpostazioniGriglia.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/ControllerImpostazioniGriglia.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -20,8 +17,8 @@
       <file leaf-file-name="ControllerImpostazioniGriglia.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="529" column="150" selection-start-line="529" selection-start-column="150" selection-end-line="529" selection-end-column="150" />
+            <state relative-caret-position="216">
+              <caret line="404" column="33" selection-start-line="404" selection-start-column="33" selection-end-line="404" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1296#1304#0" expanded="true" />
@@ -108,7 +105,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="33" />
     <option name="y" value="33" />
     <option name="width" value="750" />
@@ -653,8 +650,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="529" column="150" selection-start-line="529" selection-start-column="150" selection-end-line="529" selection-end-column="150" />
+        <state relative-caret-position="216">
+          <caret line="404" column="33" selection-start-line="404" selection-start-column="33" selection-end-line="404" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1296#1304#0" expanded="true" />
