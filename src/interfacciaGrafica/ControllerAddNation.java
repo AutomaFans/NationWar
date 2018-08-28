@@ -39,14 +39,15 @@ public class ControllerAddNation {
     private TextField txtNomeNazione;			//Area di testo chiamata txtNomeNazione per inserire il nome della nazione che si vuole aggiungere
 
     @FXML
-    private ChoiceBox<String> coloreNazione;	//ChoiceBox (menu a tendina) chiamato coloreNazione che conterra'Ã‚Â  tutti i
-    //colori che potranno essere scelti quando si crea una nazione
+    private ChoiceBox<String> coloreNazione;	/*ChoiceBox (menu a tendina) chiamato coloreNazione che conterra' tutti i
+    											colori che potranno essere scelti quando si crea una nazione*/
 
 
 
     //METODO INITIALIZE
-    //Aggiunge al choice box chimato nomeNazione tutti gli elementi che sono contenuti dentro la lista
-    //ListaNomiNazioni, poi imposta di default la stringa "Seleziona Nome" della lista.
+    //Aggiunge al choice box chiamato nomeNazione tutti gli elementi che sono contenuti dentro la lista
+    //ListaColori, quindi nel menu a tendina ci saranno tutti i colori che possono essere scelti
+    //quandio si creala nazione, poi imposta di default la stringa "Seleziona Colore" della lista.
     @FXML
     public void initialize() {
         coloreNazione.getItems().addAll(ListaColori);
@@ -54,8 +55,9 @@ public class ControllerAddNation {
     }
 
 
+
     //METODO CLICK CLOSE
-    //Quando viene premuto il bottone chiamato buttonClose, viene creato un nuovo stage chaimato stage
+    //Quando viene premuto il bottone chiamato buttonClose, viene creato un nuovo stage chiamato stage
     //e (con il metodo getWindow) viene preso il valore della finestra e viene messo dentro stage.
     //Infine viene chiuso lo Stage chiamato stage, che conteneva il valore della finestra
     //(con il metodo close) e cosi si chiude la finestra.
@@ -77,14 +79,14 @@ public class ControllerAddNation {
     //nazione che vuoi aggiungere" (quindi se l'utente ha inserito un nome sbagliato)
     //allora viene creato un oggetto di tipo AnchorPane chiamato errorPane facendo riferimento
     //e richiamando l'intefaccia definita in FXMLerrore.fxml.
-    //Quindi errorPane sara'Â  l'interfaccia definita in FXMLerror.fxml.
+    //Quindi errorPane sara' l'interfaccia definita in FXMLerror.fxml.
     //Poi viene creato un nuovo Stage, chiamato errorStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA errorPane SULLO STAGE errorStage.
     //Infine mostra l'errorStage impostando la visibilita' a true (con il metodo show).
     //Altrimenti, se la lista nomiNazioni contiene gia' il nome che l'utente sta
     //inserendo (quindi se l'utente sta provando ad aggiungere una nuova nazione
-    //controlla se e' gia presente nella lista nomiNazioni) allora
+    //controlla se e' gia presente il nome scelto nella lista nomiNazioni) allora
     //viene creato un oggetto di tipo AnchorPane chiamato errorPane facendo riferimento
     //e richiamando l'intefaccia definita in FXMLnazExist.fxml.
     //Quindi errorPane sara' l'interfaccia definita in FXMLerror.fxml.
@@ -97,7 +99,7 @@ public class ControllerAddNation {
     //a "Seleziona Colore" (quindi se l'utente non ha scelto nessun colore), oppure
     //se la Stringa nomeNaz e' uguale a  "Inserisci nome della nazione che vuoi aggiungere"
     //(quindi se l'utente ha inserito un nome sbagliato)non viene aggiunto a nessuna lista la
-    //nazine che si sta tentando di creare.
+    //nazione che si sta tentando di creare.
     //Altrimenti, se non si verifica nessuna delle due condizione precedenti, cosi
     //quando viene premuto il bottone buttonAggiungi, viene creato un nuovo oggetto di tipo Nation
     //con nome txtNomeNazione (nome inserito dall'utente) e colore scelto tra i colori del ChoiceBox.
@@ -138,13 +140,15 @@ public class ControllerAddNation {
         }
         else {
             //ALTRIMENTI, SE I VALORI INSERITI NON SONO CORRETTI NON AGGIUNGE LA NAZIONE A NESSUNA LISTA
+            //QUINDI NO FA NIENTE
             if (nomeNaz.isEmpty() || coloreNaz.contentEquals("Seleziona Colore") || nomeNaz.contentEquals("Inserisci nome della nazione che vuoi aggiungere")){
-                //non aggiunge la nazione (non ha un nome valido)
-                //INVECE SE I VALORI INSERITI SONO CORRETTI AGGIUNGE LA NAZINE ALLE LISTE
-            } else{
+                //non fa niente
+            }
+            //INVECE SE I VALORI INSERITI SONO CORRETTI AGGIUNGE LA NAZIONE ALLE LISTE
+            else{
                 Nation nazione = new Nation(nomeNaz, coloreNaz);
-                new ControllerImpostazioniGriglia().nationList.add(0, nazione); //Viene creata una nuova istanza di ControllerImpostazioniGriglia
-                //in maniera da aggiungere alla sua ArrayList statica la nazione
+                new ControllerImpostazioniGriglia().nationList.add(0, nazione); /*Viene creata una nuova istanza di ControllerImpostazioniGriglia
+                																in maniera da aggiungere alla sua ArrayList statica la nazione*/
                 nomiNazioni.add(nomeNaz);
                 ListaColori.remove(coloreNaz);
                 Stage stage = (Stage) buttonAggiungi.getScene().getWindow();
