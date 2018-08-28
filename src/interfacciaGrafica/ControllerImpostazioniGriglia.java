@@ -58,11 +58,11 @@ public class ControllerImpostazioniGriglia implements Initializable {
     private Button buttonMenu;				//Bottone chiamato buttonMenu, per tornare al menu principale (FXMLmenu.fxml)
 
     @FXML
-    private StackedBarChart barChart;  //Grafico chiamato barChart, base per le statistiche degli abitanti
+    private StackedBarChart barChart;  		//Grafico chiamato barChart, base per le statistiche degli abitanti
     @FXML
-    private StackedBarChart barChartR; //Grafico chiamato barChartR, base per le statistiche delle risorse
+    private StackedBarChart barChartR; 		//Grafico chiamato barChartR, base per le statistiche delle risorse
     @FXML
-    private StackedBarChart barCharD; //Grafico chiamato barChartD, base per le statistiche del denaro
+    private StackedBarChart barCharD; 		//Grafico chiamato barChartD, base per le statistiche del denaro
 
     @FXML
     private CategoryAxis nNation;          	//Nazioni coinvolte nelle statistiche (sul grafico)
@@ -86,9 +86,23 @@ public class ControllerImpostazioniGriglia implements Initializable {
     private GridPane automaGrid; 			//Griglia chiamata automaGrid che serve per la griglia del gioco
 
     int contaNumeroCelleUsate;				//Variabile di tipo intera per sapere il numero di celle della griglia che sono state usate
-    static ArrayList<String> arrayForStart = new ArrayList<>(); //mi serve per capire se Start Ã¨ stato premuto o no nel metodo ClickMenu
 
+    double valAttualeRisorse=0;				//Variabile che tiene conto del valore delle risorse
 
+    int valAttualeAbitanti=0;				//Variabile che tiene conto del numero di abitanti
+
+    double valAttualeDenaro=0;				//Variabile che tiene conto della quantita' di denaro
+
+    boolean useStart= false;				//Variabile per vedere se start e' premuto (true) o meno (false)
+
+    //Crea una lista di stringhe chiamata arrayForStart che serve per capire se Start e'
+    //stato premuto o no nel metodo ClickMenu
+    static ArrayList<String> arrayForStart = new ArrayList<>();
+
+    //Creo una lista di stringhe chiamata NomiNazioniCopia che serve per verificare
+    //se la regione per cui sto costruendo il grafico e' gia' presente nel grafico
+    //o se e' appena stata creata
+    ArrayList<String> NomiNazioniCopia = new ArrayList<>();
 
     //METODO CLICK ADD NATION
     //Se il numero  di elementi  della lista chiamata nationList e' minore del numero di elementi
@@ -102,7 +116,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Infine mostra l'addNationStage impostando la visibilita' a true (con il metodo show).
     //Altrimenti, se il numero  di elementi  della lista chiamata nationList non e' minore del numero di elementi
     //della lista chiamata ListaColori -1 allora significa che non si possono aggiunere piu' nazioni
-    //(perche' ogni volta che si crea una nuova nazione, in CoontrollerAddNation, viene tolto
+    //(perche' ogni volta che si crea una nuova nazione, in ControllerAddNation, viene tolto
     //dalla ListaColori il colore usato per la nazione creata, in tal modo non possono essere
     //create piu' nazioni con lo stesso colore), allora viene creato un oggetto di tipo AnchorPane
     //chiamato limitPane facendo riferimento e richiamando l'intefaccia definita in FXMlimite.fxml.
@@ -145,7 +159,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
     //METODO CLICK DELETE NATION
     //Quando il bottone buttonDeleteNation viene premuto, se la lista chiamata nationList
-    //che contiene tutte le nazioni che sono state create Ã¨ vuota (quindi se ci sono nazioni)
+    //che contiene tutte le nazioni che sono state create e' vuota (quindi se ci sono nazioni)
     //viene creato un oggetto di tipo AnchorPane chiamato noDeletePane facendo riferimento
     //e richiamando l'intefaccia definita in FXMLnoDelete.fxml.
     //Quindi noDeletePane sara' l'interfaccia definita in FXMLnoDelete.fxml
@@ -193,7 +207,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //METODO HELP
     //Quando il bottone buttonHelp viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
     //helpPane facendo riferimento e richiamando l'intefaccia definita in FXMLhelp.fxml.
-    //Quindi helpPane sara'Ãƒâ€šÃ‚Â  l'interfaccia definita in FXMLhelp.fxml.
+    //Quindi helpPane sara' l'interfaccia definita in FXMLhelp.fxml.
     //Poi viene creato un nuovo Stage, chiamato helpStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA helpPane SULLO STAGE helpStage.
@@ -216,13 +230,11 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Quando viene premuto il bottone start, viene disabilitato il bottone buttonAddNation,
     //(cosi da togliera la possibilita' di aggiungere altre nazioni dopo aver premuto Start),
     //viene disabilitato il bottone buttonDeleteNation,(cosi da togliera la possibilita'
-    //di cancellare nazioni dopo aver premuto Start) e viene disabilitata anche la grigllia
-    //chiamata automaGrid (cosi da togliere la possibilita' di cliccare i bottoni che compongono
-    //la griglia).
+    //di cancellare nazioni dopo aver premuto Start).
     //Se la lista chiamata nationList che contiene tutte le nazioni che sono state create
-    //Ã¨ vuota (quindi se non ci sono nazioni) allora il gioco non puo' iniziare per cui
+    //e' vuota (quindi se non ci sono nazioni) allora il gioco non puo' iniziare per cui
     //vengono riabilitati il bottone buttonAddNation e il bottone buttonDeleteNation e
-    //viene riabilitata la  griglia automaGrid, in seguito viene creato un oggetto di tipo
+    //in seguito viene creato un oggetto di tipo
     //AnchorPane chiamato noStartPane facendo riferimento e richiamando l'intefaccia
     //definita in FXMLnoStart.fxml.
     //Quindi noStartPane sara' l'interfaccia definita in FXMLnoStart.fxml
@@ -231,11 +243,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //QUINDI MOSTRA LA SCENA noStartPane SULLO STAGE noStartStage.
     //Infine mostra il noDeleteStage impostando la visibilita' a true (con il metodo show).
     //Altrimenti,se la lista chiamata nationList che contiene tutte le nazioni che sono state
-    //create non e' vuota (quindi se ci sono nazioni) allora il gioco puo' iniziare
-    boolean useStart= false;
+    //create non e' vuota (quindi se ci sono nazioni) allora il gioco puo' iniziare.
+    //Cosi una volta premuto il bottone start viene impostata la variabile useStart a true.
+    //Poi per ogni nazione dentro la lista nationList viene creata la base per il grafico degli gli
+    //abitanti della nazione chiamata set, la base per il grafico delle risorse chiamata risorse e
+    //la base per il grafico del denaro chiamata denaro.
     @FXML
     void clickStart(ActionEvent event) {
-
         this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
         this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
 
@@ -245,7 +259,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
                 buttonAddNation.setDisable(false);
                 buttonDeleteNation.setDisable(false);
-                automaGrid.setDisable(false);
                 Stage noStartStage = new Stage();
                 noStartStage.setScene(new Scene(noStartPane));
                 noStartStage.setResizable(false);
@@ -253,25 +266,25 @@ public class ControllerImpostazioniGriglia implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //ALTRIMENTI, SE NATION LIST NON E' VUOTA E' POSSIBILE INIZIARE IL GIOCO
         }else{
             useStart=true;
             for(int indice = 0; indice <nationList.size(); indice++) {
-                useStart = true;
-                XYChart.Series set = new XYChart.Series<>(); //creo set per il grafico degli Abitanti
-                XYChart.Series risorse = new XYChart.Series<>();//creo risorse per il grafico delle risorse
-                XYChart.Series denaro = new XYChart.Series<>(); //creo denaro per il grafico sul denaro (sono tutte delle basi vuote per poi costruire il mio grafico)
-                if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) { //se il nome della nazione che sto aggiornardo non è presente in NomiNazioniCopia significa che è la prima volta che la creo quindi devo mettere a 0 tutti i valori  che contenevano il numero di risorse , abitanti e denaro della nazione precedente.
+                XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
+                XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
+                XYChart.Series denaro = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
+                if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) { //se il nome della nazione che sto aggiornardo non Ã¨ presente in NomiNazioniCopia significa che Ã¨ la prima volta che la creo quindi devo mettere a 0 tutti i valori  che contenevano il numero di risorse , abitanti e denaro della nazione precedente.
                     valAttualeAbitanti = 0;
                     valAttualeRisorse = 0;
                     valAttualeDenaro = 0;
-                    NomiNazioniCopia.add(nationList.get(indice).getName()); //aggiungo alla lista NomiNazioniCopia la nuova Nazione così finche lavorerò su questa nazione posso tenermi i valori aggiornati delle sue risorse, dei suoi abitanti e del denaro.
+                    NomiNazioniCopia.add(nationList.get(indice).getName()); //aggiungo alla lista NomiNazioniCopia la nuova Nazione cosÃ¬ finche lavorerÃ² su questa nazione posso tenermi i valori aggiornati delle sue risorse, dei suoi abitanti e del denaro.
 
                 }
-                set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti))); //creo un mattone che ha sotto il nome della nazione ed è alto quanti sono gli abitanti di quella nazione
+                set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti))); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto quanti sono gli abitanti di quella nazione
                 valAttualeAbitanti = (nationList.get(indice).getNumAbitanti()); //aggiorno k sul numero di abitanti di questa nazione
-                risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quante sono el risorse della nazione
+                risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse)); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto tanto quante sono el risorse della nazione
                 valAttualeRisorse = (nationList.get(indice).getRisorse()); //aggiorno il valore delle risorse di quella nazione
-                denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed è alto tanto quanto è il denaro di quella nazione
+                denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto tanto quanto Ã¨ il denaro di quella nazione
                 valAttualeDenaro = nationList.get(indice).getDenaro(); //aggiorno il valore del denaro di quella nazione
                 barCharD.getData().addAll(denaro); //aggiungo il rispettivo mattone alla barChart
                 barChart.getData().addAll(set);//anche qui
@@ -280,7 +293,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
             }
 
             arrayForStart.add("Start è stato premuto");
-            //ALTRIMENTI INIZIA IL GIOCO
         }
     }
 
@@ -317,7 +329,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //e viene settata la percentuale di larghezza che la riga deve occupare (con il metodo setPercentWidth)
     //Per il numero di righe e di colonne specificate dall'utente, vengono creati i bottoni
     //e viene impostata l'altezza massima e minima del bottone, larghezza massima e minima
-    //del bottone, identificatore e event handler cosi da riempire tutta la griglia e vengono aggiunti i bottoni alla griglia.
+    //del bottone (cosi da riempire tutta la griglia), identificatore e event handler per
+    //colorare il bottone in base al colore scelto dall' utente e vengono aggiunti i bottoni alla griglia.
     @FXML
     void clickAddDimensions(ActionEvent event) {
         int gridColumns;                                        	//Numero di colonne della griglia desiderato dall'utente
@@ -349,13 +362,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
         this.txtColumns.setEditable(false);						    //Viene disabilitata l'area di testo per specificare il numero di colonne
         this.buttonAddNation.setDisable(false); 					//Viene abilitato il bottone buttonAddNation
 
-        double columnPercentual = 582.0/gridColumns;  				//Percentuale di spazio che deve occupare una colonna nella griglia
-        //per potersi adattare(582.0 e' la larghezza fissa della griglia)
+        double columnPercentual = 582.0/gridColumns;  				/*Percentuale di spazio che deve occupare una colonna nella griglia
+        															per potersi adattare(582.0 e' la larghezza fissa della griglia)*/
         ColumnConstraints col = new ColumnConstraints();   		    //Crea una nuova colonna
         col.setPercentWidth(columnPercentual);             		    //Setta la percentuale di larghezza che la colonna deve occupare
 
-        double rowPercentual = 517.0/gridRows;  					//Percentuale di spazio che deve occupare una riga nella griglia per
-        //potersi adattare(517.0 e' l'altezza fissa della griglia)
+        double rowPercentual = 517.0/gridRows;  					/*Percentuale di spazio che deve occupare una riga nella griglia per
+        															potersi adattare(517.0 e' l'altezza fissa della griglia)*/
         RowConstraints row = new RowConstraints(); 				    //Crea una nuova riga
         row.setPercentHeight(rowPercentual);       				    //Setta la percentuale di altezza che la riga deve occupare
 
@@ -365,14 +378,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
             for (int y=0; y<gridColumns; y++){						//Per y che va da 0 fino a  al numero di colonne inserito dall'utente
                 Regione bottone = new Regione();  					//Crea un bottone (uno per ogni incrocio riga - colonna)
                 bottone.setValore(gridRows, gridColumns);           //Setta il valore in denaro della regione(cella)
-
-                bottone.setMinHeight(rowPercentual);  				//Imposta l'altezza minima del bottone a rowPercentual
-                bottone.setMaxHeight(rowPercentual);				//Imposta l'altezza massima del bottone a rowPercentual
-                bottone.setMaxWidth(columnPercentual);				//Imposta la grandezza minima del bottone a columnPercentual
-                bottone.setMinWidth(columnPercentual);				//Imposta la grandezza massima del bottone a columnPercentual
+                bottone.setMinHeight(rowPercentual-0.56);  			//Imposta l'altezza minima del bottone a rowPercentual
+                bottone.setMaxHeight(rowPercentual-0.56);			//Imposta l'altezza massima del bottone a rowPercentual
+                bottone.setMaxWidth(columnPercentual-0.60);			//Imposta la grandezza minima del bottone a columnPercentual
+                bottone.setMinWidth(columnPercentual-0.60);			//Imposta la grandezza massima del bottone a columnPercentual
                 bottone.setId("btn" + i + y);                       //Aggiunge un identificatore(ID) al bottone
-                bottone.setOnAction(this::addRegionToNation);       //Aggiunge un event handler al bottone che e' quello per colorare
-                //la cella in base al'ultima nazione inserita
+                bottone.setOnAction(this::addRegionToNation);       /*Aggiunge un event handler al bottone che e' quello per colorare
+                													la cella in base al'ultima nazione inserita*/
                 automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
 
             }
@@ -381,62 +393,97 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
 
     //METODO MENU
-    //Quando il bottone buttonMenu viene premuto, si svuota la lista delle nazioni in maniera da non
-    //tenere memorizzate le vecchie nazioni create, ed inoltre viene riaggiunto alla listaColori il
-    //colore usato per la nazione che si sta eliminando, poi viene creato un oggetto di tipo AnchorPane chiamato
+    //Se la lunghezza dell'array aarrayForStart e' maggiore o uguale di 1 (quindi si e' gia'
+    //premuto Start e poi si preme Menu) viene creato un nuovo Stage, chiamato stageFinestra e imposta il titolo
+    //di questo stage con la scritta "ATTENZIONE".
+    //Poi vengono creati i vari componenti (o elementi) da mettere dentro questo stage.
+    //Quindi viene creata una label chiamata label e viene impostato il testo di questa label
+    //con la scritta "Perderai tutto quello che hai fatto fino ad ora. Sicuro di voler interrompere la simulazione?".
+    //Poi viene creato un bottone chiamato yesButton e viene impostato il testo di questo bottone con la scritta "Si".
+    //Allo stesso modo viene creato un altro bottone chiamato no Button e viene impostato il testo di questo bottone
+    //con la scritta "No".
+    //Poi crea un VBox chiamato layout (per disporre i componenti verticalmente, in questo caso i
+    //componenti sono la label e i due bottoni yesButton e noButton)
+    //e aggiunge a layout prima la label poi il bottone yesButton e poi il bottone
+    //noButton ed infine posiziona questi due componenti al centro (richiamando il metodo setAlignment)
+    //Infine crea una Scene (contenitore più  interno) chiamata scene per il nodo radice
+    //specificato (layout) e specifica la scena da usare sullo stage stageFinestra
+    //(con il metodo setScene) e poi mostra lo stage stageFinestra impostandola visibilita' a
+    //true (con il metodo show).
+    //Se il bottone yesButton viene premuto (quindi se si e' sicuri di interrompere la simulazione)
+    //vengono presi tutti i colori che erano stati usati per colorare le celle della nazioni e vengono riaggiunti
+    //alla lista ListaColori (che contiene' tutti i colori delle nazioni che potranno essere scelti quando si crea
+    //una nuova nazione) cosida rendere nuovamenti i colori diponibili ed in seguito viene cancellato tutto cio' che si
+    //trova dentro la lista nomiNazioni (che contiene' tutti i nomi delle nazioni che sono state create) e viene cancellato
+    //tutto cio' che si trova dentro la lista nationList  (che conterra' tutte le nazioni che sono state create) in maniera
+    //da non tenere memorizzate le nazioni che sono state create.
+    //Poi viene creato un oggetto di tipo AnchorPane chiamato
     //menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
     //Quindi menu sara' l'interfaccia definita in FXMLmenu.fxml.
     //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
-    //precedentemente, ovvero con menu.
+    //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
+    //Se il bottone noButton viene premuto (quindi se non si e' sicuri di interrompere la simulazione)
+    //viene semplicemente chiuso lo stage chiamato stageFinestra (con il metodo close).
+    //Altrimenti, se non si è premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
+    //colorare le celle della nazioni e vengono riaggiunti alla lista ListaColori (che contiene' tutti i colori delle nazioni
+    //che potranno essere scelti quando si crea una nuova nazione) cosida rendere nuovamenti i colori diponibili ed in seguito
+    //viene cancellato tutto cio' che si trova dentro la lista nomiNazioni (che contiene' tutti i nomi delle nazioni che sono
+    //state create) e viene cancellato tutto cio' che si trova dentro la lista nationList  (che conterra' tutte le nazioni che
+    //sono state create) in maniera da non tenere memorizzate le nazioni che sono state create.
+    //Poi viene creato un oggetto di tipo AnchorPane chiamato menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
+    //Quindi menu sara' l'interfaccia definita in FXMLmenu.fxml.
+    //Poi prende il nodo principale, borderPane,  e sostituisce tutti i figli con l'oggetto creato
+    //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
     @FXML
     void clickMenu(ActionEvent event) {
-        if(arrayForStart.size()>=1){ // se è stato premuto Start
-            Stage stageFinestra = new Stage();  //creo un nuovo stage che chiamo StageFinestra
-            stageFinestra.setTitle("ATTENZIONE"); //imposto il titolo della Finestra
-            //ora creo i vari elementi da mettere all'interno della finestra
-            Label label = new Label(); //ovvero un label
-            label.setText("Perderai tutto quello che hai fatto fino ad ora. Sicuro di voler interrompere la simulazione?"); //che conterrà  questo testo
-            Button yesButton = new Button(); //un bottone
-            yesButton.setText("Si"); //che conterrÃ  questo testo
-            Button noButton = new Button(); //un altro bottone
-            noButton.setText("No"); //che conterrÃ  questo testo
-            yesButton.setOnAction(e -> { //imposto ciò che deve accadere se premo il bottone yesButton
-                for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //prendo tutti i coloti delle Nazioni che avevo creato e li rimetto nella ListaColori
+        //SE E' STATO PREMUTO START (PRIMA DI PREMERE IL BOTTONE BUTTON MENU)
+        if(arrayForStart.size()>=1){
+            Stage stageFinestra = new Stage();
+            stageFinestra.setTitle("ATTENZIONE");
+            Label label = new Label();
+            label.setText("Perderai tutto quello che hai fatto fino ad ora. Sicuro di voler interrompere la simulazione?");
+            Button yesButton = new Button();
+            yesButton.setText("Si");
+            Button noButton = new Button();
+            noButton.setText("No");
+            VBox layout = new VBox(10);//
+            layout.getChildren().addAll(label, yesButton, noButton);
+            layout.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(layout);
+            stageFinestra.setScene(scene);
+            stageFinestra.show();
+            //SE IL BOTTONE YES BUTTON VIENE PREMUTO
+            yesButton.setOnAction(e -> {
+                for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) {
                     Nation nazione = i.next();
                     ListaColori.add(nazione.getColor());
                 }
-                nomiNazioni.clear(); 			//Cancello tutto cio' che si trova in nomiNazioni
-                nationList.clear(); 			//Cancello tutti gli oggetti Nation di nationList.
-
+                nomiNazioni.clear();
+                nationList.clear();
                 try {
-                    AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml")); //restituisco il menu
-                    borderPane.getChildren().setAll(menu); //sul BorderPane
+                    AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
+                    borderPane.getChildren().setAll(menu);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
                 stageFinestra.close(); //e chiudo la finestra
             });
-            noButton.setOnAction(e -> { //imposto ciò che deve accadere se premo su noButton
-                stageFinestra.close(); //chiudo la finestra
+            //SE IL BOTTONE NO BUTTON VIENE PREMUTO
+            noButton.setOnAction(e -> {
+                stageFinestra.close();
             });
-            //Dopo di che ritorna il valore della variabile Conferma.
-            VBox layout = new VBox(10);//Poi creo un VBox chiamato layout (per disporre i componenti verticalmente), spacing Ã¨ la spaziatura tra un componente e l'altro
-            layout.getChildren().addAll(label, yesButton, noButton); //e aggiunge i componenti
-            layout.setAlignment(Pos.CENTER);//posiziona questi due componenti al centro (richiamando il metodo setAlignment)
-            Scene scene = new Scene(layout); //Infine crea una Scene (contenitore più  interno) chiamata scene per il nodo radice
-            stageFinestra.setScene(scene);//specifica la scena da usare sullo stage stageS1
-            stageFinestra.show();
         }
-        else{ //ALTRIMENTI, ovvero se il bottone MainMenu è stato premuto prima di premere start
-            for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) { //rimetto in NationList tutti i colori delle nazioni che avevo usato
+        //ALTRIMENTI, SE E' STATO PREMUTO MENU (NON AVENDO PREMUTO IL BOTTONE BUTTON START)
+        else{
+            for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) {
                 Nation nazione = i.next();
                 ListaColori.add(nazione.getColor());
             }
-            nomiNazioni.clear(); 			//Cancello tutto cio' che si trova in nomiNazioni
-            nationList.clear(); 			//Cancello tutti gli oggetti Nation di nationList.
+            nomiNazioni.clear();
+            nationList.clear();
             try {
-                AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml")); //restituisco il menu
-                borderPane.getChildren().setAll(menu); //sul BorderPane
+                AnchorPane menu = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
+                borderPane.getChildren().setAll(menu);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -447,11 +494,12 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //METODO ADD REGION TO NATION
     //Quando si clicca su una cella mentre si stanno aggiungendo nazioni alla griglia, questo metodo assegna
     //alla cella cliccata il colore dell'ultima nazione inserita.
-    //Se la lista chiamata nationList e' vuota, quindi se non e' stat creata nessuna nazione,
+    //Se la variabile useStart e' true (cio' se e' gia' stato premuto start) non seccede nulla.
+    //Se la lista chiamata nationList e' vuota, quindi se non e' stata creata nessuna nazione,
     //allora viene soltanto abilitato il bottone chiamato buttonAddNation e non succede nient'altro,
     //perche' se non abbiamo creato nessuna nazione e clicchiamo su una cella della griglia il programma
     //non deve fare nulla.
-    //Altrimenti, controlla se quella cella non e' stata assegnata a nessuna nazione:
+    //Altrimenti se abbiamo cretao la nazione , controlla se quella cella non e' stata assegnata a nessuna nazione:
     //e se non e' stata assegnata (quindi se la cella su cui si clicca non fa gia' parte
     //di una nazione si assegna quella regione, quindi quella cella, alla nazione)
     //e verra' colorata in base al colore scelto.
@@ -471,14 +519,25 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Inoltre, ogni volta che si clicca e quindi si colora una cella viene incrementata la variabile che tiene conto
     //del numero di celle utilizzate e se questo numero di celle utilizzate e' maggiore o uguale al prodotto
     //numero di righe per numero di colonne (indseriti dall'utente nelle apposite aree di testo)
-    //allora significa che la griglia ÃƒÂ¨ piena e che sono state usate tgutte le celle per cui viene disabilitato il
+    //allora significa che la griglia e' piena e che sono state usate tutte le celle per cui viene disabilitato il
     //bottone chiamato buttonAddNation, cosi che non e' piu' possibile inserire un'altra nazione.
-    double valAttualeRisorse=0;
-    ArrayList<String> NomiNazioniCopia = new ArrayList<>(); //Questa lista i serve per verificare se la regione per cui sto costruendo il grafico è già presente o se è appena stata creata
-    int valAttualeAbitanti=0;
-    double valAttualeDenaro=0;
+    //Se siamo nel caso in cui abbiamo creato una nazione, creaiamo una variabile bottone di tipo regione che
+    //identifica la cella su cui si clicca.
+    //Poi viene creata una label, chiamata appartenenzaNazione e viene impostato il testo di questa label con
+    //il nome della nazione di appartenenza (cioe' quella cella a quale nazione appartiene).
+    //Poi viene creata un'altra label, chiamata risorseRegione e viene impostato il testo di questa label con
+    //il valore delle risorse relative a quella specifica regione (cioe' quella cella quante risorse ha).
+    //In seguito viene creato un VBox chiamato verticalBox (per disporre i componenti verticalmente, in questo caso i
+    //componenti sono le due label) e aggiunge a verticalBox prima la label appartenenzaNazione e poi lalabel risorseRegione
+    //Poi viene creato un PopOver chiamato pop.
+    //un PopOver e' una specie di finetra (senza pero' titolo e bottoni).
+    //Poi viene impostata l'azione che quando si passa il mouse sopra una regione (una cella) che e' gia' stata assegnata
+    //ad una nazione allora viene visualizzato il PopOver (cioe' il PopOver viene viisualizzato solo quando si passail mouse
+    //sopra una cella che e' gia' stata assegnata ad una nazione).
+    //Allo stesso modo viene impostata l'azione che quando si sposta il mouse allora viene chiuso il PopOver.
     @FXML
     void addRegionToNation(ActionEvent event) {
+        //SE SI E' GIA' PREMUTO START NON SUCCEDE NULLA
         if (useStart==true){
             return;
         }
@@ -486,20 +545,17 @@ public class ControllerImpostazioniGriglia implements Initializable {
         //IL PROGRAMMA NON DEVE FARE NULLA
         if (nationList.isEmpty() == true) {
             buttonAddNation.setDisable(false);
-
         }
         //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
         //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO E DEVE ESSERE ASSEGNATA ALLA NAZIONE
         else {
-            if(((Regione) event.getSource()).getNazione().equals("")) {    //se la cella su cui si clicca non fa gia'
-                // parte di una nazione si assegna quella
-                // regione alla nazione
-                //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
-                int gridColumns = 0;                                            //Numero di colonne della griglia desiderato dall'utente
-                int gridRows = 0;                                                //Numero di righe della griglia desiderato dall'utente
-                this.buttonDeleteNation.setDisable(false);                        //Viene abilitato il bottone buttonDeleteNation
-                this.buttonStart.setDisable(false);                                //Viene abilitato il bottone buttonStart
-                //SETTA LA NAZIONE DI APPARTENENZA E ILCOLORE DELLA NAZIONE SULLA CELLA
+            if(((Regione) event.getSource()).getNazione().equals("")) {    /*se la cella su cui si clicca non fa gia'
+               																parte di una nazione si assegna quella regione alla nazione*/
+                int gridColumns = 0;                                       //Numero di colonne della griglia desiderato dall'utente
+                int gridRows = 0;                                          //Numero di righe della griglia desiderato dall'utente
+                this.buttonDeleteNation.setDisable(false);                 //Viene abilitato il bottone buttonDeleteNation
+                this.buttonStart.setDisable(false);                        //Viene abilitato il bottone buttonStart
+                //SETTA LA NAZIONE DI APPARTENENZA E IL COLORE DELLA NAZIONE SULLA CELLA
                 ((Regione) event.getSource()).setNazione(nationList.get(0).getName(), nationList.get(0).getColor());
                 //AUMENTA IL NUMERO DI ABITANTI, LE RISORSE E IL DENARO DELLA NAZIONE IN BASE ALLE CARATTERISTICCHE DEL TERRITORIO ASSEGNATO
                 nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
@@ -518,31 +574,33 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     this.buttonAddNation.setDisable(true);                        //Viene disabilitato il botttone buttonAddNation
                 }
             }
-            //
-            //ALTRIMENTI NON SUCCEDE NULLA
+            //ALTRIMENTI SE LA CELLA SU CUI CLICCHIAMO E' STATA ASSEGNATA GIA' AD UNA NAZIONE NON SUCCEDE NULLA
             else{
                 return;
             }
-            Regione bottone = ((Regione) event.getSource());  //identifico con la variabile locale la regione su cui ho cliccato
-            Label appartenezaNazione = new Label("Nazione: " + bottone.getNazione());  //creo una Label che contiene il nome della nazione di apparteneza della regione
-            Label risorseRegione = new Label("Valore risorse: " + bottone.getRisorse());  //creo una Label con il valore delle risorse relative a quella specifica regione
-            VBox verticalBox = new VBox(appartenezaNazione,risorseRegione);  //creo un verticalBox che contiene le due Label create precedentemente
-            PopOver pop = new PopOver(verticalBox);  //creo l'oggetto pop che è un PopOver, ossia una specie di finetra (senza però titolo e bottoni)
-            //il popover verrà visualizzato quando si passerà sopra una regione che è già stata assegnata ad una regione
-            bottone.setOnMouseEntered(MouseEvent -> {
 
+            Regione bottone = ((Regione) event.getSource());  						//Variabile bottone di tipo regione che identifica la cella su cui si clicca.
+            Label appartenenzaNazione = new Label();  								//Si crea una Label  chiamata appartenenzaNazione
+            appartenenzaNazione.setText("Nazione: " + bottone.getNazione());		//Setto il testo della label con il nome della nazione di apparteneza della regione
+            Label risorseRegione = new Label();  									//Si crea una Label chiamata risorseRegione
+            risorseRegione.setText("Valore risorse: " + bottone.getRisorse());		//Setto il testo della label con il valore delle risorse relative a quella specifica regione
+            VBox verticalBox = new VBox(appartenenzaNazione,risorseRegione);  		//Si crea un VBox che contiene le due Label create precedentemente
+            PopOver pop = new PopOver(verticalBox);  								//Si crea un PopOver chiamato pop
+            //IL POPOVER VERRA' VISUALIZZATO QUANDO SI PASSA IL MOUSE SOPRA UNA REGIONE (CELLA)
+            //CHE E' GIA STATA ASSEGNATA AD UNA NAZIONE
+            bottone.setOnMouseEntered(MouseEvent -> {
                 pop.show(((Regione) event.getSource()));
             });
-            //il popover si chiuderà non appena verrà spostato il mouse
+            //IL POPOVER SI CHIDERA' QUANDO SI SPOSTA IL MOUSE
             bottone.setOnMouseExited(MouseEvent -> {
                 pop.hide();
             });
         }
-
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
+
+
 }
