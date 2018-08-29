@@ -59,6 +59,7 @@ public class ControllerMenu implements Initializable {
 
 
     //METODO INITIALIZE
+    //Viene impostata la variabile useButton(creata dentro ControllerImpGriglia) a false.
     //Se la negazione della variabile definita dentro il Main e' uguale a true (quindi se isShowed e' true)
     //allora richiama il metodo loadTitle().
     @Override
@@ -85,7 +86,7 @@ public class ControllerMenu implements Initializable {
     //finita inizia la transazione in uscita (con il metodo setOnFinished).
     //Poi, quando anche la transazione in uscita e' finita, crea un oggetto di tipo AnchorPane
     //chiamato menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi menu sara'Ã‚Â  l'interfaccia definita in FXMLmenu.fxml.
+    //Quindi menu sara' l'interfaccia definita in FXMLmenu.fxml.
     //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
     //precedentemente, ovvero con menu.
     private void loadTitle(){

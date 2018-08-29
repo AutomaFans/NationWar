@@ -6,36 +6,36 @@ import java.util.Random;
 //Ovvero una Regione e' una cella che compone il territorio di una Nazione
 public class Regione extends Button{
 
-    private double risorse;       //Numero di risorse naturali della regione
-    private String nomeNazione;       //Nome della nazione a cui appartiene la regione(inizialmente di nessuno)
-    private String tipo;          //Tipo di regione che puo' essere in base alle risorse di tipo sterile o fertile
-    private double valore;        //Valore in denaro de terreno (una nazione deve spendere una certa somma per colonizzare un terreno)
-    private CellThread threadRegione; //Thread della regione
-    private Nation nazione;       //oggetto Nation a cui appartiene la regione
+    private double risorse;       		//Numero di risorse naturali della regione
+    private String nomeNazione;       	//Nome della nazione a cui appartiene la regione(inizialmente di nessuno)
+    private String tipo;          		//Tipo di regione che puo' essere in base alle risorse di tipo sterile o fertile
+    private double valore;        		//Valore in denaro de terreno (una nazione deve spendere una certa somma per colonizzare un terreno)
+    private CellThread threadRegione; 	//Thread della regione
+    private Nation nazione;       		//Nazione a cui appartiene la regione (la cella della griglia)
 
     //Genera un nuovo oggetto di tipo Random(randomico), per cui
     //- assegna alle risorse un numero casuale compreso tra 0 e 1000
     //- la nazione di appartenenza inizialmente e' nulla perche' quando generato il territorio non e' di nessuno
     //Inoltre se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
     //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse e' minore
-    //di 350 allora la regione Ã¨ sterile per cui viene impostato il tipo = sterile
+    //di 350 allora la regione ÃƒÂ¨ sterile per cui viene impostato il tipo = sterile
     //Poi in base al tipo di territorio viene impostato lo sfondo della cella della griglia.
-    //Se il tipo Ã¨ fertile allora lo sfondo della cella sara' l'immagine IMG-Fertile.jpg,
-    //alrimenti, se il tipo Ã¨ sterile allora lo sfondo della cella sara' l'immagine
+    //Se il tipo e' fertile allora lo sfondo della cella sara' l'immagine IMG-Fertile.jpg,
+    //alrimenti, se il tipo e' sterile allora lo sfondo della cella sara' l'immagine
     //IMG-Sterile.jpg.
     //Il valore reale verra' valorizzato al momento in cui si aggiunge la regione alla griglia.
     //Infine assegna un thread alla Regione che svolgera le azioni inerenti ad essa.
     public Regione(){
-        Random rand = new Random();              //Genera un nuovo oggetto di tipo Random(randomico)
-        risorse = rand.nextInt(1000);     //Assegna alle risorse un numero casuale compreso tra 0 e 1000
-        nomeNazione = "";                        //la nazione di appartenenza inizialmente e' vuota perche' quando generato il territorio non e' di nessuno
+        Random rand = new Random();         //Genera un nuovo oggetto di tipo Random(randomico)
+        risorse = rand.nextInt(1000);     	//Assegna alle risorse un numero casuale compreso tra 0 e 1000
+        nomeNazione = "";                   //La nazione di appartenenza inizialmente e' vuota perche' quando generato il territorio non e' di nessuno
         nazione = null;
         //IN BASE ALLE RISORSE VIENE IMPOSTATO IL TIPO DI TERRITOPRIO (FERTILLE O STERILE)
-        if(risorse >= 350.0){                   //Se il numero di risorse e' maggiore uguale a 350
-            tipo = "fertile";					//Allora la regione e' fertile
+        if(risorse >= 350.0){               //Se il numero di risorse e' maggiore uguale a 350
+            tipo = "fertile";				//Allora la regione e' fertile
         }
-        else{									//Altrimenti, se il numero di risorse e' minore di 350
-            tipo = "sterile";                   //Allora la regione e' sterile
+        else{								//Altrimenti, se il numero di risorse e' minore di 350
+            tipo = "sterile";               //Allora la regione e' sterile
         }
         //IMPOSTA LO SFONDO DELLA CELLA IN BASE AL TIPO DI TERRITORIO
         if(tipo.equals("fertile")){
@@ -53,7 +53,7 @@ public class Regione extends Button{
     //Ovvero toglie il nome della nazione di appartenza e l'oggetto Nation su quella cella e imposta lo sfondo di default.
     //Quindi aggiorna il tipo della regione, richiamando il metodo refreshType della classe
     //Regione.
-    //In seguito se la regione è di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
+    //In seguito se la regione Ã¨ di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
     //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
     public void resetRegion(){
         this.nomeNazione = "";
@@ -111,8 +111,8 @@ public class Regione extends Button{
     //METODO REFRESH TYPE
     //Setta il terreno al suo tipo di stato attuale(fertile o sterile)
     //se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
-    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse Ã¨ minore
-    //di 350 allora la regione Ã¨ sterile per cui viene impostato il tipo = sterile
+    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse ÃƒÂ¨ minore
+    //di 350 allora la regione ÃƒÂ¨ sterile per cui viene impostato il tipo = sterile
     public void refreshType(){
         if(risorse >= 350.0){                   //Se il numero di risorse e' maggiore uguale a 350
             tipo = "fertile";					//Allora la regione e' fertile
@@ -125,7 +125,7 @@ public class Regione extends Button{
 
     //METODO CONSUMA RISORSE
     //Viene sottratto un quinto del numero di risorse ad ogni fase di gioco che interessa la nazione: cio' succede nel
-    // momento in cui una nazione occupa questa regione e quindi consuma le risorse.
+    //momento in cui una nazione occupa questa regione e quindi consuma le risorse.
     public void consumaRisorse(){
         this.risorse = risorse - (risorse / 5); //viene consumato un quinto delle risorse
         this.refreshType();                     //viene aggiornato lo stato attuale della regione(fertile o sterile)
@@ -135,16 +135,16 @@ public class Regione extends Button{
     //Metodo per settare il valore reale in denaro della regione
     //Il valore cambiera' in base al numero di risorse e di righe e colonne della griglia.
     //Se si ha una griglia abbastanza grande il valore sara' piu' basso per permettere
-    //una maggiore espansione nella tabella, per cui il valore sarÃ  la meta'' delle risorse
+    //una maggiore espansione nella tabella, per cui il valore sarÃƒÂ  la meta'' delle risorse
     //(risorse/2).
     //Altrimenti, se si ha una griglia di piccole dimensioni il valore sara' piu' alto
     //per contenere l'espansione, per cui il valore e' uguale alle risorse (valore = risorse).
     public void setValore(int righe, int colonne){
-        if(righe > 20 && colonne > 20){          	//Se il numero di righe e di colonne della griglia Ã¨ maggiore di 20
+        if(righe > 20 && colonne > 20){          	//Se il numero di righe e di colonne della griglia ÃƒÂ¨ maggiore di 20
             this.valore = risorse / 2;				//Il valore e' uguale alla meta' delle risorse
         }
-        else{                                      //Altrimenti, se il numero di righe e di colonne della griglia Ã¨ minore o uguale di 20
-            this.valore = risorse;				   //Il valore e' uguale alle risorse
+        else{                                     	//Altrimenti, se il numero di righe e di colonne della griglia ÃƒÂ¨ minore o uguale di 20
+            this.valore = risorse;				   	//Il valore e' uguale alle risorse
         }
     }
 
@@ -155,7 +155,7 @@ public class Regione extends Button{
     }
 
     //METODO START REGION THREAD
-    //Esegue lo start del thread inerente la regione
+    //Esegue lo start del thread su quella regione
     public void startRegionThread(){
         this.threadRegione.start();
     }

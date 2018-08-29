@@ -7,36 +7,47 @@ import java.util.Random;
 
 //Ogni nazione e' composta dal nome, dal colore, dall'eta', dal denaro, dalle risorse e dal numero di abitanti.
 //Il colore sara' utilizzato per colorare i bottoni nella griglia.
+//Una Nazione estende un thread.
 public class Nation extends Thread{
 
     private String color;				    //Stringa color peril colore della nazione
-    private Eta age;                        //age conterra' l'eta' in cui si trova la nazione
-    private double denaro;                  //denaro corrente della nazione
-    private double risorse;                 //risorse naturali della nazione
-    private int numAbitanti;                //numero di abitanti della nazione
-    private boolean active;                 //booleano con valore ture se nazione non ha finito di svolgere la sua run,
-    // false altrimenti
-    private ControllerImpostazioniGriglia gridController; //controller della griglia per avvisare(notify()) il thread
-    //che gestisce i turni di passare al turno della nazione successiva
+    private Eta age;                        //Age conterra' l'eta' in cui si trova la nazione
+    private double denaro;                  //Duble denaro che tiene conto del denaro corrente della nazione
+    private double risorse;                 //Duble risorse che tiene conto delle risorse naturali della nazione
+    private int numAbitanti;                //Inteo numAbitanti che tiene conto del numero di abitanti della nazione
+
+    private boolean active;                 //Variabile booleana che sara' true se la nazione non ha finito di svolgere la sua run, false altrimenti
+
+    //Controller della griglia per avvisare(notify()) il thread che gestisce i turni
+    //di passare al turno della nazione successiva
+    private ControllerImpostazioniGriglia gridController;
+
 
     //Lista di regioni che rappresentano le celle assegnate e conquistate dalla nazione
-    //Quindi ogni nazione avra i suoi territori e questa lista contiene i territori (le celle)
+    //Quindi ogni nazione avra' i suoi territori e questa lista contiene i territori (le celle)
     //posseduti dalla nazione
     private  ArrayList<Regione> regioni = new ArrayList<>();
 
 
     //COSTRUTTORE CON DUE PARAMETRI
+    //Prende come parametri una stringa nome e una stringa colore.
+    //Poi setta il nome della nazione, impostando come nome la stringa che e' stata presa da parametro,
+    //(richiamamndo il metodo setName che e' un metodo gia' definito nella classe Thread).
+    //Poi imposta il colore della nazione, impostando come colore la stringa che e' stata presa da parametro.
+    //Poi setta l'eta' della nazione, di default l'eta' della nazione e' antica, e antica viene
+    //scelta dal dominio enumerativo di "Eta".
+    //poi setta il denaro ele risorse della nazione, questi due valori inizialmente sono a 0
+    //e assumono un valore iniziale in base alle celle(pezzi di territorio) assegnati sulla griglia
+    //Poi setta ad 1 il numero di abitanti della nazione (quindi ogni nazione ha come minimo un abitante).
+    //Infine setta la variabil booleana active a false.
     public Nation(String nome, String color){
-        this.setName(nome);                 //setta il nome della nazione, con il metodo setName() della classe Thread
-        this.color = color;
-        this.age = Eta.ANTICA;              //L'eta' di default della nazione e' antica, e antica viene
-        //scelta dal dominio enumerativo di "Eta"
-        this.denaro = 0.0;                  //Di default denaro e risorse sono a 0 e assumono
-        //un valore iniziale in base alle celle(pezzi di territorio) assegnati
-        //sulla griglia
-        this.risorse = 0.0;
-        this.numAbitanti = 1;
-        this.active = false;
+        this.setName(nome);                 //Setta il nome della nazion
+        this.color = color;					//Setta il colore della nazione
+        this.age = Eta.ANTICA;             	//Setta l'eta' della nazione
+        this.denaro = 0.0;                  //Setta il denaro della nazone
+        this.risorse = 0.0;					//Setta le risorse della nazone
+        this.numAbitanti = 1;				//Setta il numero di abitanti della nazione
+        this.active = false;				//Imposta la variabile booleana active a false
     }
 
 
@@ -82,7 +93,7 @@ public class Nation extends Thread{
     //viene impostata l'eta' della nazione come eta' intermedia.
     //Altrimenti le risorse della nazione sono maggiori o uguali di 5000, il numero
     //di abitanti della nazione sono maggiori o uguali di 2000 e il denaro dellanazione
-    //e' maggiore o uguale a 10000 allora vine impostata l'eta' della nazion come
+    //e' maggiore o uguale a 10000 allora vine impostata l'eta' della nazione come
     //eta' moderna.
     public void refreshAge(){
         if(this.risorse < 3000 && this.numAbitanti < 1000 && this.denaro < 5000){
@@ -114,20 +125,28 @@ public class Nation extends Thread{
     }
 
     //METODO TAKE PROFIT
-    //Metodo per aumentare il numero di abitanti, il denaro e le risorse della nazione in base al tipo di regione assegnata
-    //durante l'assegnazione di territori nella fase di impostazione della griglia.
-    //Utilizzato nel caso in cui si assegna una regione alla nazione nelle impostazioni iniziali.
+    //Metodo per aumentare il numero di abitanti, il denaro e le risorse della nazione.
+    //Queto metodo prende due parametri: il tipo di regione (fertile o sterile) e le risorse
+    //della regione.
+    //Se la regione (cella)  e' fertile aumenta il numero di abitanti di 100, mentre se la
+    //regione e' sterile aumenta il numero di abitanti di 10.
+    //Inoltre aumenta il numero delle risorse della nazione in base alla regione (cella) che e'
+    //stata assegnata a quella nazione (quindi siccome ogni cella ha un certo numero di risorse
+    //quando viene assegna quella cella alla nazione, aumentano le risorse della nazione della quantita'
+    //di risorse che la cella aveva).
+    //Infine aumenta il numero di denaro della nazione in base alla regione (cella) che e'
+    //stata assegnata a quella nazione (quindi siccome ogni cella ha un certo numero di risorse
+    //quando viene assegna quella cella alla nazione, aumentano le risorse della nazione della meta
+    //della quantita di risorse che la cella aveva).
     public void takeProfit(String tipoRegione, Double risorseRegione){
-        if(tipoRegione.equals("fertile")){ //se la regione e' fertile aumenta il numero di abitanti di 100
-            this.numAbitanti += 100;
+        if(tipoRegione.equals("fertile")){ 		//Se la regione e' fertile
+            this.numAbitanti += 100;			//Aumenta il numero di abitanti di 100
         }
-        else{                              //se la regione e' sterile aumenta il numero di abitanti di 10
-            this.numAbitanti += 10;
+        else{                              		//Altrimenti, se la regione e' sterile
+            this.numAbitanti += 10;				//Aumenta il numero di abitanti di 10
         }
-
-        this.risorse += risorseRegione;      //aumenta il numero di risorse della nazione in base alla regione assegnata
-
-        this.denaro += risorseRegione / 2.0; //aumenta il denaro della nazione in base alla regione assegnata
+        this.risorse += risorseRegione;      	//Aumenta il numero di risorse della nazione in base alla regione assegnata
+        this.denaro += risorseRegione / 2.0; 	//Aumenta il denaro della nazione in base alla regione assegnata
     }
 
     //METODO INCREASE POPULATION
@@ -150,13 +169,15 @@ public class Nation extends Thread{
 
 
     //METODO GET REGIONI
-    //Restituisce l'array list di regioni assegnate alla nazione
+    //Restituisce l'array list chimato regioni che sono le regioni assegnate alla nazione
     public ArrayList<Regione> getRegioni(){
         return regioni;
     }
 
     //METODO ADD REGION
-    //Assegna una cella alla nazione: inserisce la cella (la regione) che assegnamo alla nazione
+    //Assegna una cella alla nazione.
+    //Inserisce la cella (la regione) che assegnamo alla nazione alla lista regioni
+    //che contiene tutte le celle assegnate e conquistate da quella nazione.
     public void addRegion(Regione region){
         this.regioni.add(region);
     }
@@ -165,29 +186,31 @@ public class Nation extends Thread{
     //Rimuove tutte le regioni resettandole, o meglio togliendo nazione di appartenenza
     //su quella cella e togliendo il colore della nazione, richiamando il metodo resetRegion
     //della classe Region.
-    //Inoltre toglie le celle  dalla lista regioni, la quale contiene tutte
-    //le regioni (le celle) assegnate ad una determinata nazione
+    //Inoltre toglie le celle dalla lista regioni, la quale contiene tutte le regioni
+    //(le celle) assegnate ad una determinata nazione
     public void removeAllRegions(){
         for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
             Regione num = i.next();
-            num.resetRegion();      //toglie nazione di appartenza e colore della nazione alla regione
-            i.remove();             //toglie la regione dalla lista di quelle appartenenti alla nazione
+            num.resetRegion();      //Toglie dalla cella la nazione di appartenza e il colore della nazione
+            i.remove();             //Toglie la cella dalla lista di quelle appartenenti alla nazione
         }
     }
 
 
     //METODO CLONE CHARACTERS
     //Metodo usato nel caso si sta clonando una nazione per runnarla di nuovo senza perdere traccia dei dati, in quel caso
-    //quindi questa sarebbe una nazione clone(l'uniche nazioni non clone sono quelle del primo turno di gioco).
-    //In particolare copia i dati della nazione che si vuole clonare in questa nazione, mentre nome e colore sono gia' stati copiati
-    public void cloneCharacters(Nation nazioneDaClonare){            //Prende come parametro la nazione daclonare
-        this.age = nazioneDaClonare.getAge();                        //copia l'eta'
-        this.denaro = nazioneDaClonare.getDenaro();                  //copia la quantita' di denaro
-        this.risorse = nazioneDaClonare.getRisorse();                //copia la quantita' di risorse
-        this.numAbitanti = nazioneDaClonare.getNumAbitanti();        //copia il numero di abitanti
-        this.gridController = nazioneDaClonare.getGridController();  //copia l'oggetto griglia sul quale la nazione
-        //svolge delle azioni
-        for(int i=0; i < nazioneDaClonare.getRegioni().size(); i++){ //Itero le regioni della nazione da clonare
+    //quindi questa sarebbe una nazione clone (le uniche nazioni non clone sono quelle del primo turno di gioco).
+    //In particolare copia i dati della nazione che si vuole clonare in questa nazione, (nome e colore sono gia' stati copiati)
+    //Qusto metodo prende come parametro la nuova nazione da clonare e copia dentro questa l'età della nazione,
+    //la quantita' di denaro, la quantita' di risorse, il numero di abitanti ecopia l'oggetto griglia sul quale la nazione
+    //svolge delle azioni.
+    public void cloneCharacters(Nation nazioneDaClonare){
+        this.age = nazioneDaClonare.getAge();                        	//Copia l'eta'
+        this.denaro = nazioneDaClonare.getDenaro();                  	//Copia la quantita' di denaro
+        this.risorse = nazioneDaClonare.getRisorse();                	//Copia la quantita' di risorse
+        this.numAbitanti = nazioneDaClonare.getNumAbitanti();        	//Copia il numero di abitanti
+        this.gridController = nazioneDaClonare.getGridController();  	//Copia l'oggetto griglia sul quale la nazione svolge delle azioni
+        for(int i=0; i < nazioneDaClonare.getRegioni().size(); i++){ 	//Itero le regioni della nazione da clonare
             //Passo alle regioni il nuovo oggetto nazioneclonato che gli appartiene
             nazioneDaClonare.getRegioni().get(i).setNazione(nazioneDaClonare.getName(), nazioneDaClonare.getColor(), this);
             //Inoltre anche i thread delle regioni se sono stati startati(start()) non possono piu' eseguire il loro run()
@@ -199,7 +222,8 @@ public class Nation extends Thread{
     }
 
     //METODO GET THREAD STATE
-    //Restituisce true se il thread non ha finito di svolgere la sua run, false altrimenti
+    //Restituisce il valore della variabile active, quindi restituisce true se il thread non
+    //ha finito di svolgere la sua run, false altrimenti
     public boolean getThreadState(){
         return this.active;
     }
@@ -219,8 +243,9 @@ public class Nation extends Thread{
     }
 
     //METODO SVEGLIA
-    //Metodo usato dalla regione scelta casualmente dalla nazione: la regione avvisa la Nation che era in attesa(wait())
-    //che ha finito il suo lavoro e che quindi si e' giunti a fine turno
+    //Metodo usato dalla regione scelta casualmente dalla nazione: la regione avvisa la Nation
+    //che era in attesa(wait()) che ha finito il suo lavoro e che quindi si e' giunti
+    //a fine turno
     public synchronized void sveglia(){
         notify();
     }
@@ -228,34 +253,44 @@ public class Nation extends Thread{
     //METODO RUN
     //Il run prevede lo svolgimento del turno della nazione nella simulazione, inizialmente fa agire una sua regione presa
     //casualmente e successivamente attende che il suo turno finisca. Alla fine svolgera delle azioni di fine turno.
+    //Siccome la nazone iniziera' ad eseguire il proprio turno allora viene messa la variabile boolena active (che tiene
+    //conto se una nazone sta eseguendo il proprio tueno o meno) a true.
+    //poi viene presa casualmente dallalista regioni una regione da startare e viene memorizzato l'indice di questa regione
+    ///all'interno della variabile regionToStart.
+    //Se l'intero memorizzato nella variabile regionToStart e' uguale alla lunghezza della lista regioni si sottrae
+    //1, per non incombere successivamente in un OutOfBoundException.
+    //Successiavmente fa lo start (richiamando il metodo startRegionThread della classe Regione) di una regione casuale della nazione,
+    //e questa regione e' presa dalla lista regioni (per prendere la regione dalla lista si usa l'intero memorizzato nella
+    //variabile regionToStart).
+    //Cosi la nazione va in attesa e aspetta che finisca il suo turno per svolgere le azioni successive,
+    //in particolare attende (wait()) che la regione che agisce la avvisi con una notify() che il suo turno e' finito.
+    //Cosi quando la nazione riceve una notify, viene richiamato il metodo increasePopulation della classe Nation,
+    //il metodo incassaDenaro della classe Nation e il metodo consumaRisorse della classe Nation.
+    //Inoltre avendo finito il prorpio turno setta la variabile acive a false ed infine la nazione avvisa il thread
+    //che deteneva la griglia e gestiva i turni che il suo turno e' finito e si puo' passare al turno della
+    //nazione successiva.
     public synchronized void run() {
         try{
-            this.active = true;                                 //la nazione ha iniziato ad eseguire il codice del suo run()
-                                                                //pertanto se ne tiene conto settando active a true
-            Random rand = new Random();
-            int regionToStart = rand.nextInt((regioni.size())); //intero che rappresentera' l'indice della regione da startare
-            if(regionToStart == regioni.size()){                //se l'intero e' uguale alla lunghezza della lista regioni si
-                                                                //sottrae 1, cio' per non incombere successivamente in un
-                                                                // OutOfBoundException
-                regionToStart -= 1;
+            this.active = true;                                 //La nazione ha iniziato ad eseguire il codice del suo run() pertanto se ne tiene conto settando active a true
+            Random rand = new Random();							//Viene creato un oggetto di tipo Random, chiamato rand
+            int regionToStart = rand.nextInt((regioni.size())); //Intero che rappresentera' l'indice della regione da startare
+            if(regionToStart == regioni.size()){                //Se l'intero e' uguale alla lunghezza della lista regioni
+                regionToStart -= 1;								//Sottrae 1
             }
-            regioni.get(regionToStart).startRegionThread();  //fa lo start() di una regione casuale dalla
-                                                             // nazione(usando come indice l'intero regionToStart)
+            regioni.get(regionToStart).startRegionThread();  	//Fa lo start() di una regione casuale della nazione
             System.out.println(this.getName() + "nazione");
-            wait();             //La nazione va in attesa che si arrivi alla fine del suo turno per svolgere le azioni successive:
-                                //in particolare attende(wait()) che la regione che agisce la avvisi con una notify() che
-                                //il suo turno e' finito.
+            wait();            									 //La nazione va in attesa che si arrivi alla fine del suo turno per svolgere le azioni successive
             System.out.println("Sono di nuovo in gioco!");
 
-            this.increasePopulation();     //La popolazione subisce un alzamento o un abbassamento in base allo stato dei terreni posseduti
-            this.incassaDenaro();          //Viene incassato denaro in base alle risorse e agli abitanti della nazione
-            this.consumaRisorse();         //Vengono consumate le risorse, inoltre in questo metodo viene anche aggiornata l'eta':
-                                           //si vuole infatti tenere conto della situazione in cui si trova la nazione a fine turno
-            this.active = false;           //Avendo finito di eseguire il codice del suo run() setta active a false
-            this.gridController.sveglia(); //La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
-                                           // il suo turno e' finito e si puo' passare al turno della nazione successiva
+            this.increasePopulation();     						//La popolazione subisce un alzamento o un abbassamento in base allo stato dei terreni posseduti
+            this.incassaDenaro();          						//Viene incassato denaro in base alle risorse e agli abitanti della nazione
+            this.consumaRisorse();         						/*Vengono consumate le risorse, inoltre in questo metodo viene anche aggiornata l'eta':
+                                           						si vuole infatti tenere conto della situazione in cui si trova la nazione a fine turno*/
+            this.active = false;          						//Avendo finito di eseguire il codice del suo run() setta active a false
+            this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
+            //il suo turno e' finito e si puo' passare al turno della nazione successiva
         }
-        catch (InterruptedException i){    //Se si ha un interrupt di questa nazione si ottiene un eccezione
+        catch (InterruptedException i){    						//Se si ha un interrupt di questa nazione si ottiene un eccezione
             System.out.println("Vita nazione interrotta!");
         }
     }
