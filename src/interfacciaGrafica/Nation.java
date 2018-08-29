@@ -1,4 +1,6 @@
 package interfacciaGrafica;
+import org.controlsfx.control.PopOver;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -172,6 +174,7 @@ public class Nation extends Thread{
             i.remove();             //toglie la regione dalla lista di quelle appartenenti alla nazione
         }
     }
+
 
     //METODO CLONE CHARACTERS
     //Metodo usato nel caso si sta clonando una nazione per runnarla di nuovo senza perdere traccia dei dati, in quel caso

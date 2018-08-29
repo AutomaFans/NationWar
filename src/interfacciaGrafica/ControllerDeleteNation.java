@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import org.controlsfx.control.PopOver;
+
 import java.util.Iterator;
 
 import static interfacciaGrafica.ControllerAddNation.ListaColori;					//Prende la lista chiamata ListaColori creata nella classe ControllerAddNation
@@ -90,11 +92,9 @@ public class ControllerDeleteNation {
                 i.remove();
             }
         }
+        ControllerImpostazioniGriglia.useButton = false;
         Stage stage = (Stage) buttonElimina.getScene().getWindow();
         stage.close();
-
-
-
     }
 
 
