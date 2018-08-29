@@ -47,7 +47,7 @@ public class ControllerAddNation {
     //METODO INITIALIZE
     //Aggiunge al choice box chiamato nomeNazione tutti gli elementi che sono contenuti dentro la lista
     //ListaColori, quindi nel menu a tendina ci saranno tutti i colori che possono essere scelti
-    //quandio si creala nazione, poi imposta di default la stringa "Seleziona Colore" della lista.
+    //quandio si crea la nazione, poi imposta di default la stringa "Seleziona Colore" della lista.
     @FXML
     public void initialize() {
         coloreNazione.getItems().addAll(ListaColori);
@@ -66,6 +66,7 @@ public class ControllerAddNation {
         Stage stage = (Stage) buttonClose.getScene().getWindow();
         stage.close();
     }
+
 
 
     //METODO CLICK AGGIUNGI NAZIONE
@@ -108,12 +109,13 @@ public class ControllerAddNation {
     //ListaColori il colore memorizzato nella stringa coloreNaz che contiene il colore che
     //viene scelto dall'utente quando crea una nazione  (in modo che non puo' essere scelto un' altra volta lo stesso colore).
     //Dopo di che' la finestra viene chiusa e si torna sulla griglia.
+    //Ed infine viene impostata la variabile useButton(creata dentro ControllerImpGriglia) a false.
     @FXML
     void clickAggiungiNazione(ActionEvent event) {
         String coloreNaz = coloreNazione.getSelectionModel().getSelectedItem();
         String nomeNaz = txtNomeNazione.getText();
         //CONTROLLA SE TUTTI I VALORI INSERITI QUANDO SI CREA UNA NAZIONE SONO GIUSTI
-        //SE I VALORI INSERITI NON ONO CORETTI ESCE IL MESSAGGIO DI ERRORE
+        //SE I VALORI INSERITI NON SONO CORETTI ESCE IL MESSAGGIO DI ERRORE
         if (nomeNaz.isEmpty() || coloreNaz.contentEquals("Seleziona Colore") || nomeNaz.contentEquals("Inserisci nome della nazione che vuoi aggiungere") ) {
             try {
                 AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLerrore.fxml"));
@@ -126,7 +128,7 @@ public class ControllerAddNation {
             }
         }
         //CONTROLLA SE IL NOME DELLA NAZIONE CHE SI STA CREANDO NON E' GIA' STATO USATO
-        //SE E' GIA STATO USATO CHIAMA ESCE IL MESSAGGIO DI ERRORE
+        //SE E' GIA STATO USATO ESCE IL MESSAGGIO DI ERRORE
         if (nomiNazioni.contains(nomeNaz)==true){
             try {
                 AnchorPane errorPane = FXMLLoader.load(getClass().getResource("FXMLnazExist.fxml"));
@@ -157,5 +159,4 @@ public class ControllerAddNation {
         }
         ControllerImpostazioniGriglia.useButton = false;
     }
-
 }

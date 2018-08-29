@@ -43,6 +43,7 @@ public class ControllerDeleteNation {
     }
 
 
+
     //METODO CLICK CLOSE
     //Quando viene premuto il bottone chiamato buttonClose, viene creato un nuovo stage chaimato stage
     //e (con il metodo getWindow) viene preso il valore della finestra e viene messo dentro stage.
@@ -53,6 +54,7 @@ public class ControllerDeleteNation {
         Stage stage = (Stage) buttonClose.getScene().getWindow();
         stage.close();
     }
+
 
 
     //METODO CLICK ELIMINA NAZIONE
@@ -72,6 +74,7 @@ public class ControllerDeleteNation {
     //Lista Colori per non creare nazioni con lo stesso colore.
     //Inoltre toglie il colore della nazione alle celle che erano che erano che erano state assegnate
     //alla nazione che si sta eliminando, richiamando il metodo removeAllRegion della classe Nation.
+    //In seguito viene viene impostata la variabile useButton(creata dentro ControllerImpGriglia) a false.
     //Dopo di che' quando si preme il bottone chiamato buttonElimina la finestra viene chiusa
     //e si torna sulla griglia.
     @FXML
