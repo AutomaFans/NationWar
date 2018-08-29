@@ -248,52 +248,112 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Poi per ogni nazione dentro la lista nationList viene creata la base per il grafico degli gli
     //abitanti della nazione chiamata set, la base per il grafico delle risorse chiamata risorse e
     //la base per il grafico del denaro chiamata denaro.
+    //A quel punto viene eseguito il run() di nazione per nazione in maniera progressiva e
+    //quindi viene svolto un turno per ogni nazione. Cosi' inizia a prendere vita la simulazione.
+    //Per eseguire la wait in clickStart bisogna sincronizzare(synchronize) il metodo in maniera che una nazione possa
+    // notificare il thread che gestiva i turni: la notifica(notify()) viene mandata con il metodo sveglia() e avvisa il
+    //thread che si era messo in attesa sulla griglia che la nazione ha finito il suo turno su quella griglia e che quindi
+    // si puo' passare al turno della nazione successiva. Senza synchronize si otterebbero delle eccezioni.
     @FXML
-    void clickStart(ActionEvent event) {
-        this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
-        this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
+    synchronized void clickStart(ActionEvent event) {
+        try{
+            this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
+            this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
 
-        //SE NATION LIST E' VUOTA NON E' POSSIBILE INIZIARE IL GIOCO
-        if (nationList.size() == 0){
-            try {
-                AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
-                buttonAddNation.setDisable(false);
-                buttonDeleteNation.setDisable(false);
-                Stage noStartStage = new Stage();
-                noStartStage.setScene(new Scene(noStartPane));
-                noStartStage.setResizable(false);
-                noStartStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            //ALTRIMENTI, SE NATION LIST NON E' VUOTA E' POSSIBILE INIZIARE IL GIOCO
-        }else{
-            useStart=true;
-            for(int indice = 0; indice <nationList.size(); indice++) {
-                XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
-                XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
-                XYChart.Series denaro = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
-                if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) { //se il nome della nazione che sto aggiornardo non Ã¨ presente in NomiNazioniCopia significa che Ã¨ la prima volta che la creo quindi devo mettere a 0 tutti i valori  che contenevano il numero di risorse , abitanti e denaro della nazione precedente.
-                    valAttualeAbitanti = 0;
-                    valAttualeRisorse = 0;
-                    valAttualeDenaro = 0;
-                    NomiNazioniCopia.add(nationList.get(indice).getName()); //aggiungo alla lista NomiNazioniCopia la nuova Nazione cosÃ¬ finche lavorerÃ² su questa nazione posso tenermi i valori aggiornati delle sue risorse, dei suoi abitanti e del denaro.
+            //SE NATION LIST E' VUOTA NON E' POSSIBILE INIZIARE IL GIOCO
+            if (nationList.size() == 0){
+                try {
+                    AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
+                    buttonAddNation.setDisable(false);
+                    buttonDeleteNation.setDisable(false);
+                    Stage noStartStage = new Stage();
+                    noStartStage.setScene(new Scene(noStartPane));
+                    noStartStage.setResizable(false);
+                    noStartStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //ALTRIMENTI, SE NATION LIST NON E' VUOTA E' POSSIBILE INIZIARE IL GIOCO
+            }else{
+                useStart=true;
+                for(int indice = 0; indice <nationList.size(); indice++) {
+                    XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
+                    XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
+                    XYChart.Series denaro = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
+                    if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) { //se il nome della nazione che sto aggiornardo non Ã¨ presente in NomiNazioniCopia significa che Ã¨ la prima volta che la creo quindi devo mettere a 0 tutti i valori  che contenevano il numero di risorse , abitanti e denaro della nazione precedente.
+                        valAttualeAbitanti = 0;
+                        valAttualeRisorse = 0;
+                        valAttualeDenaro = 0;
+                        NomiNazioniCopia.add(nationList.get(indice).getName()); //aggiungo alla lista NomiNazioniCopia la nuova Nazione cosÃ¬ finche lavorerÃ² su questa nazione posso tenermi i valori aggiornati delle sue risorse, dei suoi abitanti e del denaro.
+
+                    }
+                    set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti))); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto quanti sono gli abitanti di quella nazione
+                    valAttualeAbitanti = (nationList.get(indice).getNumAbitanti()); //aggiorno k sul numero di abitanti di questa nazione
+                    risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse)); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto tanto quante sono el risorse della nazione
+                    valAttualeRisorse = (nationList.get(indice).getRisorse()); //aggiorno il valore delle risorse di quella nazione
+                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto tanto quanto Ã¨ il denaro di quella nazione
+                    valAttualeDenaro = nationList.get(indice).getDenaro(); //aggiorno il valore del denaro di quella nazione
+                    barCharD.getData().addAll(denaro); //aggiungo il rispettivo mattone alla barChart
+                    barChart.getData().addAll(set);//anche qui
+                    barChartR.getData().addAll(risorse); //anche qui
 
                 }
-                set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti))); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto quanti sono gli abitanti di quella nazione
-                valAttualeAbitanti = (nationList.get(indice).getNumAbitanti()); //aggiorno k sul numero di abitanti di questa nazione
-                risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse)); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto tanto quante sono el risorse della nazione
-                valAttualeRisorse = (nationList.get(indice).getRisorse()); //aggiorno il valore delle risorse di quella nazione
-                denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto tanto quanto Ã¨ il denaro di quella nazione
-                valAttualeDenaro = nationList.get(indice).getDenaro(); //aggiorno il valore del denaro di quella nazione
-                barCharD.getData().addAll(denaro); //aggiungo il rispettivo mattone alla barChart
-                barChart.getData().addAll(set);//anche qui
-                barChartR.getData().addAll(risorse); //anche qui
 
+                arrayForStart.add("Start è stato premuto");
+
+                //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
+                //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione inserita nelle impostazioni iniziali
+                for(int i=0; i < nationList.size(); i++){  //itera ogni nazione
+                    nationList.get(i).start();             //Viene svolto il turno della nazione considerata in lista
+                    do {
+                        wait();                            //si mette in attesa che la nazione finisca di svolgere il suo turno
+                    }
+                    while(nationList.get(i).getThreadState() == true); //se la nazione iterata ha svolto il suo turno e quindi non sta piu'
+                    //finendo il suo run()(me ne rendo conto dal booleano active di Nation
+                    // che e' a true se la nazione sta ancora finendo di eseguire il suo codice
+                    // nella run())
+
+                    if(i == nationList.size()-1){                      //Se e' stato svolto il turno dall'ultima nazione in lista si
+                        //rinizia dalla prima nazione, altrimenti si va alla prossima nazione nella
+                        //lista
+                        this.nationList = cloneNationThreadList();     //Per riniziare a svolgere i turni dalla prima nazione ho bisogno di creare
+                        //nuove istanze di Nation che clonano quelle nella lista e sostituirle con
+                        //quelle, questo perche' non e' possibile fare start di un Thread sul quale
+                        //ho gia' fatto start() altrimenti si otterrebbe un eccezione. In questa
+                        //maniera clonando le nazioni e sotituendole a quelle vecchie ottengo nuovi
+                        //oggetti Nation startabili(in grado di eseguire il proprio run()) ma che mantengono
+                        //gli stessi dati di prima(senza perdite di dati)
+                        i=-1;                                          //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
+                    }
+                }
             }
-
-            arrayForStart.add("Start è stato premuto");
         }
+        catch(InterruptedException e){                           //Se si interrompe il thread che gestisce i turni si ottiene un'eccezione
+            System.out.println("Il thread gestore della simulazione e' stato interrotto!");
+        }
+    }
+
+    //METODO CLONE NATION THREAD LIST
+    //Clona i thread della lista nationList e li sostituisce a quelli in nationList: una volta eseguiti i run() di quei thread
+    //non e' piu' possibile startarli altrimenti si otterrebbe un eccezione, ma e' possibile creare una nuova istanza di Nation
+    //e startarla...nel nostro caso ce ne serve una tale e quale cosi' da avere gli stessi dati di prima per il thread
+    private ArrayList<Nation> cloneNationThreadList(){
+        ArrayList<Nation> cloneList = new ArrayList<Nation>();  //lista clonata che viene restituita per sostituire quella vecchia
+        for(int i=0; i < nationList.size();i++){                //si itera ogni vecchia nazione
+            Nation cloneNazione = new Nation(nationList.get(i).getName(), nationList.get(i).getColor()); //della nazione iterata si imposta nome
+            //e colore
+            cloneNazione.cloneCharacters(nationList.get(i));    //si copiano le caratteristiche della vecchia nazione incluse le regioni
+            cloneList.add(i, cloneNazione);                     //si aggiunge la nuova nazione clonata alla lista di ritorno
+        }
+        return cloneList;              //ritorna la lista clonata
+    }
+
+    //METODO SVEGLIA
+    ////Utilizzato da una nazione che sta svolgendo un turno per svegliare il thread che gestisce l'intera simulazione:
+    // questo thread rimane in attesa(wait()) che la nazione svolga il suo turno e che l'avvisi che ha finito (notify())
+    // e puo' passare ad eseguire il turno della nazione successiva
+    public synchronized void sveglia(){
+        notify();
     }
 
     //METODO CLICK ADD DIMENSIONS
@@ -503,9 +563,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //e se non e' stata assegnata (quindi se la cella su cui si clicca non fa gia' parte
     //di una nazione si assegna quella regione, quindi quella cella, alla nazione)
     //e verra' colorata in base al colore scelto.
-    //Mentre se e' stata assegnata gia' ad un nazione non fa nulla.
-    //Siccome siamo nel caso in cui e' stata creata almeno una nazione, viene abilitato il bottone buttonDeleteNation
-    //e viene abilitato anche il bottone buttonStart.
+    //Siccome siamo nel caso in cui e' stata creata almeno una nazione: viene assegnato questo controller (this) alla
+    // nazione, cio' servira' per ricevere un avviso(notify()) da parte della nazione che ha finito il suo turno di gioco
+    // e che quindi si puo' passare al turno della nazione successiva. Inoltre viene abilitato il bottone
+    // buttonDeleteNation e viene abilitato anche il bottone buttonStart.
     //Applicando getSource() all'evento individuato (click sulla cella della griglia) si ottiene il bottone
     //su cui si e' verificato l'evento, ma viene restituito come un tipo Object e quindi applichiamo un cast
     //esplicito ((Regione)event.getSource())).
@@ -549,14 +610,16 @@ public class ControllerImpostazioniGriglia implements Initializable {
         //ALTRIMENTI, SE ABBIAMO CREATO UNA NAZIONE E CLICCHIAMO SU UNA CELLA DELLA GRIGLIA
         //LA CELLA DEVE ESSERE COLORATA DEL COLORE SCELTO E DEVE ESSERE ASSEGNATA ALLA NAZIONE
         else {
-            if(((Regione) event.getSource()).getNazione().equals("")) {    /*se la cella su cui si clicca non fa gia'
+            if(((Regione) event.getSource()).getNomeNazione().equals("")) {    /*se la cella su cui si clicca non fa gia'
                																parte di una nazione si assegna quella regione alla nazione*/
+                nationList.get(0).setGridController(this);                 //Passo this alla nazione per operazioni con i thread
                 int gridColumns = 0;                                       //Numero di colonne della griglia desiderato dall'utente
                 int gridRows = 0;                                          //Numero di righe della griglia desiderato dall'utente
                 this.buttonDeleteNation.setDisable(false);                 //Viene abilitato il bottone buttonDeleteNation
                 this.buttonStart.setDisable(false);                        //Viene abilitato il bottone buttonStart
-                //SETTA LA NAZIONE DI APPARTENENZA E IL COLORE DELLA NAZIONE SULLA CELLA
-                ((Regione) event.getSource()).setNazione(nationList.get(0).getName(), nationList.get(0).getColor());
+                //SETTA LA NAZIONE DI APPARTENENZA E IL COLORE DELLA NAZIONE SULLA CELLA: inoltre passa l'oggeto nazione alla regione utile
+                //poi per la gestione dei thread
+                ((Regione) event.getSource()).setNazione(nationList.get(0).getName(), nationList.get(0).getColor(), nationList.get(0));
                 //AUMENTA IL NUMERO DI ABITANTI, LE RISORSE E IL DENARO DELLA NAZIONE IN BASE ALLE CARATTERISTICCHE DEL TERRITORIO ASSEGNATO
                 nationList.get(0).takeProfit(((Regione) event.getSource()).getTipo(), ((Regione) event.getSource()).getRisorse());
                 //AGGIUNGE L'OBJECT REGIONE (LA CELLA) ALLA LISTA DELLE REGIONI(LE CELLE) ASSEGNATE ALLA NAZIONE
@@ -570,6 +633,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     //Esce dal metodo cosi' da non generare errori
                 }
                 contaNumeroCelleUsate++;                                        //Incrementa il numero di celle utilizzate
+                //SE LE CELLE SONO STATE TUTTE UTILIZZATE BISOGNA DISABILITARE IL BOTTONE  BUTTON ADD NATION
                 if (contaNumeroCelleUsate >= (gridColumns * gridRows)) {        //Se sono state usate tutte le celle
                     this.buttonAddNation.setDisable(true);                        //Viene disabilitato il botttone buttonAddNation
                 }
