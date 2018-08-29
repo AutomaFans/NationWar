@@ -455,7 +455,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 //Ogni volta che viene aggiunto un nuovo bottone alla griglia viene anche creato il popover corrispndente.
                 //Questo PopOver mostrerà il valore delle risorse presenti in quella Regione, che saranno poi sfruttate dalle nazioni che la occuperanno.
                 Label risorseRegione = new Label("Risorse disponibili: " + bottone.getRisorse());
-                PopOver pop = new PopOver(risorseRegione);
+                Label tipoRegione = new Label("Regione: " + bottone.getTipo());
+                Label valoreRegione = new Label("Valore in denaro: " + bottone.getValore());
+                VBox vBox = new VBox(risorseRegione,tipoRegione,valoreRegione);
+                PopOver pop = new PopOver(vBox);
                 //pop viene visualizzato quando su entra con il mouse nella regione delimitata dal bottone
                 bottone.setOnMouseEntered(MouseEvent -> {
                     if(useButton == false) {
