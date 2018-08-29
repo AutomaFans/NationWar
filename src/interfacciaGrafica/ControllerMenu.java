@@ -63,6 +63,7 @@ public class ControllerMenu implements Initializable {
     //allora richiama il metodo loadTitle().
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ControllerImpostazioniGriglia.useButton = false;
         if (!Main.isShowed) {
             loadTitle();
         }
@@ -126,6 +127,8 @@ public class ControllerMenu implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
+
 }
 

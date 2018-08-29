@@ -104,6 +104,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //o se e' appena stata creata
     ArrayList<String> NomiNazioniCopia = new ArrayList<>();
 
+    static boolean useButton = false;   //variabile booleana usata per capire se è stato cliccato uno dei bottoni aggiungiNazione, eliminaNazione, Help o menuPrincipale
     //METODO CLICK ADD NATION
     //Se il numero  di elementi  della lista chiamata nationList e' minore del numero di elementi
     //della lista chiamata ListaColori -1 allora quando il bottone buttonAddNation viene premuto,
@@ -127,6 +128,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Infine mostra il limitStage impostando la visibilita' a true (con il metodo show).
     @FXML
     void clickAddNation(ActionEvent event) {
+        useButton = true;
         //SE IL NUMERO DI ELEMENTI DI NATION LIST E' MINORE DEL NUMERO DI ELEMENTI DI LISTA COLORI -1
         //ALLORA SI POSSONO AGGIUNGERE ALTRE NAZONI
         if (nationList.size() < ControllerAddNation.ListaColori.size() - 1) {
@@ -177,6 +179,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Infine mostra il deleteNationStage impostando la visibilita' a true (con il metodo show).
     @FXML
     void clickDeleteNation(ActionEvent event) {
+        useButton = true;
         //SE NATION LIST E' VUOTA NON E' POSSIBILE CANCELLARE LE NAZIONI
         if (nationList.size() == 0) {
             try {
@@ -214,6 +217,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Infine mostra il helpStage impostando la visibilita' a true (con il metodo show).
     @FXML
     void clickHelp(ActionEvent event) {
+        useButton = true;
         try {
             AnchorPane helpPane = FXMLLoader.load(getClass().getResource("FXMLhelp.fxml"));
             Stage helpStage = new Stage();
@@ -256,6 +260,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     // si puo' passare al turno della nazione successiva. Senza synchronize si otterebbero delle eccezioni.
     @FXML
     synchronized void clickStart(ActionEvent event) {
+        useButton = true;
         try{
             this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
             this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
@@ -447,13 +452,32 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 													la cella in base al'ultima nazione inserita*/
                 automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
 
+                //Ogni volta che viene aggiunto un nuovo bottone alla griglia viene anche creato il popover corrispndente.
+                //Questo PopOver mostrerà il valore delle risorse presenti in quella Regione, che saranno poi sfruttate dalle nazioni che la occuperanno.
+                Label risorseRegione = new Label("Risorse disponibili: " + bottone.getRisorse());
+                PopOver pop = new PopOver(risorseRegione);
+                //pop viene visualizzato quando su entra con il mouse nella regione delimitata dal bottone
+                bottone.setOnMouseEntered(MouseEvent -> {
+                    if(useButton == false) {
+                        pop.show(bottone);
+                        //useButton = true;
+                    }
+                });
+                //il pop scompare quando si esce ddall'area delimitata dal bottone con il mouse
+                bottone.setOnMouseExited(MouseEvent -> {
+                    if(useButton == false) {
+                        pop.hide();
+                    }
+                });
             }
         }
     }
 
 
+
+
     //METODO MENU
-    //Se la lunghezza dell'array aarrayForStart e' maggiore o uguale di 1 (quindi si e' gia'
+    //Se la lunghezza dell'array arrayForStart e' maggiore o uguale di 1 (quindi si e' gia'
     //premuto Start e poi si preme Menu) viene creato un nuovo Stage, chiamato stageFinestra e imposta il titolo
     //di questo stage con la scritta "ATTENZIONE".
     //Poi vengono creati i vari componenti (o elementi) da mettere dentro questo stage.
@@ -496,6 +520,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
     @FXML
     void clickMenu(ActionEvent event) {
+        useButton = true;
         //SE E' STATO PREMUTO START (PRIMA DI PREMERE IL BOTTONE BUTTON MENU)
         if(arrayForStart.size()>=1){
             Stage stageFinestra = new Stage();
@@ -642,23 +667,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
             else{
                 return;
             }
-
-            Regione bottone = ((Regione) event.getSource());  						//Variabile bottone di tipo regione che identifica la cella su cui si clicca.
-            Label appartenenzaNazione = new Label();  								//Si crea una Label  chiamata appartenenzaNazione
-            appartenenzaNazione.setText("Nazione: " + bottone.getNazione());		//Setto il testo della label con il nome della nazione di apparteneza della regione
-            Label risorseRegione = new Label();  									//Si crea una Label chiamata risorseRegione
-            risorseRegione.setText("Valore risorse: " + bottone.getRisorse());		//Setto il testo della label con il valore delle risorse relative a quella specifica regione
-            VBox verticalBox = new VBox(appartenenzaNazione,risorseRegione);  		//Si crea un VBox che contiene le due Label create precedentemente
-            PopOver pop = new PopOver(verticalBox);  								//Si crea un PopOver chiamato pop
-            //IL POPOVER VERRA' VISUALIZZATO QUANDO SI PASSA IL MOUSE SOPRA UNA REGIONE (CELLA)
-            //CHE E' GIA STATA ASSEGNATA AD UNA NAZIONE
-            bottone.setOnMouseEntered(MouseEvent -> {
-                pop.show(((Regione) event.getSource()));
-            });
-            //IL POPOVER SI CHIDERA' QUANDO SI SPOSTA IL MOUSE
-            bottone.setOnMouseExited(MouseEvent -> {
-                pop.hide();
-            });
         }
     }
 

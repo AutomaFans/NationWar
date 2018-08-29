@@ -155,6 +155,7 @@ public class ControllerAddNation {
                 stage.close();
             }
         }
+        ControllerImpostazioniGriglia.useButton = false;
     }
 
 }
