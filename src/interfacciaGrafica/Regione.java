@@ -7,13 +7,15 @@ import java.util.Random;
 public class Regione extends Button{
 
     private double risorse;       //Numero di risorse naturali della regione
-    private String nazione;       //Nazione a cui appartiene la regione(inizialmente di nessuno)
+    private String nomeNazione;       //Nome della nazione a cui appartiene la regione(inizialmente di nessuno)
     private String tipo;          //Tipo di regione che puo' essere in base alle risorse di tipo sterile o fertile
     private double valore;        //Valore in denaro de terreno (una nazione deve spendere una certa somma per colonizzare un terreno)
+    private CellThread threadRegione; //Thread della regione
+    private Nation nazione;       //oggetto Nation a cui appartiene la regione
 
     //Genera un nuovo oggetto di tipo Random(randomico), per cui
     //- assegna alle risorse un numero casuale compreso tra 0 e 1000
-    //- la nazione di appartenenza inizialmente e' vuota perche' quando generato il territorio non e' di nessuno
+    //- la nazione di appartenenza inizialmente e' nulla perche' quando generato il territorio non e' di nessuno
     //Inoltre se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
     //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse e' minore
     //di 350 allora la regione Ã¨ sterile per cui viene impostato il tipo = sterile
@@ -22,10 +24,12 @@ public class Regione extends Button{
     //alrimenti, se il tipo Ã¨ sterile allora lo sfondo della cella sara' l'immagine
     //IMG-Sterile.jpg.
     //Il valore reale verra' valorizzato al momento in cui si aggiunge la regione alla griglia.
+    //Infine assegna un thread alla Regione che svolgera le azioni inerenti ad essa.
     public Regione(){
         Random rand = new Random();              //Genera un nuovo oggetto di tipo Random(randomico)
-        risorse = rand.nextInt(1000);            //Assegna alle risorse un numero casuale compreso tra 0 e 1000
-        nazione = "";                            //la nazione di appartenenza inizialmente e' vuota perche' quando generato il territorio non e' di nessuno
+        risorse = rand.nextInt(1000);     //Assegna alle risorse un numero casuale compreso tra 0 e 1000
+        nomeNazione = "";                        //la nazione di appartenenza inizialmente e' vuota perche' quando generato il territorio non e' di nessuno
+        nazione = null;
         //IN BASE ALLE RISORSE VIENE IMPOSTATO IL TIPO DI TERRITOPRIO (FERTILLE O STERILE)
         if(risorse >= 350.0){                   //Se il numero di risorse e' maggiore uguale a 350
             tipo = "fertile";					//Allora la regione e' fertile
@@ -41,17 +45,19 @@ public class Regione extends Button{
             this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Sterile.jpg')");
         }
         this.valore = 0.0;
+        this.threadRegione = new CellThread(this); //Assegna un thread alla regione di tipo CellThread
     }
 
     //METODO RESET REGION
     //Permette di resettare la regione.
-    //Ovvero toglie la nazione di appartenza su quella cella e imposta lo sfondo di default.
+    //Ovvero toglie il nome della nazione di appartenza e l'oggetto Nation su quella cella e imposta lo sfondo di default.
     //Quindi aggiorna il tipo della regione, richiamando il metodo refreshType della classe
     //Regione.
     //In seguito se la regione è di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
     //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
     public void resetRegion(){
-        this.nazione = "";
+        this.nomeNazione = "";
+        this.nazione = null;
         this.refreshType();
         //Resetta lo sfondo in base al suo tipo(sterile o fertile) e togliendo il colore della nazione
         if(tipo.equals("fertile")){
@@ -70,12 +76,17 @@ public class Regione extends Button{
         return this.risorse;
     }
 
-    //METODO GET NAZIONE
-    //Restituisce la nazione di appartenenza o manda un messaggio in console se la regione non apparatiene a nessuno
-    public String getNazione() {
-        return this.nazione;
+    //METODO GET NOME NAZIONE
+    //Restituisce il nome della nazione di appartenenza o manda un messaggio in console se la regione non appartiene a nessuno
+    public String getNomeNazione() {
+        return this.nomeNazione;
     }
 
+    //METODO GET NAZIONE
+    //Restituisce l'oggetto Nation che rappresenta la nazione a cui appartiene la regione
+    public Nation getNazione(){
+        return this.nazione;
+    }
 
     //METODO GET TIPO
     //Restituisce il tipo di regione(fertile o sterile)
@@ -84,15 +95,17 @@ public class Regione extends Button{
     }
 
     //METODO SET NAZIONE
-    //Permette di assegnare alla regione la nazione di appartenenza passata come parametro e il colore della nazione. Metodo usato quando
-    //si assegna una regione ad una nazione durante le impostazioni iniziali e durante la simulazione quando una nazione conquista un
-    //territorio.
+    //Permette di assegnare alla regione la nazione di appartenenza passata come parametro e il colore della nazione. Assegna inoltre
+    // l'oggetto nazione stesso utile per alcune operazioni(sara' utile ad esempio con i thread)
+    // Metodo usato quando si assegna una regione ad una nazione durante le impostazioni iniziali e durante la simulazione quando
+    // una nazione conquista un territorio.
     //Alla regione viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
     //applicato un background color e cioe' il colore di sfondo che sara' quello passato al metodo. Nel caso in cui si sta impostando
     //la griglia si tratta de colore dell'ultima nazione inserita nel sistema.
-    public void setNazione(String nomeNazione, String colore){
-        this.nazione = nomeNazione;
+    public void setNazione(String nationName, String colore, Nation naz){
+        this.nomeNazione = nationName;
         this.setStyle("-fx-background-color: " + colore);
+        this.nazione = naz;
     }
 
     //METODO REFRESH TYPE
@@ -139,5 +152,18 @@ public class Regione extends Button{
     //Ritorna il valore in denaro dela regione
     public double getValore(){
         return this.valore;
+    }
+
+    //METODO START REGION THREAD
+    //Esegue lo start del thread inerente la regione
+    public void startRegionThread(){
+        this.threadRegione.start();
+    }
+
+    //METODO SET NEW THREAD
+    //Una volta eseguito il run del suo thread non sara' piu' possibile startarlo altrimenti si otterra' un eccezione,
+    //per questo il metodo assegna un nuovo thread alla regione cosi' che sia possibile fare di nuovo lo start() del suo thread
+    public void setNewThread(){
+        this.threadRegione = new CellThread(this);
     }
 }
