@@ -109,20 +109,20 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //METODO CLICK ADD NATION
     //Viene impostata la variabile useButton a true (viene rimessa a false nella classe ControllerAddNation
     //quando si clicca il bottone chiamato buttonAggiungi per creare una nazione).
-    //Poi se il numero  di elementi  della lista chiamata nationList e' minore del numero di elementi
-    //della lista chiamata ListaColori -1 allora quando il bottone buttonAddNation viene premuto,
-    //viene creato un oggetto di tipo AnchorPane chiamato addNationPane facendo riferimento
-    //e richiamando l'intefaccia definita in FXMLaddNation.fxml.
+    //Poi se il numero  di elementi  della lista chiamata nationList e' minore di 38 (che sono
+    //il nu mero di colori disponibili che si possono assegnare alle nazioni)allora quando il bottone
+    //buttonAddNation viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
+    //addNationPane facendo riferimento e richiamando l'intefaccia definita in FXMLaddNation.fxml.
     //Quindi addNationPane sara' l'interfaccia definita in FXMLaddNation.fxml.
     //Poi viene creato un nuovo Stage, chiamato addNationStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
     //QUINDI MOSTRA LA SCENA addNationPane SULLO STAGE addNationStage.
     //Infine mostra l'addNationStage impostando la visibilita' a true (con il metodo show).
     //Quindi viene visualizzata la finestra per creare ed inserire la nazione.
-    //Altrimenti, se il numero  di elementi  della lista chiamata nationList non e' minore del numero di elementi
-    //della lista chiamata ListaColori -1 allora significa che non si possono aggiunere piu' nazioni
-    //(perche' ogni volta che si crea una nuova nazione, in ControllerAddNation, viene tolto
-    //dalla ListaColori il colore usato per la nazione creata, in tal modo non possono essere
+    //Altrimenti, se il numero  di elementi  della lista chiamata nationList non e' minore di 38
+    //allora significa che non si possono aggiunere piu' nazioni perche' significa che sono stati
+    //usati tutti i colori (perche' ogni volta che si crea una nuova nazione, in ControllerAddNation,
+    //viene tolto dalla ListaColori il colore usato per la nazione creata, in tal modo non possono essere
     //create piu' nazioni con lo stesso colore), allora viene creato un oggetto di tipo AnchorPane
     //chiamato limitPane facendo riferimento e richiamando l'intefaccia definita in FXMlimite.fxml.
     //Quindi limitPane sara' l'interfaccia definita in FXMLlimite.fxml.
@@ -135,9 +135,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
     @FXML
     void clickAddNation(ActionEvent event) {
         useButton = true;
-        //SE IL NUMERO DI ELEMENTI DI NATION LIST E' MINORE DEL NUMERO DI ELEMENTI DI LISTA COLORI -1
-        //ALLORA SI POSSONO AGGIUNGERE ALTRE NAZONI
-        if (nationList.size() < ControllerAddNation.ListaColori.size() - 1) {
+        //SE IL NUMERO DI ELEMENTI DI NATION LIST E' MINORE DI 38 ALLORA SI POSSONO
+        //AGGIUNGERE ALTRE NAZONI
+        if (nationList.size() < 38) {
             try {
                 AnchorPane addNationPane = FXMLLoader.load(getClass().getResource("FXMLaddNation.fxml"));
                 Stage addNationStage = new Stage();
@@ -148,9 +148,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 e.printStackTrace();
             }
         }
-        //ALTRIMENTI, SE IL NUMERO DI ELEMENTI DI NATION LIST NON E' MINORE DEL NUMERO DI ELEMENTI DI
-        //LISTA COLORI -1 ALLORA NON SI POSSONO AGGIUNGERE ALTRE NAZONI PERCHE' SI E' RAGGIUNTO IL
-        //LIMITE MASSIMO DI COLORI.
+        //ALTRIMENTI, SE IL NUMERO DI ELEMENTI DI NATION LIST NON E' MINORE DI 38 ALLORA
+        //NON SI POSSONO AGGIUNGERE ALTRE NAZONI PERCHE' SONO STATI USATI TUTTI I COLORI
         else {
             try {
                 AnchorPane limitPane = FXMLLoader.load(getClass().getResource("FXMLlimite.fxml"));
@@ -270,7 +269,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //il gioco (perche' non ci sono nazioni).
     //Altrimenti,se la lista chiamata nationList che contiene tutte le nazioni che sono state
     //create non e' vuota (quindi se ci sono nazioni) allora il gioco puo' iniziare.
-    //Cosi una volta premuto il bottone start viene impostata la variabile useStart a true.
+    //Cosi una volta premuto il bottone start viene impostata la variabile useStart a true ed
+    //in seguito viene impstata la scritta della label (in basso a destra) chiamata mggError
+    //con la scritta "Partita iniziata".
     //Poi per ogni nazione dentro la lista nationList viene creata la base per il grafico degli gli
     //abitanti della nazione chiamata set, la base per il grafico delle risorse chiamata risorse e
     //la base per il grafico del denaro chiamata denaro.
@@ -290,7 +291,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Poi aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
     //Poi aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
     //Poi aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
-    //Infine viene aggiunta dentro  la lista arrayForStart la stringa "Start è stato premuto".
+    //Infine viene aggiunta dentro  la lista arrayForStart la stringa "Start Ã¨ stato premuto".
     //Una volta premuto start c'e' un for che va ad iterare tutte le nazioni dentro la lista nationList
     //(viene iterata nazione per nazione E QUESTO VIENE FATTO DAL THREAD MAIN).
     //Quindi viene presa una nazione per volta in maniera progressiva (e vengono prese dall'ultima creata
@@ -314,7 +315,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //turno della nazione successiva, per cui per svegliare il main c'e' il metodo ssveglia che fa una notify.
     @FXML
     synchronized void clickStart(ActionEvent event) {
-        this.msgError.setText("Partita iniziata");
         useButton = true;
         try{
             this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
@@ -335,6 +335,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 //ALTRIMENTI, SE NATION LIST NON E' VUOTA E' POSSIBILE INIZIARE IL GIOCO
             }else{
                 useStart=true;
+                this.msgError.setText("Partita iniziata");
                 for(int indice = 0; indice <nationList.size(); indice++) {
                     XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
                     XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
@@ -353,13 +354,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
                     valAttualeRisorse = (nationList.get(indice).getRisorse());
                     //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed Ã¨ alto tanto quanto Ã¨ il denaro di quella nazione
+                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÂ¨ alto tanto quanto ÃƒÂ¨ il denaro di quella nazione
                     valAttualeDenaro = nationList.get(indice).getDenaro();
                     barCharD.getData().addAll(denaro); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                     barChart.getData().addAll(set);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
                     barChartR.getData().addAll(risorse); 	//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
                 }
-                arrayForStart.add("Start è stato premuto");
+                arrayForStart.add("Start e' stato premuto");
 
                 //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
                 //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione inserita nelle impostazioni iniziali
@@ -583,7 +584,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //componenti sono la label e i due bottoni yesButton e noButton)
     //e aggiunge a layout prima la label poi il bottone yesButton e poi il bottone
     //noButton ed infine posiziona questi due componenti al centro (richiamando il metodo setAlignment)
-    //Infine crea una Scene (contenitore piÃ¹  interno) chiamata scene per il nodo radice
+    //Infine crea una Scene (contenitore piu'  interno) chiamata scene per il nodo radice
     //specificato (layout) e specifica la scena da usare sullo stage stageFinestra
     //(con il metodo setScene) e poi mostra lo stage stageFinestra impostandola visibilita' a
     //true (con il metodo show).
@@ -601,7 +602,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
     //Se il bottone noButton viene premuto (quindi se non si e' sicuri di interrompere la simulazione)
     //viene semplicemente chiuso lo stage chiamato stageFinestra (con il metodo close).
-    //Altrimenti, se non si e'¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
+    //Altrimenti, se non si e'Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
     //colorare le celle della nazioni e vengono riaggiunti alla lista ListaColori (che contiene' tutti i colori delle nazioni
     //che potranno essere scelti quando si crea una nuova nazione) cosida rendere nuovamenti i colori diponibili ed in seguito
     //viene cancellato tutto cio' che si trova dentro la lista nomiNazioni (che contiene' tutti i nomi delle nazioni che sono
