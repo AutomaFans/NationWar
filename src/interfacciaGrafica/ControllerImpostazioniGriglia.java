@@ -314,6 +314,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //turno della nazione successiva, per cui per svegliare il main c'e' il metodo ssveglia che fa una notify.
     @FXML
     synchronized void clickStart(ActionEvent event) {
+        this.msgError.setText("Partita iniziata");
         useButton = true;
         try{
             this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
