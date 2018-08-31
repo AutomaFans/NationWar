@@ -90,7 +90,7 @@ public class ControllerDeleteNation {
         for(Iterator<Nation> i = nationList.iterator(); i.hasNext();) {
             Nation num = i.next();
             if (num.getName() == nomeNazione.getValue()) {
-                ListaColori.add(num.getName());
+                ListaColori.add(num.getColor());
                 num.removeAllRegions();   //Tolgo nazione di appartenenza e colore della nazione alle celle che erano state assegnate alla nazione
                 i.remove();
             }
