@@ -187,7 +187,7 @@
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor></Button>
-                <Label fx:id="msgError" layoutX="566.0" layoutY="4.0" prefHeight="20.0" prefWidth="145.0" text="Min 2 righe e colonne \n Max 32 righe e colonne">
+                <Label fx:id="msgError" layoutX="566.0" layoutY="4.0" prefHeight="20.0" prefWidth="145.0" text="Max 32 righe e colonne">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor></Label>
