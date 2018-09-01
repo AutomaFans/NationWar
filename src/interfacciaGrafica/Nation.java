@@ -259,7 +259,10 @@ public class Nation extends Thread{
     //casualmente e successivamente attende che il suo turno finisca. Alla fine svolgera delle azioni di fine turno.
     //Siccome la nazone iniziera' ad eseguire il proprio turno allora viene messa la variabile boolena active (che tiene
     //conto se una nazone sta eseguendo il proprio tueno o meno) a true.
-    //poi viene presa casualmente dallalista regioni una regione da startare e viene memorizzato l'indice di questa regione
+    //Viene mandato il thread in sleep per 1000 millisecondi(un secondo) in maniera da poter notare cosa succede tra un turno e
+    //l'altro. Se non ci fosse la sleep i cambiamenti sarebbero istantanei e non sarebbe possibile percepire i cambiamenti(in un
+    //secondo verrebbero eseguiti decine di turni).
+    //Poi viene presa casualmente dalla lista regioni una regione da startare e viene memorizzato l'indice di questa regione
     ///all'interno della variabile regionToStart.
     //Se l'intero memorizzato nella variabile regionToStart e' uguale alla lunghezza della lista regioni si sottrae
     //1, per non incombere successivamente in un OutOfBoundException.
@@ -276,6 +279,7 @@ public class Nation extends Thread{
     public synchronized void run() {
         try{
             this.active = true;                                 //La nazione ha iniziato ad eseguire il codice del suo run() pertanto se ne tiene conto settando active a true
+            sleep(1000);                                  //Perde un secondo di tempo in maniera da notare i cambiamenti tra un turno e l'altro
             Random rand = new Random();							//Viene creato un oggetto di tipo Random, chiamato rand
             int regionToStart = rand.nextInt((regioni.size())); //Intero che rappresentera' l'indice della regione da startare
             if(regionToStart == regioni.size()){                //Se l'intero e' uguale alla lunghezza della lista regioni
