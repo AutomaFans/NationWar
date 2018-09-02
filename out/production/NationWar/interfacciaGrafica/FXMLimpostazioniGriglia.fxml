@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -33,7 +40,7 @@
         della griglia specificate dentro l'aree di testo.
         -->
 
-<BorderPane fx:id="borderPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerImpostazioniGriglia">
+<BorderPane fx:id="borderPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerImpostazioniGriglia">
     <center>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
@@ -47,7 +54,7 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Statistiche Nazioni">
+                <Tab fx:id="tabPopolazione" disable="true" text="Statistiche Popolazione">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -62,7 +69,7 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Statistiche risorse">
+                <Tab fx:id="tabRisorse" disable="true" text="Statistiche risorse">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -78,7 +85,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Statistiche denaro">
+                <Tab fx:id="tabDenaro" disable="true" text="Statistiche denaro">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -145,6 +152,7 @@
                   <Font size="14.0" />
                </font>
                 </Button>
+            <TextArea fx:id="txtTurniDaSvolgere" disable="true" prefHeight="70.0" prefWidth="134.0" text="1" />
                 <Button fx:id="buttonHelp" mnemonicParsing="false" onAction="#clickHelp" prefHeight="150.0" prefWidth="150.0" text="  Aiuto">
                     <graphic>
                         <ImageView fitHeight="37.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">

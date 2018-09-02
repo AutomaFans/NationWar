@@ -448,6 +448,25 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                                                             //il quale continuare la simulazione
                                 this.msgError.setText("Inserire n. turni > 0"); //Si avverte di inserire il numero di turni da svolgere
 
+                                //elimino tutte le statistiche fatte fino ad ora
+                                barChart.getData().clear();
+                                barCharD.getData().clear();
+                                barChartR.getData().clear();
+                                for (int k=0; k< nationList.size(); k++) {
+                                    XYChart.Series set1 = new XYChart.Series<>();       //Si crea il grafico degli Abitanti chiamato set1 (e' una base vuota su cui poi va costruito il grafico)
+                                    XYChart.Series risorse1 = new XYChart.Series<>();    //Si crea il grafico delle risorse chiamato risorse1(e' una base vuota su cui poi va costruito il grafico)
+                                    XYChart.Series denaro1 = new XYChart.Series<>();     //Si crea il grafico del denaro chiamato denaro1(e' una base vuota su cui poi va costruito il grafico)
+                                    //do un nome e un'altezza al mattone set1, dove l'altezza è il numero di abitanti della nazione
+                                    set1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), (nationList.get(k).getNumAbitanti()  )));
+                                    //do un nome e un'altezza al mattone set1, dove l'altezza è il numero delle risorse della nazione
+                                    risorse1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getRisorse() ));
+                                    //do un nome e un'altezza al mattone set1, dove l'altezza è il denaro della nazione
+                                    denaro1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getDenaro() ));
+                                    //aggiungo i mattoni nei vari barChart
+                                    barChart.getData().addAll(set1);
+                                    barChartR.getData().addAll(risorse1);
+                                    barCharD.getData().addAll(denaro1);
+                                }
                             }
                             else{                                          //Altrimenti la simulazione continua con il prossimo turno
 
