@@ -46,7 +46,7 @@ public class Nation extends Thread{
         this.age = Eta.ANTICA;             	//Setta l'eta' della nazione
         this.denaro = 0.0;                  //Setta il denaro della nazone
         this.risorse = 0.0;					//Setta le risorse della nazone
-        this.numAbitanti = 1;				//Setta il numero di abitanti della nazione
+        this.numAbitanti = 10;				//Setta il numero di abitanti della nazione
         this.active = false;				//Imposta la variabile booleana active a false
     }
 
