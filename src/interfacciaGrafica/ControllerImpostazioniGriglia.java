@@ -84,6 +84,19 @@ public class ControllerImpostazioniGriglia implements Initializable {
     @FXML
     private GridPane automaGrid; 			//Griglia chiamata automaGrid che serve per la griglia del gioco
 
+    @FXML
+    private Tab tabRisorse;                 //Tab per le statistiche sulle risorse di ogni nazione
+
+    @FXML
+    private Tab tabDenaro;                  //Tab per le statistiche sul denaro di ogni nazione
+
+    @FXML
+    private Tab tabPopolazione;             //Tab per le statistiche sulla popolazione di ogni nazione
+
+    @FXML
+    private TextArea txtTurniDaSvolgere;    //TextArea dove inserire durante una pausa il numero di turni per i quali si
+                                            // desidera far continuare la simulazione
+
     int contaNumeroCelleUsate;				//Variabile di tipo intera per sapere il numero di celle della griglia che sono state usate
 
     double valAttualeRisorse=0;				//Variabile che tiene conto del valore delle risorse
@@ -95,6 +108,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
     boolean useStart= false;				//Variabile per vedere se start e' premuto (true) o meno (false)
 
     static boolean useButton = false;   	//Variabile booleana usata per capire se e' stato cliccato uno dei bottoni aggiungiNazione, eliminaNazione, Help o menuPrincipale
+
+    int turni = 0;                          //La variabile turni tiene conto del numero di turni trascorsi dall'inizio del gioco.
+                                            //Un turno è completo quando tutte le nazioni in gioco "hanno fatto la propria mossa".
 
     //Crea una lista di stringhe chiamata arrayForStart che serve per capire se Start e'
     //stato premuto o no nel metodo ClickMenu
@@ -250,7 +266,11 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
     //METODO CLICK START
     //Viene impostata la variabile useButton a true
-    //Quando viene premuto il bottone start, viene disabilitato il bottone buttonAddNation,
+    //C'e' una area di testo sotto lo start da cui vengono presi i turni per i quali avanzare nella simulazione
+    //prima di una pausa: inizalmente per default si ha "1"(un turno) e quindi si avanza tranquillamente, ma
+    //se poi viene dato un numero uguale a 0 si ottiene un messaggio d'errore nel label in basso a destra. Quindi
+    //per continuare bisogna inserire sempre un numero maggiore di 0.
+    //Se il numero di turni per cui avanzare e' > 0, viene disabilitato il bottone buttonAddNation,
     //(cosi da togliera la possibilita' di aggiungere altre nazioni dopo aver premuto Start),
     //viene disabilitato il bottone buttonDeleteNation,(cosi da togliera la possibilita'
     //di cancellare nazioni dopo aver premuto Start).
@@ -291,9 +311,17 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Poi aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
     //Poi aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
     //Poi aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
-    //Infine viene aggiunta dentro  la lista arrayForStart la stringa "Start Ã¨ stato premuto".
-    //Una volta premuto start c'e' un for che va ad iterare tutte le nazioni dentro la lista nationList
-    //(viene iterata nazione per nazione E QUESTO VIENE FATTO DAL THREAD MAIN).
+    //Infine viene aggiunta dentro  la lista arrayForStart la stringa "Start e' stato premuto".
+    //Vengono disabilitati i bottoni di menu, help, start e statistiche che saranno cliccabili solo a gioco fermo.
+    //Disabilitata a gioco che avanza anche l'area di testo in cui inserire i turni.
+    //L'uso del pulsante start viene cambiato ora in continua, dove una volta cliccato su start(che una volta avviato il gioco
+    //si trasforma in continua) si continua per il numero di turni inseriti nell'area di testo sotto start.
+    //Se si clicca su continua e quindi siamo nella situazione in cui start e' gia' stato premuto una volta allora bisogna
+    //clonare le nazioni in maniera da poter fare di nuovo start delle nazioni in nationList(cosa altrimenti non possibile
+    //visto che l'istanza di un thread puo' essere runnato una sola volta). Si tiene conto poi del numero di turni per il
+    //quale avanzare: il numero e' quello indicato nell'area di testo sotto lo start.
+    //Si arriva quindi al punto centrale della simulazione in cui c'e' un for che va ad iterare tutte le nazioni dentro
+    // la lista nationList (viene iterata nazione per nazione E QUESTO VIENE FATTO DAL THREAD MAIN).
     //Quindi viene presa una nazione per volta in maniera progressiva (e vengono prese dall'ultima creata
     //perche' noi inseriamo sempre in prima posizione nella lista) e il thread main fa start di quella nazione
     //e siccome poi il main continuerebbe ad andare avanti nel codice e' stata messa una wait, cosi la nazione
@@ -302,78 +330,132 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Il thread Main attende finche' la nazione iterata ha finito di svolgere il suo turno (me ne rendo conto richiamando il metodo
     //getThreadState della classe Nation che restituisce true se il thread non ha finito di svolgere il suo turno, false altrimenti)
     //quindi attende finche' il metodo getThreadState restituisce true.
-    //In seguito, controlliamo se e' stato eseguito il turno dell'ultima nazione, bisogna riiniziare dalla prima
-    //ma siccome c'e' un problema con i Thread, cioe' una volta eseguito lo start di un thread non si puo' piu'
-    //rieseguire lo start, almeno che non si crea una nuova istanza.
-    //Per cui vengono clonate le nazioni (i thread perche' Nation estende Thread) e vengono sostituite a quelle vecchie,
-    //richimando il metodo cloneNationThreadList, ottenendo cosi nuovi oggetti di tipo Nation startabili (in grado di eseguire
-    //il proprio run()) ma che mantengono gli stessi dati di prima (senza perdite di dati, appunto perche' sono stati clonati).
-    //Infine viene messo l'indice del for a -1 per riniziare ad iterare da capo le nazione della lista nationList.
+    //In seguito, controlliamo se e' stato eseguito il turno dell'ultima nazione: se si allora si tiene conto che e' stato svolto
+    // un turno per ogni nazione(this.turni ++;) e si dimuisce il numero di turni che devono ancora essere svolti(indicati nella
+    // casella di testo). Se siamo al primo turno o e' stato svolto il numero di turni indicato si ferma la simulazione(pausa)
+    // per poter consultare le statistiche, constatare le differenze e decidere di quanti turni far avanzare la simulazione
+    // Se non siamo al primo turno e non e' stato svolto il numero di turni indicato bisogna riiniziare dalla prima nazione ma
+    // siccome c'e' un problema con i Thread,  cioe' che una volta eseguito lo start di un thread non si puo' piu' rieseguire
+    // lo start, almeno che non si crea una nuova istanza, allora vengono clonate le nazioni (i thread perche' Nation estende
+    // Thread) e vengono sostituite a quelle vecchie, richimando il metodo cloneNationThreadList, ottenendo cosi nuovi oggetti
+    // di tipo Nation startabili (in grado di eseguire il proprio run()) ma che mantengono gli stessi dati di prima (senza
+    // perdite di dati, appunto perche' sono stati clonati).
+    //Infine viene messo l'indice del for a -1 per riniziare ad iterare da capo le nazioni della lista nationList.
     //Per eseguire la wait in clickStart bisogna sincronizzare (synchronize) il metodo in maniera che una nazione possa
     //notificare il thread che gestiva i turni, senza synchronize si otterebbero delle eccezioni.
     //Quando la nazione ha finito di eseguire il proprio turno, bisogna svegliare il thread main ed eseguire il
-    //turno della nazione successiva, per cui per svegliare il main c'e' il metodo ssveglia che fa una notify.
+    //turno della nazione successiva, per cui per svegliare il main c'e' il metodo sveglia che fa una notify.
     @FXML
     synchronized void clickStart(ActionEvent event) {
         useButton = true;
         try{
-            this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
-            this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
-            //SE NATION LIST E' VUOTA NON E' POSSIBILE INIZIARE IL GIOCO
-            if (nationList.size() == 0){
-                try {
-                    AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
-                    buttonAddNation.setDisable(false);
-                    buttonDeleteNation.setDisable(false);
-                    Stage noStartStage = new Stage();
-                    noStartStage.setScene(new Scene(noStartPane));
-                    noStartStage.setResizable(false);
-                    noStartStage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //ALTRIMENTI, SE NATION LIST NON E' VUOTA E' POSSIBILE INIZIARE IL GIOCO
-            }else{
-                useStart=true;
-                this.msgError.setText("Partita iniziata");
-                for(int indice = 0; indice <nationList.size(); indice++) {
-                    XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
-                    XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
-                    XYChart.Series denaro = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
-                    //SE IL NOME DELLA NAZIONE NON E' CONTENUTO NELLA LISTA NOMINAZIONI COPIA
-                    if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) {
-                        valAttualeAbitanti = 0;
-                        valAttualeRisorse = 0;
-                        valAttualeDenaro = 0;
-                        NomiNazioniCopia.add(nationList.get(indice).getName());
-                    }
-                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
-                    set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti)));
-                    valAttualeAbitanti = (nationList.get(indice).getNumAbitanti());
-                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
-                    risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
-                    valAttualeRisorse = (nationList.get(indice).getRisorse());
-                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÂ¨ alto tanto quanto ÃƒÂ¨ il denaro di quella nazione
-                    valAttualeDenaro = nationList.get(indice).getDenaro();
-                    barCharD.getData().addAll(denaro); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
-                    barChart.getData().addAll(set);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
-                    barChartR.getData().addAll(risorse); 	//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
-                }
-                arrayForStart.add("Start e' stato premuto");
+            if(Integer.parseInt(this.txtTurniDaSvolgere.getText()) == 0){    //Per continuare bisogna inserire un numero di turni > 0,
+                                                                             //altrimenti si ottiene un errore nel label in basso a destra
+                                                                             //(il primo turno viene svolto senza problemi perche' il TextArea
+                                                                             //txtTurniDaSvolgere ha gia' "1" come valore di default
+                this.msgError.setText("Inserire n. turni > 0");
+            }
+            else{                                                           //Se i turni per i quali avanzare sono > 0
+                this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
+                this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
 
-                //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
-                //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione inserita nelle impostazioni iniziali
-                for(int i=0; i < nationList.size(); i++){  				//Viene iterata nazione per nazione della lista nationList
-                    nationList.get(i).start();            				//Viene svolto il turno della nazione considerata
-                    do {
-                        wait();                           				//Il therad main si mette in attesa che la nazione finisca di svolgere il suo turno
+                //SE NATION LIST E' VUOTA NON E' POSSIBILE INIZIARE IL GIOCO
+                if (nationList.size() == 0){
+                    try {
+                        AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
+                        buttonAddNation.setDisable(false);
+                        buttonDeleteNation.setDisable(false);
+                        Stage noStartStage = new Stage();
+                        noStartStage.setScene(new Scene(noStartPane));
+                        noStartStage.setResizable(false);
+                        noStartStage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    while(nationList.get(i).getThreadState() == true); 	//E resta in attesa finche' il metodo getThreadState restituisce true
+                    //ALTRIMENTI, SE NATION LIST NON E' VUOTA E' POSSIBILE INIZIARE IL GIOCO
+                }else{
+                    useStart=true;
+                    for(int indice = 0; indice <nationList.size(); indice++) {
+                        XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
+                        XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
+                        XYChart.Series denaro = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
+                        //SE IL NOME DELLA NAZIONE NON E' CONTENUTO NELLA LISTA NOMINAZIONI COPIA
+                        if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) {
+                            valAttualeAbitanti = 0;
+                            valAttualeRisorse = 0;
+                            valAttualeDenaro = 0;
+                            NomiNazioniCopia.add(nationList.get(indice).getName());
+                        }
+                        //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
+                        set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti)));
+                        valAttualeAbitanti = (nationList.get(indice).getNumAbitanti());
+                        //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
+                        risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
+                        valAttualeRisorse = (nationList.get(indice).getRisorse());
+                        //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
+                        denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÂ¨ alto tanto quanto ÃƒÂ¨ il denaro di quella nazione
+                        valAttualeDenaro = nationList.get(indice).getDenaro();
+                        barCharD.getData().addAll(denaro); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
+                        barChart.getData().addAll(set);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
+                        barChartR.getData().addAll(risorse); 	//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
+                    }
+                    arrayForStart.add("Start e' stato premuto");
 
-                    if(i == nationList.size()-1){                      	//Se e' stato svolto il turno dell'ultima nazione in lista bisogna riiniziare dalla prima
-                        this.nationList = cloneNationThreadList();     	//Vengono clonate le nazioni
-                        i=-1;                                          	//Infine porto l'indice del for a -1 per riniziare ad iterare da capo
+                    //I bottoni non saranno cliccabili durante lo svolgimento di un turno. Inoltre durante lo svolgimento
+                    // di un turno non sara' possibile editare l'area di testo in cui inserire i turni per i quali la simulazione deve continuare.
+                    this.buttonStart.setDisable(true);
+                    this.buttonHelp.setDisable(true);
+                    this.buttonMenu.setDisable(true);
+                    this.tabPopolazione.setDisable(true);                   //Non e' possibile consultare le statistiche mentre il gioco avanza
+                    this.tabDenaro.setDisable(true);
+                    this.tabRisorse.setDisable(true);
+                    this.txtTurniDaSvolgere.setDisable(true);
+
+                    this.msgError.setText("Turno " + this.turni + 1);       //Mostra il turno in cui ci troviamo nel label in basso a destra
+                    this.buttonStart.setText("Continua");                   //Il bottone di start cambia ora utilizzo: servira' ora per continuare
+                                                                            //tra una pausa e l'altra
+                    if(useStart == true){                                   //Se la simulazione e' iniziata
+                        this.nationList = cloneNationThreadList();     	    //Vengono clonate le nazioni per poter startare di nuovo i thread
+                    }
+                    int turniSvolti = Integer.parseInt(txtTurniDaSvolgere.getText()); //numero di turni da svolgere prima della pausa
+                    //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
+                    //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione inserita nelle impostazioni iniziali
+                    for(int i=0; i < nationList.size(); i++){  				//Viene iterata nazione per nazione della lista nationList
+                        nationList.get(i).start();            				//Viene svolto il turno della nazione considerata
+                        do {
+                            wait();                           				//Il therad main si mette in attesa che la nazione finisca di svolgere il suo turno
+                        }
+                        while(nationList.get(i).getThreadState() == true); 	//E resta in attesa finche' il metodo getThreadState restituisce true
+
+                        if(i == nationList.size()-1){                      	//Se e' stato svolto il turno dell'ultima nazione in lista bisogna riiniziare dalla prima
+                            this.turni ++;                                 //Si tiene conto che si e' arrivati alla fine del turno per tutte le nazioni
+                            turniSvolti --;                                //Un turno e' stato svolto e quindi aggiorno il numero di turni da svolgere
+                                                                           //rimanenti
+
+                            if(this.turni == 1 || turniSvolti == 0){      //Se siamo al primo turno o e' stato svolto il numero di turni indicato
+                                                                          //si ferma la simulazione(pausa) per poter consultare le statistiche,
+                                                                          // constatare le differenze e decidere di quanti turni far avanzare la
+                                                                          // simulazione
+                                //Viene riabilitato l'uso dei bottoni
+                                this.buttonHelp.setDisable(false);
+                                this.buttonMenu.setDisable(false);
+                                this.tabPopolazione.setDisable(false);      //Le varie statistiche saranno consultabili solo a gioco fermo
+                                this.tabDenaro.setDisable(false);
+                                this.tabRisorse.setDisable(false);
+                                this.buttonStart.setDisable(false);         //Viene riabilitato il bottone di start che ora serve per continuare
+                                                                            //la simulazione
+                                this.txtTurniDaSvolgere.setDisable(false);  //A gioco fermo in questa TextArea si puo' inserire il numero di turni per
+                                                                            //il quale continuare la simulazione
+                                this.msgError.setText("Inserire n. turni > 0"); //Si avverte di inserire il numero di turni da svolgere
+
+                            }
+                            else{                                          //Altrimenti la simulazione continua con il prossimo turno
+
+                                this.msgError.setText("Turno " + this.turni + 1); //Mostra il turno in cui ci troviamo nel label in basso a destra
+                                this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
+                                i=-1;                                          	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
+                            }
+                        }
                     }
                 }
             }

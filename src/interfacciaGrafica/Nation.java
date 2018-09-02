@@ -16,10 +16,6 @@ public class Nation extends Thread{
     private double risorse;                 //Duble risorse che tiene conto delle risorse naturali della nazione
     private int numAbitanti;                //Inteo numAbitanti che tiene conto del numero di abitanti della nazione
 
-    static int turni = 0;                   //La variabile turni tiene conto del numero di turni trascorsi dal'inizio del gioco.
-                                            //Un turno è completo quando tutte le nazioni in gioco "hanno fatto la propria mossa".
-    static int nNazione = 0;                //Varibile utilizzata per il conteggio dei turni.
-
     private boolean active;                 //Variabile booleana che sara' true se la nazione non ha finito di svolgere la sua run, false altrimenti
 
     //Controller della griglia per avvisare(notify()) il thread che gestisce i turni
@@ -88,6 +84,8 @@ public class Nation extends Thread{
 
     //METODO REFRESH AGE
     //Metodo che permette di aggiornare l'eta' attuale della nazione.
+    //Ogni passggio di eta' avviene se sono passati almeno 20 turni dall'inizio del gioco
+    //o 20 turni da un cambiamento di eta'.
     //Se le risorse della nazione sono minori di 3000, il numero di abitanti della nazione
     //sono minori di 1000 e il denaro della nazione e' minore di 5000 allora
     //viene impostata l'eta' della nazione come eta' antica.
@@ -100,7 +98,7 @@ public class Nation extends Thread{
     //e' maggiore o uguale a 10000 allora vine impostata l'eta' della nazione come
     //eta' moderna.
     public void refreshAge(){
-        if(turni%20 == 0) {   //Il passaggio da un'epoca ad un'altra avviene ogni 20 anni (se determinati valori vengono soddisfatti).
+        if(this.gridController.turni % 20 == 0) {   //Il passaggio da un'epoca ad un'altra avviene ogni 20 anni (se determinati valori vengono soddisfatti).
             if (this.risorse < 3000 && this.numAbitanti < 1000 && this.denaro < 5000) {
                 this.age = Eta.ANTICA;
             } else if ((this.risorse >= 3000 && this.numAbitanti >= 1000 && this.denaro >= 5000) &&
@@ -273,7 +271,7 @@ public class Nation extends Thread{
     //in particolare attende (wait()) che la regione che agisce la avvisi con una notify() che il suo turno e' finito.
     //Cosi quando la nazione riceve una notify, viene richiamato il metodo increasePopulation della classe Nation,
     //il metodo incassaDenaro della classe Nation e il metodo consumaRisorse della classe Nation.
-    //Inoltre avendo finito il prorpio turno setta la variabile acive a false ed infine la nazione avvisa il thread
+    //Inoltre avendo finito il prorpio turno setta la variabile active a false ed infine la nazione avvisa il thread
     //che deteneva la griglia e gestiva i turni che il suo turno e' finito e si puo' passare al turno della
     //nazione successiva.
     public synchronized void run() {
@@ -294,16 +292,6 @@ public class Nation extends Thread{
             this.incassaDenaro();          						//Viene incassato denaro in base alle risorse e agli abitanti della nazione
             this.consumaRisorse();         						/*Vengono consumate le risorse, inoltre in questo metodo viene anche aggiornata l'eta':
                                            						si vuole infatti tenere conto della situazione in cui si trova la nazione a fine turno*/
-            //Controlla il conteggio dei turni.
-            //Se tutte le nazioni hanno giocato allora si incrementa di 1 il turno, altrimenti incrementa di 1 solamente il numero di nazioni che hanno giocato in quel turno.
-            if(nNazione == ControllerImpostazioniGriglia.nationList.size()){
-                nNazione = 0;
-                turni += 1;
-            }
-            else{
-                nNazione += 1;
-            }
-
             this.active = false;          						//Avendo finito di eseguire il codice del suo run() setta active a false
             this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
             //il suo turno e' finito e si puo' passare al turno della nazione successiva
