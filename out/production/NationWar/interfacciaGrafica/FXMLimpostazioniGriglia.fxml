@@ -101,6 +101,21 @@
                         </AnchorPane>
                     </content>
                 </Tab>
+                <Tab fx:id="tabInfoNazioni" disable="true" text="Info Nazioni">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="519.0" prefWidth="587.0">
+                            <children>
+                                <TableView fx:id="InfoTable" layoutX="-3.0" prefHeight="543.0" prefWidth="599.0">
+                                    <columns>
+                                        <TableColumn fx:id="ColonnaNazioni" minWidth="186.0" prefWidth="186.0" resizable="false" text="Nazioni" />
+                                        <TableColumn fx:id="ColonnaEta" minWidth="106.0" prefWidth="106.0" resizable="false" text="Età" />
+                                        <TableColumn fx:id="ColonnaFertili" minWidth="133.0" prefWidth="133.0" resizable="false" text="Regioni Fertili" />
+                                        <TableColumn fx:id="ColonnaSterili" maxWidth="190.0" minWidth="157.0" prefWidth="157.0" resizable="false" text="Regioni Sterili" />
+                                    </columns>
+                                </TableView>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
             </tabs>
         </TabPane>
     </center>
@@ -118,9 +133,9 @@
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
                 </Button>
                 <Button fx:id="buttonDeleteNation" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickDeleteNation" prefHeight="150.0" prefWidth="150.0" text="Elimina &#10;Nazione">
                     <graphic>
@@ -133,9 +148,9 @@
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
                 </Button>
                 <Button fx:id="buttonStart" disable="true" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#clickStart" prefHeight="150.0" prefWidth="150.0" text="  Gioca">
                     <graphic>
@@ -148,11 +163,11 @@
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
                 </Button>
-            <TextArea fx:id="txtTurniDaSvolgere" disable="true" prefHeight="70.0" prefWidth="134.0" text="1" />
+                <TextArea fx:id="txtTurniDaSvolgere" disable="true" prefHeight="70.0" prefWidth="134.0" text="1" />
                 <Button fx:id="buttonHelp" mnemonicParsing="false" onAction="#clickHelp" prefHeight="150.0" prefWidth="150.0" text="  Aiuto">
                     <graphic>
                         <ImageView fitHeight="37.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
@@ -164,17 +179,17 @@
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
                 </Button>
                 <Button fx:id="buttonMenu" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onAction="#clickMenu" prefHeight="150.0" prefWidth="150.0" text="Menu Principale">
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                    <font>
+                        <Font size="14.0" />
+                    </font></Button>
             </children>
         </VBox>
     </right>

@@ -59,7 +59,7 @@ public class Regione extends Button{
     //Ovvero toglie il nome della nazione di appartenza e l'oggetto Nation su quella cella e imposta lo sfondo di default.
     //Quindi aggiorna il tipo della regione, richiamando il metodo refreshType della classe
     //Regione.
-    //In seguito se la regione Ã¨ di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
+    //In seguito se la regione ÃƒÂ¨ di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
     //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
     public void resetRegion(){
         this.nomeNazione = "";
@@ -127,8 +127,8 @@ public class Regione extends Button{
     //METODO REFRESH TYPE
     //Setta il terreno al suo tipo di stato attuale(fertile o sterile)
     //se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
-    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse ÃƒÂ¨ minore
-    //di 350 allora la regione ÃƒÂ¨ sterile per cui viene impostato il tipo = sterile
+    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse ÃƒÆ’Ã‚Â¨ minore
+    //di 350 allora la regione ÃƒÆ’Ã‚Â¨ sterile per cui viene impostato il tipo = sterile
     public void refreshType(){
         if(risorse >= 350.0){                   //Se il numero di risorse e' maggiore uguale a 350
             tipo = "fertile";					//Allora la regione e' fertile
@@ -151,15 +151,15 @@ public class Regione extends Button{
     //Metodo per settare il valore reale in denaro della regione
     //Il valore cambiera' in base al numero di risorse e di righe e colonne della griglia.
     //Se si ha una griglia abbastanza grande il valore sara' piu' basso per permettere
-    //una maggiore espansione nella tabella, per cui il valore sarÃƒÂ  la meta'' delle risorse
+    //una maggiore espansione nella tabella, per cui il valore sarÃƒÆ’Ã‚Â  la meta'' delle risorse
     //(risorse/2).
     //Altrimenti, se si ha una griglia di piccole dimensioni il valore sara' piu' alto
     //per contenere l'espansione, per cui il valore e' uguale alle risorse (valore = risorse).
     public void setValore(int righe, int colonne){
-        if(righe > 20 && colonne > 20){          	//Se il numero di righe e di colonne della griglia ÃƒÂ¨ maggiore di 20
+        if(righe > 20 && colonne > 20){          	//Se il numero di righe e di colonne della griglia ÃƒÆ’Ã‚Â¨ maggiore di 20
             this.valore = risorse / 2;				//Il valore e' uguale alla meta' delle risorse
         }
-        else{                                     	//Altrimenti, se il numero di righe e di colonne della griglia ÃƒÂ¨ minore o uguale di 20
+        else{                                     	//Altrimenti, se il numero di righe e di colonne della griglia ÃƒÆ’Ã‚Â¨ minore o uguale di 20
             this.valore = risorse;				   	//Il valore e' uguale alle risorse
         }
     }
