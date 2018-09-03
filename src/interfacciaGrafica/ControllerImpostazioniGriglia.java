@@ -447,7 +447,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                 this.txtTurniDaSvolgere.setDisable(false);  //A gioco fermo in questa TextArea si puo' inserire il numero di turni per
                                                                             //il quale continuare la simulazione
                                 this.msgError.setText("Inserire n. turni > 0"); //Si avverte di inserire il numero di turni da svolgere
-
+                                useButton= false; //lo metto a false così che finito il numeri dei turni, sono di nuovo visibili i pop
                                 //elimino tutte le statistiche fatte fino ad ora
                                 barChart.getData().clear();
                                 barCharD.getData().clear();
