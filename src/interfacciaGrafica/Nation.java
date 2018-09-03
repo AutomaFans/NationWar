@@ -18,6 +18,8 @@ public class Nation extends Thread{
 
     private boolean active;                 //Variabile booleana che sara' true se la nazione non ha finito di svolgere la sua run, false altrimenti
 
+    private boolean vivo = true;            //variabile booleana che indica lo stato di una nazione: sotto i 10 abitanti diventa morto, percui vivo = false
+
     //Controller della griglia per avvisare(notify()) il thread che gestisce i turni
     //di passare al turno della nazione successiva
     private ControllerImpostazioniGriglia gridController;
@@ -80,6 +82,12 @@ public class Nation extends Thread{
     //restituisce il numero di abitanti della nazione
     public int getNumAbitanti(){
         return this.numAbitanti;
+    }
+
+    //METODO GET STATO
+    //Restituisce true se la nazione è viva, false altrimenti
+    public boolean getStato(){
+        return this.vivo;
     }
 
     //METODO REFRESH AGE
@@ -295,6 +303,11 @@ public class Nation extends Thread{
             this.active = false;          						//Avendo finito di eseguire il codice del suo run() setta active a false
             this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
             //il suo turno e' finito e si puo' passare al turno della nazione successiva
+
+            if(this.getNumAbitanti() < 10){
+                vivo = false;
+            }
+
         }
         catch (InterruptedException i){    						//Se si ha un interrupt di questa nazione si ottiene un eccezione
             System.out.println("Vita nazione interrotta!");
