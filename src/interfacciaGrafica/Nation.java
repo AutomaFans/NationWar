@@ -18,7 +18,10 @@ public class Nation extends Thread{
 
     private boolean active;                 //Variabile booleana che sara' true se la nazione non ha finito di svolgere la sua run, false altrimenti
 
-    private boolean vivo = true;            //variabile booleana che indica lo stato di una nazione: sotto i 10 abitanti diventa morto, percui vivo = false
+    private boolean vivo = true;            //Variabile booleana che indica lo stato di una nazione.
+											/*Indica se la nazione e' viva (true) o se la nazione e' morta (false).
+	 										Sotto i 10 abitanti la nazione e' morta*/
+
 
     //Controller della griglia per avvisare(notify()) il thread che gestisce i turni
     //di passare al turno della nazione successiva
@@ -44,7 +47,7 @@ public class Nation extends Thread{
     //scelta dal dominio enumerativo di "Eta".
     //poi setta il denaro ele risorse della nazione, questi due valori inizialmente sono a 0
     //e assumono un valore iniziale in base alle celle(pezzi di territorio) assegnati sulla griglia
-    //Poi setta ad 1 il numero di abitanti della nazione (quindi ogni nazione ha come minimo un abitante).
+    //Poi setta a 10 il numero di abitanti della nazione (quindi ogni nazione ha come minimo un abitante).
     //Infine setta la variabil booleana active a false.
     public Nation(String nome, String color){
         this.setName(nome);                 //Setta il nome della nazion
@@ -83,13 +86,13 @@ public class Nation extends Thread{
     }
 
     //METODO GET NUM ABITANTI
-    //restituisce il numero di abitanti della nazione
+    //Restituisce il numero di abitanti della nazione
     public int getNumAbitanti(){
         return this.numAbitanti;
     }
 
     //METODO GET STATO
-    //Restituisce true se la nazione è viva, false altrimenti
+    //Restituisce true se la nazione e' viva, false altrimenti
     public boolean getStato(){
         return this.vivo;
     }
@@ -209,14 +212,14 @@ public class Nation extends Thread{
             int gridRows = this.gridController.getNumeroRighe();      //Ottiene il numero di righe totali della griglia
             int gridColumns = this.gridController.getNumeroColonne(); //Ottiene il numero di colonne totali della griglia
             boolean regioneEseguibile = false;       //Booleano che sara' messo a true se la regione ha almeno un territorio
-                                                     //confinante che non fa parte della nazione
+            //confinante che non fa parte della nazione
 
             //Ci sono vari tipologie di celle classificate in base a se hanno o meno una
             //coordinata(x=row o y=column) che colloca la cella al bordo della griglia
             if(row == 0){                            //Caso in cui la cella non ha sopra nessuna cella confinante(si tratta di
-                                                     // una cella nella prima riga)
+                // una cella nella prima riga)
                 if(column == 0){                     //caso in cui la cella non ha a sinistra nessuna cella confinante(si tratta
-                                                     //di una cella nella prima colonna)
+                    //di una cella nella prima colonna)
                     //Controllo se la regione ha a destra o in basso una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella nell'angolo in alto a sinistra: con il metodo getNodeFromGridPane (a cui viene passato numero
                     //di riga e colonna della cella e la griglia in cui si trova la cella) ottengo il nodo(un oggetto) che si trova nella
@@ -224,38 +227,38 @@ public class Nation extends Thread{
                     //"((Regione)nodoOttenuto)", e se ne ottiene il nome della nazione di appartenenza verificando che non sia uguale a quello
                     //della nazione della regione che si vuole verificare se e' eseguibile.
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 1, 0)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 0, 1)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 0, 1)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true; //se una delle due celle confinanti non fa parte della nazione allora la regione di cui
-                                                  //si verifica l'eseguibilita' viene scelta per essere inserita nella lista
+                        //si verifica l'eseguibilita' viene scelta per essere inserita nella lista
                     }
                 }
                 else if(column == (gridColumns-1)){  //Caso in cui la cella non ha a destra nessuna cella confinante(si tratta di
-                                                     //una cella nell'ultima colonna)
+                    //una cella nell'ultima colonna)
                     //Controllo se la regione ha a sinistra o in basso una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella nell'angolo in alto a destra
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, 0)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, 1)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, 1)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
                 else{                                //Caso in cui la cella sia a destra e sinistra celle confinanti(si tratta di
-                                                     //una cella di una colonna intermedia)
+                    //una cella di una colonna intermedia)
                     //Controllo se la regione ha a destra o a sinistra una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella del bordo in alto ma non negli angoli
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, 0)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column+1, 0)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, 1)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column+1, 0)).getNomeNazione().equals(this.getName()) == false
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, 1)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
             }
             else if(row == (gridRows-1)){             //Caso in cui la cella non ha sotto nessuna cella confinante(si tratta di
-                                                      // una cella nell'ultima riga)
+                // una cella nell'ultima riga)
                 if(column == 0){
                     //Controllo se la regione ha a destra o in alto una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella nell'angolo in basso a sinistra
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 0, row-1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 1, row)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 1, row)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
@@ -263,7 +266,7 @@ public class Nation extends Thread{
                     //Controllo se la regione ha a sinistra o in alto una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella nell'angolo in basso a destra
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row-1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
@@ -271,20 +274,20 @@ public class Nation extends Thread{
                     //Controllo se la regione ha in alto, a sinistra o a destra una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella nel bordo in basso ma non negli angoli
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row-1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column+1, row)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column+1, row)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
             }
             else{                                    //Caso in cui la cella ha sia sopra che sotto celle confinanti(si tratta di
-                                                     // una cella in una riga intermedia)
+                // una cella in una riga intermedia)
                 if(column == 0){
                     //Controllo se la regione ha in alto, in basso o a destra una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella nel bordo sinistro ma non negli angoli
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 0, row-1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 0, row+1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 1, row)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 0, row+1)).getNomeNazione().equals(this.getName()) == false
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), 1, row)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
@@ -292,8 +295,8 @@ public class Nation extends Thread{
                     //Controllo se la regione ha in alto, in basso o a sinistra una cella confinante che non fa parte della nazione, se siamo in questo
                     //caso si tratta di una cella nel bordo destro ma non negli angoli
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row-1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row+1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row+1)).getNomeNazione().equals(this.getName()) == false
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
@@ -301,9 +304,9 @@ public class Nation extends Thread{
                     //Controllo se la regione ha in alto, a destra, in basso o a sinistra una cella confinante che non fa parte della nazione,
                     // se siamo in questo caso si tratta di una cella che non si trova in nessuno dei bordi
                     if(((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row+1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row-1)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false
-                    || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column+1, row)).getNomeNazione().equals(this.getName()) == false){
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column, row-1)).getNomeNazione().equals(this.getName()) == false
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column-1, row)).getNomeNazione().equals(this.getName()) == false
+                            || ((Regione)this.gridController.getNodeFromGridPane(this.gridController.getGridPane(), column+1, row)).getNomeNazione().equals(this.getName()) == false){
                         regioneEseguibile = true;
                     }
                 }
@@ -312,7 +315,7 @@ public class Nation extends Thread{
             //Se la regione ha almeno un territorio confinante che non appartiene alla nazione
             if(regioneEseguibile == true){
                 this.regionsToExec.add(region);      //Viene aggiunta alla lista di quelle che devono essere scelte randomicamente
-                                                     //dalla nazione per eseguire il loro thread
+                //dalla nazione per eseguire il loro thread
             }//Altrimenti non viene aggiunta
         }
     }
@@ -348,7 +351,7 @@ public class Nation extends Thread{
     //Metodo usato nel caso si sta clonando una nazione per runnarla di nuovo senza perdere traccia dei dati, in quel caso
     //quindi questa sarebbe una nazione clone (le uniche nazioni non clone sono quelle del primo turno di gioco).
     //In particolare copia i dati della nazione che si vuole clonare in questa nazione, (nome e colore sono gia' stati copiati)
-    //Qusto metodo prende come parametro la nuova nazione da clonare e copia dentro questa l'età della nazione,
+    //Qusto metodo prende come parametro la nuova nazione da clonare e copia dentro questa l'etÃ  della nazione,
     //la quantita' di denaro, la quantita' di risorse, il numero di abitanti ecopia l'oggetto griglia sul quale la nazione
     //svolge delle azioni.
     public void cloneCharacters(Nation nazioneDaClonare){
@@ -421,13 +424,14 @@ public class Nation extends Thread{
     //Inoltre avendo finito il prorpio turno setta la variabile active a false ed infine la nazione avvisa il thread
     //che deteneva la griglia e gestiva i turni che il suo turno e' finito e si puo' passare al turno della
     //nazione successiva.
+    //infine se il numero di abitanti e' minore di 10, viene messala variabile boolena vivo a false.
     public synchronized void run() {
         try{
             this.active = true;                                       //La nazione ha iniziato ad eseguire il codice del suo run() pertanto se ne tiene conto
-                                                                      // settando active a true
-            sleep(1000);                                        //Perde un secondo di tempo in maniera da notare i cambiamenti tra un turno e l'altro
+            // settando active a true
+            sleep(1000);                                        	  //Perde un secondo di tempo in maniera da notare i cambiamenti tra un turno e l'altro
             refreshRegionsToExec();                                   //Aggiorna l'elenco delle regioni che possono essere scelte randomicamente
-                                                                      //per eseguire il loro thread
+            //per eseguire il loro thread
             Random rand = new Random();							      //Viene creato un oggetto di tipo Random, chiamato rand
             int regionToStart = rand.nextInt((regionsToExec.size())); //Intero che rappresentera' l'indice della regione da startare
             if(regionToStart == regionsToExec.size()){                //Se l'intero e' uguale alla lunghezza della lista regioni di eseguire(regionsToExec)
@@ -436,7 +440,7 @@ public class Nation extends Thread{
             regionsToExec.get(regionToStart).startRegionThread();  	  //Fa lo start() di una regione casuale nella lista di quelle da eseguire
             System.out.println(this.getName() + "nazione");
             wait();            									      //La nazione va in attesa che si arrivi alla fine del suo turno per svolgere le azioni
-                                                                      // successive
+            // successive
             System.out.println("Sono di nuovo in gioco!");
 
             this.increasePopulation();     						//La popolazione subisce un alzamento o un abbassamento in base allo stato dei terreni posseduti
@@ -445,7 +449,7 @@ public class Nation extends Thread{
                                            						si vuole infatti tenere conto della situazione in cui si trova la nazione a fine turno*/
             this.active = false;          						//Avendo finito di eseguire il codice del suo run() setta active a false
             this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
-                                                                //il suo turno e' finito e si puo' passare al turno della nazione successiva
+            //il suo turno e' finito e si puo' passare al turno della nazione successiva
 
             if(this.getNumAbitanti() < 10){
                 vivo = false;
