@@ -361,7 +361,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                                                              //altrimenti si ottiene un errore nel label in basso a destra
                                                                              //(il primo turno viene svolto senza problemi perche' il TextArea
                                                                              //txtTurniDaSvolgere ha gia' "1" come valore di default
-                this.msgError.setText("Inserire n. turni > 0");
+                this.msgError.setText("Inserire n. turni > 0"); //NON VIENE MAI USATO POSSIAMO CANCELLARLO
             }
             else{                                                           //Se i turni per i quali avanzare sono > 0
                 this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
@@ -419,7 +419,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     this.tabRisorse.setDisable(true);
                     this.txtTurniDaSvolgere.setDisable(true);
 
-                    this.msgError.setText("Turno " + this.turni + 1);       //Mostra il turno in cui ci troviamo nel label in basso a destra
+                    this.msgError.setText("Turno " + this.turni + 1);       //Mostra il turno in cui ci troviamo nel label in basso a destra NON VIENE USATO POSSIAMO CANCELLARLO
                     this.buttonStart.setText("Continua");                   //Il bottone di start cambia ora utilizzo: servira' ora per continuare
                                                                             //tra una pausa e l'altra
                     if(useStart == true){                                   //Se la simulazione e' iniziata
@@ -455,7 +455,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                     //la simulazione
                                     this.txtTurniDaSvolgere.setDisable(false);  //A gioco fermo in questa TextArea si puo' inserire il numero di turni per
                                     //il quale continuare la simulazione
-                                    this.msgError.setText("Inserire n. turni > 0"); //Si avverte di inserire il numero di turni da svolgere
+                                    this.msgError.setText("Inserire n. turni > 0"+" "+"("+turni+")"); //Si avverte di inserire il numero di turni da svolgere
                                     useButton= false; //lo metto a false così che finito il numeri dei turni, sono di nuovo visibili i pop
                                     //elimino tutte le statistiche fatte fino ad ora
                                     barChart.getData().clear();
@@ -484,7 +484,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                 }
                                 else{                                          //Altrimenti la simulazione continua con il prossimo turno
 
-                                    this.msgError.setText("Turno " + this.turni + 1); //Mostra il turno in cui ci troviamo nel label in basso a destra
+                                    this.msgError.setText("Turno " + this.turni + 1); //Mostra il turno in cui ci troviamo nel label in basso a destraNON VIENE USATO POSSIAMO CANCELLARLO 
                                     this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
                                     i=-1;                                          	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
                                 }
