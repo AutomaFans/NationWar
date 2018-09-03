@@ -275,21 +275,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //(cosi da togliera la possibilita' di aggiungere altre nazioni dopo aver premuto Start),
     //viene disabilitato il bottone buttonDeleteNation,(cosi da togliera la possibilita'
     //di cancellare nazioni dopo aver premuto Start).
-    //Se la lista chiamata nationList che contiene tutte le nazioni che sono state create
-    //e' vuota (quindi se non ci sono nazioni) allora il gioco non puo' iniziare per cui
-    //vengono riabilitati il bottone buttonAddNation e il bottone buttonDeleteNation e
-    //in seguito viene creato un oggetto di tipo
-    //AnchorPane chiamato noStartPane facendo riferimento e richiamando l'intefaccia
-    //definita in FXMLnoStart.fxml.
-    //Quindi noStartPane sara' l'interfaccia definita in FXMLnoStart.fxml
-    //Poi viene creato un nuovo Stage, chiamato noStartStage, e specifica la scena da usare
-    //su quello stage (con il metodo setScene).
-    //QUINDI MOSTRA LA SCENA noStartPane SULLO STAGE noStartStage.
-    //Infine mostra il noDeleteStage impostando la visibilita' a true (con il metodo show).
-    //Quindi viene visualizzata la finestra per avvisare l'utente che non si puo' far partire
-    //il gioco (perche' non ci sono nazioni).
-    //Altrimenti,se la lista chiamata nationList che contiene tutte le nazioni che sono state
-    //create non e' vuota (quindi se ci sono nazioni) allora il gioco puo' iniziare.
+    //Poi il gioco puo' iniziare.
     //Cosi una volta premuto il bottone start viene impostata la variabile useStart a true ed
     //in seguito viene impstata la scritta della label (in basso a destra) chiamata mggError
     //con la scritta "Partita iniziata".
@@ -361,52 +347,36 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                                                              //altrimenti si ottiene un errore nel label in basso a destra
                                                                              //(il primo turno viene svolto senza problemi perche' il TextArea
                                                                              //txtTurniDaSvolgere ha gia' "1" come valore di default
-                this.msgError.setText("Inserire n. turni > 0"); //NON VIENE MAI USATO POSSIAMO CANCELLARLO
             }
             else{                                                           //Se i turni per i quali avanzare sono > 0
                 this.buttonAddNation.setDisable(true); 						//Viene disabilitato il bottone buttonAddNation
                 this.buttonDeleteNation.setDisable(true);					//Viene disabilitato il bottone buttonDeleteNation
 
-                //SE NATION LIST E' VUOTA NON E' POSSIBILE INIZIARE IL GIOCO
-                if (nationList.size() == 0){
-                    try {
-                        AnchorPane noStartPane = FXMLLoader.load(getClass().getResource("FXMLnoStart.fxml"));
-                        buttonAddNation.setDisable(false);
-                        buttonDeleteNation.setDisable(false);
-                        Stage noStartStage = new Stage();
-                        noStartStage.setScene(new Scene(noStartPane));
-                        noStartStage.setResizable(false);
-                        noStartStage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    //ALTRIMENTI, SE NATION LIST NON E' VUOTA E' POSSIBILE INIZIARE IL GIOCO
-                }else{
-                    useStart=true;
-                    for(int indice = 0; indice <nationList.size(); indice++) {
-                        XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
-                        XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
-                        XYChart.Series denaro = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
-                        //SE IL NOME DELLA NAZIONE NON E' CONTENUTO NELLA LISTA NOMINAZIONI COPIA
-                        if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) {
-                            valAttualeAbitanti = 0;
-                            valAttualeRisorse = 0;
-                            valAttualeDenaro = 0;
-                            NomiNazioniCopia.add(nationList.get(indice).getName());
+                useStart=true;
+                for(int indice = 0; indice <nationList.size(); indice++) {
+                    XYChart.Series set = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
+                    XYChart.Series risorse = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
+                    XYChart.Series denaro = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
+                    //SE IL NOME DELLA NAZIONE NON E' CONTENUTO NELLA LISTA NOMINAZIONI COPIA
+                    if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) {
+                        valAttualeAbitanti = 0;
+                        valAttualeRisorse = 0;
+                        valAttualeDenaro = 0;
+                        NomiNazioniCopia.add(nationList.get(indice).getName());
                         }
-                        //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
-                        set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti)));
-                        valAttualeAbitanti = (nationList.get(indice).getNumAbitanti());
-                        //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
-                        risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
-                        valAttualeRisorse = (nationList.get(indice).getRisorse());
-                        //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                        denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÂ¨ alto tanto quanto ÃƒÂ¨ il denaro di quella nazione
-                        valAttualeDenaro = nationList.get(indice).getDenaro();
-                        barCharD.getData().addAll(denaro); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
-                        barChart.getData().addAll(set);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
-                        barChartR.getData().addAll(risorse); 	//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
-                    }
+                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
+                    set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti)));
+                    valAttualeAbitanti = (nationList.get(indice).getNumAbitanti());
+                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
+                    risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
+                    valAttualeRisorse = (nationList.get(indice).getRisorse());
+                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
+                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÂ¨ alto tanto quanto ÃƒÂ¨ il denaro di quella nazione
+                    valAttualeDenaro = nationList.get(indice).getDenaro();
+                    barCharD.getData().addAll(denaro); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
+                    barChart.getData().addAll(set);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
+                    barChartR.getData().addAll(risorse); 	//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
+
                     arrayForStart.add("Start e' stato premuto");
 
                     //I bottoni non saranno cliccabili durante lo svolgimento di un turno. Inoltre durante lo svolgimento
@@ -418,8 +388,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     this.tabDenaro.setDisable(true);
                     this.tabRisorse.setDisable(true);
                     this.txtTurniDaSvolgere.setDisable(true);
-
-                    this.msgError.setText("Turno " + this.turni + 1);       //Mostra il turno in cui ci troviamo nel label in basso a destra NON VIENE USATO POSSIAMO CANCELLARLO
                     this.buttonStart.setText("Continua");                   //Il bottone di start cambia ora utilizzo: servira' ora per continuare
                                                                             //tra una pausa e l'altra
                     if(useStart == true){                                   //Se la simulazione e' iniziata
@@ -483,8 +451,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                     }
                                 }
                                 else{                                          //Altrimenti la simulazione continua con il prossimo turno
-
-                                    this.msgError.setText("Turno " + this.turni + 1); //Mostra il turno in cui ci troviamo nel label in basso a destraNON VIENE USATO POSSIAMO CANCELLARLO 
                                     this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
                                     i=-1;                                          	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
                                 }
