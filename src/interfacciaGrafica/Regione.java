@@ -12,20 +12,24 @@ public class Regione extends Button{
     private double valore;        		//Valore in denaro de terreno (una nazione deve spendere una certa somma per colonizzare un terreno)
     private CellThread threadRegione; 	//Thread della regione
     private Nation nazione;       		//Nazione a cui appartiene la regione (la cella della griglia)
+    private int numRow;                 //numero di riga in cui si trova la cella
+    private int numColumn;              //numero di colonna in cui si trova la cella
 
+    //Il costruttore prende il numero di riga e di colonna in cui si trova la cella(regione) nella griglia
     //Genera un nuovo oggetto di tipo Random(randomico), per cui
     //- assegna alle risorse un numero casuale compreso tra 0 e 1000
     //- la nazione di appartenenza inizialmente e' nulla perche' quando generato il territorio non e' di nessuno
     //Inoltre se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
     //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse e' minore
-    //di 350 allora la regione ÃƒÂ¨ sterile per cui viene impostato il tipo = sterile
+    //di 350 allora la regione e' sterile per cui viene impostato il tipo = sterile
     //Poi in base al tipo di territorio viene impostato lo sfondo della cella della griglia.
     //Se il tipo e' fertile allora lo sfondo della cella sara' l'immagine IMG-Fertile.jpg,
     //alrimenti, se il tipo e' sterile allora lo sfondo della cella sara' l'immagine
     //IMG-Sterile.jpg.
     //Il valore reale verra' valorizzato al momento in cui si aggiunge la regione alla griglia.
-    //Infine assegna un thread alla Regione che svolgera le azioni inerenti ad essa.
-    public Regione(){
+    //Assegna poi un thread alla Regione che svolgera le azioni inerenti ad essa.
+    //Infine valorizza le coordinate della regione nella griglia
+    public Regione(int row, int column){
         Random rand = new Random();         //Genera un nuovo oggetto di tipo Random(randomico)
         risorse = rand.nextInt(1000);     	//Assegna alle risorse un numero casuale compreso tra 0 e 1000
         nomeNazione = "";                   //La nazione di appartenenza inizialmente e' vuota perche' quando generato il territorio non e' di nessuno
@@ -46,6 +50,8 @@ public class Regione extends Button{
         }
         this.valore = 0.0;
         this.threadRegione = new CellThread(this); //Assegna un thread alla regione di tipo CellThread
+        this.numRow = row;                               //Assegna numero di riga nella griglia
+        this.numColumn = column;                         //Assegna numero di colonna nella griglia
     }
 
     //METODO RESET REGION
@@ -68,7 +74,17 @@ public class Regione extends Button{
         }
     }
 
+    //METODO GET ROW
+    //Restituisce il numero di riga in cui la regione si trova nella griglia
+    public int getRow(){
+        return this.numRow;
+    }
 
+    //METODO GET COLUMN
+    //Restituisce il numero di colonna in cui la regione si trova nella griglia
+    public int getColumn(){
+        return this.numColumn;
+    }
 
     //METODO GET RISORSE
     //Restituisce il numero di risorse naturali attuali della nazione
