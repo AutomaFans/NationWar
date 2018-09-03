@@ -347,6 +347,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //turno della nazione successiva, per cui per svegliare il main c'e' il metodo sveglia che fa una notify.
     @FXML
     synchronized void clickStart(ActionEvent event) {
+        //Questo for serve per eliminare le nazioni che sono state create ma a cui non è stata assegnata alcuna regione
+        for (int indice=0; indice<nationList.size();indice++){
+            if (nationList.get(indice).getRegioni().size()==0){
+                nationList.remove(indice);
+                ListaColori.add(nationList.get(indice).getColor()); //riaggiungiamo il colore della nazione cancellata in ListaColori
+            }
+        }
         useButton = true;
         try{
             if(Integer.parseInt(this.txtTurniDaSvolgere.getText()) == 0){    //Per continuare bisogna inserire un numero di turni > 0,
