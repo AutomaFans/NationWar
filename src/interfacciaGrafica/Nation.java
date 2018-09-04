@@ -97,6 +97,11 @@ public class Nation extends Thread{
         return this.vivo;
     }
 
+    //METODO SET STATO
+    //permette di modificare lo stato vivo a true o false della nazione
+    public void setStato(Boolean stato) {
+        this.vivo=stato;
+    }
     //METODO REFRESH AGE
     //Metodo che permette di aggiornare l'eta' attuale della nazione.
     //Ogni passggio di eta' avviene se sono passati almeno 20 turni dall'inizio del gioco
