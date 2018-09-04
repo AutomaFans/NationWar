@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -15,8 +17,13 @@
         campo con la scritta "Istruzioni del gioco".
         -->
 
-<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerHelp">
+<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerHelp">
     <children>
+      <ImageView fitHeight="646.0" fitWidth="917.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@foresta_polmoni.jpg" />
+         </image>
+      </ImageView>
         <Button fx:id="buttonClose" layoutX="585.0" layoutY="526.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="38.0" prefWidth="89.0" text="Chiudi" />
         <TextField editable="false" layoutX="14.0" layoutY="31.0" prefHeight="57.0" prefWidth="563.0" text="1. Cos'è NationWar? Da dove nasce quest'idea?">
             <font>
