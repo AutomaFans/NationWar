@@ -459,6 +459,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     for (int k=0; k<nationList.size();k++){
                         if ((nationList.get(k).getRegioni().size())==0){ //Se la nazione perde tutte le regioni
                             nationList.get(k).setStato(false); //allora setto il suo stato vivo a false (quindi la faccio morire) [ho creato nella classe Nation un metodo che mi permette di farlo ovvero setStato]
+                            nazioniMorte++;
                         }
                     }
                 }
