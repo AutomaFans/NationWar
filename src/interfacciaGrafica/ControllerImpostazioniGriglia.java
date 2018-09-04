@@ -456,7 +456,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     barCharD.getData().addAll(denaro);        	//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                     barChart.getData().addAll(set);            	//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
                     barChartR.getData().addAll(risorse);    	//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
+                    for (int k=0; k<nationList.size();k++){
+                        if ((nationList.get(k).getRegioni().size())==0){ //Se la nazione perde tutte le regioni
+                            nationList.get(k).setStato(false); //allora setto il suo stato vivo a false (quindi la faccio morire) [ho creato nella classe Nation un metodo che mi permette di farlo ovvero setStato]
+                        }
+                    }
                 }
+
                 arrayForStart.add("Start e' stato premuto");
 
                 //I bottoni non saranno cliccabili durante lo svolgimento di un turno. Inoltre durante lo svolgimento
