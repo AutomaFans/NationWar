@@ -15,22 +15,19 @@
         Infine, dentro l'AnchorPane posiziona l'immagine chiamata IMG-MondoNAzioni.
         -->
 
-<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" rotate="180.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
+<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" rotate="180.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
     <children>
-        <Label layoutX="140.0" layoutY="140.0" prefHeight="120.0" prefWidth="103.0" rotate="180.0" text="Loading..." StackPane.alignment="CENTER_LEFT" />
+      <ImageView fitHeight="704.0" fitWidth="758.0" layoutX="-3.0" layoutY="-42.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@photo_2018-09-04_14-26-37.jpg" />
+         </image>
+      </ImageView>
         <ProgressBar accessibleRole="TEXT" cache="true" layoutX="265.0" layoutY="190.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="176.0" StackPane.alignment="CENTER">
             <cursor>
                 <Cursor fx:constant="WAIT" />
             </cursor>
         </ProgressBar>
-        <ImageView fitHeight="112.0" fitWidth="124.0" layoutX="300.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
-            <image>
-                <Image url="@IMG-MondoNazioni.jpg" />
-            </image>
-         <cursor>
-            <Cursor fx:constant="WAIT" />
-         </cursor>
-        </ImageView>
+        <Label layoutX="318.0" layoutY="187.0" prefHeight="24.0" prefWidth="55.0" rotate="180.0" text="Loading..." StackPane.alignment="CENTER_LEFT" />
     </children>
    <cursor>
       <Cursor fx:constant="WAIT" />
