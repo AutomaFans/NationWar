@@ -165,15 +165,15 @@ public class Regione extends Button{
     //Metodo per settare il valore reale in denaro della regione
     //Il valore cambiera' in base al numero di risorse e di righe e colonne della griglia.
     //Se si ha una griglia abbastanza grande il valore sara' piu' basso per permettere
-    //una maggiore espansione nella tabella, per cui il valore sarÃƒÆ’Ã‚Â  la meta'' delle risorse
+    //una maggiore espansione nella tabella, per cui il valore sara'  la meta'' delle risorse
     //(risorse/2).
     //Altrimenti, se si ha una griglia di piccole dimensioni il valore sara' piu' alto
     //per contenere l'espansione, per cui il valore e' uguale alle risorse (valore = risorse).
     public void setValore(int righe, int colonne){
-        if(righe > 20 && colonne > 20){          	//Se il numero di righe e di colonne della griglia ÃƒÆ’Ã‚Â¨ maggiore di 20
+        if(righe > 10 && colonne > 10){          	//Se il numero di righe e di colonne della griglia e' maggiore di 10
             this.valore = risorse / 2;				//Il valore e' uguale alla meta' delle risorse
         }
-        else{                                     	//Altrimenti, se il numero di righe e di colonne della griglia ÃƒÆ’Ã‚Â¨ minore o uguale di 20
+        else{                                     	//Altrimenti, se il numero di righe e di colonne della griglia e' minore o uguale di 10
             this.valore = risorse;				   	//Il valore e' uguale alle risorse
         }
     }

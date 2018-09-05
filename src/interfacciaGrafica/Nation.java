@@ -160,8 +160,25 @@ public class Nation extends Thread{
         this.denaro = (risorse / 2.0) + (numAbitanti*2.0);
     }
 
+    //METODO CONQUISTA REGIONE
+    //Permette di annettere la regione passata da parametro al dominio della nazione, trendone benefici. La regione
+    //puo' anche essere nociva alla nazione, perche' se si tratta di una regione con un numero
+    //basso di risorse puo' accadere che la nazione conquistandolo non prenda nessun profitto, anzi col tempo
+    //potrebbe abbassarsi piu' velocemente la popolazione e quindi di conseguenza i profitti:
+    // in quel caso la nazione avrebbe conquistato una regione che puo' contribuire alla sua rovina.
+    public void conquistaRegione(Regione region){
+        this.denaro -= region.getValore();                              //Viene speso il denaro che serve per comprare
+        //la regione in base al suo valore
+        region.setNazione(this.getName(), this.getColor(), this);  //Vengono settato il controllo della nazione
+        //sulla regione
+        this.addRegion(region);                                         //Viene aggiunta la regione a quelle possedute
+        //dalla nazione
+        this.takeProfit(region.getTipo(), region.getRisorse());         //Viene preso profitto dalla conquista
+    }
+
     //METODO TAKE PROFIT
-    //Metodo per aumentare il numero di abitanti, il denaro e le risorse della nazione.
+    //Metodo per aumentare il numero di abitanti, il denaro e le risorse della nazione: tutto cio' avviene
+    // solo se la regione ha risorse da offrire(risorseRegione > 0).
     //Queto metodo prende due parametri: il tipo di regione (fertile o sterile) e le risorse
     //della regione.
     //Se la regione (cella)  e' fertile aumenta il numero di abitanti di 100, mentre se la
@@ -175,21 +192,25 @@ public class Nation extends Thread{
     //quando viene assegna quella cella alla nazione, aumentano le risorse della nazione della meta
     //della quantita di risorse che la cella aveva).
     public void takeProfit(String tipoRegione, Double risorseRegione){
-        if(tipoRegione.equals("fertile")){ 		//Se la regione e' fertile
-            this.numAbitanti += 100;			//Aumenta il numero di abitanti di 100
-        }
-        else{                              		//Altrimenti, se la regione e' sterile
-            this.numAbitanti += 10;				//Aumenta il numero di abitanti di 10
-        }
-        this.risorse += risorseRegione;      	//Aumenta il numero di risorse della nazione in base alla regione assegnata
-        this.denaro += risorseRegione / 2.0; 	//Aumenta il denaro della nazione in base alla regione assegnata
+        //Se le risorse della regione sono maggiori di 0 allora si ottiene profitto
+        if(risorseRegione > 0){
+            if(tipoRegione.equals("fertile")){ 		//Se la regione e' fertile
+                this.numAbitanti += 100;			//Aumenta il numero di abitanti di 100
+            }
+            else{                              		//Altrimenti, se la regione e' sterile
+                this.numAbitanti += 10;				//Aumenta il numero di abitanti di 10
+            }
+            this.risorse += risorseRegione;      	//Aumenta il numero di risorse della nazione in base alla regione assegnata
+            this.denaro += risorseRegione / 2.0; 	//Aumenta il denaro della nazione in base alla regione assegnata
+        }//Altrimenti non si ottiene nessun profitto
     }
 
     //METODO INCREASE POPULATION
     //Ad ogni turno se richiamato aumenta il numero degli abitanti della nazione in base ai terreni posseduti.
     //Quindi per ogni regione nella lista regioni che contiene tutte le regioni (celle) assegnate asd una nazione
     //se quella regione e' fertile aumentera' la popolazione di 100 mentre se quella regione e'
-    //sterile la popolazione diminuira' di 20 abitanti.
+    //sterile la popolazione diminuira' di 20 abitanti. Se quella regione e' sterile e non ha piu' risorse da offrire
+    //la popolazione diminuira' di 30.
     //Per vedere il tipo di territorio viene richiamato il metodo getTipo della classe Regione.
     public void increasePopulation() {
         for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
@@ -198,7 +219,13 @@ public class Nation extends Thread{
                 this.numAbitanti += 100;
             }
             else {
-                this.numAbitanti -=20;
+                if(num.getRisorse() <= 0){ //Se si tratta di una regione per la quale sono state esaurite tutte le sue risorse
+                    this.numAbitanti -=30; //Si ottiene una notevole depressione demografica
+                }
+                else{                      //Altrimenti la popolazione si abbassa leggermente di meno
+                    this.numAbitanti -=20;
+                }
+
             }
         }
     }
