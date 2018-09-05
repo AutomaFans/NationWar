@@ -1,5 +1,7 @@
 package interfacciaGrafica;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
@@ -35,6 +38,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //aggiungere una nazione). Se non fosse statica il dato dell' inserimento
     //andrebbe perso.
     static ArrayList<Nation> nationList = new ArrayList<Nation>();
+    private int numSterile;
+    private int numFertile;
 
     @FXML
     private TextField txtNomeNazione; 		//Area di testo chiamata txtNomeNAzione per inserire il nome della Nazione
@@ -100,19 +105,19 @@ public class ControllerImpostazioniGriglia implements Initializable {
     private Tab tabInfoNazioni;        		//Tab per le informazioni su ogni nazione (noem, eta, numero di terreni fertili e numero di tereni sterili)
 
     @FXML
-    private TableView<Nation> InfoTable;		 //Tabella chiamata InfoTable per contenetere le informzazioni delle nazioni
+    private TableView<NationCostruttore> InfoTable;		 //Tabella chiamata InfoTable per contenetere le informzazioni delle nazioni
 
     @FXML
-    TableColumn <Nation, String> ColonnaNazioni; //Colonna della tabella InfoTable, chiamata ColonnaNazioni per i nomi di tutte le nazioni
+    TableColumn <NationCostruttore, String> ColonnaNazioni; //Colonna della tabella InfoTable, chiamata ColonnaNazioni per i nomi di tutte le nazioni
 
     @FXML
-    TableColumn <Nation, Eta> ColonnaEta;		 //Colonna della tabella InfoTable, chiamata ColonnaEta per l'eta' della nazione su quella riga
+    TableColumn <NationCostruttore, Eta> ColonnaEta;		 //Colonna della tabella InfoTable, chiamata ColonnaEta per l'eta' della nazione su quella riga
 
     @FXML
-    TableColumn <Nation, Integer> ColonnaFertili; 	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori fertili della nazione su quella riga
+    TableColumn <NationCostruttore, Integer> ColonnaFertili; 	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori fertili della nazione su quella riga
 
     @FXML
-    TableColumn <Nation, Integer> ColonnaSterili;	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori sterili della nazione su quella rig
+    TableColumn <NationCostruttore, Integer> ColonnaSterili;	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori sterili della nazione su quella rig
 
     @FXML
     private TextArea txtTurniDaSvolgere;    //TextArea dove inserire durante una pausa il numero di turni per i quali si
@@ -134,6 +139,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Un turno e' completo quando tutte le nazioni in gioco "hanno fatto la propria mossa".
 
     int nazioniMorte = 0;                   //Variabile che tiene conto del numero di nazioni morte durante la simulazione
+
 
 
     //Crea una lista di stringhe chiamata arrayForStart che serve per capire se Start e'
@@ -416,6 +422,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //il bottone start, cosi il gioco e' finito.
     @FXML
     synchronized void clickStart(ActionEvent event) {
+        ObservableList<NationCostruttore> data = FXCollections.observableArrayList();
         //ELIMINA LE NAZIONI CHE SONO STATE CREATE MA A CUI NON E' STATA ASSEGNATA NESSUNA RAGIONE
         for (int indice=0; indice<nationList.size();indice++){
             if (nationList.get(indice).getRegioni().size()==0){
@@ -487,6 +494,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
                 //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione creata
                 for(int i=0; i < nationList.size(); i++){  				//Viene iterata nazione per nazione della lista nationList
+
                     //SE LA NAZIONE ITERATA E' VIVA
                     if(nationList.get(i).getStato() == true) {
                         nationList.get(i).start();                      //Viene svolto il turno della nazione considerata
@@ -496,10 +504,20 @@ public class ControllerImpostazioniGriglia implements Initializable {
                         while (nationList.get(i).getThreadState() == true);   //E resta in attesa finche' il metodo getThreadState restituisce true
                         //SE E' STATO SVOLTO IL TURNO DELL'ULTIMA NAZIONE IN LISTA BISOGNA RIINIZIARE DALLA PRIMA
                         if(i == nationList.size()-1){
+                            data.clear();//pulisco la lista delle info delle nazioni
+
+                            for (int index=0; index<nationList.size();index++){ //e per ogni nazione
+
+                            data.add(new NationCostruttore(nationList.get(index).getName(),nationList.get(index).getAge(),nationList.get(index).getNumSterili(),nationList.get(index).getNumFertili()));} //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                             this.turni ++;                                    //Si tiene conto che si e' arrivati alla fine del turno per tutte le nazioni
                             turniSvolti --;                                   //Un turno e' stato svolto e quindi aggiorno il numero di turni da svolgere rimanenti
                             //SE SIAMO AL PRIMO TURNO O SE SONO STATI SVOLTI TUTTI I TURNI INDICATI
                             if(this.turni == 1 || turniSvolti == 0){
+                                ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<NationCostruttore,String>("nome"));
+                                ColonnaEta.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Eta>("eta"));
+                                ColonnaFertili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numFertili"));
+                                ColonnaSterili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numSterili"));
+                                InfoTable.setItems(data);
                                 this.buttonHelp.setDisable(false);
                                 this.buttonMenu.setDisable(false);
                                 this.tabPopolazione.setDisable(false);
