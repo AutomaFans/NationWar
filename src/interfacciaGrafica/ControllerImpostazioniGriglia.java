@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import static interfacciaGrafica.ControllerAddNation.ListaColori;
 import static interfacciaGrafica.ControllerAddNation.nomiNazioni;
+import static interfacciaGrafica.Regione.createPop;
+
 import javafx.scene.Node;         //libreria per utilizzare l'interfaccia Node
 
 public class ControllerImpostazioniGriglia implements Initializable {
@@ -721,27 +723,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 													la cella in base al'ultima nazione inserita*/
                 automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
 
-                //Ogni volta che viene aggiunto un nuovo bottone alla griglia viene anche creato il popover corrispondente.
-                Label risorseRegione = new Label();											//Si crea una Label  chiamata appartenenzaNazione
-                risorseRegione.setText("Risorse disponibili: " + bottone.getRisorse());		//Setta il testo della label con il valore delle risorse relative a quella specifica regione
-                Label tipoRegione = new Label();											//Si crea una Label  chiamata tipoRegione
-                tipoRegione.setText("Regione: " + bottone.getTipo());						//Setta il testo della label con il tipo di terreno relativo a quella specifica regione
-                Label valoreRegione = new Label();											//Si crea una Label chiamata valoreRegione
-                valoreRegione.setText("Valore in denaro: " + bottone.getValore());			//Setta il testo della label con il denaro relativo a quella specifica regione
-                VBox vBox = new VBox(risorseRegione,tipoRegione,valoreRegione);				//Si crea un VBox che contiene le tre label create precedentemente
-                PopOver pop = new PopOver(vBox);											//Si crea un PopOver chiamato pop
-                //IL POPOVER VERRA' VISUALIZZATO QUANDO SI PASSA IL MOUSE SOPRA UNA REGIONE (CELLA)
-                bottone.setOnMouseEntered(MouseEvent -> {
-                    if(useButton == false) {
-                        pop.show(bottone);
-                    }
-                });
-                //IL POPOVER SI CHIDERA' QUANDO SI SPOSTA IL MOUSE DALLA REGIONE (CELLA)
-                bottone.setOnMouseExited(MouseEvent -> {
-                    if(useButton == false) {
-                        pop.hide();
-                    }
-                });
+                PopOver pop = createPop(bottone);
             }
         }
     }

@@ -1,7 +1,13 @@
 package interfacciaGrafica;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import org.controlsfx.control.PopOver;
+
 import java.util.Random;
 import java.util.ArrayList;
+
+import static interfacciaGrafica.ControllerImpostazioniGriglia.useButton;
 
 //Una Regione rappresenta un Button esteso
 //Ovvero una Regione e' una cella che compone il territorio di una Nazione
@@ -154,6 +160,10 @@ public class Regione extends Button{
         this.refreshType();                     //viene aggiornato lo stato attuale della regione(fertile o sterile)
     }
 
+    public void consumaDenaro(){
+        this.valore = valore - (valore / 5);
+    }
+
     //METODO SET VALORE
     //Metodo per settare il valore reale in denaro della regione
     //Il valore cambiera' in base al numero di risorse e di righe e colonne della griglia.
@@ -188,6 +198,35 @@ public class Regione extends Button{
     //per questo il metodo assegna un nuovo thread alla regione cosi' che sia possibile fare di nuovo lo start() del suo thread
     public void setNewThread(){
         this.threadRegione = new CellThread(this);
+    }
+
+    //METODO CREATE POP
+    //Questo metodo crea un oggetto di tipo PopOver relativo alla Regione su cui viene invocato.
+    //Il popover sara' visibile ogni volta che si passa con il mouse sulla regione e ogni volta che si esce verra' chiuso.
+    //Il popover mostra le risorse disponibili, il tipo di territorio e il suo valore in denaro (dati relativi alla regione su cui viene creato).
+    public static PopOver createPop(Regione r){
+        //Ogni volta che viene aggiunto un nuovo bottone alla griglia viene anche creato il popover corrispondente.
+        Label risorseRegione = new Label();											//Si crea una Label  chiamata appartenenzaNazione
+        risorseRegione.setText("Risorse disponibili: " + r.getRisorse());		//Setta il testo della label con il valore delle risorse relative a quella specifica regione
+        Label tipoRegione = new Label();											//Si crea una Label  chiamata tipoRegione
+        tipoRegione.setText("Regione: " + r.getTipo());						//Setta il testo della label con il tipo di terreno relativo a quella specifica regione
+        Label valoreRegione = new Label();											//Si crea una Label chiamata valoreRegione
+        valoreRegione.setText("Valore in denaro: " + r.getValore());			//Setta il testo della label con il denaro relativo a quella specifica regione
+        VBox vBox = new VBox(risorseRegione,tipoRegione,valoreRegione);				//Si crea un VBox che contiene le tre label create precedentemente
+        PopOver pop = new PopOver(vBox);											//Si crea un PopOver chiamato pop
+        //IL POPOVER VERRA' VISUALIZZATO QUANDO SI PASSA IL MOUSE SOPRA UNA REGIONE (CELLA)
+        r.setOnMouseEntered(MouseEvent -> {
+            if(useButton == false) {
+                pop.show(r);
+            }
+        });
+        //IL POPOVER SI CHIDERA' QUANDO SI SPOSTA IL MOUSE DALLA REGIONE (CELLA)
+        r.setOnMouseExited(MouseEvent -> {
+            if(useButton == false) {
+                pop.hide();
+            }
+        });
+        return pop;
     }
 
     //METODO REFRESH NEIGHBORING REGIONS
