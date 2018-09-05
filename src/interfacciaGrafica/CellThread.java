@@ -24,7 +24,6 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
     //con una notify()
     public void run(){
         this.region.consumaRisorse();
-        System.out.println(this.region.getNazione().getName() + "regione");
         this.region.getNazione().sveglia();
     }
 }

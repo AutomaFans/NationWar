@@ -1,6 +1,7 @@
 package interfacciaGrafica;
 import javafx.scene.control.Button;
 import java.util.Random;
+import java.util.ArrayList;
 
 //Una Regione rappresenta un Button esteso
 //Ovvero una Regione e' una cella che compone il territorio di una Nazione
@@ -14,6 +15,10 @@ public class Regione extends Button{
     private Nation nazione;       		//Nazione a cui appartiene la regione (la cella della griglia)
     private int numRow;                 //numero di riga in cui si trova la cella
     private int numColumn;              //numero di colonna in cui si trova la cella
+    private ArrayList<Regione> regioniConfinantiAlleate = new ArrayList<>();    //regioni confinanti alla regione che fanno parte
+                                                                                // della stessa nazione
+    private ArrayList<Regione> regioniConfinantiSconosciute = new ArrayList<>();//regioni confinanti alla regione che non fanno
+                                                                                // parte della stessa naione
 
     //Il costruttore prende il numero di riga e di colonna in cui si trova la cella(regione) nella griglia
     //Genera un nuovo oggetto di tipo Random(randomico), per cui
@@ -56,12 +61,14 @@ public class Regione extends Button{
 
     //METODO RESET REGION
     //Permette di resettare la regione.
-    //Ovvero toglie il nome della nazione di appartenza e l'oggetto Nation su quella cella e imposta lo sfondo di default.
+    //Ovvero ne aggiorna il valore, toglie il nome della nazione di appartenza e l'oggetto Nation su quella cella e
+    // imposta lo sfondo di default.
     //Quindi aggiorna il tipo della regione, richiamando il metodo refreshType della classe
     //Regione.
-    //In seguito se la regione ÃƒÂ¨ di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
+    //In seguito se la regione e' di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
     //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
     public void resetRegion(){
+        this.setValore(nazione.getGridController().getNumeroRighe(), nazione.getGridController().getNumeroColonne());
         this.nomeNazione = "";
         this.nazione = null;
         this.refreshType();
@@ -181,5 +188,63 @@ public class Regione extends Button{
     //per questo il metodo assegna un nuovo thread alla regione cosi' che sia possibile fare di nuovo lo start() del suo thread
     public void setNewThread(){
         this.threadRegione = new CellThread(this);
+    }
+
+    //METODO REFRESH NEIGHBORING REGIONS
+    //Aggiorna le 2 liste che rappresentano le regioni confinanti e alleate con la regione, e quelle che confinano con
+    //essa ma non sono alleate
+    public void refreshNeighboringRegions(){
+        //Prendo la regione che confina in alto con questa regione "this"
+        Regione one = (Regione)this.nazione.getGridController().getNodeFromGridPane(this.nazione.getGridController().getGridPane(), numColumn, numRow-1);
+        if(one != null){ //Se questa regione esiste(puo' esserci il caso in cui la regione per la quale si vogliono vedere i confinanti sia una
+                         //cella al bordo in alto e quindi una cella sopra non esisterebbe)
+            if(one.getNomeNazione().equals(this.getNomeNazione())){  //Se la regione confinante fa parte della stessa nazione della
+                                                                     //regione per la quale vediamo le confinanti
+                this.regioniConfinantiAlleate.add(one);              //Allora la aggiungiamo a le confinanti alleate
+            }
+            else{
+                this.regioniConfinantiSconosciute.add(one);          //Altrimenti viene aggiunta alle confinanti non alleate
+            }
+        }
+        //Prendo la regione che confina a destra con questa regione "this"
+        Regione two = (Regione)this.nazione.getGridController().getNodeFromGridPane(this.nazione.getGridController().getGridPane(), numColumn+1, numRow);
+        if(two != null){
+            if(two.getNomeNazione().equals(this.getNomeNazione())){
+                this.regioniConfinantiAlleate.add(two);
+            }
+            else{
+                this.regioniConfinantiSconosciute.add(two);
+            }
+        }
+        //Prendo la regione che confina in basso con questa regione "this"
+        Regione three = (Regione)this.nazione.getGridController().getNodeFromGridPane(this.nazione.getGridController().getGridPane(), numColumn, numRow+1);
+        if(three != null){
+            if(three.getNomeNazione().equals(this.getNomeNazione())){
+                this.regioniConfinantiAlleate.add(three);
+            }
+            else{
+                this.regioniConfinantiSconosciute.add(three);
+            }
+        }
+        //Prendo la regione che confina a sinistra con questa regione "this"
+        Regione four = (Regione)this.nazione.getGridController().getNodeFromGridPane(this.nazione.getGridController().getGridPane(), numColumn-1, numRow);
+        if(four != null){
+            if(four.getNomeNazione().equals(this.getNomeNazione())){
+                this.regioniConfinantiAlleate.add(four);
+            }
+            else{
+                this.regioniConfinantiSconosciute.add(four);
+            }
+        }
+    }
+
+    //METODO GET REGIONI CONFINANTI ALLEATE
+    public ArrayList<Regione> getRegioniConfinantiAlleate(){
+        return regioniConfinantiAlleate;
+    }
+
+    //METODO GET REGIONI CONFINANTI SCONOSCIUTE
+    public ArrayList<Regione> getRegioniConfinantiSconosciute(){
+        return regioniConfinantiSconosciute;
     }
 }

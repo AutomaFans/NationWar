@@ -346,8 +346,57 @@ public class Nation extends Thread{
     public void removeExecRegions(){
         for(Iterator<Regione> i = regionsToExec.iterator(); i.hasNext();) {
             Regione num = i.next();
-            num.resetRegion();
             i.remove();
+        }
+    }
+
+    //METODO VERIFICA REGOLE TRANSIZIONE
+    //Permette di verificare le regole di transizione per la regione passata come parametro: alla fine del metodo si
+    //vedra' se la nazione puo' o non puo' mantenere il controllo della regione.
+    public void verificaRegoleTransizione(Regione region){
+        region.refreshNeighboringRegions();       //Aggiorna le regioni che confinano alla regione passata da parametro
+        ArrayList<Regione> alleate=region.getRegioniConfinantiAlleate();        //Regioni confinanti alleate
+        ArrayList<Regione> sconosciute=region.getRegioniConfinantiSconosciute();//Regioni confinanti non alleate
+        boolean mantieniControllo = false;                         //Variabile per verificare se bisogna mantenere o no il controllo della
+                                                                   //regione passata da parametro: il risultato verra' determinato
+                                                                   //dalle regole di transizione
+        //Verifica di seguito le regole di transizione
+        if(region.getTipo().equals("sterile")){      //Se la regione e' sterile
+            if(alleate.size() >= 2){            //Se ha almeno due territori confinanti alleati
+                boolean fertile = false;        //booleano per vedere se almeno uno dei territori alleati e' fertile
+                for(int i=0; i < alleate.size(); i++){
+                    if(alleate.get(i).getTipo().equals("fertile")){ //Se auno di questi territori alleati e' fertile
+                        fertile = true;                        //Se ne tiene conto
+                    }
+                }
+                if(fertile == true){             //Se almeno una delle regioni alleate e' fertile
+                    mantieniControllo = true;       //La nazione mantiene il controllo della regione
+                }
+                else{                               //Altrimenti si considerano i territori confinanti non alleati
+                    for(int i=0; i < sconosciute.size(); i++){
+                        if(sconosciute.get(i).getTipo() == "fertile"){ //Se almeno uno di questi e' fertile
+                            mantieniControllo = true;       //La nazione mantiene il controllo della regione
+                        }
+                    }
+                }
+            }
+            else{                               //Altrimenti si considerano i territori confinanti non alleati
+                for(int i=0; i < sconosciute.size(); i++){
+                    if(sconosciute.get(i).getTipo() == "fertile"){ //Se almeno uno di questi e' fertile
+                        mantieniControllo = true;       //La nazione mantiene il controllo della regione
+                    }
+                }
+            }
+        }
+        else{                                   //Se la regione e' fertile
+            mantieniControllo = true;       //La nazione mantiene il controllo della regione
+        }
+
+        if (mantieniControllo == false){        //Se non si puo' mantenere il controllo della regione
+            region.resetRegion();               //La nazione ne perde il controllo e le sue caratteristiche vengono
+                                                //modificate in maniera che questa regione non faccia piu' parte
+                                                //della nazione
+            regioni.remove(region);             //Rimuovo la regione dalla lista di quelle che appartengono alla nazione
         }
     }
 
@@ -406,19 +455,31 @@ public class Nation extends Thread{
     }
 
     //METODO RUN
-    //Il run prevede lo svolgimento del turno della nazione nella simulazione, inizialmente fa agire una sua regione presa
-    //casualmente e successivamente attende che il suo turno finisca. Alla fine svolgera delle azioni di fine turno.
-    //Siccome la nazone iniziera' ad eseguire il proprio turno allora viene messa la variabile boolena active (che tiene
+    //Il run prevede lo svolgimento del turno della nazione nella simulazione, inizialmente sceglie una sua regione in
+    //maniera casuale tra quelle che confinano con almeno una regione che non gli appartiene, e testa su di essa le
+    //regole di transizione, poi sceglie di nuovo una regione che confina con almeno una regione che non gli appartiene
+    // e lo fa di nuovo casualmente e successivamente attende che il suo turno finisca. Alla fine svolgera delle azioni di fine turno.
+    //Siccome la nazione iniziera' ad eseguire il proprio turno allora viene messa la variabile boolena active (che tiene
     //conto se una nazone sta eseguendo il proprio tueno o meno) a true.
     //Viene mandato il thread in sleep per 1000 millisecondi(un secondo) in maniera da poter notare cosa succede tra un turno e
     //l'altro. Se non ci fosse la sleep i cambiamenti sarebbero istantanei e non sarebbe possibile percepire i cambiamenti(in un
     //secondo verrebbero eseguiti decine di turni).
-    //Viene aggiornata la lista delle regioni che possono essere scelte per essere eseguite in maniera da scegliere quelle
-    //che attualmente confinano con un territorio che non fa parte della nazione.
+    //Successivamente si controlla se la nazione ha occupato tutta la griglia: se si bisognera' prendere una regione
+    //della nazione (dalla lista regioni)per verificarne le regole di transizione.
+    //Altrimenti viene aggiornata la lista delle regioni della nazione che confinano con almeno una regione non alleata. Da questa lista
+    //viene scelta una regione casualmente. Se l'intero memorizzato nella variabile regionToControl e' uguale alla lunghezza
+    // della lista regioni da eseguire(regionsToExec) si sottrae 1, per non incombere successivamente in un OutOfBoundException.
+    // Su questa regione si verificano le regole di transizione: una volta verificate si vedra' se la nazione dovra'
+    // mantenere o meno il controllo di quella regione.
+    //Se applicando le regole di transizione la nazione e' rimasta senza regioni allora la nazione e' dichiarata morta e
+    //non bisogna svolgere il codice che segue: si tiene conto quindi che e' morta e si avvisa il thread main che gestiva
+    // i turni che il turno della nazione e' finito.
+    //Altrimenti se non siamo nel caso precedente si verifica di nuovo se la nazione detiene tutta la griglia: se si
+    // bisognera' estrarre una regione qualsiasi(dalla lista regioni) in maniera randomica ed eseguire il suo thread.
+    // Altrimenti viene aggiornata nuovamente la lista delle regioni che possono essere scelte per essere eseguite in
+    // maniera da scegliere quelle che attualmente confinano con un territorio che non fa parte della nazione.
     //Poi viene presa casualmente da questa lista(regionsToExec) una regione da startare e viene memorizzato l'indice di questa regione
     ///all'interno della variabile regionToStart.
-    //Se l'intero memorizzato nella variabile regionToStart e' uguale alla lunghezza della lista regioni da eseguire(regionsToExec)
-    // si sottrae 1, per non incombere successivamente in un OutOfBoundException.
     //Successiavmente fa lo start (richiamando il metodo startRegionThread della classe Regione) di una regione casuale della nazione,
     //e questa regione e' presa dalla lista regioni (per prendere la regione dalla lista si usa l'intero memorizzato nella
     //variabile regionToStart).
@@ -429,35 +490,93 @@ public class Nation extends Thread{
     //Inoltre avendo finito il prorpio turno setta la variabile active a false ed infine la nazione avvisa il thread
     //che deteneva la griglia e gestiva i turni che il suo turno e' finito e si puo' passare al turno della
     //nazione successiva.
-    //infine se il numero di abitanti e' minore di 10, viene messala variabile boolena vivo a false.
+    //Infine se il numero di abitanti e' minore di 10, viene messa la variabile boolena vivo a false.
     public synchronized void run() {
         try{
             this.active = true;                                       //La nazione ha iniziato ad eseguire il codice del suo run() pertanto se ne tiene conto
             // settando active a true
             sleep(1000);                                        	  //Perde un secondo di tempo in maniera da notare i cambiamenti tra un turno e l'altro
-            refreshRegionsToExec();                                   //Aggiorna l'elenco delle regioni che possono essere scelte randomicamente
-            //per eseguire il loro thread
-            Random rand = new Random();							      //Viene creato un oggetto di tipo Random, chiamato rand
-            int regionToStart = rand.nextInt((regionsToExec.size())); //Intero che rappresentera' l'indice della regione da startare
-            if(regionToStart == regionsToExec.size()){                //Se l'intero e' uguale alla lunghezza della lista regioni di eseguire(regionsToExec)
-                regionToStart -= 1;								      //sottrae 1
+
+            //Se la nazione ha occupato tutta la griglia non ci sono regioni che confinano con regioni non alleate, quindi posso verificare
+            // direttamente le regole di transizione su una regione qualsiasi della griglia che scelgo casualmente
+            if(this.regioni.size() == (this.gridController.getNumeroRighe() * this.gridController.getNumeroColonne())){
+                Random rand1 = new Random();                              //Viene creato un oggetto di tipo Random, chiamato Rand1
+                int regionToControl = rand1.nextInt((regioni.size())); //Intero generato casualmente che rappresentera' l'indice della
+                                                                       // regione sulla quale verificare le regole di transizione
+                if(regionToControl == regioni.size()){                //Se l'intero e' uguale alla lunghezza della lista regioni sottrae 1
+                    regionToControl -= 1;
+                }
+                //Per la regione scelta vengono verificate le regole di transizioni le quali ci diranno se la nazione manterra' o meno
+                //il controllo su quella regione
+                System.out.println(regioni.get(regionToControl).toString());
+                verificaRegoleTransizione(regioni.get(regionToControl));
             }
-            regionsToExec.get(regionToStart).startRegionThread();  	  //Fa lo start() di una regione casuale nella lista di quelle da eseguire
-            System.out.println(this.getName() + "nazione");
-            wait();            									      //La nazione va in attesa che si arrivi alla fine del suo turno per svolgere le azioni
-            // successive
-            System.out.println("Sono di nuovo in gioco!");
+            //Altrimenti se non e' stata occupata tutta la griglia vuol dire che ci sono delle regioni che confinano con regioni non alleate,
+            //e quindi bisogna scegliere una regione di questo tipo per verificarne le regole di transizione
+            else{
+                refreshRegionsToExec();                                   //Aggiorna l'elenco delle regioni che possono essere scelte randomicamente
+                                                                          //per eseguire il loro thread
+                Random rand1 = new Random();                              //Viene creato un oggetto di tipo Random, chiamato Rand1
+                int regionToControl = rand1.nextInt((regionsToExec.size())); //Intero generato casualmente che rappresentera' l'indice della
+                                                                             // regione sulla quale verificare le regole di transizione
+                if(regionToControl == regionsToExec.size()){                //Se l'intero e' uguale alla lunghezza della lista regioni da
+                                                                            // eseguire(regionsToExec) sottrae 1
+                    regionToControl -= 1;
+                }
+                //Per la regione scelta vengono verificate le regole di transizioni le quali ci diranno se la nazione manterra' o meno
+                //il controllo su quella regione
+                System.out.println(regionsToExec.get(regionToControl).toString());
+                verificaRegoleTransizione(regionsToExec.get(regionToControl));
+            }
 
-            this.increasePopulation();     						//La popolazione subisce un alzamento o un abbassamento in base allo stato dei terreni posseduti
-            this.incassaDenaro();          						//Viene incassato denaro in base alle risorse e agli abitanti della nazione
-            this.consumaRisorse();         						/*Vengono consumate le risorse, inoltre in questo metodo viene anche aggiornata l'eta':
-                                           						si vuole infatti tenere conto della situazione in cui si trova la nazione a fine turno*/
-            this.active = false;          						//Avendo finito di eseguire il codice del suo run() setta active a false
-            this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
-            //il suo turno e' finito e si puo' passare al turno della nazione successiva
+            if(this.regioni.size() == 0){       //Se la nazione a seguito dell'applicazione delle regole di transizione e' rimasta senza regioni
+                                                //caso in cui ho una solo regione e applicando le regole di transizione la perdo
+                this.vivo = false;              //Allora la nazione muore
+                this.active = false;          						//Avendo finito di eseguire il codice del suo run() setta active a false
+                this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
+                                                                    //il suo turno e' finito
+            }
+            else{                               //Altrimenti continua con le prossime istruzioni
+                //Si passa a scegliere una nuova regione random, ma questa volta per conquistare nuove regioni(o stringere alleanze)
+                //Se le regioni possedute dalla nazione sono uguali al numero di celle della griglia allora la nazione possiede tutta la
+                //griglia e quindi non ci saranno celle che confinano con regioni che non sono della stessa nazione. Percio'
+                //si va ad eseguire una regione qualsiasi posseduta dalla nazione
+                if(this.regioni.size() == (this.gridController.getNumeroRighe() * this.gridController.getNumeroColonne())){
+                    Random rand2 = new Random();							  //Viene creato un nuovo oggetto di tipo Random per scegliere di nuovo
+                                                                              //una regione randomica tra quelle di "regioni"
+                    int regionToStart = rand2.nextInt((regioni.size())); //Intero che rappresentera' l'indice della regione da startare
+                    if(regionToStart == regioni.size()){
+                        regionToStart -= 1;
+                    }
+                    regioni.get(regionToStart).startRegionThread();  	  //Fa lo start() di una regione casuale nella lista di quelle da eseguire
+                }
+                else{ //altrimenti bisognera' scegliere tra quelle che confinano con almeno un territorio non alleato
+                    refreshRegionsToExec();                              //Aggiorna l'elenco delle regioni che possono essere scelte randomicamente
+                                                                         //per eseguire il loro thread
+                    Random rand2 = new Random();					     //Viene creato un nuovo oggetto di tipo Random per scegliere di nuovo
+                                                                         //una regione randomica tra quelle di regionsToExec
+                    int regionToStart = rand2.nextInt((regionsToExec.size())); //Intero che rappresentera' l'indice della regione da startare
+                    if(regionToStart == regionsToExec.size()){
+                        regionToStart -= 1;
+                    }
+                    regionsToExec.get(regionToStart).startRegionThread();  	  //Fa lo start() di una regione casuale nella lista di quelle da eseguire
+                }
+                System.out.println(this.getName() + "nazione");
+                wait();            									      //La nazione va in attesa che si arrivi alla fine del suo turno per svolgere le azioni
+                                                                          // successive
+                System.out.println("Sono di nuovo in gioco!");
 
-            if(this.getNumAbitanti() < 10){
-                vivo = false;
+                this.increasePopulation();     						//La popolazione subisce un alzamento o un abbassamento in base allo stato dei terreni posseduti
+                this.incassaDenaro();          						//Viene incassato denaro in base alle risorse e agli abitanti della nazione
+                this.consumaRisorse();         						/*Vengono consumate le risorse, inoltre in questo metodo viene anche aggiornata l'eta':
+                                           						    si vuole infatti tenere conto della situazione in cui si trova la nazione a fine turno*/
+                this.active = false;          						//Avendo finito di eseguire il codice del suo run() setta active a false
+                this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
+                                                                    //il suo turno e' finito e si puo' passare al turno della nazione successiva
+
+                if(this.getNumAbitanti() < 10){
+                    vivo = false;
+                }
             }
 
         }
