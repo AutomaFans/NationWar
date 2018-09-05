@@ -28,7 +28,7 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
     //con una notify()
     public void run(){
         this.region.consumaRisorse();             //consuma le risorse della regione
-        this.region.consumaDenaro();
+        this.region.setValore(this.region.getNazione().getGridController().getNumeroRighe(),this.region.getNazione().getGridController().getNumeroColonne());
         PopOver pop2 = createPop(this.region);    //aggiorna il popover relativo alla regione creandone uno nuovo che si va a sovrepporre al precedente
         this.region.getNazione().sveglia();
     }
