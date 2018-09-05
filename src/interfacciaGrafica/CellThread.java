@@ -1,5 +1,9 @@
 package interfacciaGrafica;
 
+import org.controlsfx.control.PopOver;
+
+import static interfacciaGrafica.Regione.createPop;
+
 public class CellThread extends Thread{  //Tipo di thread che costituisce un legame con una cella della griglia
 
     Regione region;           //Variabile di tipo Regione chiamata region che e' la regione (cella) su cui agisce il CellThread
@@ -23,7 +27,10 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
     //ha finito avvisa la nazione e per farlo viene utilizzato il metodo sveglia() che avvisa la nazione
     //con una notify()
     public void run(){
-        this.region.consumaRisorse();
+        this.region.consumaRisorse();             //consuma le risorse della regione
+        this.region.consumaDenaro();
+        PopOver pop2 = createPop(this.region);    //aggiorna il popover relativo alla regione creandone uno nuovo che si va a sovrepporre al precedente
         this.region.getNazione().sveglia();
     }
+
 }
