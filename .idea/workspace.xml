@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2fb928f-6efc-419f-a686-fb1b8a1a2473" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/CellThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/CellThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/Nation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/Nation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/Regione.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NationWar/interfacciaGrafica/Regione.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/Regione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/Regione.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Regione.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Regione.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Regione.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="163" column="44" selection-start-line="163" selection-start-column="44" selection-end-line="163" selection-end-column="44" />
+            <state relative-caret-position="159">
+              <caret line="160" column="5" selection-start-line="160" selection-start-column="5" selection-end-line="160" selection-end-column="5" />
               <folding>
                 <element signature="e#5441#5442#0" expanded="true" />
                 <element signature="e#5475#5476#0" expanded="true" />
@@ -37,8 +33,6 @@
                 <element signature="e#6226#6227#0" expanded="true" />
                 <element signature="e#6335#6336#0" expanded="true" />
                 <element signature="e#6367#6368#0" expanded="true" />
-                <element signature="e#8800#8801#0" expanded="true" />
-                <element signature="e#8840#8841#0" expanded="true" />
                 <element signature="e#9763#9764#0" expanded="true" />
                 <element signature="e#9797#9798#0" expanded="true" />
                 <element signature="e#9919#9920#0" expanded="true" />
@@ -63,7 +57,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Nation.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Nation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="9287">
@@ -95,8 +89,8 @@
       <file leaf-file-name="CellThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+            <state relative-caret-position="319">
+              <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#481#482#0" expanded="true" />
@@ -164,12 +158,12 @@
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerMenu.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" />
-        <option value="$PROJECT_DIR$/src/interfacciaGrafica/Regione.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/Regione.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="750" />
@@ -316,7 +310,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="7" />
@@ -328,11 +322,11 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20985691" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20985691" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="6" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.10834553" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10834553" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="6" />
@@ -706,10 +700,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9287">
+          <caret line="579" column="13" selection-start-line="579" selection-start-column="13" selection-end-line="579" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#481#482#0" expanded="true" />
+            <element signature="e#516#517#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Regione.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="163" column="44" selection-start-line="163" selection-start-column="44" selection-end-line="163" selection-end-column="44" />
+        <state relative-caret-position="159">
+          <caret line="160" column="5" selection-start-line="160" selection-start-column="5" selection-end-line="160" selection-end-column="5" />
           <folding>
             <element signature="e#5441#5442#0" expanded="true" />
             <element signature="e#5475#5476#0" expanded="true" />
@@ -723,8 +736,6 @@
             <element signature="e#6226#6227#0" expanded="true" />
             <element signature="e#6335#6336#0" expanded="true" />
             <element signature="e#6367#6368#0" expanded="true" />
-            <element signature="e#8800#8801#0" expanded="true" />
-            <element signature="e#8840#8841#0" expanded="true" />
             <element signature="e#9763#9764#0" expanded="true" />
             <element signature="e#9797#9798#0" expanded="true" />
             <element signature="e#9919#9920#0" expanded="true" />
@@ -736,25 +747,6 @@
             <element signature="e#13343#13344#0" expanded="true" />
             <element signature="e#13394#13395#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#481#482#0" expanded="true" />
-            <element signature="e#516#517#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9287">
-          <caret line="579" column="13" selection-start-line="579" selection-start-column="13" selection-end-line="579" selection-end-column="13" />
         </state>
       </provider>
     </entry>

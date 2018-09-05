@@ -160,10 +160,6 @@ public class Regione extends Button{
         this.refreshType();                     //viene aggiornato lo stato attuale della regione(fertile o sterile)
     }
 
-    public void consumaDenaro(){
-        this.valore = valore - (valore / 5);
-    }
-
     //METODO SET VALORE
     //Metodo per settare il valore reale in denaro della regione
     //Il valore cambiera' in base al numero di risorse e di righe e colonne della griglia.
