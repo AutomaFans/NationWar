@@ -158,6 +158,7 @@ public class Regione extends Button{
     public void consumaRisorse(){
         this.risorse = risorse - (risorse / 5); //viene consumato un quinto delle risorse
         this.refreshType();                     //viene aggiornato lo stato attuale della regione(fertile o sterile)
+
     }
 
     //METODO SET VALORE
