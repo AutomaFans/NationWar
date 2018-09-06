@@ -38,8 +38,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //aggiungere una nazione). Se non fosse statica il dato dell' inserimento
     //andrebbe perso.
     static ArrayList<Nation> nationList = new ArrayList<Nation>();
-    private int numSterile;
-    private int numFertile;
+
 
     @FXML
     private TextField txtNomeNazione; 		//Area di testo chiamata txtNomeNAzione per inserire il nome della Nazione
@@ -504,20 +503,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
                         while (nationList.get(i).getThreadState() == true);   //E resta in attesa finche' il metodo getThreadState restituisce true
                         //SE E' STATO SVOLTO IL TURNO DELL'ULTIMA NAZIONE IN LISTA BISOGNA RIINIZIARE DALLA PRIMA
                         if(i == nationList.size()-1){
-                            data.clear();//pulisco la lista delle info delle nazioni
-
-                            for (int index=0; index<nationList.size();index++){ //e per ogni nazione
-
-                            data.add(new NationCostruttore(nationList.get(index).getName(),nationList.get(index).getAge(),nationList.get(index).getNumSterili(),nationList.get(index).getNumFertili()));} //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                             this.turni ++;                                    //Si tiene conto che si e' arrivati alla fine del turno per tutte le nazioni
                             turniSvolti --;                                   //Un turno e' stato svolto e quindi aggiorno il numero di turni da svolgere rimanenti
                             //SE SIAMO AL PRIMO TURNO O SE SONO STATI SVOLTI TUTTI I TURNI INDICATI
                             if(this.turni == 1 || turniSvolti == 0){
-                                ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<NationCostruttore,String>("nome"));
-                                ColonnaEta.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Eta>("eta"));
-                                ColonnaFertili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numFertili"));
-                                ColonnaSterili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numSterili"));
-                                InfoTable.setItems(data);
                                 this.buttonHelp.setDisable(false);
                                 this.buttonMenu.setDisable(false);
                                 this.tabPopolazione.setDisable(false);
@@ -532,9 +521,27 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                 barChart.getData().clear();
                                 barCharD.getData().clear();
                                 barChartR.getData().clear();
+                                data.clear();//pulisco la lista delle info delle nazioni
+
                                 for (int k=0; k< nationList.size(); k++) {
+                                    int numSterile=0;
+                                    int numFertile=0;
+                                    for (int ind=0; ind< nationList.get(k).getRegioni().size();ind++){ //per ogni regione di ogni nazione
+                                        if (nationList.get(k).getRegioni().get(ind).getTipo()=="sterile") { //incremente numSterile se la regione è sterile
+                                            numSterile++;
+                                        }else{ //incremente numFertile se la regione è fertile
+                                            numFertile++;
+                                        }
+                                    }
+                                    ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<NationCostruttore,String>("nome")); //Assegno alla colonna CollonnaNazione il dato nome (nome della nazione)
+                                    ColonnaEta.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Eta>("eta")); //assegno alla colonnaEta il dato dell'eta
+                                    ColonnaFertili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numFertili")); //assegno alla colonnaFertili il numFertili (numero terreni fertili)
+                                    ColonnaSterili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numSterili")); //assegno alla colonnaSterili il numSterili (numero terreni sterili)
+                                    InfoTable.setItems(data); //Aggiungo il tutto nella tabella principale
+
                                     //SE LA NAZIONE ITERATA E' VIVA
                                     if (nationList.get(k).getStato() == true) {
+                                        data.add(new NationCostruttore(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         XYChart.Series set1 = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series risorse1 = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series denaro1 = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
@@ -552,6 +559,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                     }
                                     //ALTRIMENTI, SE LA NAZONE ITERATA E' MORTA
                                     else {
+                                        data.add(new NationCostruttore(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         continue;
                                     }
                                 }
