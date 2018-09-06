@@ -21,11 +21,8 @@ public class Nation extends Thread{
     private boolean vivo = true;            //Variabile booleana che indica lo stato di una nazione.
 											/*Indica se la nazione e' viva (true) o se la nazione e' morta (false).
 	 										Sotto i 10 abitanti la nazione e' morta*/
-    private int numSterili;  //indica quante regioni sterili ha una nazione
-    private int numFertili;  //indica quante regioni fertili ha una nazione
 
-
-    //Controller della griglia per avvisare(notify()) il thread che gestisce i turni
+	//Controller della griglia per avvisare(notify()) il thread che gestisce i turni
     //di passare al turno della nazione successiva
     private ControllerImpostazioniGriglia gridController;
 
@@ -75,17 +72,6 @@ public class Nation extends Thread{
         return this.age;
     }
 
-
-    //METODO GETNUMSTERILI
-    //restituisce il numero di regioni sterili di una nazione
-    public int getNumSterili(){
-        return this.numSterili;
-    }
-
-    //METODO GETNUMFERTILI
-    //restituisce il numero di regioni fertili della nazione
-    public int getNumFertili(){ return this.numFertili;
-    }
 
     //METODO GET DENARO
     //Restituisce la quantita' di denaro attuale presente nelle tesorerie della nazione
@@ -243,15 +229,7 @@ public class Nation extends Thread{
     //che contiene tutte le celle assegnate e conquistate da quella nazione.
     public void addRegion(Regione region){
         this.regioni.add(region);                //Aggiunge la regione alla lista completa delle regioni della nazione
-        if (region.getTipo()=="fertile"){
-            numFertili++;
-            System.out.println("fertili:"+numFertili);
-        }
 
-        if (region.getTipo()=="sterile"){
-            numSterili++;
-            System.out.println("sterili:"+ numSterili);
-        }
     }
 
     //METODO REFRESH REGIONS TO EXEC
@@ -386,15 +364,6 @@ public class Nation extends Thread{
         for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
             Regione num = i.next();
             num.resetRegion();      //Toglie dalla cella la nazione di appartenza e il colore della nazione
-            if (num.getTipo()=="fertile"){
-                numFertili--;
-                System.out.println("fertili in meno:"+numFertili);
-            }
-
-            if (num.getTipo()=="sterile"){
-                numSterili--;
-                System.out.println("sterili in meno:"+ numSterili);
-            }
             i.remove();             //Toglie la cella dalla lista di quelle appartenenti alla nazione
         }
         removeExecRegions();
@@ -405,7 +374,6 @@ public class Nation extends Thread{
     public void removeExecRegions(){
         for(Iterator<Regione> i = regionsToExec.iterator(); i.hasNext();) {
             Regione num = i.next();
-
             i.remove();
         }
     }
@@ -456,12 +424,6 @@ public class Nation extends Thread{
             region.resetRegion();               //La nazione ne perde il controllo e le sue caratteristiche vengono
                                                 //modificate in maniera che questa regione non faccia piu' parte
                                                 //della nazione
-            if (region.getTipo()=="sterile"){    //mi serve per capire se devo decrementare numSterili
-                numSterili--;
-            }
-            if (region.getTipo() == "fertile"){//mi serve per capire se devo decrementare numFertili
-                numFertili--;
-            }
             regioni.remove(region);             //Rimuovo la regione dalla lista di quelle che appartengono alla nazione
 
         }
