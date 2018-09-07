@@ -7,18 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<!-- COMMENTO -->
-<!--
-        Mette un AnchorPane, poi dentro questo AnchorPane posiziona un' immagine e un bottone, al centro.
-        Poi imposta il testo del bottone con la scritta "Play".
-        Infine, dentro l'AnchorPane posiziona l'immagine di sfondo, chiamata IMG-Sfondo.
-        -->
-
 <AnchorPane fx:id="rootPane" maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
     <children>
-        <ImageView fitHeight="649.0" fitWidth="859.0" layoutX="-24.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="3000.0" fitWidth="859.0" layoutX="-24.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@terreno_mani.jpg" />
+                <Image url="@IMG-SfondoMenu.jpg" />
             </image>
         </ImageView>
         <Button fx:id="buttonPlay" contentDisplay="CENTER" layoutX="304.0" layoutY="429.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="60.0" prefWidth="144.0" text="Gioca">
@@ -29,9 +22,9 @@
                 <Font size="21.0" />
             </font>
         </Button>
-      <Button fx:id="buttonExit" layoutX="671.0" layoutY="543.0" mnemonicParsing="false" onAction="#clickExit" text="Esci">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor></Button>
+        <Button fx:id="buttonExit" layoutX="671.0" layoutY="543.0" mnemonicParsing="false" onAction="#clickExit" text="Esci">
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor></Button>
     </children>
 </AnchorPane>

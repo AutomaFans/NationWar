@@ -6,14 +6,14 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="305.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerLimite">
-   <children>
-      <Label layoutX="52.0" layoutY="68.0" prefHeight="170.0" prefWidth="495.0" text="Numero massimo di nazioni superato!">
-         <font>
-            <Font size="29.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Label>
-   </children>
+    <children>
+        <Label layoutX="52.0" layoutY="68.0" prefHeight="170.0" prefWidth="495.0" text="Numero massimo di nazioni superato!">
+            <font>
+                <Font size="29.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Label>
+    </children>
 </AnchorPane>

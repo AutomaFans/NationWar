@@ -7,29 +7,26 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<!-- COMMENTO -->
-<!--
-        Mette un AnchorPane, poi dentro questo AnchorPane posiziona una label e una progressBar, al centro.
-        Poi imposta il testo della label con la scritta "Loading...".
-        Infine, dentro l'AnchorPane posiziona l'immagine chiamata IMG-MondoNAzioni.
-        -->
-
-<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" rotate="180.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
+<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" rotate="180.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerMenu">
     <children>
-      <ImageView fitHeight="704.0" fitWidth="758.0" layoutX="-3.0" layoutY="-42.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
-         <image>
-            <Image url="@photo_2018-09-04_14-26-37.jpg" />
-         </image>
-      </ImageView>
-        <ProgressBar accessibleRole="TEXT" cache="true" layoutX="265.0" layoutY="190.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="176.0" StackPane.alignment="CENTER">
+        <ImageView fitHeight="704.0" fitWidth="758.0" layoutX="-3.0" layoutY="-42.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+            <image>
+                <Image url="@IMG-SfondoTitolo.jpg" />
+            </image>
+        </ImageView>
+        <ProgressBar accessibleRole="TEXT" cache="true" layoutX="230.0" layoutY="124.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="265.0" StackPane.alignment="CENTER">
             <cursor>
                 <Cursor fx:constant="WAIT" />
             </cursor>
         </ProgressBar>
-        <Label layoutX="318.0" layoutY="187.0" prefHeight="24.0" prefWidth="55.0" rotate="180.0" text="Loading..." StackPane.alignment="CENTER_LEFT" />
+        <Label layoutX="308.0" layoutY="127.0" prefHeight="35.0" prefWidth="112.0" rotate="180.0" text="Loading..." textAlignment="CENTER" StackPane.alignment="CENTER_LEFT">
+            <font>
+                <Font name="Carlito Bold Italic" size="24.0" />
+            </font></Label>
     </children>
-   <cursor>
-      <Cursor fx:constant="WAIT" />
-   </cursor>
+    <cursor>
+        <Cursor fx:constant="WAIT" />
+    </cursor>
 </AnchorPane>

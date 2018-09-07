@@ -1,10 +1,9 @@
 package interfacciaGrafica;
 
 import org.controlsfx.control.PopOver;
-
-import static interfacciaGrafica.Regione.createPop;
-
 import java.util.Random;
+
+import static interfacciaGrafica.Regione.createPop;		//Importo il metodo createPop della classe Regione
 
 public class CellThread extends Thread{  //Tipo di thread che costituisce un legame con una cella della griglia
 
