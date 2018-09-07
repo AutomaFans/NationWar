@@ -343,6 +343,7 @@ public class Nation extends Thread{
     //che contiene tutte le celle assegnate e conquistate da quella nazione.
     public void addRegion(Regione region){
         this.regioni.add(region);                //Aggiunge la regione alla lista completa delle regioni della nazione
+        this.removeAllRegions(); //e le vengono sottratte tutte le nazioni  //aggiungere questo
 
     }
 
