@@ -19,6 +19,7 @@ public class Regione extends Button{
     private double valore;        		//Valore in denaro de terreno (una nazione deve spendere una certa somma per colonizzare un terreno)
     private CellThread threadRegione; 	//Thread della regione
     private Nation nazione;       		//Nazione a cui appartiene la regione (la cella della griglia)
+    private Accordo alleanza;           //Booleano che e' a true se il territorio e' utilizzato per un'alleanza
     private int numRow;                 //numero di riga in cui si trova la cella
     private int numColumn;              //numero di colonna in cui si trova la cella
 
@@ -44,7 +45,8 @@ public class Regione extends Button{
     //IMG-Sterile.jpg.
     //Il valore reale verra' valorizzato al momento in cui si aggiunge la regione alla griglia.
     //Assegna poi un thread alla Regione che svolgera le azioni inerenti ad essa.
-    //Infine valorizza le coordinate della regione nella griglia
+    //Infine valorizza le coordinate della regione nella griglia e il valore che mi dice se la regione ha stretto
+    //un'alleanza
     public Regione(int row, int column){
         Random rand = new Random();         //Genera un nuovo oggetto di tipo Random(randomico)
         risorse = rand.nextInt(1000);     	//Assegna alle risorse un numero casuale compreso tra 0 e 1000
@@ -68,6 +70,7 @@ public class Regione extends Button{
         this.threadRegione = new CellThread(this); //Assegna un thread alla regione di tipo CellThread
         this.numRow = row;                               //Assegna numero di riga nella griglia
         this.numColumn = column;                         //Assegna numero di colonna nella griglia
+        this.alleanza = null;                            //Inizialmente la regione non fa parte di nessuna alleanza
     }
 
 
@@ -92,6 +95,7 @@ public class Regione extends Button{
         else{
             this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Sterile.jpg')");
         }
+        this.alleanza = null;    //Se la regione faceva parte di un'accordo quell'accordo viene sciolto
     }
 
 
@@ -407,5 +411,17 @@ public class Regione extends Button{
     //confinanti e non alleate con la regione)
     public ArrayList<Regione> getRegioniConfinantiSconosciute(){
         return regioniConfinantiSconosciute;
+    }
+
+    //METODO GET ALLEANZA
+    //Restituisce l'alleanza stretta sulla regione, ammesso che ne sia stata stretta una
+    public Accordo getAlleanza(){
+        return alleanza;
+    }
+
+    //METODO ROMPI PATTO
+    //Permette di annullare un patto di alleanza stretto su questa regione
+    public void rompiPatto(){
+        this.alleanza = null;
     }
 }
