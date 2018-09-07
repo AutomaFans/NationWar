@@ -7,17 +7,17 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerNoStart">
-   <children>
-      <Label layoutX="29.0" layoutY="14.0" text="ATTENZIONE!">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <TextArea editable="false" layoutX="29.0" layoutY="65.0" prefHeight="121.0" prefWidth="508.0" text="Prima di iniziare il gioco è necessario creare &#10;almeno una nazione.">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </TextArea>
-      <Button fx:id="buttonClose" layoutX="436.0" layoutY="338.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="94.0" text="Chiudi" />
-   </children>
+    <children>
+        <Label layoutX="29.0" layoutY="14.0" text="ATTENZIONE!">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <TextArea editable="false" layoutX="29.0" layoutY="65.0" prefHeight="121.0" prefWidth="508.0" text="Prima di iniziare il gioco è necessario creare &#10;almeno una nazione.">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </TextArea>
+        <Button fx:id="buttonClose" layoutX="436.0" layoutY="338.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="94.0" text="Chiudi" />
+    </children>
 </AnchorPane>

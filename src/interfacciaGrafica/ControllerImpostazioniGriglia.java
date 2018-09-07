@@ -104,23 +104,23 @@ public class ControllerImpostazioniGriglia implements Initializable {
     private Tab tabInfoNazioni;        		//Tab per le informazioni su ogni nazione (noem, eta, numero di terreni fertili e numero di tereni sterili)
 
     @FXML
-    private TableView<NationCostruttore> InfoTable;		 //Tabella chiamata InfoTable per contenetere le informzazioni delle nazioni
+    private TableView<Nation> InfoTable;		 //Tabella chiamata InfoTable per contenetere le informzazioni delle nazioni
 
     @FXML
-    TableColumn <NationCostruttore, String> ColonnaNazioni; //Colonna della tabella InfoTable, chiamata ColonnaNazioni per i nomi di tutte le nazioni
+    TableColumn <Nation, String> ColonnaNazioni; //Colonna della tabella InfoTable, chiamata ColonnaNazioni per i nomi di tutte le nazioni
 
     @FXML
-    TableColumn <NationCostruttore, Eta> ColonnaEta;		 //Colonna della tabella InfoTable, chiamata ColonnaEta per l'eta' della nazione su quella riga
+    TableColumn <Nation, Eta> ColonnaEta;		 //Colonna della tabella InfoTable, chiamata ColonnaEta per l'eta' della nazione su quella riga
 
     @FXML
-    TableColumn <NationCostruttore, Integer> ColonnaFertili; 	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori fertili della nazione su quella riga
+    TableColumn <Nation, Integer> ColonnaFertili; 	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori fertili della nazione su quella riga
 
     @FXML
-    TableColumn <NationCostruttore, Integer> ColonnaSterili;	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori sterili della nazione su quella rig
+    TableColumn <Nation, Integer> ColonnaSterili;	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori sterili della nazione su quella rig
 
     @FXML
-    private TextArea txtTurniDaSvolgere;    //TextArea dove inserire durante una pausa il numero di turni per i quali si
-    //desidera far continuare la simulazione
+    private TextArea txtTurniDaSvolgere;    /*TextArea dove inserire durante una pausa il numero di turni per i quali si
+    										desidera far continuare la simulazione*/
 
     int contaNumeroCelleUsate;				//Variabile di tipo intera per sapere il numero di celle della griglia che sono state usate
 
@@ -134,11 +134,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
     static boolean useButton = false;   	//Variabile booleana usata per capire se e' stato cliccato uno dei bottoni aggiungiNazione, eliminaNazione, Help o menuPrincipale
 
-    int turni = 0;                          //La variabile turni tiene conto del numero di turni trascorsi dall'inizio del gioco.
-    //Un turno e' completo quando tutte le nazioni in gioco "hanno fatto la propria mossa".
+    int turni = 0;                          /*La variabile turni tiene conto del numero di turni trascorsi dall'inizio del gioco.
+   											Un turno e' completo quando tutte le nazioni in gioco "hanno fatto la propria mossa"*/
 
     int nazioniMorte = 0;                   //Variabile che tiene conto del numero di nazioni morte durante la simulazione
-
 
 
     //Crea una lista di stringhe chiamata arrayForStart che serve per capire se Start e'
@@ -150,43 +149,68 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //o se e' appena stata creata
     ArrayList<String> NomiNazioniCopia = new ArrayList<>();
 
+
+
     //METODO GET NUMERO RIGHE
-    //Restituisce il numero di righe totali della griglia
+    //Restituisce il numero di righe totali della griglia.
+    //Siccome il numero di righe della griglia viene inserito dall'utente nell'area di testo
+    //chiamata txtRows, allora con il metodo getText prendiamo questo valore dall'area di testo,
+    //ma siccome getText restituisce una stringa, la convertiamo ad intero (con il metodo
+    //Integer.parseInt)
     public int getNumeroRighe(){
         return Integer.parseInt(txtRows.getText());
     }
+
+
+
     //METODO GET NUMERO COLONNE
-    //Restituisce il numero di colonne totali della griglia
+    //Restituisce il numero di colonne totali della griglia.
+    //Siccome il numero di colonne della griglia viene inserito dall'utente nell'area di testo
+    //chiamata txtColumns, allora con il metodo getText prendiamo questo valore dall'area di testo,
+    //ma siccome getText restituisce una stringa, la convertiamo ad intero (con il metodo
+    //Integer.parseInt)
     public int getNumeroColonne(){
         return Integer.parseInt(txtColumns.getText());
     }
 
+
+
     //METODO GET GRIDPANE
-    //Restituisce la griglia in cui si svolge la simulazione
+    //Restituisce la griglia in cui si svolge la simulazione.
+    //La griglia su cuui si svolge la simulazione e' chiamata automaGrid.
     public GridPane getGridPane(){
         return this.automaGrid;
     }
 
+
+
     //METODO GET NODE FROM GRID PANE
-    //Restituisce l'oggetto di tipo Node della griglia specificato dalle coordinate col(colonna) e row(riga).
-    //Ogni oggetto di tipo griglia e' un iterable quindi puo' essere iterato conn un forEach.
+    //Questo metodo prende come parametri una griglia, un intero row che rappresenta il numero di riga
+    //e un altro intero col che rappresenta il numero di colonna e restituisce l'oggetto di tipo Node
+    //della griglia specificato dalle coordinate col(colonna) e row(riga), passate come parametri.
+    //Ogni oggetto di tipo griglia e' un iterable quindi puo' essere iterato con un forEach.
+    //(quindi possiamo iterare ogni nodo figlio della griglia, grazie al metodo getChildren).
     //Se l'oggetto iterato corrisponde nel numero di riga e colonna passati come parametri allora
     //si tratta dell' oggetto che stiamo cercando e quindi viene restituito.
     //Altrimenti, se non viene trovato nulla ritorna NULL
     public Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        //Ogni oggetto della griglia e' un iterable e quindi viene iterato in questo forEach
+        //OGNI OGGETTO DELLA GRIGLIA E' UN ITERABILE QUINDI VIENE ITERATO IN QUESTOFOR EACH
         for (Node node : gridPane.getChildren()) {
-            //Se l'oggetto iterato corrisponde nel numero di riga e colonna passati come parametri si tratta dell'
-            //oggetto che stiamo cercando e quindi viene restituito
+            //SE L'OGGETTO ITERATO CORRISPONDE AL NUMERO DI RIGA E COLONNA PASSATI COME PARAMETRI
+            //ALLORA SIGNIFICA CHE SI TRATTA DELL'OGGETTO CHE STIAMO CERCANDO E PERCIO' VIENE
+            //RESTITUITO
             if (GridPane.getColumnIndex(node) == (Integer)col && GridPane.getRowIndex(node) == (Integer)row) {
                 return node;
             }
         }
-        //Se non viene trovato nulla si ritorna null
+        //SE NON VIENE TROVATO NULLA RITORNA NULL
         return null;
     }
 
+
+
     //METODO CLICK ADD NATION
+    //Questo metodo viene chiamato quando si preme il bottone AddNation.
     //Viene impostata la variabile useButton a true (viene rimessa a false nella classe ControllerAddNation
     //quando si clicca il bottone chiamato buttonAggiungi per creare una nazione).
     //Poi se il numero  di elementi  della lista chiamata nationList e' minore di 38 (che sono
@@ -246,6 +270,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
 
     //METODO CLICK DELETE NATION
+    //Questo metodo viene chiamato quando si preme il bottone DeleteNation.
     //Viene impostata la variabile useButton a true (viene rimessa a false nella classe ControllerDeleteNation
     //quando si clicca il bottone chiamato buttonElimina per eliminare una nazione).
     //Quando il bottone buttonDeleteNation viene premuto, se la lista chiamata nationList
@@ -302,6 +327,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
 
     //METODO HELP
+    //Questo metodo viene chiamato quando si preme il bottone Help.
     //Viene impostata la variabile useButton a true (viene rimessa a false nella classe ControllerHelp
     //quando si clicca il bottone chiamato buttonClose per chiudere il menu di aiuto).
     //Quando il bottone buttonHelp viene premuto, viene creato un oggetto di tipo AnchorPane chiamato
@@ -327,15 +353,18 @@ public class ControllerImpostazioniGriglia implements Initializable {
     }
 
 
-
     //METODO CLICK START
+    //Questo metodo viene chiamato quando si preme il bottone Start (che poi diventa Continua)
+    //per far partire il gioco (la simulazione).
+    //Viene creata un ObservableList (una lista che permette di tenere traccia delle modifiche)
+    //chiamata informazioni, e questa lista contine oggetti di tipo Nation.
     //Per ogni nazione dentro nationList viene richiamato il metodo getRegioni, quindi se quella
     //nazione ha un numero di regioni uguali a 0 (quindi se a quella nazione non e' stata assegnata nessuna cella)
     //viene rimossa e viene riaggiunto il colore, che era stato scelto nel momento della creazione della nazione,
     //alla lista chiamata ListaColor  (perche' in controllerAddNation quando si creava una nuova nazione
     //veniva eliminato anche il colore dalla lista Lista Colori per non creare nazioni con lo stesso colore).
     //Poi viene impostata la variabile booleana useButton a true.
-    //C'e' una area di testo sotto lo start da cui vengono presi i turni per i quali avanzare nella simulazione
+    //C'e' un' area di testo sotto lo start da cui vengono presi i turni per i quali avanzare nella simulazione
     //prima di una pausa: inizalmente per default si ha "1"(un turno).
     //Dopo che si e' svolto il primo turno, per continuare bisogna inserire un numero di turni > 0,
     //altrimenti si ottiene un errore nel label chiamata msgError, in basso a destra (il primo turno viene svolto
@@ -364,6 +393,12 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Poi aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
     //Poi aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
     //Poi aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
+    //In seguito per ogni nazione dentro la lista nationList, se quella nazione non ha piu' regioni
+    //(ha perso tutti i territori) (me ne rendo conto richiamando il metodo getRegioni della classe Nation)
+    //allora la nazione muore, per cui viene richiamato il metodo setStato della classe Nation (il quale
+    //permette di impostare la variabile vivo, che tiene conto se una nazione e' viva o morta, a true se
+    //la nazione e' viva o a false se la nazione e' morta) e in segito viene incrementata la variabile
+    //nazioniMorte, che tiene conto del numero di nazioni morte.
     //Infine viene aggiunta dentro  la lista arrayForStart la stringa "Start e' stato premuto".
     //Poi vengono disabilitati i bottoni di menu, help, start e statistiche che saranno cliccabili solo a gioco fermo.
     //e viene anche disabilitata l'area di testo in cui inserire i turni.
@@ -372,8 +407,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     ///Se si clicca su continua e quindi siamo nella situazione in cui start e' gia' stato premuto una volta allora bisogna
     //clonare le nazioni in maniera da poter fare di nuovo start delle nazioni in nationList(cosa altrimenti non possibile
     //visto che l'istanza di un thread puo' essere runnato una sola volta).
-    //Viene preso poi dall'area di testo txtTurniDaSvolgere il numero di turni per il
-    //quale avanzare.
+    //Ora (con il metodo getText) viene preso il numero inserito nell'area di testo turniDaSvolgere (ovvero il numero di turni per
+    //il quale avanzare), viene convertito ad intero e viene memorizzato tale numero dentro la variabile turniSvolti.
     //Si arriva quindi al punto centrale della simulazione in cui c'e' un for che va ad iterare tutte le nazioni dentro
     //la lista nationList (viene iterata nazione per nazione E QUESTO VIENE FATTO DAL THREAD MAIN).
     //Quindi viene presa una nazione per volta in maniera progressiva (e vengono prese dall'ultima creata
@@ -386,9 +421,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //getThreadState della classe Nation che restituisce true se il thread non ha finito di svolgere il suo turno, false altrimenti)
     //quindi attende finche' il metodo getThreadState restituisce true.
     //In seguito, controlliamo se e' stato eseguito il turno dell'ultima nazione: se si allora si tiene conto che e' stato svolto
-    //un turno per ogni nazione (turni ++;) e si dimuisce il numero di turni che devono ancora essere svolti(indicati nella
-    //casella di testo).
-    //Se siamo al primo turno o e' stato svolto il numero di turni indicato si ferma la simulazione(pausa)
+    //un turno per ogni nazione per cui viene incrementata la variabile turni (tiene conto del numero di turni trascorsi dall'inizio
+    //del gioco) e si decrementa la variabile turniSvolti (che tiene conto del numero di turni da svolgere prima della pausa).
+    //Se siamo al primo turno o e' stato svolto il numero di turni indicato si ferma la simulazione (pausa)
     //per poter consultare le statistiche, constatare le differenze e decidere di quanti turni far avanzare la simulazione
     //Cosi vengono anche i bottoni, tra cui il bottone start (che ora serve a fare continuare la simulazione) e viene anche
     //riabilitata la casella di testo txtTurniDaSvolgere per inserire un altro numero di turni per far avanzare la simulazione.
@@ -398,11 +433,25 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //In seguito viene messa a false la variabile useButton perche' una volta terminati i turni specificati sono
     //nuovamente visibili i PopOver.
     //Doposiche vengono cancellate tutte le statistiche fatte fin'ora (con il metodo clear) per lasciare spazio alle nuove
-    //statistiche dei prossimi turni.
+    //statistiche dei prossimi turni e viene pulita anche la lista chiamata informazioni (cjhe contiene tutte e informazioni
+    //su una Nazione).
+    //Per ogni nazione dentro nationList vengono create due variabili: numSterile (che tiene conto del numero di territori
+    //sterili di quella nazione) e numFertili (che tiene conto del numero di territori fertili di quella nazione).
+    //Percio, ora per ogni regione di quella nazione, se la regione e' sterile (metodo getTipo della classe Regione) viene
+    //incrementata la variabile numSterile, altrimenti se la regione e' fertile (metodo getTipo della classe Regione) viene
+    //incrementata la variabile numFertile.
+    //Poi, viene assegnata alla colonna ColonnaNazione il nome della nazione, alla colonna ColonnaEta l'eta' della nazione,
+    //alla colonna ColonnaFertili il numero di terreni fertili della nazione e alla colonna ColonnaSterili il numero di
+    //terreni sterili della nazione. Infne vengono aggiunte tutte le informazione dentro la tabella InfoTable.
     //Ora per ogni nazione dentro nationList viene richiamato il metodo getStato (della classe Nation).
-    //Se il metodo getStato restituisce true, quindi se la nazione e' viva vengono create le nuove statistiche
-    //(alla stessa maniera specificata precedentemente).
-    //Altrimenti se il metodo getStato restituisce false, e quindi se la nazione e' morta passa alla prossima nazione della Lista.
+    //Se il metodo getStato restituisce true, quindi se la nazione e' viva vengono aggiunti tutti i dati della nazione
+    //alla lista informazioni (quindi viene richiamato il costruttore con 4 parametri della classe Nation, passando il nome
+    //(metodo getName), l'eta' (metodo getAge), numero di territori fertili (variabile numFertile) e il numero di territori
+    //sterili (variabile numSterile)) e vengono in seguito create le nuove statistiche (alla stessa maniera specificata precedentemente).
+    //Altrimenti se il metodo getStato restituisce false, e quindi se la nazione e' morta vengono aggiunti tutti i dati della nazione
+    //alla lista informazioni (quindi viene richiamato il costruttore della classe Nation, passando il nome (metodo getName),
+    //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile) e il numero di territori sterili (variabile numSterile)),
+    //ma vicino al nome viene aggunta la scritta "(MORTA)".
     //Altrimenti, se non siamo al primo turno e non e' stato svolto il numero di turni indicato bisogna riiniziare dalla prima nazione ma
     //siccome c'e' un problema con i Thread,  cioe' che una volta eseguito lo start di un thread non si puo' piu' rieseguire
     //lo start, almeno che non si crea una nuova istanza, allora vengono clonate le nazioni (i thread perche' Nation estende
@@ -421,12 +470,12 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //il bottone start, cosi il gioco e' finito.
     @FXML
     synchronized void clickStart(ActionEvent event) {
-        ObservableList<NationCostruttore> data = FXCollections.observableArrayList();
+        ObservableList<Nation> informazioni = FXCollections.observableArrayList();
         //ELIMINA LE NAZIONI CHE SONO STATE CREATE MA A CUI NON E' STATA ASSEGNATA NESSUNA RAGIONE
         for (int indice=0; indice<nationList.size();indice++){
             if (nationList.get(indice).getRegioni().size()==0){
                 nationList.remove(indice);
-                ListaColori.add(nationList.get(indice).getColor()); //riaggiungiamo il colore della nazione cancellata in ListaColori
+                ListaColori.add(nationList.get(indice).getColor()); //Viene riaggiunto il colore della nazione cancellata in ListaColori
             }
         }
         useButton = true;
@@ -444,7 +493,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 for(int indice = 0; indice <nationList.size(); indice++) {
                     XYChart.Series set = new XYChart.Series<>();            //Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
                     XYChart.Series risorse = new XYChart.Series<>();        //Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
-                    XYChart.Series denaro = new XYChart.Series<>();        //Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
+                    XYChart.Series denaro = new XYChart.Series<>();        	//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
                     //SE IL NOME DELLA NAZIONE NON E' CONTENUTO NELLA LISTA NOMINAZIONI COPIA
                     if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) {
                         valAttualeAbitanti = 0;
@@ -459,23 +508,22 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
                     valAttualeRisorse = (nationList.get(indice).getRisorse());
                     //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÆ’Ã‚Â¨ alto tanto quanto ÃƒÆ’Ã‚Â¨ il denaro di quella nazione
+                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨ alto tanto quanto ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨ il denaro di quella nazione
                     valAttualeDenaro = nationList.get(indice).getDenaro();
                     barCharD.getData().addAll(denaro);        	//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                     barChart.getData().addAll(set);            	//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
-                    barChartR.getData().addAll(risorse);    	//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
+                    barChartR.getData().addAll(risorse);    	//Aggiungo il mattone delle risosrse alla rispettiva barChart delle risorse, chiamato barChartR.
+                    //SE LA NAZIONE PERDE TUTTE LE SUE REGIONI, ALLORA LA NAZIONE MUORE
                     for (int k=0; k<nationList.size();k++){
-                        if ((nationList.get(k).getRegioni().size())==0){ //Se la nazione perde tutte le regioni
-                            nationList.get(k).setStato(false); //allora setto il suo stato vivo a false (quindi la faccio morire) [ho creato nella classe Nation un metodo che mi permette di farlo ovvero setStato]
+                        if ((nationList.get(k).getRegioni().size())==0){
+                            nationList.get(k).setStato(false); //allora setto il suo stato vivo a false (quindi la faccio morire)
                             nazioniMorte++;
                         }
                     }
                 }
-
                 arrayForStart.add("Start e' stato premuto");
-
                 //I bottoni non saranno cliccabili durante lo svolgimento di un turno. Inoltre durante lo svolgimento
-                // di un turno non sara' possibile editare l'area di testo in cui inserire i turni per i quali la simulazione deve continuare.
+                //di un turno non sara' possibile editare l'area di testo in cui inserire i turni per i quali la simulazione deve continuare.
                 this.buttonStart.setDisable(true);
                 this.buttonHelp.setDisable(true);
                 this.buttonMenu.setDisable(true);
@@ -493,7 +541,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
                 //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione creata
                 for(int i=0; i < nationList.size(); i++){  				//Viene iterata nazione per nazione della lista nationList
-
                     //SE LA NAZIONE ITERATA E' VIVA
                     if(nationList.get(i).getStato() == true) {
                         nationList.get(i).start();                      //Viene svolto il turno della nazione considerata
@@ -521,27 +568,30 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                 barChart.getData().clear();
                                 barCharD.getData().clear();
                                 barChartR.getData().clear();
-                                data.clear();//pulisco la lista delle info delle nazioni
-
+                                //VIENE PULITA LA LISTA DELLE INFORMAZIONI SULLE NAZIONI
+                                informazioni.clear();
+                                //PER OGNI NAZIONE SI TIENE CONTO DEL NUMERO DI TERRENI FERTILI E DEL NUMERO DI TERRENI
+                                //STERILI, CHE QUELLA NAZIONE HA
                                 for (int k=0; k< nationList.size(); k++) {
                                     int numSterile=0;
                                     int numFertile=0;
-                                    for (int ind=0; ind< nationList.get(k).getRegioni().size();ind++){ //per ogni regione di ogni nazione
-                                        if (nationList.get(k).getRegioni().get(ind).getTipo()=="sterile") { //incremente numSterile se la regione è sterile
+                                    for (int ind=0; ind< nationList.get(k).getRegioni().size();ind++){
+                                        //SE LA REGIONE E' STERILE INCREMENTA LA VARIABILE NUMSTERILE
+                                        if (nationList.get(k).getRegioni().get(ind).getTipo()=="sterile") {
                                             numSterile++;
-                                        }else{ //incremente numFertile se la regione è fertile
+                                            //ALTRIMENTI, SE LA REGIONE E' FERTILE INCREMENTA LA VARIABILE NUMFERTILE
+                                        }else{
                                             numFertile++;
                                         }
                                     }
-                                    ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<NationCostruttore,String>("nome")); //Assegno alla colonna CollonnaNazione il dato nome (nome della nazione)
-                                    ColonnaEta.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Eta>("eta")); //assegno alla colonnaEta il dato dell'eta
-                                    ColonnaFertili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numFertili")); //assegno alla colonnaFertili il numFertili (numero terreni fertili)
-                                    ColonnaSterili.setCellValueFactory(new PropertyValueFactory<NationCostruttore,Integer>("numSterili")); //assegno alla colonnaSterili il numSterili (numero terreni sterili)
-                                    InfoTable.setItems(data); //Aggiungo il tutto nella tabella principale
-
+                                    ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<Nation,String>("nome")); 		//Assegno alla colonna ColonnaNazione il dato nome (nome della nazione)
+                                    ColonnaEta.setCellValueFactory(new PropertyValueFactory<Nation,Eta>("eta")); 				//Assegno alla colonnaEta il dato dell'eta
+                                    ColonnaFertili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numFertili")); 	//Assegno alla colonnaFertili il numFertili (numero terreni fertili)
+                                    ColonnaSterili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numSterili")); 	//Assegno alla colonnaSterili il numSterili (numero terreni sterili)
+                                    InfoTable.setItems(informazioni); 																		//Aggiungo il tutto nella tabella principale
                                     //SE LA NAZIONE ITERATA E' VIVA
                                     if (nationList.get(k).getStato() == true) {
-                                        data.add(new NationCostruttore(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                        informazioni.add(new Nation(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile)); //Aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         XYChart.Series set1 = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series risorse1 = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series denaro1 = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
@@ -559,7 +609,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                     }
                                     //ALTRIMENTI, SE LA NAZONE ITERATA E' MORTA
                                     else {
-                                        data.add(new NationCostruttore(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                        informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         continue;
                                     }
                                 }
@@ -592,13 +642,15 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
 
     //METODO CLONE NATION THREAD LIST
-    //Clona i thread (le nazioni perche' Nation estende Thread) della lista nationList e li sostituisce a quelli in nationList.
+    //Clona i thread (ovvero le nazioni perche' Nation estende Thread) della lista nationList
+    //e li sostituisce a quelli in nationList.
     //Crea una nuova lista di nazioni chiamata cloneList.
-    //Poi itera tutte le nazioni nella lista nation list e di ogni nazione iterata viene creata una nuova nazione con il nome e
-    //colore della nazione vecchia (nome e colore vengono presi richiamando i metodi getName e getColor della classe Nation)
-    //e si copiano le caratteristiche della vecchia nazione incluse le regioni, richiamando il metodo cloneCharacters della
-    //classe Nation ed infine si aggiunge il clone della vecchia nazione (quindi si aggiunge la nuova nazione) alla lista
-    //cloneList ed infine viene ritornata la lista cloneList
+    //Poi itera tutte le nazioni nella lista nation list e di ogni nazione iterata viene creata
+    //una nuova nazione con il nome e colore della nazione vecchia (nome e colore vengono presi
+    //richiamando i metodi getName e getColor della classe Nation) e si copiano le caratteristiche
+    //della vecchia nazione incluse le regioni, richiamando il metodo cloneCharacters della
+    //classe Nation ed infine si aggiunge il clone della vecchia nazione (quindi si aggiunge
+    //la nuova nazione) alla lista cloneList ed infine viene ritornata la lista cloneList
     private ArrayList<Nation> cloneNationThreadList(){
         ArrayList<Nation> cloneList = new ArrayList<Nation>();  										 //Crea la lista cloneList
         for(int i=0; i < nationList.size();i++){               											 //Si itera ogni vecchia nazione in nationList
@@ -612,9 +664,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
 
     //METODO SVEGLIA
-    //Siccome il thread main si mette in attesa (wait) mentre una nazione sta svolgendo il proprio turno turno,
+    //Siccome il thread main si mette in attesa (wait) mentre una nazione sta svolgendo il proprio turno,
     //(e questo viene fatto nel metodo click start) allora quando la nazione ha finito il proprio turno
-    //bisogna svegliare il thread (notify) e passare passare ad eseguire il turno della nazione successiva.
+    //bisogna svegliare il thread (notify) e passare ad eseguire il turno della nazione successiva.
     //Quindi per svegliare il thread viene fatta una notify.
     //Quindi questo metodo e' utilizzato da una nazione che sta svolgendo un turno per svegliare il thread
     //che gestisce l'intera simulazione, ovvero il thread main
@@ -625,14 +677,16 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
 
     //METODO CLICK ADD DIMENSIONS
-    //Viene utilizzato quando si preme il bottone "Imposta grandezza griglia": permette
+    //Viene richiamato quando si preme il bottone "Imposta grandezza griglia": permette
     //quindi di impostare la grandezza della griglia.
     //Definisce due variabili intere per il numero di colonne della griglia e per il
     //numero di righe della griglia.
     //Poi (con il metoto getText) prende il numero di colonne e il numero di righe che
-    //l'utente ha inserito nelle aree di testo txtColumns e txtRows.
-    //Se l'utente non inserisce nelle due aree un  numero intero, viene lanciata l'eccezione
-    //per cui la label msgError sara' impostata con la scritta "Inserisci un intero!"
+    //l'utente ha inserito nelle aree di testo txtColumns e txtRows e siccome getText
+    //restituisce una stringa, quest'ultima viene convertita in intero (con il metodo
+    //Integer.parseInt).
+    //Se l'utente non inserisce un numero intero nelle due arre di testo, viene lanciata l'eccezione
+    //per cui la label msgError sara' impostata con la scritta "Inserisci un intero!".
     //Siccome si puo' inserire un massimo numero di 32 righe e 32 colonne, se il numero
     //di righe e colonne e' maggiore di 32 allora la label msgError sara' impostata con
     //la scritta "Troppe righe e colonne!".
@@ -648,13 +702,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Se vengono inseriti tutti i dati corretti si puo' proseguire.
     //Quindi la label msgError sara' impostata con la scritta "Inserisci Nazione".
     //Viene disabilitato il bottone btnGridDimensions per togliere la possibilita'
-    //di ridimensionare la griglia e per lo stesso motivo sono disabilitate le arre di testo
+    //di ridimensionare la griglia e per lo stesso motivo sono disabilitate le aree di testo
     //txtRows e txtColumns per togliere la possibilita di inserire un altro numero di righe e di colonne.
     //Invece viene abilitato il bottone buttonAddNation per dare la possibilita di aggiungere una nazione.
     //Poi si passa ad aggiungere i bottoni sulle righe e sulle colonne alla griglia.
-    //Ogni bottone rappresenta nella griglia una regione e pertanto gli verra' assegnato un certo valore in denaro che la
-    //nazione dovra' spendere se vorra' acquistarlo: tutto cio' usando il metodo setValore(numero righe, numero colonne) di
-    // Regione.
     //Viene creata una variabile columnPercentual che e' la percentuale di spazio che deve occupare
     //una colonna nella griglia per potersi adattare, cosi viene creata una nuova colonna.
     //e viene settata la percentuale di larghezza che la colonna deve occupare (con il metodo setPercentWidth).
@@ -662,25 +713,19 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //una riga nella griglia per potersi adattare, cosi viene creata una nuova riga
     //e viene settata la percentuale di larghezza che la riga deve occupare (con il metodo setPercentWidth)
     //Per il numero di righe e di colonne specificate dall'utente, vengono creati i bottoni ai quali vengono
-    //assegnate le coordinate per utilita' nella loro individuazione e viene impostata l'altezza massima e minima
-    // del bottone, larghezza massima e minima del bottone (cosi da riempire tutta la griglia), identificatore e event
-    // handler per colorare il bottone in base al colore scelto dall' utente e vengono aggiunti i bottoni alla griglia.
-    //inolte ogni volta che viene aggiuntonuovo bottone alla griglia viene anche creato il popover corrispondente.
+    //assegnate le coordinate per individuarli e viene impostata l'altezza massima e minima del bottone,
+    //larghezza massima e minima del bottone (cosi da riempire tutta la griglia), e poi viene assegnato ad ogni
+    //bottone un identificatore (con il metodo setId).
+    //Ogni bottone rappresenta nella griglia una regione e pertanto gli verra' assegnato un certo valore
+    //in denaro che la nazione dovra' spendere se vorra' acquistarlo: tutto cio' usando il metodo setValore
+    //della classe Regione.
+    //Inoltre ad ogni bottone viene assegnato un event handler per colorare il bottone in base al colore
+    //scelto dall' utente (e questo event handler e il metodo addRegionToNation della classe
+    //ControllerImpGriglia).
+    //Infine vengono aggiunti i bottoni alla griglia.
+    //Ogni volta che viene aggiunto nuovo bottone alla griglia viene anche creato il popover corrispondente
+    //(con il metodo createPop della classe Regione).
     //Un PopOver e' una specie di finetra (senza pero' titolo e bottoni).
-    //Poi viene creata una label, chiamata risorseRegione e viene impostato il testo di questa label con
-    //il valore delle risorse relative a quella specifica regione (cioe' quella cella quante risorse ha).
-    //Poi viene creata un'altra label, chiamata tipoRegione e viene impostato il testo di questa label con
-    //il tipo di terreno (fertile o sterile) relativo a quella specifica regione (cioe' il terreno di quella cella se e' fertile o sterile).
-    //Poi viene creata un'altra label, chiamata valoreRegione e viene impostato il testo di questa label con
-    //il denaro relative a quella specifica regione (cioe' quella cella quanto denaro ha).
-    //In seguito viene creato un VBox chiamato VBox (per disporre i componenti verticalmente, in questo caso i
-    //componenti sono le dtree label) e aggiunge a VBox prima la label risorseRegione poi la label tipoRegione
-    //ed infine la label valoreRegione
-    //Poi viene creato un PopOver chiamato pop, e questo PopOver mostrera' il valore delle risorse presenti in quella Regione,
-    //che saranno poi sfruttate dalle nazioni che la occuperanno.
-    //Poi viene impostata l'azione che quando si passa il mouse sopra una regione (una cella) allora viene visualizzato
-    //il PopOver (cioe' il PopOver viene visualizzato solo quando si passail mouse sopra una cella ).
-    //Allo stesso modo viene impostata l'azione che quando si sposta il mouse allora viene chiuso il PopOver.
     @FXML
     void clickAddDimensions(ActionEvent event) {
         int gridColumns;                                        	//Numero di colonne della griglia desiderato dall'utente
@@ -738,18 +783,17 @@ public class ControllerImpostazioniGriglia implements Initializable {
         //Queste regioni sono istanze della classe Regione che estende la classe Button
         for (int i=0; i< gridRows; i++ ){							//Per i che va da 0 fino a  al numero di righe inserito dall'utente
             for (int y=0; y<gridColumns; y++){
-                Regione bottone = new Regione(i, y);  					//Crea un bottone (uno per ogni incrocio riga - colonna)
-                bottone.setValore(gridRows, gridColumns);           //Setta il valore in denaro della regione(cella)
+                Regione bottone = new Regione(i, y);  				//Crea un bottone (uno per ogni incrocio riga - colonna)
                 bottone.setMinHeight(rowPercentual-0.56);  			//Imposta l'altezza minima del bottone a rowPercentual
                 bottone.setMaxHeight(rowPercentual-0.56);			//Imposta l'altezza massima del bottone a rowPercentual
                 bottone.setMaxWidth(columnPercentual-0.60);			//Imposta la grandezza minima del bottone a columnPercentual
                 bottone.setMinWidth(columnPercentual-0.60);			//Imposta la grandezza massima del bottone a columnPercentual
                 bottone.setId("btn" + i + y);                       //Aggiunge un identificatore(ID) al bottone
+                bottone.setValore(gridRows, gridColumns);           //Setta il valore in denaro della regione(cella)
                 bottone.setOnAction(this::addRegionToNation);       /*Aggiunge un event handler al bottone che e' quello per colorare
                 													la cella in base al'ultima nazione inserita*/
                 automaGrid.add(bottone,y,i); 						//Aggiunge il bottone alla griglia
-
-                PopOver pop = createPop(bottone);
+                PopOver pop = createPop(bottone);					//Viene creato il PopOver su quel bottone
             }
         }
     }
@@ -788,7 +832,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
     //Se il bottone noButton viene premuto (quindi se non si e' sicuri di interrompere la simulazione)
     //viene semplicemente chiuso lo stage chiamato stageFinestra (con il metodo close).
-    //Altrimenti, se non si e'Ã‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
+    //Altrimenti, se non si e'Ãƒâ€šÃ‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
     //colorare le celle della nazioni e vengono riaggiunti alla lista ListaColori (che contiene' tutti i colori delle nazioni
     //che potranno essere scelti quando si crea una nuova nazione) cosida rendere nuovamenti i colori diponibili ed in seguito
     //viene cancellato tutto cio' che si trova dentro la lista nomiNazioni (che contiene' tutti i nomi delle nazioni che sono

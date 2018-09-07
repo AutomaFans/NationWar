@@ -144,7 +144,7 @@ public class ControllerAddNation {
             //ALTRIMENTI, SE I VALORI INSERITI NON SONO CORRETTI NON AGGIUNGE LA NAZIONE A NESSUNA LISTA
             //QUINDI NO FA NIENTE
             if (nomeNaz.isEmpty() || coloreNaz.contentEquals("Seleziona Colore") || nomeNaz.contentEquals("Inserisci nome della nazione che vuoi aggiungere")){
-                //non fa niente
+                //Non fa niente
             }
             //INVECE SE I VALORI INSERITI SONO CORRETTI AGGIUNGE LA NAZIONE ALLE LISTE
             else{

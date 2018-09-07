@@ -7,16 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<!-- COMMENTO -->
-<!--
-        Mette un AnchorPane, poi dentro questo AnchorPane posiziona una label e imposta la il testo di questa label
-        con la scritta "SCEGLIERE LA NAZIONE CHE SI DESIDERA ELIMINARE." e posiziona questa label in alto.
-        Poi posiziona un'altra label e imposta la il testo di questa label con la scritta "Nazione" e vicino a
-        questa label posiziona un ChoiceBox (menu a tendina).
-        Infine posiziona in basso due bottoni e imposta il testo dei due bottoni con la scritta "Elimina Nazione"
-        per il bottone a sinistra,  e con la scritta "Close" per il bottone a destra
-        -->
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerDeleteNation">
     <children>
         <Label layoutX="83.0" layoutY="112.0" prefHeight="44.0" prefWidth="80.0" text="Nazione:">
@@ -30,13 +20,13 @@
             </font>
         </Label>
         <Button fx:id="buttonElimina" layoutX="342.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickEliminaNazione" prefHeight="25.0" prefWidth="112.0" text="Elimina Nazione">
-         <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-         </cursor></Button>
+            <cursor>
+                <Cursor fx:constant="OPEN_HAND" />
+            </cursor></Button>
         <Button fx:id="buttonClose" layoutX="490.0" layoutY="343.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="67.0" text="Chiudi">
-         <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-         </cursor></Button>
+            <cursor>
+                <Cursor fx:constant="OPEN_HAND" />
+            </cursor></Button>
         <ChoiceBox fx:id="nomeNazione" layoutX="163.0" layoutY="122.0" prefWidth="150.0" />
     </children>
 </AnchorPane>
