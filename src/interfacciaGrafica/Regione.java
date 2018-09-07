@@ -176,7 +176,7 @@ public class Regione extends Button{
             tipo = "fertile";					//Allora la regione e' fertile
         }
         else{									//Altrimenti, se il numero di risorse e' minore di 350
-            tipo = "sterile";                  //Allora la regione e' sterile
+            tipo = "sterile";                  //Allora la regione e' sterile 
         }
     }
 
