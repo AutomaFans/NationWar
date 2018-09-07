@@ -343,7 +343,6 @@ public class Nation extends Thread{
     //che contiene tutte le celle assegnate e conquistate da quella nazione.
     public void addRegion(Regione region){
         this.regioni.add(region);                //Aggiunge la regione alla lista completa delle regioni della nazione
-        this.removeAllRegions(); //e le vengono sottratte tutte le nazioni  //aggiungere questo
 
     }
 
@@ -930,8 +929,9 @@ public class Nation extends Thread{
                 this.gridController.sveglia(); 						//La nazione avvisa il thread che deteneva la griglia e gestiva i turni che
                 //il suo turno e' finito e si puo' passare al turno della nazione successiva
                 //SE IL NUMERO DI ABITANTI E' MINORE DI 10
-                if(this.getNumAbitanti() < 10){
-                    vivo = false;
+                if(this.getNumAbitanti() < 10){ //se ci sono meno di 10 abitanti
+                    vivo = false; //la nazione muore
+                    this.removeAllRegions(); //e le vengono sottratte tutte le nazioni  //aggiungere questo
                 }
             }
         }
