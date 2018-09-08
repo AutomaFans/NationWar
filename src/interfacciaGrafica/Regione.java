@@ -32,6 +32,7 @@ public class Regione extends Button{
     private ArrayList<Regione> regioniConfinantiSconosciute = new ArrayList<>();
 
 
+    //COSTRUTTORE CN DUE PARAMETRI
     //Il costruttore prende il numero di riga e di colonna in cui si trova la cella(regione) nella griglia
     //Genera un nuovo oggetto di tipo Random(randomico), per cui
     //- assegna alle risorse un numero casuale compreso tra 0 e 1000
@@ -44,9 +45,11 @@ public class Regione extends Button{
     //alrimenti, se il tipo e' sterile allora lo sfondo della cella sara' l'immagine
     //IMG-Sterile.jpg.
     //Il valore reale verra' valorizzato al momento in cui si aggiunge la regione alla griglia.
-    //Assegna poi un thread alla Regione che svolgera le azioni inerenti ad essa.
-    //Infine valorizza le coordinate della regione nella griglia e il valore che mi dice se la regione ha stretto
-    //un'alleanza
+    //Assegna poi un thread alla Regione (richiammando il costruttore con un parametro della classe
+    //CellThread) che svolgera le azioni inerenti ad essa.
+    //Infine valorizza le coordinate della regione nella griglia e il la variabile che mi dice se la regione
+    //ha stretto un'alleanzae e siccome inizialmente la regione non fa parte di nessuna allenaza,
+    //la variabile booleana alleanza viene settata a null
     public Regione(int row, int column){
         Random rand = new Random();         //Genera un nuovo oggetto di tipo Random(randomico)
         risorse = rand.nextInt(1000);     	//Assegna alle risorse un numero casuale compreso tra 0 e 1000
@@ -67,7 +70,7 @@ public class Regione extends Button{
             this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Sterile.jpg')");
         }
         this.valore = 0.0;
-        this.threadRegione = new CellThread(this); //Assegna un thread alla regione di tipo CellThread
+        this.threadRegione = new CellThread(this); 		 //Assegna un thread alla regione di tipo CellThread
         this.numRow = row;                               //Assegna numero di riga nella griglia
         this.numColumn = column;                         //Assegna numero di colonna nella griglia
         this.alleanza = null;                            //Inizialmente la regione non fa parte di nessuna alleanza
@@ -83,6 +86,8 @@ public class Regione extends Button{
     //Regione.
     //In seguito se la regione e' di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
     //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
+    //inoltre se la regione faceva parte di una allenaza, allora viene sciolta ancjhe l'alleanza su quella
+    //regione per cui viene impostata la variabile booleana alleanza a null
     public void resetRegion(){
         this.setValore(nazione.getGridController().getNumeroRighe(), nazione.getGridController().getNumeroColonne());
         this.nomeNazione = "";
@@ -180,9 +185,10 @@ public class Regione extends Button{
             tipo = "fertile";					//Allora la regione e' fertile
         }
         else{									//Altrimenti, se il numero di risorse e' minore di 350
-            tipo = "sterile";                  //Allora la regione e' sterile 
+            tipo = "sterile";                  //Allora la regione e' sterile
         }
     }
+
 
 
     //METODO CONSUMA RISORSE
@@ -301,7 +307,7 @@ public class Regione extends Button{
     //(che contiene le regioni confinanti e non alleate con la regione).
     //Viene presa la regione che confina in alto con questa regione "this" e viene messa dentro
     //la variabile di tipo Regione chiamata one.
-    //Se la regione one esiste (perchè puo' esserci il caso in cui la regione per la quale
+    //Se la regione one esiste (perchÃ¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo in alto e quindi una cella
     //sopra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
@@ -310,7 +316,7 @@ public class Regione extends Button{
     //viene aggiunta alla lista delle regioni confinanti non allete.
     //Poi viene presa la regione che confina a destra con questa regione "this" e viene messa
     //dentro la variabile di tipo Regione chiamata two.
-    //Se la regione two esiste (perchè puo' esserci il caso in cui la regione per la quale
+    //Se la regione two esiste (perchÃ¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo a destra e quindi una cella
     //a destra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
@@ -319,7 +325,7 @@ public class Regione extends Button{
     //viene aggiunta alla lista delle regioni confinanti non allete.
     //Poi viene presa la regione che confina in basso con questa regione "this" e viene messa
     //dentro la variabile di tipo Regione chiamata three.
-    //Se la regione three esiste (perchè puo' esserci il caso in cui la regione per la quale
+    //Se la regione three esiste (perchÃ¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo in basso e quindi una cella
     //al di sotto non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
@@ -328,7 +334,7 @@ public class Regione extends Button{
     //viene aggiunta alla lista delle regioni confinanti non allete.
     //Poi viene presa la regione che confina a sinistra con questa regione "this" e viene messa
     //dentro la variabile di tipo Regione chiamata four.
-    //Se la regione four esiste (perchè puo' esserci il caso in cui la regione per la quale
+    //Se la regione four esiste (perchÃ¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo a sinistra e quindi una cella
     //a sinistra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
@@ -413,14 +419,18 @@ public class Regione extends Button{
         return regioniConfinantiSconosciute;
     }
 
+
+
     //METODO GET ALLEANZA
     //Restituisce l'alleanza stretta sulla regione, ammesso che ne sia stata stretta una
     public Accordo getAlleanza(){
         return alleanza;
     }
 
+
+
     //METODO ROMPI PATTO
-    //Permette di annullare un patto di alleanza stretto su questa regione
+    //Permette di annullare un patto di alleanza stretto su una regione
     public void rompiPatto(){
         this.alleanza = null;
     }
