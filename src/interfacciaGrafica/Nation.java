@@ -94,16 +94,19 @@ public class Nation extends Thread{
     //e che quindi dovranno essere scelte casualmente per eseguire il thread che gli appartiene.
     private ArrayList<Regione> regionsToExec = new ArrayList<>();
 
-    //Lista degli accordi proposti dalla nazione e accettati da parte di un altra nazione
+    //Lista degli accordi proposti da una data nazione e poi questi accordi saranno
+    //accettati da parte di un altra nazione.
     private ArrayList<Accordo> accordiProposti = new ArrayList<>();
 
-    //Lista degli accordi accettati e proposti da altre nazioni
+    //Lista degli accordi proposti da una nazione e accettati da una data nazione
     private ArrayList<Accordo> accordiAccettati = new ArrayList<>();
 
     //Lista degli acerrimi nemici della nazione
+    //Quindi questa lista contiene tutti i nemici di una nazione
     private ArrayList<Nation> enemyNations= new ArrayList<>();
 
     //Lista degli alleati della nazione
+    //Quindi questa lista contiene tutti gli alleati di una nazione
     private ArrayList<Nation> allies = new ArrayList<>();
 
 
@@ -180,7 +183,7 @@ public class Nation extends Thread{
 
     //METODO SET STATO
     //Permette di settare la variabile booleana chiamata vivi.
-    //Prende come parametro un booleano stato (che può essere false o true) e
+    //Prende come parametro un booleano stato (che puÃ² essere false o true) e
     //se gli viene passato true setta la variabile vivo con true, altrimente se gli
     //viene passato false setta la variabile vivo con false.
     //Quindi se la nazione e' viva verra' passato true (cosi la variabile booleana vivo sara' true),
@@ -195,7 +198,7 @@ public class Nation extends Thread{
     //Metodo che permette di aggiornare l'eta' attuale della nazione.
     //Ogni passaggio di eta' avviene se sono passati almeno 20 turni dall'inizio del gioco
     //o 20 turni da un cambiamento di eta'.
-    //Per fare ciò:bisogna vedere se il numero di turni diviso 20 da resto 0 (cioe' se il numero
+    //Per fare cio' bisogna vedere se il numero di turni diviso 20 da resto 0 (cioe' se il numero
     //di turni e' un multiplo di 20).
     //Quindi se il numero di turni diviso 20 da resto 0 si va a vedere:
     //- se le risorse della nazione sono minori di 3000, il numero di abitanti della nazione
@@ -316,9 +319,10 @@ public class Nation extends Thread{
     //tutte le risose) allora la popolazione diminuira' di 30, altrimenti se quella regione
     //non ha ha un numero di risorse minore o ugulale a 0 (quindi se non sono state esaurite
     //tutte le risose) allora la popolazione diminuira' soltanto di 20.
-    //Inoltre per ogni accordo proposto e stretto con altre nazioni si ottiene un aumento della popolazione di 50 abitanti.
     //Per vedere il tipo di territorio viene richiamato il metodo getTipo della classe Regione.
     //Per vedere il tipo di territorio viene richiamato il metodo getTipo della classe Regione.
+    //Inoltre per ogni accordo proposto dalla nazione e stretto con altre nazioni si ottiene
+    //un aumento della popolazione di 50 abitanti.
     public void increasePopulation() {
         for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
             Regione num = i.next();
@@ -338,8 +342,7 @@ public class Nation extends Thread{
                 }
             }
         }
-        for(int i=0; i <this.accordiProposti.size(); i++){ //Per ogni accordo proposto e stretto con altre nazioni si ottiene
-            //un'aumento della popolazione
+        for(int i=0; i <this.accordiProposti.size(); i++){
             this.numAbitanti += 50;
         }
     }
@@ -352,43 +355,64 @@ public class Nation extends Thread{
         return regioni;
     }
 
+
+
     //METODO GET ENEMYES
     //Restituisce la lista dei piu' grandi nemici della nazione this
     public ArrayList<Nation> getEnemyes(){
         return this.enemyNations;
     }
 
+
+
     //METODO GET ALLEATI
-    //Restituisce la lista delle nazioni alleate alla nazione
+    //Restituisce la lista di tutte le nazioni alleate alla nazione this
     public ArrayList<Nation> getAllies(){
         return this.allies;
     }
 
+
+
     //METODO GET ACCORDI PROPOSTI
-    //Restituisce la lista di accordi proposti da parte della nazione e attualmente in vigore
+    //Restituisce la lista di accordi proposti da parte della nazione this e attualmente
+    //in vigore
     public ArrayList<Accordo> getAccordiProposti(){
         return this.accordiProposti;
     }
 
+
+
+    //METODO GET ACCORDI ACCETTATI
+    //Restituisci la lista degli accordi ricevuti ed accettati dalla nazione this
+    public ArrayList<Accordo> getAccordiAccettati(){
+        return this.accordiAccettati;
+    }
+
+
+
     //METODO AGGIORNA PATTI PROPOSTI
-    //Aggiorna i patti proposti: metodo usato quando una nazione che entra in guerra con una alleata deve sciogliere i patti
-    //e di seguito aggiornarli
+    //Questo metodo prende come parametri una la lista chiamata proposti, che rappresenta i
+    //nuovi accordi proposti e aggiorna la lista chiamata accordiProposti (della classe nation)
+    //con la lista presa da parametro.
+    //Questo metodo usato quando una nazione che entra in guerra con una alleata deve
+    //sciogliere i patti e di seguito aggiornarli
     public void aggiornaPattiProposti(ArrayList<Accordo> proposti){
         this.accordiProposti = proposti;
     }
 
+
+
     //METODO AGGIORNA PATTI ACCETTATI
-    //Aggiorna i patti accettati: metodo usato quando una nazione che entra in guerra con una alleata deve sciogliere i patti
-    //e di seguito aggiornarli
+    //Questo metodo prende come parametri una la lista chiamata accettati, che rappresenta i
+    //nuovi accordi proposti e aggiorna la lista chiamata accordiAccettati (della classe nation)
+    //con la lista presa da parametro.
+    //Questo metodo usato quando una nazione che entra in guerra con una alleata deve
+    //sciogliere i patti e di seguito aggiornarli
     public void aggiornaPattiAccettati(ArrayList<Accordo> accettati){
         this.accordiAccettati = accettati;
     }
 
-    //METODO GET ACCORDI ACCETTATI
-    //Restituisci la lista degli accordi ricevuti ed accettati dalla nazione
-    public ArrayList<Accordo> getAccordiAccettati(){
-        return this.accordiAccettati;
-    }
+
 
     //METODO ADD REGION
     //Questo metodo prende come paramentro una regin di tipo Regione e assegna
@@ -904,22 +928,35 @@ public class Nation extends Thread{
         }
     }
 
+
+
     //METODO DICHIARA ACERRIMO NEMICO
-    //Permette di dichiarare una nazione come acerrima nemica: d'ora in poi incontrandosi le nazioni andranno sempre
-    // in guerra
+    //Questo metodo prende come parametri una Nazione chiamata nemico e permette di dichiarare
+    //la nazione presa come parametro come acerrima nemica
+    //per cui d'ora in poi incontrandosi le nazioni andranno sempre in guerra.
+    //Per dichiarare la nazione come acerrima nemica, viene presa la lista enemyNations
+    //(che contiene tutti i nemici di una nazione) con il metodo getEnemyes() della classe
+    //Nation e viene aggiunta a questa lista la nazione presa come parametro.
     public void dichiaraAcerrimoNemico(Nation nemico){
         this.getEnemyes().add(nemico);
     }
 
+
+
     //METODO RISCUOTI TASSE
-    //Permette di riscuotere le tasse dalle nazioni alle quali sono stati accettati degli accordi
+    //Permette di riscuotere le tasse dalle nazioni alle quali sono stati accettati degli accordi.
+    //Quindi per ogni accordo accettato, la nazione che ha proposto l'accordo (presa con il metodo
+    //getNazioneChePropone della classe Accordo) pasa la tassa, per cui gli viene sottratta una
+    //cifra di denaro di 400, mentrela nazione che ha accettato l'accordo, riscuote questa cifra
+    //e quindi gli viene sommata una cifra di denaro di 400
     public void riscuotiTasse(){
         for(int i=0; i<accordiAccettati.size(); i++){
-            this.accordiAccettati.get(i).getNazioneChePropone().denaro -= 400.0; //La nazione che ha proposto l'accordo paga
-            //la tassa
-            this.denaro += 400.0;                                                //La nazione che ha accettato la riscuote
+            this.accordiAccettati.get(i).getNazioneChePropone().denaro -= 400.0; //La nazione che ha proposto l'accordo paga la tassa
+            this.denaro += 400.0;                                                //La nazione che ha accettato l'accordo riscuote la tassa
         }
     }
+
+
 
     //METODO CLONE CHARACTERS
     //Questo metodo prende come paramentro una Nazione, che rappresenta la nazione che ssi vuole clonare.
@@ -992,7 +1029,7 @@ public class Nation extends Thread{
     //nazione ha finito di svolgere il suo turno o meno).
     //Poi si perde un secondo di tempo in maniera da notare i cambiamenti tra un turno e l'altro
     //(con il metodo sleep).
-    //In seguito si passa a controllare se la nazione ha occupato tutta la griglia, perchè
+    //In seguito si passa a controllare se la nazione ha occupato tutta la griglia, perchÃ¨
     //nel caso la nazione ha occupato tutta la griglia non ci sono regioni che confinano con regioni
     //non alleate, quindi si possono verificare direttamente le regole di transizione su una regione
     //qualsiasi della griglia che viene scelta casualmente.
@@ -1050,10 +1087,11 @@ public class Nation extends Thread{
     //successive, e quando viene risvegliata vengono richiamati il metodi increasePopulation (della
     //classe Nation) il quale aumenta o diminuisce il numero degli abitanti della nazione in base
     //ai terreni posseduti, il metodo incassaDenaro (della classe Nation) il quale aumenta
-    //il denaro della nazione in relazione al numero delle risorse totali e degli abitanti, inoltre riscuote
-    // tasse da eventuali alleanze in cui la nazione ha accettato l'accordo(col metodo riscuotiTasse di Nation),
-    // e viene richiamato infine il metodo consumaRisosse (della classe nation) il quale consuma le risorse della
-    // nazione e aggiorna l'eta della nazione.
+    //il denaro della nazione in relazione al numero delle risorse totali e degli abitanti,
+    //il metodo riscuotiTasse (della classe Nation) il quale riscuote tasse da eventuali
+    //alleanze in cui la nazione ha accettato l'accordo e viene richiamato infine il metodo
+    //consumaRisosse (della classe nation) il quale consuma le risorse della nazione e aggiorna l'eta
+    //della nazione.
     //Dopo cio, la nazione finisce di eseguire il suo turno per cui setta la variabile active a false,
     //e in seguito la nazione avvisa il thread che deteneva la griglia e gestiva i turni che
     //il suo turno e' finito e si puo' passare al turno della nazione successiva.

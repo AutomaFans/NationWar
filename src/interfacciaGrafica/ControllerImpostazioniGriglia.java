@@ -138,7 +138,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
    											Un turno e' completo quando tutte le nazioni in gioco "hanno fatto la propria mossa"*/
 
     int nazioniMorte = 0;                   //Variabile che tiene conto del numero di nazioni morte durante la simulazione
-    
+
     //Crea una lista di stringhe chiamata arrayForStart che serve per capire se Start e'
     //stato premuto o no nel metodo ClickMenu
     static ArrayList<String> arrayForStart = new ArrayList<>();
@@ -460,11 +460,20 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //notificare il thread che gestiva i turni, senza synchronize si otterebbero delle eccezioni.
     //Quando la nazione ha finito di eseguire il proprio turno, bisogna svegliare il thread main ed eseguire il
     //turno della nazione successiva, per cui per svegliare il main c'e' il metodo sveglia che fa una notify.
-    //Altrimenti, se la nazione e' morta, il thread Main non fa start di quella nazione.
-    //Per cui vine incrementta di uno la variabile che tiene conto del numero di nazioni morte e se il numero
-    //di nazioni morte non e' uguale al nmero di nazione che sono dentro la lista nationList (cioe' se ci sono
-    //altre nazioni che possono essere vive) allora il  gioco continua, altrimenti si interrompe e viene disabilitato
-    //il bottone start, cosi il gioco e' finito.
+    //Altrimenti, se la nazione e' morta, bisogna controllare se ci sono altre nazioni vive dentro
+    //la lista nation list.
+    //Quindi se la lista nationList e' vuota (quindi non ci sono piu' nazioni vive) allora il gioco si interrompe.
+    //Altrimenti, se se la lista nationList non e' vuota (quindi ci sono altra' nazioni vive) allora il gioco
+    //continua.
+    //Infine se la lista nationList e' vuota, allora viene abilitato il bottone Menu e il bottone Help.
+    //e in seguito viene creato un oggetto di tipo AnchorPane chiamato fPane facendo riferimento
+    //e richiamando l'intefaccia definita in FXMLfineGioco.fxml.
+    //Quindi errorPane sara' l'interfaccia definita in FXMLfineGioco.fxml.
+    //Poi viene creato un nuovo Stage, chiamato fStage, e specifica la scena da usare
+    //su quello stage (con il metodo setScene).
+    //QUINDI MOSTRA LA SCENA fPane SULLO STAGE fStage.
+    //Infine mostra l'fStage impostando la visibilita' a true (con il metodo show).
+    //E cosi l'utente vede una schermata che dice che il gioco e' terminato.
     @FXML
     synchronized void clickStart(ActionEvent event) {
         ObservableList<Nation> informazioni = FXCollections.observableArrayList();
@@ -505,7 +514,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
                     valAttualeRisorse = (nationList.get(indice).getRisorse());
                     //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨ alto tanto quanto ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨ il denaro di quella nazione
+                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ alto tanto quanto ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ il denaro di quella nazione
                     valAttualeDenaro = nationList.get(indice).getDenaro();
                     barCharD.getData().addAll(denaro);        	//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                     barChart.getData().addAll(set);            	//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
@@ -620,8 +629,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     }
                     //ALTRIMENTI, SE LA NAZIONE E' MORTA
                     else {
-                        if(nationList.size() == 0) {           //Se ci sono ancora delle nazioni 'vive' il gioco continua, altrimenti si interrompe.
+                        //SE NON SONO PIU' NAZIONI DENTRO LA LISTA NATION LIST
+                        if(nationList.size() == 0) {
                             break;
+                            //ALTRIMENTI, SE CI SONO ANCORA NAZIONI DENTRO LA LISTA NATION LIST
                         } else {
                             continue;
                         }
@@ -632,6 +643,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
         catch(InterruptedException e){                           //Se si interrompe il thread che gestisce i turni si ottiene un'eccezione
             System.out.println("Il thread gestore della simulazione e' stato interrotto!");
         }
+        //SE LA LISTA NATION LIST E' VUOTA
         if(nationList.size() == 0){
             buttonMenu.setDisable(false);
             buttonHelp.setDisable(false);
@@ -840,7 +852,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
     //Se il bottone noButton viene premuto (quindi se non si e' sicuri di interrompere la simulazione)
     //viene semplicemente chiuso lo stage chiamato stageFinestra (con il metodo close).
-    //Altrimenti, se non si e'Ãƒâ€šÃ‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
+    //Altrimenti, se non si e'ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
     //colorare le celle della nazioni e vengono riaggiunti alla lista ListaColori (che contiene' tutti i colori delle nazioni
     //che potranno essere scelti quando si crea una nuova nazione) cosida rendere nuovamenti i colori diponibili ed in seguito
     //viene cancellato tutto cio' che si trova dentro la lista nomiNazioni (che contiene' tutti i nomi delle nazioni che sono
