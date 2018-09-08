@@ -138,8 +138,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
    											Un turno e' completo quando tutte le nazioni in gioco "hanno fatto la propria mossa"*/
 
     int nazioniMorte = 0;                   //Variabile che tiene conto del numero di nazioni morte durante la simulazione
-
-
+    
     //Crea una lista di stringhe chiamata arrayForStart che serve per capire se Start e'
     //stato premuto o no nel metodo ClickMenu
     static ArrayList<String> arrayForStart = new ArrayList<>();
@@ -148,8 +147,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //se la regione per cui sto costruendo il grafico e' gia' presente nel grafico
     //o se e' appena stata creata
     ArrayList<String> NomiNazioniCopia = new ArrayList<>();
-
-
 
     //METODO GET NUMERO RIGHE
     //Restituisce il numero di righe totali della griglia.
@@ -474,8 +471,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
         //ELIMINA LE NAZIONI CHE SONO STATE CREATE MA A CUI NON E' STATA ASSEGNATA NESSUNA RAGIONE
         for (int indice=0; indice<nationList.size();indice++){
             if (nationList.get(indice).getRegioni().size()==0){
-                nationList.remove(indice);
                 ListaColori.add(nationList.get(indice).getColor()); //Viene riaggiunto il colore della nazione cancellata in ListaColori
+                nationList.remove(indice);
             }
         }
         useButton = true;
@@ -623,12 +620,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     }
                     //ALTRIMENTI, SE LA NAZIONE E' MORTA
                     else {
-                        nazioniMorte++;                                   	//Incremento di 1 il numero di nazioni 'morte'
-                        if(nazioniMorte != nationList.size()-1) {           //Se ci sono ancora delle nazioni 'vive' il gioco continua, altrimenti si interrompe.
-                            continue;
-                        } else {
-                            buttonStart.setDisable(true);
+                        if(nationList.size() == 0) {           //Se ci sono ancora delle nazioni 'vive' il gioco continua, altrimenti si interrompe.
                             break;
+                        } else {
+                            continue;
                         }
                     }
                 }
@@ -636,6 +631,19 @@ public class ControllerImpostazioniGriglia implements Initializable {
         }
         catch(InterruptedException e){                           //Se si interrompe il thread che gestisce i turni si ottiene un'eccezione
             System.out.println("Il thread gestore della simulazione e' stato interrotto!");
+        }
+        if(nationList.size() == 0){
+            buttonMenu.setDisable(false);
+            buttonHelp.setDisable(false);
+            try {
+                AnchorPane fPane = FXMLLoader.load(getClass().getResource("FXMLfineGioco.fxml"));
+                Stage fStage = new Stage();
+                fStage.setScene(new Scene(fPane));
+                fStage.setResizable(false);
+                fStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
