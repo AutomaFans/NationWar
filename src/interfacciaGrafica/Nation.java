@@ -846,6 +846,17 @@ public class Nation extends Thread{
         // che lo ha proposto
         alleanza.getNazioneCheAccetta().getAccordiAccettati().remove(alleanza);  //Rimuove il patto tra gli accordi accettati della
         //nazione che lo ha accettato
+        boolean ultimo=true; //booleano per vedere se l'accordo interrotto era l'ultimo rimasto tra le 2 nazioni
+        //Si controlla tra gli accordi proposti dalla regione che ha proposto l'accordo se l'accordo eliminato era l'ultimo rimasto tra
+        //le due nazioni, e se lo e' mette "ultimo" a false.
+        for(int i=0;i<alleanza.getNazioneChePropone().getAccordiProposti().size(); i++){
+            if(alleanza.getNazioneChePropone().getAccordiProposti().get(i).getNazioneCheAccetta() == alleanza.getNazioneCheAccetta()){
+                ultimo = false;
+            }
+        }
+        if(ultimo == false){ //Se e' stato eliminato l'ultimo accordo tra le 2 nazioni allora le 2 nazioni non sono piu' alleate
+            this.finisciAlleanza(alleanza.getNazioneChePropone(), alleanza.getNazioneCheAccetta());
+        }
     }
 
     //METODO PROPONI ACCORDO
@@ -860,18 +871,26 @@ public class Nation extends Thread{
             //Viene creato il nuovo patto economico sulla regione per la quale viene stretto
             Accordo pattoEconomico = new Accordo(this, accettatore, region);
             this.accordiProposti.add(pattoEconomico);           //Viene aggiunto il patto a quelli proposti della nazione
-            // che propone
+                                                                // che propone
             accettatore.accordiAccettati.add(pattoEconomico);   //Viene aggiunto il patto a quelli accettati della nazione
-            // che accetta
+                                                                // che accetta
+            this.dichiaraAlleato(accettatore);                  //Viene aggiunta la nazione che accetta l'accordo alla lista
+                                                                //degli alleati: d'ora in poi le due nazioni non andranno mai
+                                                                //in guerra almeno che una delle due non accetti un patto da parte
+                                                                //dell'altra nazione diventando cosi' acerrime nemiche e scioiendo
+                                                                //ogni alleanza
+            accettatore.dichiaraAlleato(this);
             region.setText("Stretto un patto");
         }
         //Altrimenti l'accordo non viene accettato e le nazioni diventano acerrime nemiche per sempre: d'ora in poi
         //andranno sempre in guerra. Inoltre se ci sono vengono sciolti tutti gli accordi tra queste nazioni
         else{
             this.dichiaraAcerrimoNemico(accettatore);   //La nazione che aveva proposto l'accordo dichiara nemica quella che
-            //non l'ha accettato
+                                                        //non l'ha accettato
             accettatore.dichiaraAcerrimoNemico(this);   //La nazione che non ha accettato l'accordo dichiara nemica la nazione
-            //che ha proposto l'accordo
+                                                        //che ha proposto l'accordo
+            this.finisciAlleanza(this, accettatore);//Siccome l'accordo non e' stato accettato finisce l'alleanza tra le
+                                                         //due nazioni(se gia' era stata stretta)
             //Vengono sciolti tutti gli accordi tra le due nazioni (se presenti)
             //Le liste conterrano tutti gli accordi delle due nazioni(accettati e proposti) ma senza quelli stretti insieme
             ArrayList<Accordo> accordiPropostiDaChiPropone = new ArrayList<>();
@@ -941,7 +960,18 @@ public class Nation extends Thread{
         this.getEnemyes().add(nemico);
     }
 
+    //METODO DICHIARA ALLEATO
+    //Permette di dichiarare un alleato della nazione(la nazione passata da parametro)
+    public void dichiaraAlleato(Nation alleato){
+        this.allies.add(alleato);  //Aggiunge l'alleato alla lista di alleati della nazione
+    }
 
+    //METODO FINISCI ALLEANZA
+    //Metodo chiamato al momento in cui si chiude un'alleanza a seguito di un'accordo non accettato
+    public void finisciAlleanza(Nation one, Nation two){
+        one.allies.remove(two); //Vengono rimosse le corrispettive alleanze dalle liste di alleati delle due nazioni
+        two.allies.remove(one);
+    }
 
     //METODO RISCUOTI TASSE
     //Permette di riscuotere le tasse dalle nazioni alle quali sono stati accettati degli accordi.
