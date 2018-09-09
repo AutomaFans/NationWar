@@ -108,6 +108,8 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
             //Se la nazione che vuole conquistare il territorio nemico ha le risorse maggiori del nemico,
             //ipotizzando che quindi ha anche piu' armi
             if(this.region.getNazione().getRisorse() > regionToConquest.getNazione().getRisorse()){
+                //Se ci sono degli accordi tra le due nazioni vengono sciolti
+                this.sciogliAccordi(regionToConquest.getNazione());
                 //La nazione va in guerra contro la nazione che possiede la regione da conquistare
                 this.region.getNazione().guerra(regionToConquest.getNazione(), regionToConquest);
             }//Altrimenti non agisce
@@ -130,6 +132,8 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
     //Scioglie tutti gli accordi tra la nazione passata da parametero(che difende il territorio) e quella che detiene
     //la regione del CellThread this(quella che attacca)
     public void sciogliAccordi(Nation defender){
+        //Viene interrotta l'alleanza tra le 2 nazioni
+        this.region.getNazione().finisciAlleanza(region.getNazione(), defender);
         //Le liste conterrano tutti gli accordi delle due nazioni(accettati e proposti) ma senza quelli stretti insieme
         ArrayList<Accordo> accordiPropostiDaChiPropone = new ArrayList<>();
         ArrayList<Accordo> accordiAccettatiDaChiPropone = new ArrayList<>();
