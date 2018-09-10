@@ -140,8 +140,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
     int turni = 0;                          /*La variabile turni tiene conto del numero di turni trascorsi dall'inizio del gioco.
    											Un turno e' completo quando tutte le nazioni in gioco "hanno fatto la propria mossa"*/
 
-    int nazioniMorte = 0;                   //Variabile che tiene conto del numero di nazioni morte durante la simulazione
-
     //Crea una lista di stringhe chiamata arrayForStart che serve per capire se Start e'
     //stato premuto o no nel metodo ClickMenu
     static ArrayList<String> arrayForStart = new ArrayList<>();
@@ -358,7 +356,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //per far partire il gioco (la simulazione).
     //Viene creata un ObservableList (una lista che permette di tenere traccia delle modifiche)
     //chiamata informazioni, e questa lista contine oggetti di tipo Nation.
-    //Per ogni nazione dentro nationList viene richiamato il metodo getRegioni, quindi se quella
+    //Solo se il bottone start e' stato cliccato la prima volta e non altre volte per continuare la simulazione:
+    // per ogni nazione dentro nationList viene richiamato il metodo getRegioni, quindi se quella
     //nazione ha un numero di regioni uguali a 0 (quindi se a quella nazione non e' stata assegnata nessuna cella)
     //viene rimossa e viene riaggiunto il colore, che era stato scelto nel momento della creazione della nazione,
     //alla lista chiamata ListaColor  (perche' in controllerAddNation quando si creava una nuova nazione
@@ -393,13 +392,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Poi aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
     //Poi aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
     //Poi aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
-    //In seguito per ogni nazione dentro la lista nationList, se quella nazione non ha piu' regioni
-    //(ha perso tutti i territori) (me ne rendo conto richiamando il metodo getRegioni della classe Nation)
-    //allora la nazione muore, per cui viene richiamato il metodo setStato della classe Nation (il quale
-    //permette di impostare la variabile vivo, che tiene conto se una nazione e' viva o morta, a true se
-    //la nazione e' viva o a false se la nazione e' morta) e in segito viene incrementata la variabile
-    //nazioniMorte, che tiene conto del numero di nazioni morte.
-    //Infine viene aggiunta dentro  la lista arrayForStart la stringa "Start e' stato premuto".
     //Poi vengono disabilitati i bottoni di menu, help, start e statistiche che saranno cliccabili solo a gioco fermo.
     //e viene anche disabilitata l'area di testo in cui inserire i turni.
     //L'uso del pulsante start viene cambiato ora in continua, dove una volta cliccato su start(che una volta avviato il gioco
@@ -452,7 +444,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Altrimenti se il metodo getStato restituisce false, e quindi se la nazione e' morta vengono aggiunti tutti i dati della nazione
     //alla lista informazioni (quindi viene richiamato il costruttore della classe Nation, passando il nome (metodo getName),
     //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori sterili (variabile numSterile) e
-    //e i territori aleati (metodo getAllies)), ma vicino al nome viene aggunta la scritta "(MORTA)".
+    //e i territori alleati (metodo getAllies)), ma vicino al nome viene aggunta la scritta "(MORTA)".
     //Altrimenti, se non siamo al primo turno e non e' stato svolto il numero di turni indicato bisogna riiniziare dalla prima nazione ma
     //siccome c'e' un problema con i Thread,  cioe' che una volta eseguito lo start di un thread non si puo' piu' rieseguire
     //lo start, almeno che non si crea una nuova istanza, allora vengono clonate le nazioni (i thread perche' Nation estende
@@ -465,13 +457,12 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Quando la nazione ha finito di eseguire il proprio turno, bisogna svegliare il thread main ed eseguire il
     //turno della nazione successiva, per cui per svegliare il main c'e' il metodo sveglia che fa una notify.
     //Altrimenti, se la nazione e' morta, bisogna controllare se ci sono altre nazioni vive dentro
-    //la lista nation list.
-    //Quindi se la lista nationList e' vuota (quindi non ci sono piu' nazioni vive) allora il gioco si interrompe.
-    //Altrimenti, se se la lista nationList non e' vuota (quindi ci sono altra' nazioni vive) allora il gioco
-    //continua.
-    //Infine se la lista nationList e' vuota, allora viene abilitato il bottone Menu e il bottone Help.
-    //e in seguito viene creato un oggetto di tipo AnchorPane chiamato fPane facendo riferimento
-    //e richiamando l'intefaccia definita in FXMLfineGioco.fxml.
+    //la lista nation list: se non ci sono piu' nazioni vive allora il gioco si interrompe.
+    //Altrimenti, se ci sono ancora nazioni vive  il gioco continua.
+    //Infine una volta terminato il for nel quale vengono eseguiti i turni delle nazioni viene aggiornata la variabile
+    // locale al metodo "nazioniMorte", e di seguito con questa variabile si controlla se tutte le nazioni sono morte: se
+    // lo sono allora viene abilitato il bottone Menu e il bottone Help e in seguito viene creato un oggetto di tipo
+    // AnchorPane chiamato fPane facendo riferimento e richiamando l'intefaccia definita in FXMLfineGioco.fxml.
     //Quindi errorPane sara' l'interfaccia definita in FXMLfineGioco.fxml.
     //Poi viene creato un nuovo Stage, chiamato fStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
@@ -481,14 +472,17 @@ public class ControllerImpostazioniGriglia implements Initializable {
     @FXML
     synchronized void clickStart(ActionEvent event) {
         ObservableList<Nation> informazioni = FXCollections.observableArrayList();
-        //ELIMINA LE NAZIONI CHE SONO STATE CREATE MA A CUI NON E' STATA ASSEGNATA NESSUNA RAGIONE
-        for (int indice=0; indice<nationList.size();indice++){
-            if (nationList.get(indice).getRegioni().size()==0){
-                ListaColori.add(nationList.get(indice).getColor()); //Viene riaggiunto il colore della nazione cancellata in ListaColori
-                nationList.remove(indice);
+        if(useStart == false){ //Se il gioco non e' gia' iniziato
+            //ELIMINA LE NAZIONI CHE SONO STATE CREATE MA A CUI NON E' STATA ASSEGNATA NESSUNA REGIONE
+            for (int indice=0; indice<nationList.size();indice++){
+                if (nationList.get(indice).getRegioni().size()==0){
+                    ListaColori.add(nationList.get(indice).getColor()); //Viene riaggiunto il colore della nazione cancellata in ListaColori
+                    nationList.remove(indice);
+                }
             }
         }
         useButton = true;
+        int nazioniMorte = 0;                   //Variabile che tiene conto del numero di nazioni morte durante la simulazione
         try{
             //SE IL NUMERO DI TURNI INSERITO E' UGUALE DI 0
             if(Integer.parseInt(this.txtTurniDaSvolgere.getText()) == 0){
@@ -500,7 +494,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 this.buttonDeleteNation.setDisable(true);
                 useStart=true;
 
-                for(int indice = 0; indice <nationList.size(); indice++) {
+                /*for(int indice = 0; indice <nationList.size(); indice++) {
                     XYChart.Series set = new XYChart.Series<>();            //Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
                     XYChart.Series risorse = new XYChart.Series<>();        //Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
                     XYChart.Series denaro = new XYChart.Series<>();        	//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
@@ -523,15 +517,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     barCharD.getData().addAll(denaro);        	//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                     barChart.getData().addAll(set);            	//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
                     barChartR.getData().addAll(risorse);    	//Aggiungo il mattone delle risosrse alla rispettiva barChart delle risorse, chiamato barChartR.
-                    //SE LA NAZIONE PERDE TUTTE LE SUE REGIONI, ALLORA LA NAZIONE MUORE
-                    for (int k=0; k<nationList.size();k++){
-                        if ((nationList.get(k).getRegioni().size())==0){
-                            nationList.get(k).setStato(false); //allora setto il suo stato vivo a false (quindi la faccio morire)
-                            nazioniMorte++;
-                        }
-                    }
-                }
-                arrayForStart.add("Start e' stato premuto");
+                }*/
+
                 //I bottoni non saranno cliccabili durante lo svolgimento di un turno. Inoltre durante lo svolgimento
                 //di un turno non sara' possibile editare l'area di testo in cui inserire i turni per i quali la simulazione deve continuare.
                 this.buttonStart.setDisable(true);
@@ -558,7 +545,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                             wait();                                     //Il therad main si mette in attesa che la nazione finisca di svolgere il suo turno
                         }
                         while (nationList.get(i).getThreadState() == true);   //E resta in attesa finche' il metodo getThreadState restituisce true
-                        //SE E' STATO SVOLTO IL TURNO DELL'ULTIMA NAZIONE IN LISTA BISOGNA RIINIZIARE DALLA PRIMA
+                        //SE E' STATO SVOLTO IL TURNO DELL'ULTIMA NAZIONE IN LISTA BISOGNA VEDERE SE RIINIZIARE DALLA PRIMA
                         if(i == nationList.size()-1){
                             this.turni ++;                                    //Si tiene conto che si e' arrivati alla fine del turno per tutte le nazioni
                             turniSvolti --;                                   //Un turno e' stato svolto e quindi aggiorno il numero di turni da svolgere rimanenti
@@ -634,33 +621,54 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     }
                     //ALTRIMENTI, SE LA NAZIONE E' MORTA
                     else {
-                        //SE NON SONO PIU' NAZIONI DENTRO LA LISTA NATION LIST
-                        if(nationList.size() == 0) {
+                        //SE NON CI SONO PIU' NAZIONI VIVE DENTRO LA LISTA NATION LIST E' INUTILE CONTINUARE AD
+                        //ITERARE NAZIONI
+                        boolean vive = false;                         //Booleano per verificare se ci sono ancora nazione vive
+                        for(int j=0;j<nationList.size();i++){         //Controlla per ogni nazione se e' viva, e se lo e' tiene
+                            //conto che c'e' almento una nazione viva
+                            if(nationList.get(j).getStato()==true){
+                                vive = true;
+                            }
+                        }
+                        if(vive = false) {                            //Se non c'e' nessuna nazione viva interrompe il for che fa
+                            //eseguire i turni
                             break;
-                            //ALTRIMENTI, SE CI SONO ANCORA NAZIONI DENTRO LA LISTA NATION LIST
-                        } else {
+                        }
+                        //ALTRIMENTI, SE CI SONO ANCORA NAZIONI VIVE DENTRO LA LISTA NATION LIST SI CONTINUA ITERANDO LA
+                        //PROSSIMA NAZIONE
+                        else {
                             continue;
                         }
+                    }
+                }
+                //Viene aggiornato il numero di nazioni morte attuale
+                for (int k=0; k<nationList.size();k++){
+                    //SE LA NAZIONE NON HA PIU' REGIONI O E' SCESA SOTTO 10 ABITANTI
+                    if (nationList.get(k).getStato()==false){
+                        nationList.get(k).setStato(false); //Se non e' stato gia' fatto allora setto il suo stato vivo a
+                        // false (quindi la faccio morire)
+                        nazioniMorte++;                    //Tengo conto di una nazione morta in piu'
+                    }
+                }
+
+                //SE LE NAZIONI SONO TUTTE MORTE ALLORA SI CONCLUDE IL GIOCO
+                if(nazioniMorte == nationList.size()){
+                    buttonMenu.setDisable(false);
+                    buttonHelp.setDisable(false);
+                    try {
+                        AnchorPane fPane = FXMLLoader.load(getClass().getResource("FXMLfineGioco.fxml"));
+                        Stage fStage = new Stage();
+                        fStage.setScene(new Scene(fPane));
+                        fStage.setResizable(false);
+                        fStage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
         }
         catch(InterruptedException e){                           //Se si interrompe il thread che gestisce i turni si ottiene un'eccezione
             System.out.println("Il thread gestore della simulazione e' stato interrotto!");
-        }
-        //SE LA LISTA NATION LIST E' VUOTA
-        if(nationList.size() == 0){
-            buttonMenu.setDisable(false);
-            buttonHelp.setDisable(false);
-            try {
-                AnchorPane fPane = FXMLLoader.load(getClass().getResource("FXMLfineGioco.fxml"));
-                Stage fStage = new Stage();
-                fStage.setScene(new Scene(fPane));
-                fStage.setResizable(false);
-                fStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
