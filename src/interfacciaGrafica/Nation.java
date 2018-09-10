@@ -267,10 +267,23 @@ public class Nation extends Thread{
     //potrebbe abbassarsi piu' velocemente la popolazione e quindi di conseguenza i profitti:
     //in quel caso la nazione avrebbe conquistato una regione che puo' contribuire alla sua rovina.
     public void conquistaRegione(Regione region){
-        this.denaro -= region.getValore();                              //Viene speso il denaro che serve per comprare la regione in base al suo valore
-        region.setNazione(this.getName(), this.getColor(), this);  		//Vengono settato il controllo della nazione sulla regione
+        if (region.getNomeNazione()!=""){ //se la regione conquistata non è di nessuno
+            Nation nazione = region.getNazione(); //creo un oggetto nazione che è proprio la nazione che ha perso una regione
+            nazione.getRegioni().remove(region); //viene rimossa la regione dalla nazione che l'ha persa
+            if (nazione.getRegioni().size()==0){
+                nazione.setStato(false);
+            }
+
+        }
+        else { //altrimenti
+            this.denaro -= region.getValore();                            //Viene speso il denaro che serve per comprare la regione in base al suo valore
+        }
+        region.setNazione(this.getName(), this.getColor(), this);   //Vengono settato il controllo della nazione sulla regione
         this.addRegion(region);                                         //Viene aggiunta la regione a quelle possedute dalla nazione
         this.takeProfit(region.getTipo(), region.getRisorse());         //Viene preso profitto dalla conquista
+
+
+
     }
 
 
