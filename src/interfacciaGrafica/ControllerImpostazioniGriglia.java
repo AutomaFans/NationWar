@@ -116,7 +116,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
     TableColumn <Nation, Integer> ColonnaFertili; 	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori fertili della nazione su quella riga
 
     @FXML
-    TableColumn <Nation, Integer> ColonnaSterili;	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori sterili della nazione su quella rig
+    TableColumn <Nation, Integer> ColonnaSterili;	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori sterili della nazione su quella riga
+
+    @FXML
+    TableColumn <Nation, ArrayList<Nation>> ColonnaAlleanze; //Colonna della tabella InfoTable, chiamata ColonnaAlleanze per le alleanze della nazione su quella riga
 
     @FXML
     private TextArea txtTurniDaSvolgere;    /*TextArea dove inserire durante una pausa il numero di turni per i quali si
@@ -438,17 +441,18 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //incrementata la variabile numSterile, altrimenti se la regione e' fertile (metodo getTipo della classe Regione) viene
     //incrementata la variabile numFertile.
     //Poi, viene assegnata alla colonna ColonnaNazione il nome della nazione, alla colonna ColonnaEta l'eta' della nazione,
-    //alla colonna ColonnaFertili il numero di terreni fertili della nazione e alla colonna ColonnaSterili il numero di
-    //terreni sterili della nazione. Infne vengono aggiunte tutte le informazione dentro la tabella InfoTable.
+    //alla colonna ColonnaFertili il numero di terreni fertili della nazione, alla colonna ColonnaSterili il numero di
+    //terreni sterili della nazione e alla colonna ColonnaAlleanze tutte le nazioni alleate della nazione.
+    //Infine vengono aggiunte tutte le informazione dentro la tabella InfoTable.
     //Ora per ogni nazione dentro nationList viene richiamato il metodo getStato (della classe Nation).
     //Se il metodo getStato restituisce true, quindi se la nazione e' viva vengono aggiunti tutti i dati della nazione
     //alla lista informazioni (quindi viene richiamato il costruttore con 4 parametri della classe Nation, passando il nome
-    //(metodo getName), l'eta' (metodo getAge), numero di territori fertili (variabile numFertile) e il numero di territori
-    //sterili (variabile numSterile)) e vengono in seguito create le nuove statistiche (alla stessa maniera specificata precedentemente).
+    //(metodo getName), l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori
+    //sterili (variabile numSterile) e i territori aleati (metodo getAllies)) e vengono in seguito create le nuove statistiche (alla stessa maniera specificata precedentemente).
     //Altrimenti se il metodo getStato restituisce false, e quindi se la nazione e' morta vengono aggiunti tutti i dati della nazione
     //alla lista informazioni (quindi viene richiamato il costruttore della classe Nation, passando il nome (metodo getName),
-    //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile) e il numero di territori sterili (variabile numSterile)),
-    //ma vicino al nome viene aggunta la scritta "(MORTA)".
+    //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori sterili (variabile numSterile) e
+    //e i territori aleati (metodo getAllies)), ma vicino al nome viene aggunta la scritta "(MORTA)".
     //Altrimenti, se non siamo al primo turno e non e' stato svolto il numero di turni indicato bisogna riiniziare dalla prima nazione ma
     //siccome c'e' un problema con i Thread,  cioe' che una volta eseguito lo start di un thread non si puo' piu' rieseguire
     //lo start, almeno che non si crea una nuova istanza, allora vengono clonate le nazioni (i thread perche' Nation estende
@@ -514,7 +518,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
                     valAttualeRisorse = (nationList.get(indice).getRisorse());
                     //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ alto tanto quanto ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ il denaro di quella nazione
+                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ alto tanto quanto ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ il denaro di quella nazione
                     valAttualeDenaro = nationList.get(indice).getDenaro();
                     barCharD.getData().addAll(denaro);        	//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                     barChart.getData().addAll(set);            	//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
@@ -590,14 +594,15 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                             numFertile++;
                                         }
                                     }
-                                    ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<Nation,String>("nome")); 		//Assegno alla colonna ColonnaNazione il dato nome (nome della nazione)
-                                    ColonnaEta.setCellValueFactory(new PropertyValueFactory<Nation,Eta>("eta")); 				//Assegno alla colonnaEta il dato dell'eta
+                                    ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<Nation,String>("nome")); 			//Assegno alla colonna ColonnaNazione il dato nome (nome della nazione)
+                                    ColonnaEta.setCellValueFactory(new PropertyValueFactory<Nation,Eta>("eta")); 					//Assegno alla colonnaEta il dato dell'eta
                                     ColonnaFertili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numFertili")); 	//Assegno alla colonnaFertili il numFertili (numero terreni fertili)
                                     ColonnaSterili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numSterili")); 	//Assegno alla colonnaSterili il numSterili (numero terreni sterili)
-                                    InfoTable.setItems(informazioni); 																		//Aggiungo il tutto nella tabella principale
+                                    ColonnaAlleanze.setCellValueFactory(new PropertyValueFactory<Nation,ArrayList<Nation>>("allies"));		//Assegno alla colonnaAlleazne l'allies (nazioni alleate)
+                                    InfoTable.setItems(informazioni); 																//Aggiungo il tutto nella tabella principale
                                     //SE LA NAZIONE ITERATA E' VIVA
                                     if (nationList.get(k).getStato() == true) {
-                                        informazioni.add(new Nation(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile)); //Aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                        informazioni.add(new Nation(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile, nationList.get(k).getAllies())); //Aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         XYChart.Series set1 = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series risorse1 = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series denaro1 = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
@@ -615,13 +620,13 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                     }
                                     //ALTRIMENTI, SE LA NAZONE ITERATA E' MORTA
                                     else {
-                                        informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                        informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile,nationList.get(k).getAllies())); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         continue;
                                     }
                                 }
                             }
                             //ALTRIMENTI, SE NON SIAMO AL PRIMO TURNO O SE NON SONO STATI SVOLTI TUTTI I TURNI INDICATI
-                            else{                                          //Altrimenti la simulazione continua con il prossimo turno
+                            else{
                                 this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
                                 i=-1;                                          	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
                             }
@@ -852,7 +857,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
     //Se il bottone noButton viene premuto (quindi se non si e' sicuri di interrompere la simulazione)
     //viene semplicemente chiuso lo stage chiamato stageFinestra (con il metodo close).
-    //Altrimenti, se non si e'ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
+    //Altrimenti, se non si e'ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
     //colorare le celle della nazioni e vengono riaggiunti alla lista ListaColori (che contiene' tutti i colori delle nazioni
     //che potranno essere scelti quando si crea una nuova nazione) cosida rendere nuovamenti i colori diponibili ed in seguito
     //viene cancellato tutto cio' che si trova dentro la lista nomiNazioni (che contiene' tutti i nomi delle nazioni che sono

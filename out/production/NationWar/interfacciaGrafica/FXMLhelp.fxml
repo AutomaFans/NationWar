@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
@@ -9,45 +16,89 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerHelp">
+<AnchorPane maxHeight="572.0" maxWidth="715.0" minHeight="572.0" minWidth="715.0" prefHeight="572.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacciaGrafica.ControllerHelp">
     <children>
         <ImageView fitHeight="646.0" fitWidth="917.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@IMG-SfondoHelp.jpg" />
             </image>
         </ImageView>
-        <Button fx:id="buttonClose" layoutX="585.0" layoutY="526.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="38.0" prefWidth="89.0" text="Chiudi" />
-        <TextField editable="false" layoutX="14.0" layoutY="31.0" prefHeight="57.0" prefWidth="563.0" text="1. Cos'è NationWar? Da dove nasce quest'idea?">
-            <font>
-                <Font size="25.0" />
-            </font>
+        <Button fx:id="buttonClose" layoutX="590.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="38.0" prefWidth="89.0" text="Chiudi" />
+        <TextField editable="false" layoutX="14.0" layoutY="26.0" opacity="0.9" prefHeight="32.0" prefWidth="563.0" text="1. Cos'è NationWar? Da dove nasce quest'idea?">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
-        </TextField>
-        <TextArea editable="false" layoutX="13.0" layoutY="88.0" prefHeight="170.0" prefWidth="690.0" text="NationWar è un gioco in cui due o più nazioni create dall'utente si espandono,&#10;si scontrano, nascono e muoiono. &#10;Quest'applicazione prende spunto dal funzionamento degli auotmi cellulari e &#10;dal Gioco della Vita, con l'aggiunta della fantasia e dell'impegno degli studenti &#10;che lo hanno sviluppato.">
             <font>
-                <Font size="18.0" />
+                <Font name="Carlito Bold" size="18.0" />
+            </font>
+            <effect>
+                <ColorAdjust hue="0.33" saturation="0.35" />
+            </effect>
+        </TextField>
+        <TextField editable="false" layoutX="14.0" layoutY="130.0" opacity="0.9" prefHeight="34.0" prefWidth="563.0" text="2. Come si gioca?">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font name="Carlito Bold" size="18.0" />
+            </font>
+            <effect>
+                <ColorAdjust contrast="1.0" hue="-0.73" saturation="0.23" />
+            </effect>
+        </TextField>
+        <TextArea editable="false" layoutX="13.0" layoutY="164.0" prefHeight="94.0" prefWidth="690.0" text="Passo 1: CREARE LA GRIGLIA!&#10;La prima cosa da stabilire è lo schema di gioco, per cui l'utente ha la possibilita di creare la griglia sulla quale si svilupperà &#10;la simulazione.&#10;Per cui bisogna fornire il numero di righe e colonne (minimo 2 righe e 2 colonne, massimo 32 righe e 32 colonne) che la &#10;griglia deve contenere per poi cliccare su &quot;Imposta grandezza griglia&quot;.&#10;&#10;Passo 2: CREARE/CANCELLARE LE NAZIONI E DISPORLE SULLA GRIGLIA!&#10;A questo punto, dopo aver creato la griglia, cliccando sul bottone &quot;Aggiungi Nazione&quot; si possono creare le nazioni che&#10;si scontreranno. Per ogni nazione che si crea bisogna fornire un nome di fantasia e scegliere  un colore tra quelli proposti&#10;(essendo 38 i colori diponibili, si possono creare un massimo di 38 nazioni).&#10;Ogni nazione creata deve essere disposta sulla griglia, quindi ad ogni nazione bisogna assegnare dei territori, i quali &#10;possono essere fertili (contrassegnati in verde) o sterili (contrassegnati in giallo chiaro) ed ogni territorio ha assegnato &#10;un certo valore di risorse naturali e un certo valore in denaro.&#10;Se si vuole rimuovere una delle nazioni che sono state create, basta cliccare su Eimina Nazione&quot; e selezionare la nazione &#10;da eliminare, per poi cliccare su &quot;Elimina&quot;.&#10;Una volta eliminate le nazioni, i territori assegnati a qualla nazione tornano ad essere sterili o fertili.&#10;Inoltre, passando il mouse su una regione della griglia grazie ad un PopOver è possibile vedere  alcune informazioni &#10;su quel territorio: tipo del terreno (fertile o sterile), risorse e denaro di quella regione.&#10;&#10;Passo 3: INIZIA IL GIOCO!&#10;Una volta disposte tutte le nazioni il gioco può iniziare.&#10;Per cui basterà cliccare sul bottone start e viene eseguito il primo turno per tutte le nazioni precedentemente create.&#10;Dopo ogni turno ogni nazione si aggiornerà, ovvero verra' aumentato o diminuito il denaro, verranno incrementate o &#10;sottratte risorse in base ad alcune regole e si aggiornerà il tipo di terreno in base alle risorse diponibili.&#10;Finito il primo turno viene messa in pausa la simulazione e bisognerà inserire un nuovo numero di turni nella  apposita&#10;area di testo e poi cliccare sul bottone continua, cosi si riprenderà l'avanzamneto della simulazione.&#10;Alla fine del primo turno o alla fine dei turni specificati è possibile consultare le varie statisiche cliccando sugli appositi tab.&#10;In qualsiasi momento è possibile interrompere la  simulazione cliccando sul bottone &quot;Menù Principale&quot;. &#10;&#10;Per cui non ci ti ci resta che augurarti BUON DIVERTIMENTO!">
+            <font>
+                <Font size="12.0" />
             </font>
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
         </TextArea>
-        <TextField editable="false" layoutX="14.0" layoutY="279.0" prefHeight="57.0" prefWidth="563.0" text="2. Come si gioca?">
-            <font>
-                <Font size="25.0" />
-            </font>
+        <TextField editable="false" layoutX="14.0" layoutY="407.0" opacity="0.9" prefHeight="34.0" prefWidth="563.0" text="4. Il Team">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
+            <font>
+                <Font name="Carlito Bold" size="18.0" />
+            </font>
+            <effect>
+                <ColorAdjust hue="0.18" saturation="0.43" />
+            </effect>
         </TextField>
-        <TextArea editable="false" layoutX="13.0" layoutY="336.0" prefHeight="170.0" prefWidth="690.0" text="Primo passo: crea la griglia! La prima cosa da stabilire è lo schema di gioco, &#10;quindi indica il numero di righe e colonne che la tua griglia deve contenere &#10;per poi cliccare su &quot;Imposta grandezza griglia&quot;. A questo punto puoi creare &#10;le nazioni che si scontreranno cliccando su &quot;Add Nation&quot;. Di ogni nazione potrai&#10;inventare un nome e scegliere il colore, per poi disporla sulla griglia. Inoltre, &#10;se vuoi rimuovere una delle nazioni che hai creato, basta cliccare su &quot;Delete &#10;Nation&quot; e selezionare la nazione da eliminare, per poi cliccare su &quot;Elimina&quot;. Una&#10; volta create le nazioni, potrai vedere le statistiche di gioco cliccando su &#10;&quot;Statistics&quot;. Per iniziare a giocare clicca su &quot;Start&quot; e.....Buon divertimento!">
-            <font>
-                <Font size="18.0" />
-            </font>
+        <TextArea editable="false" layoutX="13.0" layoutY="441.0" prefHeight="82.0" prefWidth="690.0" text="I componenti del team di creazione e sviluppo dell'applicazione sono 4 studenti di Informatica nell'università &quot;La Sapienza&quot; &#10;di Roma.  E sono (elencati alfabeticamente):&#10;- Antonio Andreocci&#10;- Giulia Coltelli&#10;- Lorenzo Coluzzi&#10;- Simona Lazzarini&#10;Quet'applicazione è stata realizzata e presentata come progetto dell'esame &quot;Metodologie di programmazione&quot;, con la &#10;speranza da parte dei 4 studenti di prendere un bel 30 (la lode non dispiace) come voto di superamento dell'esame.">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
+            <font>
+                <Font size="12.0" />
+            </font>
+        </TextArea>
+        <TextArea editable="false" layoutX="13.0" layoutY="303.0" prefHeight="94.0" prefWidth="690.0" text="Inserire qui regole di transizione e spiegare guerre, alleanze, ecc">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="12.0" />
+            </font>
+        </TextArea>
+        <TextField editable="false" layoutX="14.0" layoutY="269.0" opacity="0.9" prefHeight="34.0" prefWidth="563.0" text="3. Cosa c'è da sapere durante il gioco?">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <effect>
+                <ColorAdjust contrast="1.0" saturation="0.35" />
+            </effect>
+            <font>
+                <Font name="Carlito Bold" size="18.0" />
+            </font>
+        </TextField>
+        <TextArea editable="false" layoutX="13.0" layoutY="60.0" prefHeight="62.0" prefWidth="690.0" text="NationWar è un gioco in cui due o più nazioni create dall'utente si espandono, si scontrano, nascono e muoiono. &#10;Quest'applicazione prende spunto dal funzionamento degli auotmi cellulari e dal Gioco della Vita, con l'aggiunta della &#10;fantasia e dell'impegno degli studenti che lo hanno sviluppato.">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="12.0" />
+            </font>
         </TextArea>
     </children>
 </AnchorPane>

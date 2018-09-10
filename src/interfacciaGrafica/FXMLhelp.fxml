@@ -65,7 +65,7 @@
                 <ColorAdjust hue="0.18" saturation="0.43" />
             </effect>
         </TextField>
-        <TextArea editable="false" layoutX="13.0" layoutY="441.0" prefHeight="82.0" prefWidth="690.0" text="Gli inventori del gioco e nonchè gli sviluppatori dello stesso, sono 4 studenti di Informatica nell'università &quot;La Sapienza&quot; &#10;di Roma. I sopracitati studenti sono:&#10;- Lorenzo Coluzzi&#10;- Simona Lazzarini&#10;- Antonio Andreocci&#10;- Coltelli Giulia">
+        <TextArea editable="false" layoutX="13.0" layoutY="441.0" prefHeight="82.0" prefWidth="690.0" text="I componenti del team di creazione e sviluppo dell'applicazione sono 4 studenti di Informatica nell'università &quot;La Sapienza&quot; &#10;di Roma.  E sono (elencati alfabeticamente):&#10;- Antonio Andreocci&#10;- Giulia Coltelli&#10;- Lorenzo Coluzzi&#10;- Simona Lazzarini&#10;Quet'applicazione è stata realizzata e presentata come progetto dell'esame &quot;Metodologie di programmazione&quot;, con la &#10;speranza da parte dei 4 studenti di prendere un bel 30 (la lode non dispiace) come voto di superamento dell'esame.">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
