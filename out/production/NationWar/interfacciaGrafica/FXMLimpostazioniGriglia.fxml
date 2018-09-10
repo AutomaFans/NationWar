@@ -42,7 +42,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <StackedBarChart fx:id="barChart" layoutX="41.0" layoutY="44.0" title="Grafico delle Nazioni">
+                                <StackedBarChart fx:id="barChart" layoutX="41.0" layoutY="44.0" title="Grafico Della Popolazione">
                                     <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                     </xAxis>
@@ -57,7 +57,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <StackedBarChart fx:id="barChartR" layoutX="41.0" layoutY="44.0" title="Grafico delle risorse">
+                                <StackedBarChart fx:id="barChartR" layoutX="41.0" layoutY="44.0" title="Grafico Delle Risorse">
                                     <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                     </xAxis>
@@ -73,7 +73,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <StackedBarChart fx:id="barCharD" layoutX="41.0" layoutY="44.0" title="Grafico delle Denaro">
+                                <StackedBarChart fx:id="barCharD" layoutX="41.0" layoutY="44.0" title="Grafico Del Denaro">
                                     <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                     </xAxis>
@@ -91,10 +91,11 @@
                             <children>
                                 <TableView fx:id="InfoTable" layoutX="-3.0" prefHeight="543.0" prefWidth="599.0">
                                     <columns>
-                                        <TableColumn fx:id="ColonnaNazioni" minWidth="186.0" prefWidth="186.0" resizable="false" text="Nazioni" />
-                                        <TableColumn fx:id="ColonnaEta" minWidth="106.0" prefWidth="106.0" resizable="false" text="Età" />
-                                        <TableColumn fx:id="ColonnaFertili" minWidth="133.0" prefWidth="133.0" resizable="false" text="Regioni Fertili" />
-                                        <TableColumn fx:id="ColonnaSterili" maxWidth="190.0" minWidth="157.0" prefWidth="157.0" resizable="false" text="Regioni Sterili" />
+                                        <TableColumn fx:id="ColonnaNazioni" minWidth="136.0" prefWidth="136.0" resizable="false" text="Nazioni" />
+                                        <TableColumn fx:id="ColonnaEta" minWidth="91.0" prefWidth="107.0" resizable="false" text="Età" />
+                                        <TableColumn fx:id="ColonnaFertili" minWidth="112.0" prefWidth="112.0" resizable="false" text="Regioni Fertili" />
+                                        <TableColumn fx:id="ColonnaSterili" maxWidth="215.0" minWidth="115.0" prefWidth="115.0" resizable="false" text="Regioni Sterili" />
+                                        <TableColumn fx:id="ColonnaAlleanze" prefWidth="114.0" text="Alleanze" />
                                     </columns>
                                 </TableView>
                             </children></AnchorPane>

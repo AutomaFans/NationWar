@@ -10,6 +10,7 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
 
     Regione region;           //Variabile di tipo Regione chiamata region che e' la regione (cella) su cui agisce il CellThread
 
+
     //COSTRUTTORE CON UN PARAMETRO
     //Prende come parametro la regione (cella) assegnata al thread e valorizza la regione del
     //thread con quella passata da parametro
@@ -19,13 +20,15 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
 
 
     //METODO RUN
-    //Il thread viene runnato solo nel caso in cui la regione appartiene ad una nazione. Se la griglia non e' stata
-    //tutta occupata dalla nazione significa che ci sono ancora regioni che non gli appartengono e che puo' quindi
-    //conquistare. La regione a quel punto controlla se si puo' conquistare una delle regioni che confinano con essa
-    //(presa casualmente): se si tratta di una regione che fa parte di un'altra nazione si vede se entrare in guerra o
-    // se si puo' stringere un patto economico, altrimenti se la regione non e' di nessuno si vede se si puo conquistare
-    // cio' dipende da se la nazione ha abbastanza denaro per comprare la regione, e se ne ha abbastanza la conquista
-    // richiamando il metodo "conquistaRegione" di Nation.
+    //Il thread viene runnato solo nel caso in cui la regione appartiene ad una nazione.
+    //Se la griglia non e' stata tutta occupata dalla nazione significa che ci sono ancora regioni
+    //che non gli appartengono e che puo' quindi conquistare. La regione a quel punto controlla se si puo' conquistare
+    //una delle regioni che confinano con essa richiamando il metodo refreshNeighboringRegions della classe Regione.
+    //La regione da conquistare e' presa casualmente per cui, se si tratta di una regione che fa parte di un'altra
+    //nazione si vede se entrare in guerra o se si puo' stringere un patto economico, altrimenti se la regione non
+    //e' di nessuno si vede se si puo conquistare e cio' dipende se la nazione ha abbastanza denaro per comprare
+    //la regione, e se ne ha abbastanza la conquista richiamando il metodo "conquistaRegione" della classe Nation.
+
     //Quando la regione da conquistare fa gia' parte di un'altra nazione allora: se quella regione non e' coinvolta in
     //nessuna alleanza si vede se si puo' stringerne una o andare in guerra col metodo makePeaceOrWar di CellThread, se
     //invece quella regione e' coinvolta in un'alleanza, quest'ultima viene sciolta e si vede se entrare in guerra o
@@ -41,8 +44,8 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
     //ha finito avvisa la nazione e per farlo viene utilizzato il metodo sveglia() che avvisa la nazione
     //con una notify()
     public void run(){
-        //Se la griglia non e' stata tutta occupata dalla nazione allora ci sono territori per i quali bisogna verificare
-        //se si possono conquistare
+        //SE LA GRIGLIA  NON E' STATA TUTTA OCCUPATA DALLA NAZIONE ALLORA VISOGNA CONTROLLARE
+        //SE CI SONO TERRITORI CHE POSSONO ESSERE CONQUISTATI
         if(this.region.getNazione().getRegioni().size() < (this.region.getNazione().getGridController().getNumeroRighe() * this.region.getNazione().getGridController().getNumeroColonne())){
             this.region.refreshNeighboringRegions();         //aggiorna le regioni che confinano sui lati con la cella cosi' da sapere quali
             //sono le regioni non alleate che si puo' provare a conquistare
