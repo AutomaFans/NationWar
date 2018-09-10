@@ -849,12 +849,13 @@ public class Nation extends Thread{
         boolean ultimo=true; //booleano per vedere se l'accordo interrotto era l'ultimo rimasto tra le 2 nazioni
         //Si controlla tra gli accordi proposti dalla regione che ha proposto l'accordo se l'accordo eliminato era l'ultimo rimasto tra
         //le due nazioni, e se lo e' mette "ultimo" a false.
+        //Itera gli accordi proposti della regione che ha proposto l'accordo
         for(int i=0;i<alleanza.getNazioneChePropone().getAccordiProposti().size(); i++){
             if(alleanza.getNazioneChePropone().getAccordiProposti().get(i).getNazioneCheAccetta() == alleanza.getNazioneCheAccetta()){
                 ultimo = false;
             }
         }
-        if(ultimo == false){ //Se e' stato eliminato l'ultimo accordo tra le 2 nazioni allora le 2 nazioni non sono piu' alleate
+        if(ultimo == true){ //Se e' stato eliminato l'ultimo accordo tra le 2 nazioni allora le 2 nazioni non sono piu' alleate
             this.finisciAlleanza(alleanza.getNazioneChePropone(), alleanza.getNazioneCheAccetta());
         }
     }
@@ -1166,7 +1167,7 @@ public class Nation extends Thread{
                 this.active = false;
                 this.gridController.sveglia();
             }
-            //ALTRIMENTI, SE LA NAZIONE PERDE TUTTE LES UE REGIONI
+            //ALTRIMENTI, SE LA NAZIONE NON PERDE TUTTE LE SUE REGIONI
             else{
                 //SE LE REGIONI POSSEDUTE DALLA NAZIONE DELLA GRIGLIA SONO UGUALI AL NUMERO DI
                 //CELLE DELLA GRIGLIA, ALLORE SIGNIFICA CHE LA NAZIONE POSSIEDE TUTTE LE REGIONI
