@@ -307,7 +307,7 @@ public class Regione extends Button{
     //(che contiene le regioni confinanti e non alleate con la regione).
     //Viene presa la regione che confina in alto con questa regione "this" e viene messa dentro
     //la variabile di tipo Regione chiamata one.
-    //Se la regione one esiste (perchÃƒÂ¨ puo' esserci il caso in cui la regione per la quale
+    //Se la regione one esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo in alto e quindi una cella
     //sopra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
@@ -316,7 +316,7 @@ public class Regione extends Button{
     //viene aggiunta alla lista delle regioni confinanti non allete.
     //Poi viene presa la regione che confina a destra con questa regione "this" e viene messa
     //dentro la variabile di tipo Regione chiamata two.
-    //Se la regione two esiste (perchÃƒÂ¨ puo' esserci il caso in cui la regione per la quale
+    //Se la regione two esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo a destra e quindi una cella
     //a destra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
@@ -325,7 +325,7 @@ public class Regione extends Button{
     //viene aggiunta alla lista delle regioni confinanti non allete.
     //Poi viene presa la regione che confina in basso con questa regione "this" e viene messa
     //dentro la variabile di tipo Regione chiamata three.
-    //Se la regione three esiste (perchÃƒÂ¨ puo' esserci il caso in cui la regione per la quale
+    //Se la regione three esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo in basso e quindi una cella
     //al di sotto non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
@@ -334,7 +334,7 @@ public class Regione extends Button{
     //viene aggiunta alla lista delle regioni confinanti non allete.
     //Poi viene presa la regione che confina a sinistra con questa regione "this" e viene messa
     //dentro la variabile di tipo Regione chiamata four.
-    //Se la regione four esiste (perchÃƒÂ¨ puo' esserci il caso in cui la regione per la quale
+    //Se la regione four esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
     //si vogliono vedere i confinanti sia una cella al bordo a sinistra e quindi una cella
     //a sinistra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
     //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta

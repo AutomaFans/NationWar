@@ -146,6 +146,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //o se e' appena stata creata
     ArrayList<String> NomiNazioniCopia = new ArrayList<>();
 
+
+
     //METODO GET NUMERO RIGHE
     //Restituisce il numero di righe totali della griglia.
     //Siccome il numero di righe della griglia viene inserito dall'utente nell'area di testo
@@ -172,7 +174,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
 
     //METODO GET GRIDPANE
     //Restituisce la griglia in cui si svolge la simulazione.
-    //La griglia su cuui si svolge la simulazione e' chiamata automaGrid.
+    //La griglia su cui si svolge la simulazione e' chiamata automaGrid.
     public GridPane getGridPane(){
         return this.automaGrid;
     }
@@ -189,7 +191,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //si tratta dell' oggetto che stiamo cercando e quindi viene restituito.
     //Altrimenti, se non viene trovato nulla ritorna NULL
     public Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        //OGNI OGGETTO DELLA GRIGLIA E' UN ITERABILE QUINDI VIENE ITERATO IN QUESTOFOR EACH
+        //OGNI OGGETTO DELLA GRIGLIA E' UN ITERABILE QUINDI VIENE ITERATO IN QUESTO FOR EACH
         for (Node node : gridPane.getChildren()) {
             //SE L'OGGETTO ITERATO CORRISPONDE AL NUMERO DI RIGA E COLONNA PASSATI COME PARAMETRI
             //ALLORA SIGNIFICA CHE SI TRATTA DELL'OGGETTO CHE STIAMO CERCANDO E PERCIO' VIENE
@@ -353,8 +355,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //per far partire il gioco (la simulazione).
     //Viene creata un ObservableList (una lista che permette di tenere traccia delle modifiche)
     //chiamata informazioni, e questa lista contiene oggetti di tipo Nation.
-    //Solo se il bottone start e' stato cliccato la prima volta e non altre volte per continuare la simulazione:
-    // per ogni nazione dentro nationList viene richiamato il metodo getRegioni, quindi se quella
+    //Solo se il gioco non e' iniziato, quindi se la variabile useStart e' a false, allora
+    //per ogni nazione dentro nationList viene richiamato il metodo getRegioni (della classe Nation), quindi se quella
     //nazione ha un numero di regioni uguali a 0 (quindi se a quella nazione non e' stata assegnata nessuna cella)
     //viene rimossa e viene riaggiunto il colore, che era stato scelto nel momento della creazione della nazione,
     //alla lista chiamata ListaColor  (perche' in controllerAddNation quando si creava una nuova nazione
@@ -369,32 +371,14 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //il bottone buttonAddNation (cosi da togliera la possibilita' di aggiungere altre nazioni dopo aver premuto Start),
     //e viene disabilitato il bottone buttonDeleteNation (cosi da togliera la possibilita' di cancellare nazioni dopo
     //aver premuto Start).
-    //Poi per ogni nazione dentro la lista nationList viene creata la base per il grafico degli gli
-    //abitanti della nazione chiamata set, la base per il grafico delle risorse chiamata risorse e
-    //la base per il grafico del denaro chiamata denaro.
-    //Poi controlla se  il nome della nazione che sto aggiornardo non e' contenuta in NomiNazioniCopia
-    //e percio' significa che e' la prima volta che la creo quindi devo mettere a 0 il valore attuale di risorse,
-    //il numero attuale di abitanti e il denaro attuale della nazione.
-    //Dopodiche aggiungo la nazione alla lista NomiNazioniCopia.
-    //Poi viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti
-    //sono gli abitanti di quella nazione. Poi viene aggiornato il numero di abitanti di quella nazione, richiamando
-    //il metodo getNumAbitanti.
-    //Poi viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti
-    //sono le risorse di quella nazione. Poi viene aggiornato il il valore delle rissorse di quella nazione, richiamando
-    //il metodo getRisorse.
-    //Poi viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto
-    //e' il denaro di quella nazione. Poi viene aggiornato il denaro di quella nazione, richiamando
-    //il metodo getDenaro.
-    //Poi aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
-    //Poi aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
-    //Poi aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
     //Poi vengono disabilitati i bottoni di menu, help, start e statistiche che saranno cliccabili solo a gioco fermo.
     //e viene anche disabilitata l'area di testo in cui inserire i turni.
     //L'uso del pulsante start viene cambiato ora in continua, dove una volta cliccato su start(che una volta avviato il gioco
     //si trasforma in continua) si continua per il numero di turni inseriti nell'area di testo sotto start, chiamata txtTurniDaSvolgere.
-    ///Se si clicca su continua e quindi siamo nella situazione in cui start e' gia' stato premuto una volta allora bisogna
-    //clonare le nazioni in maniera da poter fare di nuovo start delle nazioni in nationList(cosa altrimenti non possibile
-    //visto che l'istanza di un thread puo' essere runnato una sola volta).
+    //Se si clicca su continua e quindi siamo nella situazione in cui start e' gia' stato premuto una volta (quindi se lòa variabile
+    //useStart e' true) allora bisogna clonare le nazioni (richiamando il metodo cloneNationThreadList della classe ControllerImpGriglia)
+    //in maniera da poter fare di nuovo start delle nazioni in nationList(cosa altrimenti non possibile visto che l'istanza di un thread
+    //puo' essere runnato una sola volta).
     //Ora (con il metodo getText) viene preso il numero inserito nell'area di testo turniDaSvolgere (ovvero il numero di turni per
     //il quale avanzare), viene convertito ad intero e viene memorizzato tale numero dentro la variabile turniSvolti.
     //Si arriva quindi al punto centrale della simulazione in cui c'e' un for che va ad iterare tutte le nazioni dentro
@@ -436,7 +420,26 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Se il metodo getStato restituisce true, quindi se la nazione e' viva vengono aggiunti tutti i dati della nazione
     //alla lista informazioni (quindi viene richiamato il costruttore con 3 parametri della classe Nation, passando il nome
     //(metodo getName), l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori
-    //sterili (variabile numSterile)) e vengono in seguito create le nuove statistiche (alla stessa maniera specificata precedentemente).
+    //sterili (variabile numSterile)) e vengono in seguito create statistiche.
+    //Per cui per ogni nazione dentro la lista nationList viene creata la base per il grafico degli gli
+    //abitanti della nazione chiamata set, la base per il grafico delle risorse chiamata risorse e
+    //la base per il grafico del denaro chiamata denaro.
+    //Poi controlla se  il nome della nazione che sto aggiornardo non e' contenuta in NomiNazioniCopia
+    //e percio' significa che e' la prima volta che la creo quindi devo mettere a 0 il valore attuale di risorse,
+    //il numero attuale di abitanti e il denaro attuale della nazione.
+    //Dopodiche aggiungo la nazione alla lista NomiNazioniCopia.
+    //Poi viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti
+    //sono gli abitanti di quella nazione. Poi viene aggiornato il numero di abitanti di quella nazione, richiamando
+    //il metodo getNumAbitanti.
+    //Poi viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti
+    //sono le risorse di quella nazione. Poi viene aggiornato il il valore delle rissorse di quella nazione, richiamando
+    //il metodo getRisorse.
+    //Poi viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto
+    //e' il denaro di quella nazione. Poi viene aggiornato il denaro di quella nazione, richiamando
+    //il metodo getDenaro.
+    //Poi aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
+    //Poi aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
+    //Poi aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
     //Altrimenti se il metodo getStato restituisce false, e quindi se la nazione e' morta vengono aggiunti tutti i dati della nazione
     //alla lista informazioni (quindi viene richiamato il costruttore della classe Nation, passando il nome (metodo getName),
     //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori sterili (variabile numSterile), ma vicino al nome viene aggunta la scritta "(MORTA)".
@@ -456,9 +459,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //la lista nation list: se non ci sono piu' nazioni vive allora il gioco si interrompe.
     //Altrimenti, se ci sono ancora nazioni vive  il gioco continua.
     //Infine una volta terminato il for nel quale vengono eseguiti i turni delle nazioni viene aggiornata la variabile
-    // locale al metodo "nazioniMorte", e di seguito con questa variabile si controlla se tutte le nazioni sono morte: se
-    // lo sono allora viene abilitato il bottone Menu e il bottone Help e in seguito viene creato un oggetto di tipo
-    // AnchorPane chiamato fPane facendo riferimento e richiamando l'intefaccia definita in FXMLfineGioco.fxml.
+    //locale al metodo "nazioniMorte", e di seguito con questa variabile si controlla se tutte le nazioni sono morte: se
+    //lo sono allora il gioco e' finito per cui viene abilitato il bottone Menu e il bottone Help e in seguito viene
+    //creato un oggetto di tipo AnchorPane chiamato fPane facendo riferimento e richiamando l'intefaccia definita
+    //in FXMLfineGioco.fxml.
     //Quindi errorPane sara' l'interfaccia definita in FXMLfineGioco.fxml.
     //Poi viene creato un nuovo Stage, chiamato fStage, e specifica la scena da usare
     //su quello stage (con il metodo setScene).
@@ -468,7 +472,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     @FXML
     synchronized void clickStart(ActionEvent event) {
         ObservableList<Nation> informazioni = FXCollections.observableArrayList();
-        if(useStart == false){ //Se il gioco non e' gia' iniziato
+        //SE IL GIOCO NON E' INIZIATO
+        if(useStart == false){
             //ELIMINA LE NAZIONI CHE SONO STATE CREATE MA A CUI NON E' STATA ASSEGNATA NESSUNA REGIONE
             for (int indice=0; indice<nationList.size();indice++){
                 if (nationList.get(indice).getRegioni().size()==0){
@@ -488,32 +493,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
             else{
                 this.buttonAddNation.setDisable(true);
                 this.buttonDeleteNation.setDisable(true);
-
-                /*for(int indice = 0; indice <nationList.size(); indice++) {
-                    XYChart.Series set = new XYChart.Series<>();            //Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
-                    XYChart.Series risorse = new XYChart.Series<>();        //Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
-                    XYChart.Series denaro = new XYChart.Series<>();        	//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
-                    //SE IL NOME DELLA NAZIONE NON E' CONTENUTO NELLA LISTA NOMINAZIONI COPIA
-                    if (!(NomiNazioniCopia.contains(nationList.get(indice).getName()))) {
-                        valAttualeAbitanti = 0;
-                        valAttualeRisorse = 0;
-                        valAttualeDenaro = 0;
-                        NomiNazioniCopia.add(nationList.get(indice).getName());
-                    }
-                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
-                    set.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), (nationList.get(indice).getNumAbitanti() - valAttualeAbitanti)));
-                    valAttualeAbitanti = (nationList.get(indice).getNumAbitanti());
-                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
-                    risorse.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getRisorse() - valAttualeRisorse));
-                    valAttualeRisorse = (nationList.get(indice).getRisorse());
-                    //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                    denaro.getData().add(new XYChart.Data<String, Number>(nationList.get(indice).getName(), nationList.get(indice).getDenaro() - valAttualeDenaro)); //creo un mattone che ha sotto il nome della nazione ed ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ alto tanto quanto ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ il denaro di quella nazione
-                    valAttualeDenaro = nationList.get(indice).getDenaro();
-                    barCharD.getData().addAll(denaro);        	//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
-                    barChart.getData().addAll(set);            	//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
-                    barChartR.getData().addAll(risorse);    	//Aggiungo il mattone delle risosrse alla rispettiva barChart delle risorse, chiamato barChartR.
-                }*/
-
                 //I bottoni non saranno cliccabili durante lo svolgimento di un turno. Inoltre durante lo svolgimento
                 //di un turno non sara' possibile editare l'area di testo in cui inserire i turni per i quali la simulazione deve continuare.
                 this.buttonStart.setDisable(true);
@@ -648,7 +627,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
                         nazioniMorte++;                    //Tengo conto di una nazione morta in piu'
                     }
                 }
-
                 //SE LE NAZIONI SONO TUTTE MORTE ALLORA SI CONCLUDE IL GIOCO
                 if(nazioniMorte == nationList.size()){
                     buttonMenu.setDisable(false);
@@ -863,7 +841,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //precedentemente, ovvero con menu (quindi si tornera' alla schermata del menu' principale).
     //Se il bottone noButton viene premuto (quindi se non si e' sicuri di interrompere la simulazione)
     //viene semplicemente chiuso lo stage chiamato stageFinestra (con il metodo close).
-    //Altrimenti, se non si e'ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
+    //Altrimenti, se non si e'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ premuto start e viene premuto Menu, vengono presi tutti i colori che erano stati usati per
     //colorare le celle della nazioni e vengono riaggiunti alla lista ListaColori (che contiene' tutti i colori delle nazioni
     //che potranno essere scelti quando si crea una nuova nazione) cosida rendere nuovamenti i colori diponibili ed in seguito
     //viene cancellato tutto cio' che si trova dentro la lista nomiNazioni (che contiene' tutti i nomi delle nazioni che sono

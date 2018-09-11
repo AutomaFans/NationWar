@@ -26,7 +26,7 @@ public class Nation extends Thread{
 	 										Sotto i 10 abitanti la nazione e' morta*/
 
 
-    //COSTRUTTORE CON CINQUE PARAMETRI
+    //COSTRUTTORE CON QUATTRO PARAMETRI
     //Questo costruttore viene richiamato nel metodo clickStart della classe
     //ControllerImpGriglia, per aggiungere le informazioni riguardanti una nazione
     //alla lista informazioni (che sara' poi aggiunta alla tabella InfoTable sempre
@@ -173,7 +173,7 @@ public class Nation extends Thread{
 
     //METODO SET STATO
     //Permette di settare la variabile booleana chiamata vivi.
-    //Prende come parametro un booleano stato (che puÃƒÂ² essere false o true) e
+    //Prende come parametro un booleano stato (che puo' essere false o true) e
     //se gli viene passato true setta la variabile vivo con true, altrimente se gli
     //viene passato false setta la variabile vivo con false.
     //Quindi se la nazione e' viva verra' passato true (cosi la variabile booleana vivo sara' true),
@@ -219,10 +219,10 @@ public class Nation extends Thread{
 
     //METODO CONSUMA RISORSE
     //Siccome la nazione occupa una certa regione e quindi consuma le risorse, allora ad ogni
-    //turno del gioco viene richiamato questo metodo, per cui viene sottratto un decimo del numero
+    //turno del gioco viene richiamato questo metodo, per cui viene sottratto un quaro del numero
     //di risorse e in seguito viene richiamato il metodo RefreshAge (della classe Nation)
     public void consumaRisorse(){
-        this.risorse = risorse - (risorse / 4); //Viene consumato un decimo delle risorse
+        this.risorse = risorse - (risorse / 4); //Viene consumato un quarto delle risorse
         this.refreshAge();                       //Viene aggiornata l'eta' attuale della nazione(antica, intermedia, moderna)
     }
 
@@ -242,45 +242,65 @@ public class Nation extends Thread{
     //e permette di assegnare la regione passata da parametro ad una determinata nazione
     //traendone benefici (quindi la nazione conquista la regione che viene presa da parametro
     //e ne ricava benefici).
-    //Quindi, quando la nazione conquista (acquista) la nuova regione, allora il denaro della
+    //Quindi se la regione presa come parametro e' di qualche nazione (quindi se il nome della
+    //nazione su quella regione, preso con il metodo getNomeNazione della clesse Regione, non e' uguale a ""), allora
+    //si prende la nazione a cui apparteneva quella regione (con il metodo getNazione della classe Regione)
+    //e viene rimossa dalla nazione la regione.
+    //Ora, se la nazione che ha appena perso la regione non ha piu' regioni (quindi se non ha piu' territori)
+    //allora la nazione muore per cui viene impostata la variabile vivi a flase, richiamando il
+    //metodo setStato della classe Nation e inoltre vengono sciiolti tutti gli accordi che la
+    //nazione aveva stipulato, per cui per ogni accordo proposto dentro la lista accordiProposti (presa
+    //richiamando il metodo getAccordiProposti della classe Nation) scioglie gli accordi proposti rimuovendoli
+    //da quelli accettati delle nazioni che l'hanno accettati e inoltre imposta il testo di quella regione
+    //con la scritta "" (stringa vuota).
+    //Inoltre per ogni accordo accettato dentro la lista accordiAccettati (presa
+    //richiamando il metodo getAccordiAccettati della classe Nation) scioglie gli accordi accettati rimuovendoli
+    //da quelli proposti delle nazioni che l'hanno proposti e inoltre imposta il testo di quella regione
+    //con la scritta "" (stringa vuota).
+    //Altrimenti, se la regione presa come parametro non e' di qualche nazione (quindi se il nome della
+    //nazione su quella regione, preso con il metodo getNomeNazione della clesse Regione, e' uguale a "")
+    //allora quando la nazione conquista (acquista) la nuova regione, allora il denaro della
     //nazione viene diminuito in base al costo di quella regione (e questo costo e' dato
     //dal metodo getValore della classe Regione).
     //In seguito viene assegna a quella regione il controllo da parte di quella nazione (con
     //il metodo setNazione della classe Regione) e poi viene aggiunta la regione appena conquistata
     //a quelle gia possedute da quella nazione, quindi viene aggiunta la nazione alla lista region
     //(con il metodo addRegion della classe Nation).
-    //Infine viene richiamato il metodo takeProfit della classe antion per far si che la nazionee
+    //Infine viene richiamato il metodo takeProfit della classe Nation per far si che la nazione
     //prenda i suoi profitti delle regioni conquistate.
+    //Peercio' viene stampato sulla console il nome della nazione che ha conquistato la regione concatanato
+    //alla stringa " ha conquistato la regione " e concatenato al' ID della regione conquistata
     //La regione puo' anche essere nociva alla nazione, perche' se si tratta di una regione con un numero
     //basso di risorse puo' accadere che la nazione conquistandola non prenda nessun profitto, anzi col tempo
     //potrebbe abbassarsi piu' velocemente la popolazione e quindi di conseguenza i profitti:
     //in quel caso la nazione avrebbe conquistato una regione che puo' contribuire alla sua rovina.
     public void conquistaRegione(Regione region){
-        if (region.getNomeNazione()!=""){ //se la regione conquistata e' di qualcuno
-            Nation nazione = region.getNazione(); //creo un oggetto nazione che è proprio la nazione che ha perso una regione
-            nazione.getRegioni().remove(region); //viene rimossa la regione dalla nazione che l'ha persa
-            if (nazione.getRegioni().size()==0){ //Se la regione che ha appena perso la regione ora non ha più regioni
-                nazione.setStato(false); //muore
+        //SE LA REGIONE E' DI QUALCHE NAZIONE
+        if (region.getNomeNazione()!=""){
+            Nation nazione = region.getNazione();
+            nazione.getRegioni().remove(region);
+            //SE LA NAZIONE CHE HA APPENA PERSO LA REGIONE NON HA PIU' REGIONI
+            if (nazione.getRegioni().size()==0){
+                nazione.setStato(false);
                 //Scioglie tutti gli accordi che aveva stretto
-                for(int i=0; i<nazione.getAccordiProposti().size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli
-                                                                          // accettati delle nazioni che l'hanno accettati
+                for(int i=0; i<nazione.getAccordiProposti().size();i++){
                     nazione.getAccordiProposti().get(i).getNazioneCheAccetta().getAccordiAccettati().remove(nazione.getAccordiProposti().get(i));
                     nazione.getAccordiProposti().get(i).getRegionePatto().setText("");
                 }
-                for(int i=0; i<nazione.getAccordiAccettati().size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli
-                                                                           // proposti /delle nazioni che l'hanno proposti
+                for(int i=0; i<nazione.getAccordiAccettati().size();i++){
                     nazione.getAccordiAccettati().get(i).getNazioneChePropone().getAccordiProposti().remove(nazione.getAccordiAccettati().get(i));
                     nazione.getAccordiAccettati().get(i).getRegionePatto().setText("");
                 }
             }
 
         }
-        else { //altrimenti
-            this.denaro -= region.getValore();                            //Viene speso il denaro che serve per comprare la regione in base al suo valore
+        //ALTRIMENTI, SE LA NAZIONE NON E' DI NESSUNA NAZIONE
+        else {
+            this.denaro -= region.getValore();
         }
-        region.setNazione(this.getName(), this.getColor(), this);   //Viene settato il controllo della nazione sulla regione
-        this.addRegion(region);                                         //Viene aggiunta la regione a quelle possedute dalla nazione
-        this.takeProfit(region.getTipo(), region.getRisorse());//Viene preso profitto dalla conquista
+        region.setNazione(this.getName(), this.getColor(), this);
+        this.addRegion(region);
+        this.takeProfit(region.getTipo(), region.getRisorse());
         System.out.println(this.getName() + " ha conquistato la regione " + region.getId());
     }
 
@@ -293,7 +313,7 @@ public class Nation extends Thread{
     //tutto cio' avviene solo se la regione ha risorse da offrire(risorseRegione > 0).
     //Quindi se le risorse della regione sono maggiori di 0 allora la  nazione puo' riscuotere
     //un profitto, per cui si va a vedere se la regione (cella) e' fertile aumenta il numero di abitanti
-    //di 100, mentre se laregione e' sterile aumenta il numero di abitanti soltanto di 10.
+    //di 50, mentre se la regione e' sterile aumenta il numero di abitanti soltanto di 10.
     //Inoltre, se le risorse della regione sono maggiori di 0, aumenta anche il numero delle risorse
     //della nazione in base alla regione (cella) che e' stata assegnata a quella nazione (quindi siccome
     //ogni cella ha un certo numero di risorse quando viene assegna quella cella alla nazione, aumentano
@@ -306,7 +326,7 @@ public class Nation extends Thread{
         //SE LE RISORSE DELLA REGIONE SONO MAGGIORI DI 0, LA NAZIONE OTTINE UN PROFITTO
         if(risorseRegione > 0){
             if(tipoRegione.equals("fertile")){ 		//Se la regione e' fertile
-                this.numAbitanti += 50;			//Aumenta il numero di abitanti di 100
+                this.numAbitanti += 50;				//Aumenta il numero di abitanti di 50
             }
             else{                              		//Altrimenti, se la regione e' sterile
                 this.numAbitanti += 10;				//Aumenta il numero di abitanti di 10
@@ -324,17 +344,16 @@ public class Nation extends Thread{
     //Questo metodo viene richiamato ad ogni turno per aumentare il numero degli abitanti della
     //nazione in base ai terreni posseduti.
     //Quindi per ogni regione nella lista regioni (che contiene tutte le regioni (celle) assegnate
-    //ad una nazione), se quella regione e' fertile aumentera' la popolazione di 100 mentre se
-    //quella regione e' sterile la popolazione diminuira' di 20 abitanti. Se quella regione e'
-    //sterile, si ava vedere il numero di risorse che quella regione ha.
+    //ad una nazione), se quella regione e' fertile aumentera' la popolazione di 60.
+    //Altrimenti se quella regione e' sterile si va vedere il numero di risorse che quella regione ha.
     //Se quella regione ha un numero di risorse minore o ugulale a 0 (quindi se sono state esaurite
-    //tutte le risose) allora la popolazione diminuira' di 30, altrimenti se quella regione
+    //tutte le risose) allora la popolazione diminuira' di 50, altrimenti se quella regione
     //non ha ha un numero di risorse minore o ugulale a 0 (quindi se non sono state esaurite
-    //tutte le risose) allora la popolazione diminuira' soltanto di 20.
+    //tutte le risose) allora la popolazione diminuira' soltanto di 30.
     //Per vedere il tipo di territorio viene richiamato il metodo getTipo della classe Regione.
     //Per vedere il tipo di territorio viene richiamato il metodo getTipo della classe Regione.
     //Inoltre per ogni accordo proposto dalla nazione e stretto con altre nazioni si ottiene
-    //un aumento della popolazione di 50 abitanti.
+    //un aumento della popolazione di 10 abitanti.
     public void increasePopulation() {
         for(Iterator<Regione> i = regioni.iterator(); i.hasNext();) {
             Regione num = i.next();
@@ -821,7 +840,7 @@ public class Nation extends Thread{
     //nazione che difende, per cui se la nazione che difende ha l'eta' antica allora la nazione
     //attaccante vince e conquista la regione della nazione che difendeva e ne trae profitto
     //(richiamando il metodo conquistaRegione della classe Nation): in questo caso la nazione che difende
-    // paga di nuovo un tributo di guerra con il metodo warPayment. Mentre se la nazione che difende
+    //paga di nuovo un tributo di guerra con il metodo warPayment. Mentre se la nazione che difende
     //he l'eta' moderna allora vince, per cui la nazione che attacca subisce un piccolo calo
     //nell'economia, nella popolazione e nelle risorse (richiamando il metodo warPayment della classe Nation).
     //Infine, se la nazione che attacca ha l'eta' moderna allora possiamo subito dire che ha
@@ -830,7 +849,7 @@ public class Nation extends Thread{
     //conquistaRegione della classe Nation): in questo caso la nazione che difende paga di nuovo
     // un tributo di guerra con il metodo warPayment.
     public void guerra(Nation enemy, Regione region){
-        System.out.println(this.getName() + " è entrata in guerra contro " + enemy.getName() + "!");
+        System.out.println(this.getName() + " Ã¨ entrata in guerra contro " + enemy.getName() + "!");
         warPayment(enemy);
         //SE LE DUE NAZIONI HANNO LA STESSA ETA'
         if(this.getAge() == enemy.getAge()){
@@ -1159,7 +1178,7 @@ public class Nation extends Thread{
     //nazione ha finito di svolgere il suo turno o meno).
     //Poi si perde un secondo di tempo in maniera da notare i cambiamenti tra un turno e l'altro
     //(con il metodo sleep).
-    //In seguito si passa a controllare se la nazione ha occupato tutta la griglia, perchÃƒÂ¨
+    //In seguito si passa a controllare se la nazione ha occupato tutta la griglia, perchÃƒÆ’Ã‚Â¨
     //nel caso la nazione ha occupato tutta la griglia non ci sono regioni che confinano con regioni
     //non alleate, quindi si possono verificare direttamente le regole di transizione su una regione
     //qualsiasi della griglia che viene scelta casualmente.
@@ -1266,12 +1285,12 @@ public class Nation extends Thread{
                 this.vivo = false;
                 //Scioglie tutti gli accordi che aveva stretto
                 for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
-                                                             //delle nazioni che l'hanno accettati
+                    //delle nazioni che l'hanno accettati
                     accordiProposti.get(i).getNazioneCheAccetta().getAccordiAccettati().remove(accordiProposti.get(i));
                     accordiProposti.get(i).getRegionePatto().setText("");
                 }
                 for(int i=0; i<accordiAccettati.size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli proposti
-                                                              //delle nazioni che l'hanno proposti
+                    //delle nazioni che l'hanno proposti
                     accordiAccettati.get(i).getNazioneChePropone().getAccordiProposti().remove(accordiAccettati.get(i));
                     accordiAccettati.get(i).getRegionePatto().setText("");
                 }
@@ -1318,12 +1337,12 @@ public class Nation extends Thread{
                     vivo = false;
                     //Scioglie tutti gli accordi che aveva stretto
                     for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
-                                                                 //delle nazioni che l'hanno accettati
+                        //delle nazioni che l'hanno accettati
                         accordiProposti.get(i).getNazioneCheAccetta().getAccordiAccettati().remove(accordiProposti.get(i));
                         accordiProposti.get(i).getRegionePatto().setText("");
                     }
                     for(int i=0; i<accordiAccettati.size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli proposti
-                                                                  //delle nazioni che l'hanno proposti
+                        //delle nazioni che l'hanno proposti
                         accordiAccettati.get(i).getNazioneChePropone().getAccordiProposti().remove(accordiAccettati.get(i));
                         accordiAccettati.get(i).getRegionePatto().setText("");
                     }

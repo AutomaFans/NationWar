@@ -7,7 +7,7 @@ public class Accordo {
     private Regione regione;           	//Regione sulla quale si e' stretto l'accordo
 
 
-    //COSTRUTTORE CON DUE PARAMETRI
+    //COSTRUTTORE CON TRE PARAMETRI
     //Prende come parametri una Nazione propone, che rappresenta la nazione che propone
     //l'accordo, una Nazione accetta, che rappresenta la nazine che accetta l'accordo
     //e una Regione region che rappresenta la regione sulla quale si stringe l'accordo
@@ -21,17 +21,23 @@ public class Accordo {
         this.regione = region;
     }
 
+
+
     //METODO SET NAZIONE CHE PROPONE
     //Usato per aggiornare la nazione che propone l'accordo
     public void setNazioneChePropone(Nation propone){
         this.nazioneChePropone = propone;
     }
 
+
+
     //METODO SET NAZIONE CHE ACCETTA
     //Usato per aggiornare la nazione che accetta l'accordo
     public void setNazioneCheAccetta(Nation accetta){
         this.nazioneCheAccetta = accetta;
     }
+
+
 
     //METODO GET NAZIONE CHE PROPONE
     //Restituisce la nazione che ha proposto l'accordo
@@ -46,7 +52,6 @@ public class Accordo {
     public Nation getNazioneCheAccetta() {
         return nazioneCheAccetta;
     }
-
 
 
 
