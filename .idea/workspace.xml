@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2fb928f-6efc-419f-a686-fb1b8a1a2473" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/Regione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/Regione.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,8 +29,8 @@
       <file leaf-file-name="Nation.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21726">
-              <caret line="1310" column="12" lean-forward="true" selection-start-line="1310" selection-start-column="12" selection-end-line="1310" selection-end-column="12" />
+            <state relative-caret-position="160">
+              <caret line="234" column="16" selection-start-line="234" selection-start-column="16" selection-end-line="234" selection-end-column="16" />
               <folding>
                 <element signature="e#3124#3125#0" expanded="true" />
                 <element signature="e#3150#3151#0" expanded="true" />
@@ -189,7 +186,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="guerra&#9;PSI&#9;JAVA://interfacciaGrafica.Nation#guerra&#10;makePeaceOrWar&#9;PSI&#9;JAVA://interfacciaGrafica.CellThread#makePeaceOrWar&#10;conquistaR&#9;PSI&#9;JAVA://interfacciaGrafica.Nation#conquistaRegione&#10;dichiaraA&#9;PSI&#9;JAVA://interfacciaGrafica.Nation#dichiaraAcerrimoNemico" />
+    <property name="SearchEverywhereHistoryKey" value="consumaRisorse&#9;PSI&#9;JAVA://interfacciaGrafica.Nation#consumaRisorse&#10;guerra&#9;PSI&#9;JAVA://interfacciaGrafica.Nation#guerra&#10;makePeaceOrWar&#9;PSI&#9;JAVA://interfacciaGrafica.CellThread#makePeaceOrWar&#10;conquistaR&#9;PSI&#9;JAVA://interfacciaGrafica.Nation#conquistaRegione&#10;dichiaraA&#9;PSI&#9;JAVA://interfacciaGrafica.Nation#dichiaraAcerrimoNemico" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/controlsfx-8.40.14" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -742,8 +739,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21726">
-          <caret line="1310" column="12" lean-forward="true" selection-start-line="1310" selection-start-column="12" selection-end-line="1310" selection-end-column="12" />
+        <state relative-caret-position="160">
+          <caret line="234" column="16" selection-start-line="234" selection-start-column="16" selection-end-line="234" selection-end-column="16" />
           <folding>
             <element signature="e#3124#3125#0" expanded="true" />
             <element signature="e#3150#3151#0" expanded="true" />
