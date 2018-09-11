@@ -1,4 +1,5 @@
 package interfacciaGrafica;
+import javafx.application.Platform;
 import org.controlsfx.control.PopOver;
 
 import java.util.ArrayList;
@@ -926,7 +927,11 @@ public class Nation extends Thread{
     //rimosso il patto anche tra gli accordi accettati della nazione che lo ha accettato.
     public void interrompiAlleanza(Accordo alleanza){
         alleanza.getRegionePatto().rompiPatto();
-        alleanza.getRegionePatto().setText("");
+        Platform.runLater(
+                () -> {
+                    alleanza.getRegionePatto().setText("");
+                }
+        );
         //Rimuove il patto tra gli accordi proposti della nazione che lo ha proposto
         alleanza.getNazioneChePropone().getAccordiProposti().remove(alleanza);
         //Rimuove il patto tra gli accordi accettati della nazione che lo ha accettato
@@ -951,7 +956,13 @@ public class Nation extends Thread{
     //il pattoEconomico  a quelli proposti della nazione che propone e viene anche aggiunto
     //il pattoEconomico a quelli accettati della nazione che accetta.
     //Per cui ora si e' stretta l'alleanza su quella regione allora viene settato il testo di quella regione
-    //(ricorda che una regione e' un bottone) con la scritta "Stretto un patto".
+    //(ricorda che una regione e' un bottone) con la scritta "p".
+    //L'interfaccia utente non può essere aggiornata direttamente da un thread non dell'applicazione. Si utilizza
+    // quindi il metodo Platform.runLater(), con la logica all'interno dell'oggetto Runnable: in questa maniera
+    //non otteniamo eccezioni e il JAVAFX Thread aggiorna l'interfaccia alla fine senza particolari conflitti.
+    //Viene inclusa quindi nel blocco del Platform.runLater() la logica per settare il testo del bottone a "p".
+    //Lo stesso modo di settare il testo delle celle sara' utilizzato nel caso in cui vengono sciolti i patti
+    //settando il testo a "".
     //Altimenti, se il denaro della nazione che propone l'accordo non e' maggiore o uguale
     //a 2/3 di quello della nazione che dovrebbe accettare l'accordo, allora non viene accettato e le nazioni
     //sciolgono tutti gli accordi stretti in precedenza(se esistono).
@@ -997,7 +1008,11 @@ public class Nation extends Thread{
             this.accordiProposti.add(pattoEconomico);
             //Viene aggiunto il patto a quelli accettati della nazione che accetta
             accettatore.accordiAccettati.add(pattoEconomico);
-            region.setText("p");
+            Platform.runLater(
+                    () -> {
+                        region.setText("p");
+                    }
+            );
         }
         //ALTRIMENTI, SE L'ACCORDO NON VIENE ACCETTATO
         else{
@@ -1020,7 +1035,11 @@ public class Nation extends Thread{
                 // ACCETTATO IL PATTO, ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
-                    alleanza.getRegionePatto().setText("");
+                    Platform.runLater(
+                            () -> {
+                                alleanza.getRegionePatto().setText("");
+                            }
+                    );
                 }
             }
             //Viene aggiornata la nuova lista di accordi proposti
@@ -1037,7 +1056,11 @@ public class Nation extends Thread{
                 // ACCETTATO IL PATTO, ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
-                    alleanza.getRegionePatto().setText("");
+                    Platform.runLater(
+                            () -> {
+                                alleanza.getRegionePatto().setText("");
+                            }
+                    );
                 }
             }
             //Viene aggiornata la nuova lista di accordi accettati
@@ -1055,7 +1078,11 @@ public class Nation extends Thread{
                 // , ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
-                    alleanza.getRegionePatto().setText("");
+                    Platform.runLater(
+                            () -> {
+                                alleanza.getRegionePatto().setText("");
+                            }
+                    );
                 }
             }
             //Viene aggiornata la nuova lista di accordi proposti
@@ -1072,7 +1099,11 @@ public class Nation extends Thread{
                 // IL PATTO, ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
-                    alleanza.getRegionePatto().setText("");
+                    Platform.runLater(
+                            () -> {
+                                alleanza.getRegionePatto().setText("");
+                            }
+                    );
                 }
             }
             //Viene aggiornata la nuova lista di accordi accettati
