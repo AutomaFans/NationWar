@@ -242,7 +242,7 @@ public class Nation extends Thread{
     //e permette di assegnare la regione passata da parametro ad una determinata nazione
     //traendone benefici (quindi la nazione conquista la regione che viene presa da parametro
     //e ne ricava benefici).
-    //Quindi, quando la nazone conquista (acquista) la nuova regione, allora il denaro della
+    //Quindi, quando la nazione conquista (acquista) la nuova regione, allora il denaro della
     //nazione viene diminuito in base al costo di quella regione (e questo costo e' dato
     //dal metodo getValore della classe Regione).
     //In seguito viene assegna a quella regione il controllo da parte di quella nazione (con
@@ -261,6 +261,17 @@ public class Nation extends Thread{
             nazione.getRegioni().remove(region); //viene rimossa la regione dalla nazione che l'ha persa
             if (nazione.getRegioni().size()==0){ //Se la regione che ha appena perso la regione ora non ha più regioni
                 nazione.setStato(false); //muore
+                //Scioglie tutti gli accordi che aveva stretto
+                for(int i=0; i<nazione.getAccordiProposti().size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli
+                                                                          // accettati delle nazioni che l'hanno accettati
+                    nazione.getAccordiProposti().get(i).getNazioneCheAccetta().getAccordiAccettati().remove(nazione.getAccordiProposti().get(i));
+                    nazione.getAccordiProposti().get(i).getRegionePatto().setText("");
+                }
+                for(int i=0; i<nazione.getAccordiAccettati().size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli
+                                                                           // proposti /delle nazioni che l'hanno proposti
+                    nazione.getAccordiAccettati().get(i).getNazioneChePropone().getAccordiProposti().remove(nazione.getAccordiAccettati().get(i));
+                    nazione.getAccordiAccettati().get(i).getRegionePatto().setText("");
+                }
             }
 
         }
@@ -1172,10 +1183,11 @@ public class Nation extends Thread{
     //Se la nazione a seguito dell'applicazione delle regole di transizione e' rimasta senza regioni
     //(ad esempio nel  caso in cui una nazione ha una sola regione e applicando le regole
     //di transizione la perde) allora la nazion muore, per cui viene settata la variabile vivo a false,
-    //e siccome ha finito di eseguire il codice del suo run() setta la variabile active a false.
+    //scioglie tutti gli accordi fatti con altre nazioni(se esistono) e siccome ha finito di eseguire
+    // il codice del suo run() setta la variabile active a false.
     //Infine la nazione avvisa il thread che deteneva la griglia e gestiva i turni che
     //il suo turno e' finito.
-    //altrimenti, se la nazione non perde tutte le sue regioni si sceglie una nuova regione random,
+    //Altrimenti, se la nazione non perde tutte le sue regioni si sceglie una nuova regione random,
     //ma questa volta per conquistare nuove regioni(o stringere alleanze).
     //Per cui se le regioni possedute dalla nazione sono uguali al numero di celle della griglia
     //allora la nazione possiede tutta la griglia e quindi non ci saranno celle che confinano
@@ -1207,7 +1219,7 @@ public class Nation extends Thread{
     //e in seguito la nazione avvisa il thread che deteneva la griglia e gestiva i turni che
     //il suo turno e' finito e si puo' passare al turno della nazione successiva.
     //Infine se il numero di abitanti e' minore di 10, viene messa la variabile boolena vivo a false,
-    //cosi la nazione muore
+    //cosi la nazione muore, sciogliendo inoltre(se esistono) tutti gli accordi fatti con altre nazioni.
     public synchronized void run() {
         try{
             this.active = true;
@@ -1244,6 +1256,17 @@ public class Nation extends Thread{
             //SE LA NAZIONE PERDE TUTTE LE SUE REGIONI
             if(this.regioni.size() == 0){
                 this.vivo = false;
+                //Scioglie tutti gli accordi che aveva stretto
+                for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
+                                                             //delle nazioni che l'hanno accettati
+                    accordiProposti.get(i).getNazioneCheAccetta().getAccordiAccettati().remove(accordiProposti.get(i));
+                    accordiProposti.get(i).getRegionePatto().setText("");
+                }
+                for(int i=0; i<accordiAccettati.size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli proposti
+                                                              //delle nazioni che l'hanno proposti
+                    accordiAccettati.get(i).getNazioneChePropone().getAccordiProposti().remove(accordiAccettati.get(i));
+                    accordiAccettati.get(i).getRegionePatto().setText("");
+                }
                 this.active = false;
                 this.gridController.sveglia();
             }
@@ -1286,6 +1309,17 @@ public class Nation extends Thread{
                 //SE IL NUMERO DI ABITANTI E' MINORE DI 10
                 if(this.getNumAbitanti() < 10){
                     vivo = false;
+                    //Scioglie tutti gli accordi che aveva stretto
+                    for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
+                                                                 //delle nazioni che l'hanno accettati
+                        accordiProposti.get(i).getNazioneCheAccetta().getAccordiAccettati().remove(accordiProposti.get(i));
+                        accordiProposti.get(i).getRegionePatto().setText("");
+                    }
+                    for(int i=0; i<accordiAccettati.size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli proposti
+                                                                  //delle nazioni che l'hanno proposti
+                        accordiAccettati.get(i).getNazioneChePropone().getAccordiProposti().remove(accordiAccettati.get(i));
+                        accordiAccettati.get(i).getRegionePatto().setText("");
+                    }
                     this.removeAllRegions();
                 }
             }
