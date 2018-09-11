@@ -355,7 +355,7 @@ public class Nation extends Thread{
             }
         }
         for(int i=0; i <this.accordiProposti.size(); i++){
-            this.numAbitanti += 50;
+            this.numAbitanti += 10;
         }
     }
 
