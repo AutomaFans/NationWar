@@ -267,24 +267,21 @@ public class Nation extends Thread{
     //potrebbe abbassarsi piu' velocemente la popolazione e quindi di conseguenza i profitti:
     //in quel caso la nazione avrebbe conquistato una regione che puo' contribuire alla sua rovina.
     public void conquistaRegione(Regione region){
-        if (region.getNomeNazione()!=""){ //se la regione conquistata non è di nessuno
+        if (region.getNomeNazione()!=""){ //se la regione conquistata e' di qualcuno
             Nation nazione = region.getNazione(); //creo un oggetto nazione che è proprio la nazione che ha perso una regione
             nazione.getRegioni().remove(region); //viene rimossa la regione dalla nazione che l'ha persa
-            if (nazione.getRegioni().size()==0){
-                nazione.setStato(false);
+            if (nazione.getRegioni().size()==0){ //Se la regione che ha appena perso la regione ora non ha più regioni
+                nazione.setStato(false); //muore
             }
 
         }
         else { //altrimenti
             this.denaro -= region.getValore();                            //Viene speso il denaro che serve per comprare la regione in base al suo valore
         }
-        region.setNazione(this.getName(), this.getColor(), this);   //Vengono settato il controllo della nazione sulla regione
+        region.setNazione(this.getName(), this.getColor(), this);   //Viene settato il controllo della nazione sulla regione
         this.addRegion(region);                                         //Viene aggiunta la regione a quelle possedute dalla nazione
         this.takeProfit(region.getTipo(), region.getRisorse());         //Viene preso profitto dalla conquista
-
-
-
-    }
+}
 
 
 
@@ -1033,6 +1030,7 @@ public class Nation extends Thread{
             //Vengono sciolti tutti gli accordi tra le due nazioni (se presenti)
             //Le liste conterrano tutti gli accordi delle due nazioni(accettati e proposti) ma senza quelli stretti insieme
             ArrayList<Accordo> accordiPropostiDaChiPropone = new ArrayList<>();
+            System.out.println(accordiPropostiDaChiPropone);
             ArrayList<Accordo> accordiAccettatiDaChiPropone = new ArrayList<>();
             ArrayList<Accordo> accordiPropostiDaChiNonAccetta = new ArrayList<>();
             ArrayList<Accordo> accordiAccettatiDaChiNonAccetta = new ArrayList<>();
