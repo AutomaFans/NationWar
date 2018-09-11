@@ -277,11 +277,11 @@ public class Regione extends Button{
     //infine ritorna pop
     public static PopOver createPop(Regione r){
         Label risorseRegione = new Label();											//Si crea una Label  chiamata appartenenzaNazione
-        risorseRegione.setText("Risorse disponibili: " + r.getRisorse());			//Setta il testo della label con il valore delle risorse relative a quella specifica regione
+        risorseRegione.setText("Risorse disponibili: " + (int)r.getRisorse());			//Setta il testo della label con il valore delle risorse relative a quella specifica regione
         Label tipoRegione = new Label();											//Si crea una Label  chiamata tipoRegione
         tipoRegione.setText("Regione: " + r.getTipo());								//Setta il testo della label con il tipo di terreno relativo a quella specifica regione
         Label valoreRegione = new Label();											//Si crea una Label chiamata valoreRegione
-        valoreRegione.setText("Valore in denaro: " + r.getValore());				//Setta il testo della label con il denaro relativo a quella specifica regione
+        valoreRegione.setText("Valore in denaro: " + (int)r.getValore());				//Setta il testo della label con il denaro relativo a quella specifica regione
         VBox vBox = new VBox(risorseRegione,tipoRegione,valoreRegione);				//Si crea un VBox che contiene le tre label create precedentemente
         PopOver pop = new PopOver(vBox);											//Si crea un PopOver chiamato pop
         //IL POPOVER VERRA' VISUALIZZATO QUANDO SI PASSA IL MOUSE SOPRA UNA REGIONE (CELLA)

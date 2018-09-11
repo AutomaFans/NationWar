@@ -222,7 +222,7 @@ public class Nation extends Thread{
     //turno del gioco viene richiamato questo metodo, per cui viene sottratto un decimo del numero
     //di risorse e in seguito viene richiamato il metodo RefreshAge (della classe Nation)
     public void consumaRisorse(){
-        this.risorse = risorse - (risorse / 10); //Viene consumato un decimo delle risorse
+        this.risorse = risorse - (risorse / 4); //Viene consumato un decimo delle risorse
         this.refreshAge();                       //Viene aggiornata l'eta' attuale della nazione(antica, intermedia, moderna)
     }
 
@@ -280,8 +280,9 @@ public class Nation extends Thread{
         }
         region.setNazione(this.getName(), this.getColor(), this);   //Viene settato il controllo della nazione sulla regione
         this.addRegion(region);                                         //Viene aggiunta la regione a quelle possedute dalla nazione
-        this.takeProfit(region.getTipo(), region.getRisorse());         //Viene preso profitto dalla conquista
-}
+        this.takeProfit(region.getTipo(), region.getRisorse());//Viene preso profitto dalla conquista
+        System.out.println(this.getName() + " ha conquistato la regione " + region.getId());
+    }
 
 
 
@@ -305,7 +306,7 @@ public class Nation extends Thread{
         //SE LE RISORSE DELLA REGIONE SONO MAGGIORI DI 0, LA NAZIONE OTTINE UN PROFITTO
         if(risorseRegione > 0){
             if(tipoRegione.equals("fertile")){ 		//Se la regione e' fertile
-                this.numAbitanti += 100;			//Aumenta il numero di abitanti di 100
+                this.numAbitanti += 50;			//Aumenta il numero di abitanti di 100
             }
             else{                              		//Altrimenti, se la regione e' sterile
                 this.numAbitanti += 10;				//Aumenta il numero di abitanti di 10
@@ -339,22 +340,22 @@ public class Nation extends Thread{
             Regione num = i.next();
             //SE LA REGIONE (CELLA) E' FERTILE
             if (num.getTipo()=="fertile") {
-                this.numAbitanti += 100;
+                this.numAbitanti += 60;
             }
             //SE LA REGIONE (CELLA) E' STERILE
             else {
                 //SE LA REGIONE (OLTRE AD ESSERE STERILE) NON HA PIU' RISOSE
                 if(num.getRisorse() <= 0){
-                    this.numAbitanti -=30;
+                    this.numAbitanti -=50;
                 }
                 //SE LA REGIONE (OLTRE AD ESSERE STERILE) NON ANCORA RISOSE
                 else{
-                    this.numAbitanti -=20;
+                    this.numAbitanti -=30;
                 }
             }
         }
         for(int i=0; i <this.accordiProposti.size(); i++){
-            this.numAbitanti += 50;
+            this.numAbitanti += 10;
         }
     }
 
@@ -829,6 +830,7 @@ public class Nation extends Thread{
     //conquistaRegione della classe Nation): in questo caso la nazione che difende paga di nuovo
     // un tributo di guerra con il metodo warPayment.
     public void guerra(Nation enemy, Regione region){
+        System.out.println(this.getName() + " è entrata in guerra contro " + enemy.getName() + "!");
         warPayment(enemy);
         //SE LE DUE NAZIONI HANNO LA STESSA ETA'
         if(this.getAge() == enemy.getAge()){
@@ -841,6 +843,7 @@ public class Nation extends Thread{
             //DELLA NAZIONE CHE DIFENDE
             else{
                 warPayment(this);//La nazione che attacca perde risorse, abitanti e denaro
+                System.out.println(this.getName() + " ha perso uomini e denaro nella guerra contro " + enemy.getName());
             }
         }
         //ALTRIMENTI, SE LE DUE NAZIONI NON HANNO LA STESSA ETA'
@@ -848,17 +851,20 @@ public class Nation extends Thread{
             //SE LA NAZIONE ATTACCANTE HA L'ETA' ANTICA
             if(this.getAge().equals("ANTICA")){
                 warPayment(this);//La nazione che attacca perde risorse, abitanti e denaro
+                System.out.println(this.getName() + " ha perso uomini e denaro nella guerra contro " + enemy.getName());
             }
             //ALTIMENTI, SE LA NAZIONE ATTACCANTE HA L'ETA' INTEMEDIA
             else if(this.getAge().equals("INTERMEDIA")){
                 //SE LA NAZIONE CHE DIFENDE HA L'ETA' ANTICA
                 if(enemy.getAge().equals("ANTICA")){
                     warPayment(enemy);  //La nazione che difende perde risorse, abitanti e denaro
+                    System.out.println(this.getName() + " ha perso uomini e denaro nella guerra contro " + enemy.getName());
                     this.conquistaRegione(region);
                 }
                 //ALTRIMENTI, SE LA NAZIONE CHE DIFENDE HA L'ETA' MODERNA
                 else{
                     warPayment(this);//La nazione che attacca perde risorse, abitanti e denaro
+                    System.out.println(this.getName() + " ha perso uomini e denaro nella guerra contro " + enemy.getName());
                 }
             }
             //ALTRIMENTI, SE LA NAZIONE CHE ATTACCA HA L'ETA' MODERNA
@@ -906,6 +912,7 @@ public class Nation extends Thread{
         alleanza.getNazioneChePropone().getAccordiProposti().remove(alleanza);
         //Rimuove il patto tra gli accordi accettati della nazione che lo ha accettato
         alleanza.getNazioneCheAccetta().getAccordiAccettati().remove(alleanza);
+        System.out.println(alleanza.getNazioneChePropone().getName() + " ha interrotto l'alleanza con " + alleanza.getNazioneCheAccetta().getName());
     }
 
 
@@ -961,6 +968,7 @@ public class Nation extends Thread{
     //Infine visto che l'accordo non e' stato accettato, la nazione che aveva proposto l'accordo va in guerra con
     // quella che non l'aveva accettato.
     public void proponiAccordo(Nation accettatore, Regione region){
+        System.out.println(this.getName() + " ha proposto un accordo a " + accettatore.getName());
         //SE IL DENARO DELLA NAZIONE CHE PROPONE L'ACCORDO E MAGGIORE O UGUALE A 2/3 DEL
         //DENARO DELLA NAZIONE CHE RICEVE L'ACCORDO
         if(this.getDenaro() >= (accettatore.getDenaro() - accettatore.getDenaro()/3.0)){
@@ -1296,9 +1304,8 @@ public class Nation extends Thread{
                     }
                     regionsToExec.get(regionToStart).startRegionThread();  	  //Fa lo start() di una regione casuale nella lista di quelle da eseguire
                 }
-                System.out.println(this.getName() + "nazione");
+                //System.out.println(this.getName() + " nazione");
                 wait();            									      	  //La nazione va in attesa che si arrivi alla fine del suo turno per svolgere le azioni successive
-                System.out.println("Sono di nuovo in gioco!");
                 this.increasePopulation();
                 this.incassaDenaro();
                 this.riscuotiTasse();                               //Riscuote tasse da eventuali alleanze in cui la nazione ha accettato l'accordo
