@@ -99,7 +99,6 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
     //Data una regione da conquistare da parametro sceglie in base a l'eta' della nazione conquistatrice ed altre caratteristiche,
     // se la nazione stringera' un patto economico o se dovra' entrare in guerra con la nazione che possiede la regione da conquistare
     private void makePeaceOrWar(Regione regionToConquest){
-        System.out.println(this.region.getNomeNazione() + " vuole conquistare " + regionToConquest.getId());
         //Se la nazione che tenta la conquista si torva nell'eta' antica
         if(this.region.getNazione().getAge() == Eta.ANTICA){
             //Se ci sono degli accordi tra le due nazioni vengono sciolti
