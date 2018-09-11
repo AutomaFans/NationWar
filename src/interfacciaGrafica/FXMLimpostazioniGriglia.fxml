@@ -91,10 +91,10 @@
                             <children>
                                 <TableView fx:id="InfoTable" layoutX="-3.0" prefHeight="543.0" prefWidth="599.0">
                                     <columns>
-                                        <TableColumn fx:id="ColonnaNazioni" minWidth="136.0" prefWidth="220.0" resizable="false" text="Nazioni" />
-                                        <TableColumn fx:id="ColonnaEta" minWidth="91.0" prefWidth="132.0" resizable="false" text="Età" />
-                                        <TableColumn fx:id="ColonnaFertili" minWidth="71.0" prefWidth="118.0" resizable="false" text="Regioni Fertili" />
-                                        <TableColumn fx:id="ColonnaSterili" maxWidth="233.0" minWidth="111.0" prefWidth="113.0" resizable="false" text="Regioni Sterili" />
+                                        <TableColumn fx:id="ColonnaNazioni" minWidth="136.0" prefWidth="227.0" resizable="false" text="Nazioni" />
+                                        <TableColumn fx:id="ColonnaEta" minWidth="91.0" prefWidth="142.0" resizable="false" text="Età" />
+                                        <TableColumn fx:id="ColonnaFertili" minWidth="98.0" prefWidth="109.0" resizable="false" text="Regioni Fertili" />
+                                        <TableColumn fx:id="ColonnaSterili" maxWidth="230.0" minWidth="105.0" prefWidth="105.0" resizable="false" text="Regioni Sterili" />
                                     </columns>
                                 </TableView>
                             </children></AnchorPane>
