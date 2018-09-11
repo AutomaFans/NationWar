@@ -119,15 +119,8 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
         }
         //Se la nazione che tenta la conquista si trova nell'eta' moderna
         else{
-            //Se le due nazioni sono acerrime nemiche
-            if(this.region.getNazione().getEnemyes().contains(regionToConquest.getNazione())
-                    || regionToConquest.getNazione().getEnemyes().contains(this.region.getNazione())){
-                //La nazione va in guerra contro la nazione che possiede la regione da conquistare
-                this.region.getNazione().guerra(regionToConquest.getNazione(), regionToConquest);
-            }
-            else{ //Altrimenti tenta un accordo con la nazione nemica
-                this.region.getNazione().proponiAccordo(regionToConquest.getNazione(), regionToConquest);
-            }
+            //Prova a stringere un patto sulla regione con la nazione avversaria
+            this.region.getNazione().proponiAccordo(regionToConquest.getNazione(), regionToConquest);
         }
     }
 
@@ -135,8 +128,6 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
     //Scioglie tutti gli accordi tra la nazione passata da parametero(che difende il territorio) e quella che detiene
     //la regione del CellThread this(quella che attacca)
     public void sciogliAccordi(Nation defender){
-        //Viene interrotta l'alleanza tra le 2 nazioni
-        this.region.getNazione().finisciAlleanza(region.getNazione(), defender);
         //Le liste conterrano tutti gli accordi delle due nazioni(accettati e proposti) ma senza quelli stretti insieme
         ArrayList<Accordo> accordiPropostiDaChiPropone = new ArrayList<>();
         ArrayList<Accordo> accordiAccettatiDaChiPropone = new ArrayList<>();
@@ -151,6 +142,7 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
             }
             else{ //Se si tratta di un accordo da sciogliere, deve essere tolto il patto dalla regione coinvolta
                 alleanza.getRegionePatto().rompiPatto();
+                alleanza.getRegionePatto().setText("");
             }
         }
         region.getNazione().aggiornaPattiProposti(accordiPropostiDaChiPropone);  //Viene aggiornata la nuova lista di accordi proposti
@@ -162,6 +154,7 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
             }
             else{ //Se si tratta di un accordo da sciogliere, deve essere tolto il patto dalla regione coinvolta
                 alleanza.getRegionePatto().rompiPatto();
+                alleanza.getRegionePatto().setText("");
             }
         }
         region.getNazione().aggiornaPattiAccettati(accordiAccettatiDaChiPropone);//Viene aggiornata la nuova lista di accordi accettati
@@ -175,6 +168,7 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
             }
             else{ //Se si tratta di un accordo da sciogliere, deve essere tolto il patto dalla regione coinvolta
                 alleanza.getRegionePatto().rompiPatto();
+                alleanza.getRegionePatto().setText("");
             }
         }
         defender.aggiornaPattiProposti(accordiPropostiDaChiNonAccetta);//Viene aggiornata la nuova lista di accordi proposti
@@ -186,6 +180,7 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
             }
             else{ //Se si tratta di un accordo da sciogliere, deve essere tolto il patto dalla regione coinvolta
                 alleanza.getRegionePatto().rompiPatto();
+                alleanza.getRegionePatto().setText("");
             }
         }
         defender.aggiornaPattiAccettati(accordiAccettatiDaChiNonAccetta);//Viene aggiornata la nuova lista di accordi accettati

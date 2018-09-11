@@ -119,9 +119,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
     TableColumn <Nation, Integer> ColonnaSterili;	//Colonna della tabella InfoTable, chiamata ColonnaFertili per il numero di territori sterili della nazione su quella riga
 
     @FXML
-    TableColumn <Nation, ArrayList<Nation>> ColonnaAlleanze; //Colonna della tabella InfoTable, chiamata ColonnaAlleanze per le alleanze della nazione su quella riga
-
-    @FXML
     private TextArea txtTurniDaSvolgere;    /*TextArea dove inserire durante una pausa il numero di turni per i quali si
     										desidera far continuare la simulazione*/
 
@@ -355,7 +352,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Questo metodo viene chiamato quando si preme il bottone Start (che poi diventa Continua)
     //per far partire il gioco (la simulazione).
     //Viene creata un ObservableList (una lista che permette di tenere traccia delle modifiche)
-    //chiamata informazioni, e questa lista contine oggetti di tipo Nation.
+    //chiamata informazioni, e questa lista contiene oggetti di tipo Nation.
     //Solo se il bottone start e' stato cliccato la prima volta e non altre volte per continuare la simulazione:
     // per ogni nazione dentro nationList viene richiamato il metodo getRegioni, quindi se quella
     //nazione ha un numero di regioni uguali a 0 (quindi se a quella nazione non e' stata assegnata nessuna cella)
@@ -372,7 +369,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //il bottone buttonAddNation (cosi da togliera la possibilita' di aggiungere altre nazioni dopo aver premuto Start),
     //e viene disabilitato il bottone buttonDeleteNation (cosi da togliera la possibilita' di cancellare nazioni dopo
     //aver premuto Start).
-    //In seguito viene settata la variabile booleana useStart a true.
     //Poi per ogni nazione dentro la lista nationList viene creata la base per il grafico degli gli
     //abitanti della nazione chiamata set, la base per il grafico delle risorse chiamata risorse e
     //la base per il grafico del denaro chiamata denaro.
@@ -425,7 +421,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //In seguito viene messa a false la variabile useButton perche' una volta terminati i turni specificati sono
     //nuovamente visibili i PopOver.
     //Doposiche vengono cancellate tutte le statistiche fatte fin'ora (con il metodo clear) per lasciare spazio alle nuove
-    //statistiche dei prossimi turni e viene pulita anche la lista chiamata informazioni (cjhe contiene tutte e informazioni
+    //statistiche dei prossimi turni e viene pulita anche la lista chiamata informazioni (che contiene tutte e informazioni
     //su una Nazione).
     //Per ogni nazione dentro nationList vengono create due variabili: numSterile (che tiene conto del numero di territori
     //sterili di quella nazione) e numFertili (che tiene conto del numero di territori fertili di quella nazione).
@@ -434,23 +430,23 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //incrementata la variabile numFertile.
     //Poi, viene assegnata alla colonna ColonnaNazione il nome della nazione, alla colonna ColonnaEta l'eta' della nazione,
     //alla colonna ColonnaFertili il numero di terreni fertili della nazione, alla colonna ColonnaSterili il numero di
-    //terreni sterili della nazione e alla colonna ColonnaAlleanze tutte le nazioni alleate della nazione.
+    //terreni sterili della nazione.
     //Infine vengono aggiunte tutte le informazione dentro la tabella InfoTable.
     //Ora per ogni nazione dentro nationList viene richiamato il metodo getStato (della classe Nation).
     //Se il metodo getStato restituisce true, quindi se la nazione e' viva vengono aggiunti tutti i dati della nazione
-    //alla lista informazioni (quindi viene richiamato il costruttore con 4 parametri della classe Nation, passando il nome
+    //alla lista informazioni (quindi viene richiamato il costruttore con 3 parametri della classe Nation, passando il nome
     //(metodo getName), l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori
-    //sterili (variabile numSterile) e i territori aleati (metodo getAllies)) e vengono in seguito create le nuove statistiche (alla stessa maniera specificata precedentemente).
+    //sterili (variabile numSterile)) e vengono in seguito create le nuove statistiche (alla stessa maniera specificata precedentemente).
     //Altrimenti se il metodo getStato restituisce false, e quindi se la nazione e' morta vengono aggiunti tutti i dati della nazione
     //alla lista informazioni (quindi viene richiamato il costruttore della classe Nation, passando il nome (metodo getName),
-    //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori sterili (variabile numSterile) e
-    //e i territori alleati (metodo getAllies)), ma vicino al nome viene aggunta la scritta "(MORTA)".
+    //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori sterili (variabile numSterile), ma vicino al nome viene aggunta la scritta "(MORTA)".
     //Altrimenti, se non siamo al primo turno e non e' stato svolto il numero di turni indicato bisogna riiniziare dalla prima nazione ma
     //siccome c'e' un problema con i Thread,  cioe' che una volta eseguito lo start di un thread non si puo' piu' rieseguire
     //lo start, almeno che non si crea una nuova istanza, allora vengono clonate le nazioni (i thread perche' Nation estende
-    //Thread) e vengono sostituite a quelle vecchie, richimando il metodo cloneNationThreadList, ottenendo cosi nuovi oggetti
+    //Thread) e vengono sostituite a quelle vecchie, richiamando il metodo cloneNationThreadList, ottenendo cosi nuovi oggetti
     //di tipo Nation startabili (in grado di eseguire il proprio run()) ma che mantengono gli stessi dati di prima (senza
     //perdite di dati, appunto perche' sono stati clonati).
+    //In seguito viene settata la variabile booleana useStart a true.
     //Infine viene messo l'indice del for a -1 per riniziare ad iterare da capo le nazioni della lista nationList.
     //Per eseguire la wait in clickStart bisogna sincronizzare (synchronize) il metodo in maniera che una nazione possa
     //notificare il thread che gestiva i turni, senza synchronize si otterebbero delle eccezioni.
@@ -492,7 +488,6 @@ public class ControllerImpostazioniGriglia implements Initializable {
             else{
                 this.buttonAddNation.setDisable(true);
                 this.buttonDeleteNation.setDisable(true);
-                useStart=true;
 
                 /*for(int indice = 0; indice <nationList.size(); indice++) {
                     XYChart.Series set = new XYChart.Series<>();            //Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
@@ -534,6 +529,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 if(useStart == true){
                     this.nationList = cloneNationThreadList();     	    //Vengono clonate le nazioni per poter startare di nuovo i thread
                 }
+                useStart=true;
                 int turniSvolti = Integer.parseInt(txtTurniDaSvolgere.getText()); //Numero di turni da svolgere prima della pausa
                 //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
                 //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione creata
@@ -585,11 +581,10 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                     ColonnaEta.setCellValueFactory(new PropertyValueFactory<Nation,Eta>("eta")); 					//Assegno alla colonnaEta il dato dell'eta
                                     ColonnaFertili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numFertili")); 	//Assegno alla colonnaFertili il numFertili (numero terreni fertili)
                                     ColonnaSterili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numSterili")); 	//Assegno alla colonnaSterili il numSterili (numero terreni sterili)
-                                    ColonnaAlleanze.setCellValueFactory(new PropertyValueFactory<Nation,ArrayList<Nation>>("allies"));		//Assegno alla colonnaAlleazne l'allies (nazioni alleate)
                                     InfoTable.setItems(informazioni); 																//Aggiungo il tutto nella tabella principale
                                     //SE LA NAZIONE ITERATA E' VIVA
                                     if (nationList.get(k).getStato() == true) {
-                                        informazioni.add(new Nation(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile, nationList.get(k).getAllies())); //Aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                        informazioni.add(new Nation(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile)); //Aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         XYChart.Series set1 = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series risorse1 = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
                                         XYChart.Series denaro1 = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
@@ -607,7 +602,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                     }
                                     //ALTRIMENTI, SE LA NAZONE ITERATA E' MORTA
                                     else {
-                                        informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile,nationList.get(k).getAllies())); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                        informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         continue;
                                     }
                                 }
@@ -624,7 +619,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                         //SE NON CI SONO PIU' NAZIONI VIVE DENTRO LA LISTA NATION LIST E' INUTILE CONTINUARE AD
                         //ITERARE NAZIONI
                         boolean vive = false;                         //Booleano per verificare se ci sono ancora nazione vive
-                        for(int j=0;j<nationList.size();i++){         //Controlla per ogni nazione se e' viva, e se lo e' tiene
+                        for(int j=0;j<nationList.size();j++){         //Controlla per ogni nazione se e' viva, e se lo e' tiene
                             //conto che c'e' almento una nazione viva
                             if(nationList.get(j).getStato()==true){
                                 vive = true;
@@ -681,7 +676,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Poi itera tutte le nazioni nella lista nation list e di ogni nazione iterata viene creata
     //una nuova nazione con il nome e colore della nazione vecchia (nome e colore vengono presi
     //richiamando i metodi getName e getColor della classe Nation) e si copiano le caratteristiche
-    //della vecchia nazione incluse le regioni, richiamando il metodo cloneCharacters della
+    //della vecchia nazione incluse le regioni e gli accordi, richiamando il metodo cloneCharacters della
     //classe Nation ed infine si aggiunge il clone della vecchia nazione (quindi si aggiunge
     //la nuova nazione) alla lista cloneList ed infine viene ritornata la lista cloneList
     private ArrayList<Nation> cloneNationThreadList(){
