@@ -1244,7 +1244,7 @@ public class Nation extends Thread{
                 }
                 //Per la regione scelta vengono verificate le regole di transizioni le quali
                 //ci diranno se la nazione manterra' o meno il controllo su quella regione
-                System.out.println("Sono " + regionsToExec.get(regionToControl).getId() + " e appartengo alla nazione " + regionsToExec.get(regionToControl).getNomeNazione());
+                System.out.println("Sono " + regioni.get(regionToControl).getId() + " e appartengo alla nazione " + regioni.get(regionToControl).getNomeNazione());
                 verificaRegoleTransizione(regioni.get(regionToControl));
             }
             //Altrimenti se non e' stata occupata tutta la griglia vuol dire che ci sono delle regioni che confinano con regioni non alleate,
