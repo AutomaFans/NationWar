@@ -20,32 +20,29 @@ public class Nation extends Thread{
     private  String nome;       			//Nome della nazione
     private  int numSterili;    			//Numero di territori sterili della nazione
     private  int numFertili;    			//Numero di territori fertili della nazione
-    private ArrayList<Nation> Alleate;		//Lista per i territori alleati della nazione
     private boolean active;                 //Variabile booleana che sara' true se la nazione non ha finito di svolgere la sua run, false altrimenti
     private boolean vivo = true;            //Variabile booleana che indica lo stato di una nazione.
 											/*Indica se la nazione e' viva (true) o se la nazione e' morta (false).
 	 										Sotto i 10 abitanti la nazione e' morta*/
 
 
-    //COSTRUTTORE CON QUATTRO PARAMETRI
+    //COSTRUTTORE CON CINQUE PARAMETRI
     //Questo costruttore viene richiamato nel metodo clickStart della classe
     //ControllerImpGriglia, per aggiungere le informazioni riguardanti una nazione
     //alla lista informazioni (che sara' poi aggiunta alla tabella InfoTable sempre
     //della classe ControllerImpGriglia).
     //Prende come parametri una Stringa nome, un Eta eta, un intero numSterili, un intero
-    //numFertili e un arrayList di nazioni chiamato NazAlleate.
+    //numFertili.
     //Poi assegna l'eta eta presa da parametro al campo chiamato eta della classe
     //Nation, la stringa nome presa da parametro al campo chiamato nome della classe
     //Nation, l'intero numFertili preso da parametro al campo chiamato numFertili
     //della classe Nation, l'intero numSterili preso da parametro al campo chiamato
-    //numSterili della classe Nation e la lista NazAlleate presa da parametro al campo
-    //chiamato Alleate della classe Nation
-    public Nation(String nome, Eta eta, int numSterili, int numFertili, ArrayList<Nation> NazAlleate) {
+    //numSterili della classe Nation
+    public Nation(String nome, Eta eta, int numSterili, int numFertili) {
         this.age= eta;
         this.nome = nome;
         this.numFertili = numFertili;
         this.numSterili =numSterili;
-        this.Alleate = NazAlleate;
     }
 
     //METODO GET ETA
@@ -101,14 +98,6 @@ public class Nation extends Thread{
 
     //Lista degli accordi proposti da una nazione e accettati da una data nazione
     private ArrayList<Accordo> accordiAccettati = new ArrayList<>();
-
-    //Lista degli acerrimi nemici della nazione
-    //Quindi questa lista contiene tutti i nemici di una nazione
-    private ArrayList<Nation> enemyNations= new ArrayList<>();
-
-    //Lista degli alleati della nazione
-    //Quindi questa lista contiene tutti gli alleati di una nazione
-    private ArrayList<Nation> allies = new ArrayList<>();
 
 
     //COSTRUTTORE CON DUE PARAMETRI
@@ -364,22 +353,6 @@ public class Nation extends Thread{
     //Restituisce l'array list chimato regioni che sono le regioni assegnate alla nazione
     public ArrayList<Regione> getRegioni(){
         return regioni;
-    }
-
-
-
-    //METODO GET ENEMYES
-    //Restituisce la lista dei piu' grandi nemici della nazione this
-    public ArrayList<Nation> getEnemyes(){
-        return this.enemyNations;
-    }
-
-
-
-    //METODO GET ALLEATI
-    //Restituisce la lista di tutte le nazioni alleate alla nazione this
-    public ArrayList<Nation> getAllies(){
-        return this.allies;
     }
 
 
@@ -756,11 +729,11 @@ public class Nation extends Thread{
     //controllo della regione passata da paramentro.
     //Altrimenti, se la nazione e' fertile viene settata la variabile mantieniControllo a true, cosi
     //la nazione puo' mantenere il controllo della regione passata da paramentro.
-    //infiene se la variabile mantieniControllo e' false, allora la nazione perde il controllo della
-    //regione passata da paremetro e le caratteristiche della nazione vengono modificate in maniera
-    //che questa regione non faccia piu' parte della nazione, per cui viene richiamato il metodo resetRegion
-    //della classe regione e viene rimossa la regione dalla lista regioni (che contiene le regioni
-    //posseduti dalla nazione)
+    //Infine se la variabile mantieniControllo e' false, allora la nazione perde il controllo della
+    //regione passata da parametro: quindi se e' stato stretto un patto sulla regione viene sciolto
+    // e le caratteristiche della regione vengono modificate in maniera che questa regione non faccia piu'
+    // parte della nazione, per cui viene richiamato il metodo resetRegion della classe regione e viene
+    // rimossa la regione dalla lista regioni (che contiene le regioni posseduti dalla nazione)
     public void verificaRegoleTransizione(Regione region){
         region.refreshNeighboringRegions();      								//Aggiorna le regioni che confinano alla regione passata da parametro
         ArrayList<Regione> alleate=region.getRegioniConfinantiAlleate();        //Regioni confinanti alleate
@@ -798,6 +771,9 @@ public class Nation extends Thread{
         }
         //SE MANTIENI CONTROLLO E' FALSE
         if (mantieniControllo == false){
+            if(region.getAlleanza() != null){ //Se e' stato stretto un patto sulla regione viene sciolto
+                interrompiAlleanza(region.getAlleanza());
+            }
             region.resetRegion();
             regioni.remove(region);
 
@@ -817,7 +793,8 @@ public class Nation extends Thread{
     //difende (nazione enemy), se la nazione attaccante ha piu' risorse di quella che difende
     //allora vince la nazione attaccante, per cui conquista la regione (presa da parametro)
     //della nazione che difende e ne trae profitto (richiamando il metodo conquistaRegione della
-    //classe Nation).
+    //classe Nation): in questo caso la nazione che difende paga di nuovo un tributo di guerra con
+    // il metodo warPayment.
     //Altrimenti, se la nazione attaccante ha lo stesso numero di risorse o ha meno risorse della
     //nazione che difende, allora perde la nazione attaccante, per cui subisce un piccolo calo
     //nell'economia, nella popolazione e nelle risorse (richiamando il metodo warPayment della
@@ -828,49 +805,54 @@ public class Nation extends Thread{
     //perso perche' sicuramente l'eta' della nazione che difende sara' piu' avanzata, percio'
     //la nazione che attacca subisce un piccolo calo nell'economia, nella popolazione e nelle
     //risorse (richiamando il metodo warPayment della classe Nation).
-    //Altrimenti, se la nazione che attacca ha l'eta' moderna, allora bisogna vedere l'eta della
+    //Altrimenti, se la nazione che attacca ha l'eta' intermedia, allora bisogna vedere l'eta della
     //nazione che difende, per cui se la nazione che difende ha l'eta' antica allora la nazione
     //attaccante vince e conquista la regione della nazione che difendeva e ne trae profitto
-    //(richiamando il metodo conquistaRegione della classe Nation), mentre se la nazione che difende
-    //he l'eta' moderna allora vince, per cui la nazione che difende subisce un piccolo calo
+    //(richiamando il metodo conquistaRegione della classe Nation): in questo caso la nazione che difende
+    // paga di nuovo un tributo di guerra con il metodo warPayment. Mentre se la nazione che difende
+    //he l'eta' moderna allora vince, per cui la nazione che attacca subisce un piccolo calo
     //nell'economia, nella popolazione e nelle risorse (richiamando il metodo warPayment della classe Nation).
     //Infine, se la nazione che attacca ha l'eta' moderna allora possiamo subito dire che ha
     //vinto perche' sicuramente l'eta' della nazione che difende sara' memno avanzata, percio'
     //conquista la regione della nazione che difendeva e ne trae profitto (richiamando il metodo
-    //conquistaRegione della classe Nation)
+    //conquistaRegione della classe Nation): in questo caso la nazione che difende paga di nuovo
+    // un tributo di guerra con il metodo warPayment.
     public void guerra(Nation enemy, Regione region){
         warPayment(enemy);
         //SE LE DUE NAZIONI HANNO LA STESSA ETA'
         if(this.getAge() == enemy.getAge()){
             //SE LA NAZIONE ATTACCANTE HA PIU' RISORSE DELLA NAZIONE CHE DIFENDE
             if(this.getRisorse() > enemy.getRisorse()){
+                warPayment(enemy);  //La nazione che difende perde risorse, abitanti e denaro
                 this.conquistaRegione(region);
             }
             //ALTRIMENTI, SE LA NAZIONE ATTACCANTE HA MENO O HA LO STESSO NUMERO DI RISORSE
             //DELLA NAZIONE CHE DIFENDE
             else{
-                warPayment(this);
+                warPayment(this);//La nazione che attacca perde risorse, abitanti e denaro
             }
         }
         //ALTRIMENTI, SE LE DUE NAZIONI NON HANNO LA STESSA ETA'
         else{
             //SE LA NAZIONE ATTACCANTE HA L'ETA' ANTICA
             if(this.getAge().equals("ANTICA")){
-                warPayment(this);
+                warPayment(this);//La nazione che attacca perde risorse, abitanti e denaro
             }
             //ALTIMENTI, SE LA NAZIONE ATTACCANTE HA L'ETA' INTEMEDIA
             else if(this.getAge().equals("INTERMEDIA")){
                 //SE LA NAZIONE CHE DIFENDE HA L'ETA' ANTICA
                 if(enemy.getAge().equals("ANTICA")){
+                    warPayment(enemy);  //La nazione che difende perde risorse, abitanti e denaro
                     this.conquistaRegione(region);
                 }
                 //ALTRIMENTI, SE LA NAZIONE CHE DIFENDE HA L'ETA' MODERNA
                 else{
-                    warPayment(this);
+                    warPayment(this);//La nazione che attacca perde risorse, abitanti e denaro
                 }
             }
             //ALTRIMENTI, SE LA NAZIONE CHE ATTACCA HA L'ETA' MODERNA
             else{
+                warPayment(enemy);  //La nazione che difende perde risorse, abitanti e denaro
                 this.conquistaRegione(region);
             }
         }
@@ -899,21 +881,13 @@ public class Nation extends Thread{
     //tutti gli accordi tra quelle due nazioni. Quindi se le due nazioni non hanno piu'
     //accordi allora l'alleanza finisce, mentre se quelle due nazioni hanno accordi l'allenza
     //non puo' finire.
-    //Per cui, come prima cosa, viene presala regione sulla quale si vuole interrompere il patto
+    //Per cui, come prima cosa, viene presa la regione sulla quale si vuole interrompere il patto
     //(questa regione e' presa richiamando il metodo getRegionePatto della classe Accordo)e su questa
     //regione viene rotto il patto (richiamando il metodo rompiPatto della classe Regione).
     //ora siccome si e' rotto il patto, allora viene settato il testo di quella regione (ricorda che
     //una regione e' un bottone) con la scritta "" (stringa vuota).
     //In seguito viene rimosso il patto tra gli accordi proposti della nazione che lo ha proposto e viene
     //rimosso il patto anche tra gli accordi accettati della nazione che lo ha accettato.
-    //in seguito viene impostata la variabile booleana ultimo a true, questa variabile serve per vedere
-    //se si e' interotto l'ultimo accordo tra le 2 nazioni (in tal caso e' a true), altrimenti se
-    //ci sono ancora accordi tra le 2 nazioni ultimo e' a false.
-    //Cosi, si controlla tra gli accordi proposti dalla nazione che ha proposto l'accordo se l'accordo
-    //sciloto era l'ultimo rimasto tra le due nazioni, e se lo e' mette la variabile ultimo a false.
-    //Infine sei vede se la vartabile ultimo e' a true, quindi si vede se e' stato sciolto
-    //l'ultimo accordo tra le 2 nazioni allora le 2 nazioni non sono piu' alleate e quindi
-    //viene richiamato il metodo finisciAlleanza della classe Nation
     public void interrompiAlleanza(Accordo alleanza){
         alleanza.getRegionePatto().rompiPatto();
         alleanza.getRegionePatto().setText("");
@@ -921,18 +895,6 @@ public class Nation extends Thread{
         alleanza.getNazioneChePropone().getAccordiProposti().remove(alleanza);
         //Rimuove il patto tra gli accordi accettati della nazione che lo ha accettato
         alleanza.getNazioneCheAccetta().getAccordiAccettati().remove(alleanza);
-        boolean ultimo=true;
-        //Itera gli accordi proposti della regione che ha proposto l'accordo
-        for(int i=0;i<alleanza.getNazioneChePropone().getAccordiProposti().size(); i++){
-            if(alleanza.getNazioneChePropone().getAccordiProposti().get(i).getNazioneCheAccetta() == alleanza.getNazioneCheAccetta()){
-                ultimo = false;
-            }
-        }
-        //SE LA VARIABILE ULTIMO E' A TRUE, CIOE' SE E' STATO SCIOLTO L'ULTIMO ACCORDO
-        //TRA LE DUE NAZIONI
-        if(ultimo == true){
-            this.finisciAlleanza(alleanza.getNazioneChePropone(), alleanza.getNazioneCheAccetta());
-        }
     }
 
 
@@ -951,29 +913,11 @@ public class Nation extends Thread{
     //il costruttore con due parametri della classe Accordo), e in seguito vine aggiunto
     //il pattoEconomico  a quelli proposti della nazione che propone e viene anche aggiunto
     //il pattoEconomico a quelli accettati della nazione che accetta.
-    //Dopo di che viene aggiunta la nazione che accetta l'accordo alla lista degli alleati della
-    //nazione che propone l'accordo richiamando il metodo dichiaraAlleato della classe Nation
-    //(quindi la nazione che ha accettato l'accordo e' diventata alleata della nazione che ha
-    //proposto l'accordo) e allo stesso modo viene aggiunta la nazione che propone l'accordo
-    //alla lista degli alleati della nazione che accetta l'accordo richiamando il metodo
-    //dichiaraAlleato della classe Nation(quindi la nazione che ha proposto l'accordo
-    //e' diventata alleata della nazione che ha accettato l'accordo), cosi d'ora in poi le due nazioni
-    //non andranno mai in guerra almeno che una delle due non accetti un patto da parte dell'altra nazione
-    //diventando cosi' acerrime nemiche e sciogliendo ogni alleanza.
     //Per cui ora si e' stretta l'alleanza su quella regione allora viene settato il testo di quella regione
     //(ricorda che una regione e' un bottone) con la scritta "Stretto un patto".
     //Altimenti, se il denaro della nazione che propone l'accordo non e' maggiore o uguale
     //a 2/3 di quello della nazione che dovrebbe accettare l'accordo, allora non viene accettato e le nazioni
-    //diventano acerrime nemiche per sempre: d'ora in poi andranno sempre in guerra.
-    //Per cui  viene aggiunta la nazione che rifiuta l'accordo alla lista dei nemici  della
-    //nazione che propone l'accordo richiamando il metodo dichiaraAcerrimoNemico della classe Nation
-    //(quindi la nazione che ha rifiutato l'accordo e' diventata nemica della nazione che ha
-    //proposto l'accordo) e allo stesso modo viene aggiunta la nazione che propone l'accordo
-    //alla lista dei nemici della nazione che rifiuta l'accordo richiamando il metodo
-    //dichiaraAcerrimoNemico della classe Nation(quindi la nazione che ha proposto l'accordo
-    //e' diventata nemica della nazione che ha rifiutato l'accordo), cosi d'ora in poi le due
-    //nazioni andranno sempre in guerra
-    //Inoltre se ci sono vengono sciolti tutti gli accordi tra queste nazioni.
+    //sciolgono tutti gli accordi stretti in precedenza(se esistono).
 
     //In seguito vengono aggiornati gli accordi proposti della  nazione che propone, per cui per ogni alleanza dentro la lista
     //accordiProposti (presa richiamando il metodo getAccordiProposti) se la nazione che riceve l'accordo
@@ -1003,6 +947,8 @@ public class Nation extends Thread{
     //allora l'accordo su quella regione viene sciolto (richiamando il metodo rompiPatto della classe Regione)
     //e percio' viene settato il testo di quella regione  (ricorda che una regione e' un bottone)
     //con la scritta "" (stringa vuota).
+    //Infine visto che l'accordo non e' stato accettato, la nazione che aveva proposto l'accordo va in guerra con
+    // quella che non l'aveva accettato.
     public void proponiAccordo(Nation accettatore, Regione region){
         //SE IL DENARO DELLA NAZIONE CHE PROPONE L'ACCORDO E MAGGIORE O UGUALE A 2/3 DEL
         //DENARO DELLA NAZIONE CHE RICEVE L'ACCORDO
@@ -1013,20 +959,10 @@ public class Nation extends Thread{
             this.accordiProposti.add(pattoEconomico);
             //Viene aggiunto il patto a quelli accettati della nazione che accetta
             accettatore.accordiAccettati.add(pattoEconomico);
-            //Viene aggiunta la nazione che accetta l'accordo alla lista degli alleati della nazione che ha proposto l'accordo
-            this.dichiaraAlleato(accettatore);
-            //Viene aggiunta la nazione che propone l'accordo alla lista degli alleati della nazione che ha accettato l'accordo
-            accettatore.dichiaraAlleato(this);
             region.setText("p");
         }
         //ALTRIMENTI, SE L'ACCORDO NON VIENE ACCETTATO
         else{
-            //La nazione che aveva proposto l'accordo dichiara nemica la nazione che non ha accetto l'accordo
-            this.dichiaraAcerrimoNemico(accettatore);
-            //La nazione che non ha accettato l'accordo dichiara nemica la nazione che ha proposto l'accordo
-            accettatore.dichiaraAcerrimoNemico(this);
-            //Se c'era un'alleanza tra le due nazioni, ora finisce
-            this.finisciAlleanza(this, accettatore);
             //Vengono sciolti tutti gli accordi tra le due nazioni (se presenti)
             //Le liste conterrano tutti gli accordi delle due nazioni(accettati e proposti) ma senza quelli stretti insieme
             ArrayList<Accordo> accordiPropostiDaChiPropone = new ArrayList<>();
@@ -1037,13 +973,13 @@ public class Nation extends Thread{
             //RIMUOVE ACCORDI TRA QUELLI DELLA NAZIONE CHE AVEVA PROPOSTO L'ACCORDO
             //Aggiorna gli accordi proposti
             for(Accordo alleanza: this.getAccordiProposti()){
-                //SE LA NAZIONE CHE RICEVE L'ACCORDO NON E' LA NAZIONE CHE E' APPENA STATA
-                //DICHIARATA NEMICA, ALLORA L'ACCORDO NON VIENE SCIOLTO
+                //SE LA NAZIONE CHE RICEVE L'ACCORDO NON E' LA NAZIONE CHE NON HA
+                // ACCETTATO IL PATTO, ALLORA L'ACCORDO NON VIENE SCIOLTO
                 if(alleanza.getNazioneCheAccetta() != accettatore){
                     accordiPropostiDaChiPropone.add(alleanza);
                 }
-                //ALTRIMENTI, SE LA NAZIONE CHE RICEVE L'ACCORDO E' LA NAZIONE CHE E' APPENA
-                //STATA DICHIARATA NEMICA, ALLORA L'ACCORDO VIENE SCIOLTO
+                //ALTRIMENTI, SE LA NAZIONE CHE RICEVE L'ACCORDO E' LA NAZIONE CHE NON HA
+                // ACCETTATO IL PATTO, ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
                     alleanza.getRegionePatto().setText("");
@@ -1054,13 +990,13 @@ public class Nation extends Thread{
 
             //Aggiorna gli accordi accettati
             for(Accordo alleanza: this.getAccordiAccettati()){
-                //SE LA NAZIONE CHE PROPONE L'ACCORDO NON E' LA NAZIONE CHE E' APPENA STATA
-                //DICHIARATA NEMICA, ALLORA L'ACCORDO NON VIENE SCIOLTO
+                //SE LA NAZIONE CHE PROPONE L'ACCORDO NON E' LA NAZIONE CHE NON HA
+                // ACCETTATO IL PATTO, ALLORA L'ACCORDO NON VIENE SCIOLTO
                 if(alleanza.getNazioneChePropone() != accettatore){
                     accordiAccettatiDaChiPropone.add(alleanza);
                 }
-                //ALTRIMENTI, SE LA NAZIONE CHE RICEVE L'ACCORDO E' LA NAZIONE CHE E' APPENA
-                //STATA DICHIARATA NEMICA, ALLORA L'ACCORDO VIENE SCIOLTO
+                //ALTRIMENTI, SE LA NAZIONE CHE RICEVE L'ACCORDO E' LA NAZIONE CHE NON HA
+                // ACCETTATO IL PATTO, ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
                     alleanza.getRegionePatto().setText("");
@@ -1072,13 +1008,13 @@ public class Nation extends Thread{
             //RIMUOVE ACCORDI TRA QUELLI DELLA NAZIONE CHE NON HA ACCETTATO L'ACCORDO
             //Aggiorna gli accordi proposti
             for(Accordo alleanza: accettatore.getAccordiProposti()){
-                //SE LA NAZIONE CHE ACCETTA L'ACCORDO NON E' LA NAZIONE CHE E' APPENA STATA
-                //DICHIARATA NEMICA, ALLORA L'ACCORDO NON VIENE SCIOLTO
+                //SE LA NAZIONE CHE ACCETTA L'ACCORDO NON E' LA NAZIONE CHE HA PROPOSTO IL PATTO
+                // , ALLORA L'ACCORDO NON VIENE SCIOLTO
                 if(alleanza.getNazioneCheAccetta() != this){
                     accordiPropostiDaChiNonAccetta.add(alleanza);
                 }
-                //ALTRIMENTI, SE LA NAZIONE CHE ACCETTA L'ACCORDO E' LA NAZIONE CHE E' APPENA
-                //STATA DICHIARATA NEMICA, ALLORA L'ACCORDO VIENE SCIOLTO
+                //ALTRIMENTI, SE LA NAZIONE CHE ACCETTA L'ACCORDO E' LA NAZIONE CHE HA PROPOSTO IL PATTO
+                // , ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
                     alleanza.getRegionePatto().setText("");
@@ -1090,12 +1026,12 @@ public class Nation extends Thread{
             //Aggiorna gli accordi accettati
             for(Accordo alleanza: accettatore.getAccordiAccettati()){
                 if(alleanza.getNazioneChePropone() != this){
-                    //SE LA NAZIONE CHE ACCETTA L'ACCORDO NON E' LA NAZIONE CHE E' APPENA STATA
-                    //DICHIARATA NEMICA, ALLORA L'ACCORDO NON VIENE SCIOLTO
+                    //SE LA NAZIONE CHE ACCETTA L'ACCORDO NON E' LA NAZIONE CHE HA PROPOSTO IL PATTO,
+                    // ALLORA L'ACCORDO NON VIENE SCIOLTO
                     accordiAccettatiDaChiNonAccetta.add(alleanza);        //L'accordo non viene sciolto
                 }
-                //ALTRIMENTI, SE LA NAZIONE CHE ACCETTA L'ACCORDO E' LA NAZIONE CHE E' APPENA
-                //STATA DICHIARATA NEMICA, ALLORA L'ACCORDO VIENE SCIOLTO
+                //ALTRIMENTI, SE LA NAZIONE CHE ACCETTA L'ACCORDO E' LA NAZIONE CHE HA PROPOSTO
+                // IL PATTO, ALLORA L'ACCORDO VIENE SCIOLTO
                 else{
                     alleanza.getRegionePatto().rompiPatto();
                     alleanza.getRegionePatto().setText("");
@@ -1103,47 +1039,11 @@ public class Nation extends Thread{
             }
             //Viene aggiornata la nuova lista di accordi accettati
             accettatore.accordiAccettati = accordiAccettatiDaChiNonAccetta;
+            //Infine visto che l'accordo non e' stato accettato, la nazione che aveva proposto l'accordo
+            // va in guerra con quella che non l'aveva accettato
+            this.guerra(accettatore, region);
         }
     }
-
-
-
-    //METODO DICHIARA ACERRIMO NEMICO
-    //Questo metodo prende come parametri una Nazione chiamata nemico e permette di dichiarare
-    //la nazione presa come parametro come acerrima nemica.
-    //Per cui d'ora in poi incontrandosi le nazioni andranno sempre in guerra.
-    //Per dichiarare la nazione come acerrima nemica, viene presa la lista enemyNations
-    //(che contiene tutti i nemici di una nazione) con il metodo getEnemyes() della classe
-    //Nation e viene aggiunta a questa lista la nazione presa come parametro.
-    public void dichiaraAcerrimoNemico(Nation nemico){
-        this.getEnemyes().add(nemico);
-    }
-
-
-
-    //METODO DICHIARA ALLEATO
-    //Questo metodo prende come parametri una Nazione chiamata alleato e permette di dichiarare
-    //la nazione presa come parametro come alleata.
-    //Per dichiarare la nazione come alleata, viene presa la lista allies (che contiene tutti
-    //gli alleati di una nazione) e viene aggiunta a questa lista la nazione presa come parametro.
-    public void dichiaraAlleato(Nation alleato){
-        this.allies.add(alleato);  //Aggiunge l'alleato alla lista di alleati della nazione
-    }
-
-
-
-    //METODO FINISCI ALLEANZA
-    //Questo metodo prende come parametri due nazioni, chiamate one e two ed e' chiamato
-    //nel momento in cui si chiude un'alleanza dopo che si sono sciolti tutti gli accordi tra
-    //le due nazioni prese come parametro.
-    //Quindi rimuove dalla lista allies l'alleanza della nazione one con la nazione two e
-    //allo stesso modo rimuove dalla lista allies l'alleanza della nazione two con la nazione one
-    public void finisciAlleanza(Nation one, Nation two){
-        one.allies.remove(two); //Vengono rimosse le corrispettive alleanze dalle liste di alleati delle due nazioni
-        two.allies.remove(one);
-    }
-
-
 
     //METODO RISCUOTI TASSE
     //Permette di riscuotere le tasse dalle nazioni alle quali sono stati accettati degli accordi.
@@ -1165,23 +1065,32 @@ public class Nation extends Thread{
     //Ed e' usato nel caso si sta clonando una nazione per runnarla di nuovo senza perdere traccia dei dati, in quel caso
     //quindi questa sarebbe una nazione clone (le uniche nazioni non clone sono quelle del primo turno di gioco).
     //In particolare copia i dati della nazione che si vuole clonare in questa nazione, (nome e colore sono gia' stati copiati)
-    //Qusto metodo prende come parametro la nuova nazione da clonare e copia dentro questa l'eta' della nazione,
+    //Questo metodo prende come parametro la nuova nazione da clonare e copia dentro questa l'eta' della nazione,
     //la quantita' di denaro, la quantita' di risorse, il numero di abitanti e copia l'oggetto griglia sul quale la nazione
-    //svolge delle azioni.
+    //svolge delle azioni. Vengono inoltre copiate le regioni, gli accordi e lo stato della nazione(se e' viva o morta).
     public void cloneCharacters(Nation nazioneDaClonare){
         this.age = nazioneDaClonare.getAge();                        	//Copia l'eta'
         this.denaro = nazioneDaClonare.getDenaro();                  	//Copia la quantita' di denaro
         this.risorse = nazioneDaClonare.getRisorse();                	//Copia la quantita' di risorse
         this.numAbitanti = nazioneDaClonare.getNumAbitanti();        	//Copia il numero di abitanti
         this.gridController = nazioneDaClonare.getGridController();  	//Copia l'oggetto griglia sul quale la nazione svolge delle azioni
+        this.vivo = nazioneDaClonare.getStato();                        //Copia lo stato e cioe' se la nazione e' viva o morta
         for(int i=0; i < nazioneDaClonare.getRegioni().size(); i++){ 	//Itero le regioni della nazione da clonare
             //Passo alle regioni il nuovo oggetto nazioneclonato che gli appartiene
             nazioneDaClonare.getRegioni().get(i).setNazione(nazioneDaClonare.getName(), nazioneDaClonare.getColor(), this);
             //Inoltre anche i thread delle regioni se sono stati startati(start()) non possono piu' eseguire il loro run()
             //quindi bisogna crearne una nuova istanza
             nazioneDaClonare.getRegioni().get(i).setNewThread();
-            //Infine viene aggiunta la regione alla naione clonata(this.addRegion("regione");)
+            //Infine viene aggiunta la regione alla nazione clonata(this.addRegion("regione");)
             addRegion(nazioneDaClonare.getRegioni().get(i));
+        }
+        for(int i=0; i<nazioneDaClonare.getAccordiProposti().size();i++){
+            nazioneDaClonare.getAccordiProposti().get(i).setNazioneChePropone(this);
+            this.accordiProposti.add(nazioneDaClonare.getAccordiProposti().get(i));
+        }
+        for(int i=0; i<nazioneDaClonare.getAccordiAccettati().size();i++){
+            nazioneDaClonare.getAccordiAccettati().get(i).setNazioneCheAccetta(this);
+            this.accordiAccettati.add(nazioneDaClonare.getAccordiAccettati().get(i));
         }
     }
 
