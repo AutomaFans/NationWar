@@ -1017,7 +1017,7 @@ public class Nation extends Thread{
             this.dichiaraAlleato(accettatore);
             //Viene aggiunta la nazione che propone l'accordo alla lista degli alleati della nazione che ha accettato l'accordo
             accettatore.dichiaraAlleato(this);
-            region.setText("PATTO");
+            region.setText("p");
         }
         //ALTRIMENTI, SE L'ACCORDO NON VIENE ACCETTATO
         else{
