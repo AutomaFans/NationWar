@@ -19,23 +19,21 @@ import static interfacciaGrafica.ControllerImpostazioniGriglia.nationList;			//P
 public class ControllerDeleteNation {
 
 
+    //Bottone chiamato buttonElimina , per eliminare la nazione selezionata
     @FXML
-    private Button buttonElimina;				//Bottone chiamato buttonElimina , per eliminare la nazione selezionata
+    private Button buttonElimina;
 
+    //Bottone chiamato buttonClose, per chiudere la finestra di eliminazione della nazione
     @FXML
-    private Button buttonClose;					//Bottone chiamato buttonClose, per chiudere la finestra di eliminazione della nazione
+    private Button buttonClose;
 
+    /*ChoiceBox (menu a tendina) chiamato nomeNazione che conterra' tutti i nomi
+	delle nazioni che potranno essere selezionate per essere eliminate*/
     @FXML
-    private ChoiceBox<String> nomeNazione;		/*ChoiceBox (menu a tendina) chiamato nomeNazione che conterra' tutti i nomi
-    											delle nazioni che potranno essere selezionate per essere eliminate*/
+    private ChoiceBox<String> nomeNazione;
 
 
     //METODO INITIALIZE
-    //La lista nomiNazioni (creata nella classe ControllerAddNation) contiene tutti i nomi
-    //delle nazioni che sono state create.
-    //Aggiunge al choice box chimato nomeNazione tutti gli elementi che sono contenuti dentro la lista
-    //nomiNazioni, quindi nel menu a tendina ci saranno tutti i nomi delle nazioni che sono state create.
-    //Poi imposta di default la stringa "Seleziona Nome" della lista.
     @FXML
     public void initialize() {
         nomeNazione.getItems().addAll(nomiNazioni);
@@ -45,10 +43,6 @@ public class ControllerDeleteNation {
 
 
     //METODO CLICK CLOSE
-    //Quando viene premuto il bottone chiamato buttonClose, viene creato un nuovo stage chaimato stage
-    //e (con il metodo getWindow) viene preso il valore della finestra e viene messo dentro stage.
-    //Infine viene chiuso lo Stage chiamato stage, che conteneva il valore della finestra
-    //(con il metodo close) e cosi si chiude la finestra.
     @FXML
     void clickClose(ActionEvent event) {
         Stage stage = (Stage) buttonClose.getScene().getWindow();
@@ -58,25 +52,6 @@ public class ControllerDeleteNation {
 
 
     //METODO CLICK ELIMINA NAZIONE
-    //Dal menu a tendina chiamato nomeNazione l'utente seleziona il nome della nazione che vuole
-    //eliminare.
-    //Cosi con un for itera sulla lista di stringhe nomiNazioni e mette la stringa iterata dentro
-    //la variabile num, di tipo stinga.
-    //Se num e' uguale alla nazione che l'utente ha selezionato per eliminare dal menu a tendina
-    //allora rimuove la stringa dalla lista nomi Nazioni.
-    //Allo stesso modo, con un for itera sulla lista di Nazioni nationList e mette la Nazione iterata dentro
-    //la variabile num, di tipo Nation.
-    //Ogni oggetto di tipo Nation e' composto da un nome e da un colore, cosi se num e' uguale
-    //al nome della nazione che l'utente ha selezionato per eliminare dal menu a tendina
-    //allora rimuove la nazione dalla lista nationList e aggiunge il colore usato per quella nazione
-    //alla lista ListaColori (cosi che questo colore e' di nuovo disponibile) perche' in
-    //controllerAddNation quando si creava una nuova nazione veniva eliminato anche il colore dalla lista
-    //Lista Colori per non creare nazioni con lo stesso colore.
-    //Inoltre toglie il colore della nazione alle celle che erano che erano che erano state assegnate
-    //alla nazione che si sta eliminando, richiamando il metodo removeAllRegion della classe Nation.
-    //In seguito viene viene impostata la variabile useButton(creata dentro ControllerImpGriglia) a false.
-    //Dopo di che' quando si preme il bottone chiamato buttonElimina la finestra viene chiusa
-    //e si torna sulla griglia.
     @FXML
     void clickEliminaNazione(ActionEvent event) {
         //ELIMINA LA NAZIONE DALLA STRINGA NOMI NAZIONI

@@ -34,23 +34,6 @@ public class Regione extends Button{
 
 
     //COSTRUTTORE CN DUE PARAMETRI
-    //Il costruttore prende il numero di riga e di colonna in cui si trova la cella(regione) nella griglia
-    //Genera un nuovo oggetto di tipo Random(randomico), per cui
-    //- assegna alle risorse un numero casuale compreso tra 0 e 1000
-    //- la nazione di appartenenza inizialmente e' nulla perche' quando generato il territorio non e' di nessuno
-    //Inoltre se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
-    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse e' minore
-    //di 350 allora la regione e' sterile per cui viene impostato il tipo = sterile
-    //Poi in base al tipo di territorio viene impostato lo sfondo della cella della griglia.
-    //Se il tipo e' fertile allora lo sfondo della cella sara' l'immagine IMG-Fertile.jpg,
-    //alrimenti, se il tipo e' sterile allora lo sfondo della cella sara' l'immagine
-    //IMG-Sterile.jpg.
-    //Il valore reale verra' valorizzato al momento in cui si aggiunge la regione alla griglia.
-    //Assegna poi un thread alla Regione (richiammando il costruttore con un parametro della classe
-    //CellThread) che svolgera le azioni inerenti ad essa.
-    //Infine valorizza le coordinate della regione nella griglia e il la variabile che mi dice se la regione
-    //ha stretto un'alleanzae e siccome inizialmente la regione non fa parte di nessuna allenaza,
-    //la variabile booleana alleanza viene settata a null
     public Regione(int row, int column){
         Random rand = new Random();         //Genera un nuovo oggetto di tipo Random(randomico)
         risorse = rand.nextInt(1000);     	//Assegna alle risorse un numero casuale compreso tra 0 e 1000
@@ -80,15 +63,6 @@ public class Regione extends Button{
 
 
     //METODO RESET REGION
-    //Permette di resettare la regione.
-    //Ovvero ne aggiorna il valore, in seguito se la regione faceva parte di una allenza, allora viene sciolta anche
-    // l'alleanza su quella regione. Successivamente toglie il nome della nazione di appartenza e l'oggetto Nation su
-    // quella cella e imposta lo sfondo di default.
-    //Quindi aggiorna il tipo della regione, richiamando il metodo refreshType della classe
-    //Regione.
-    //In seguito se la regione e' di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
-    //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
-    //Se la regione aveva settato il testo a "p" perche' faceva parte di un'alleanza viene settato ora a "".
     public void resetRegion(){
         this.setValore(nazione.getGridController().getNumeroRighe(), nazione.getGridController().getNumeroColonne());
         if(alleanza != null){
@@ -122,67 +96,42 @@ public class Regione extends Button{
 
 
     //METODO GET ROW
-    //Restituisce il numero di riga in cui la regione si trova nella griglia
     public int getRow(){
         return this.numRow;
     }
 
 
-
     //METODO GET COLUMN
-    //Restituisce il numero di colonna in cui la regione si trova nella griglia
     public int getColumn(){
         return this.numColumn;
     }
 
 
-
     //METODO GET RISORSE
-    //Restituisce il numero di risorse naturali attuali della nazione
     public double getRisorse() {
         return this.risorse;
     }
 
 
-
     //METODO GET NOME NAZIONE
-    //Restituisce il nome della nazione di appartenenza o manda un messaggio in console
-    //se la regione non appartiene a nessuno
     public String getNomeNazione() {
         return this.nomeNazione;
     }
 
 
-
     //METODO GET NAZIONE
-    //Restituisce l'oggetto di tipo Nation che rappresenta la nazione a cui
-    //appartiene la regione.
     public Nation getNazione(){
         return this.nazione;
     }
 
 
-
     //METODO GET TIPO
-    //Restituisce il tipo di regione(fertile o sterile)
     public String getTipo() {
         return this.tipo;
     }
 
 
-
     //METODO SET NAZIONE
-    //Questo metodo prende come parametri una stringa nationName che rappresenta il nome
-    //della nazione, una stringa color che rappresenta il colore da dare alla regione, e
-    //un oggetto naz di tipo Nazione che rappresenta la nazione che sara assegnata alla regione.
-    //Queso metodo permette di assegnare alla regione la nazione di appartenenza presa come
-    //parametro e il colore della nazione preso come parametro.
-    //Assegna inoltre l'oggetto nazione stesso (utile per alcune operazioni come ad esempio con i thread)
-    //Il metodo viene richiamato quando si assegna una regione ad una nazione durante le
-    //impostazioni iniziali e durante la simulazione quando una nazione conquista un territorio.
-    //Alla regione viene applicato setStyle che serve per applicare una propieta' css all'oggetto in questione, in questo caso viene
-    //applicato un background color e cioe' il colore di sfondo che sara' quello passato al metodo. Nel caso in cui si sta impostando
-    //la griglia si tratta de colore dell'ultima nazione inserita nel sistema.
     public void setNazione(String nationName, String colore, Nation naz){
         this.nomeNazione = nationName;
         Platform.runLater(
@@ -194,12 +143,7 @@ public class Regione extends Button{
     }
 
 
-
     //METODO REFRESH TYPE
-    //Setta il tipo di terreno (fertile o sterile) in base al suo stato attuale.
-    //Se il numero  di risorse e' maggiore uguale a 350 allora la regione e' fertile
-    //per cui viene impostato il tipo = fertile, altrimenti se il numero di risorse e' minore
-    //di 350 allora la regione e' sterile per cui viene impostato il tipo = sterile
     public void refreshType(){
         if(risorse >= 350.0){                   //Se il numero di risorse e' maggiore uguale a 350
             tipo = "fertile";					//Allora la regione e' fertile
@@ -210,13 +154,7 @@ public class Regione extends Button{
     }
 
 
-
     //METODO CONSUMA RISORSE
-    //Viene sottratto un quinto del numero di risorse ad ogni turno di gioco che interessa
-    //la nazione, cio' succede perche' siccome una nazione occupa la regione allora le
-    //risorse vengono usate e quindi consumate.
-    //inoltreviene anche richiamato il metodo refreshType della classe Regione, per aggiornare
-    //il tipo di terreno (fertile o sterile) dopo aver consumato le risorse.
     public void consumaRisorse(){
         this.risorse = risorse - (risorse / 5);
         this.refreshType();
@@ -224,17 +162,7 @@ public class Regione extends Button{
     }
 
 
-
     //METODO SET VALORE
-    //Questo metodo prende come parametri un intero che rappresenta il numero di righe e un
-    //intero che rappresenta il numero di colonne.
-    //Questo metodo serve per settare il valore reale in denaro della regionee questo
-    //valore cambiera' in base al numero di risorse e di righe e colonne della griglia.
-    //Se si ha una griglia abbastanza grande, cioe' se si hanno piu' di 10 righe e piu'
-    //di 10 colonne, il valore sara' piu' basso per permettere una maggiore espansione
-    //nella tabella, per cui il valore sara' la meta' delle risorse (risorse/2).
-    //Altrimenti, se si ha una griglia di piccole dimensioni il valore sara' piu' alto
-    //per contenere l'espansione, per cui il valore e' uguale alle risorse (valore = risorse).
     public void setValore(int righe, int colonne){
         if(righe > 10 && colonne > 10){          	//Se il numero di righe e di colonne della griglia e' maggiore di 10
             this.valore = risorse / 2;				//Il valore e' uguale alla meta' delle risorse
@@ -247,7 +175,6 @@ public class Regione extends Button{
 
 
     //METODO GET VALORE
-    //Ritorna il valore in denaro dela regione
     public double getValore(){
         return this.valore;
     }
@@ -255,7 +182,6 @@ public class Regione extends Button{
 
 
     //METODO START REGION THREAD
-    //Esegue lo start del thread su quella regione
     public void startRegionThread(){
         this.threadRegione.start();
     }
@@ -263,9 +189,6 @@ public class Regione extends Button{
 
 
     //METODO SET NEW THREAD
-    //Una volta eseguito il run del suo thread non sara' piu' possibile startarlo altrimenti
-    //si otterra' un eccezione, per questo il metodo assegna un nuovo thread alla regione
-    //cosi' che e' possibile fare di nuovo lo start() del suo thread
     public void setNewThread(){
         this.threadRegione = new CellThread(this);
     }
@@ -273,28 +196,6 @@ public class Regione extends Button{
 
 
     //METODO CREATE POP
-    //Qusto metodo prende come parametri una Regione r e serve per creare un oggetto di tipo
-    //PopOver relativo alla Regione presa come parametro.
-    //Quindi ogni volta che viene aggiunto un nuovo bottone alla griglia viene anche creato
-    //il popover corrispondente.
-    //Per farlo viene viene creata una label, chiamata risorseRegione e viene impostato il testo di
-    //questa label con il valore delle risorse relative a quella specifica regione (cioe' quella
-    //cella quante risorse ha).
-    //Poi viene creata un'altra label, chiamata tipoRegione e viene impostato il testo di questa
-    //label con il tipo di terreno (fertile o sterile) relativo a quella specifica regione (cioe' il
-    //terreno di quella cella se e' fertile o sterile).
-    //Poi viene creata un'altra label, chiamata valoreRegione e viene impostato il testo di questa
-    //label con il denaro relative a quella specifica regione (cioe' quella cella quanto denaro ha).
-    //In seguito viene creato un VBox chiamato VBox (per disporre i componenti verticalmente, in questo caso i
-    //componenti sono le dtree label) e aggiunge a VBox prima la label risorseRegione poi la label tipoRegione
-    //ed infine la label valoreRegione
-    //Poi viene creato un PopOver chiamato pop del  VBOx sopra creato, e questo PopOver mostrera'
-    //risorse disponibili, il tipo di territorio e il suo valore in denaro (dati relativi alla
-    //regione su cui viene creato).
-    //Poi viene impostata l'azione che quando si passa il mouse sopra una regione (una cella) allora
-    //viene visualizzato il PopOver (cioe' il PopOver viene visualizzato solo quando si passail mouse sopra una cella ).
-    //Allo stesso modo viene impostata l'azione che quando si sposta il mouse allora viene chiuso il PopOver.
-    //infine ritorna pop
     public static PopOver createPop(Regione r){
         Label risorseRegione = new Label();											//Si crea una Label  chiamata appartenenzaNazione
         risorseRegione.setText("Risorse disponibili: " + (int)r.getRisorse());			//Setta il testo della label con il valore delle risorse relative a quella specifica regione
@@ -322,45 +223,6 @@ public class Regione extends Button{
 
 
     //METODO REFRESH NEIGHBORING REGIONS
-    //Questo metodo aggiorna le 2 liste: la lista chiamata regioniConfinantiAlleate (che contiene
-    //le regioni confinanti e alleate con la regione), e la lista regioniConfinantiSconosciute
-    //(che contiene le regioni confinanti e non alleate con la regione).
-    //Viene presa la regione che confina in alto con questa regione "this" e viene messa dentro
-    //la variabile di tipo Regione chiamata one.
-    //Se la regione one esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
-    //si vogliono vedere i confinanti sia una cella al bordo in alto e quindi una cella
-    //sopra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
-    //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
-    //alla lista delle regioni confinanti allete, altrimenti se la regione confinante non fa
-    //parte della stessa nazone per la quale stamo vedendo i confinanti, allora in tal caso
-    //viene aggiunta alla lista delle regioni confinanti non allete.
-    //Poi viene presa la regione che confina a destra con questa regione "this" e viene messa
-    //dentro la variabile di tipo Regione chiamata two.
-    //Se la regione two esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
-    //si vogliono vedere i confinanti sia una cella al bordo a destra e quindi una cella
-    //a destra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
-    //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
-    //alla lista delle regioni confinanti allete, altrimenti se la regione confinante non fa
-    //parte della stessa nazone per la quale stamo vedendo i confinanti, allora in tal caso
-    //viene aggiunta alla lista delle regioni confinanti non allete.
-    //Poi viene presa la regione che confina in basso con questa regione "this" e viene messa
-    //dentro la variabile di tipo Regione chiamata three.
-    //Se la regione three esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
-    //si vogliono vedere i confinanti sia una cella al bordo in basso e quindi una cella
-    //al di sotto non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
-    //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
-    //alla lista delle regioni confinanti allete, altrimenti se la regione confinante non fa
-    //parte della stessa nazone per la quale stamo vedendo i confinanti, allora in tal caso
-    //viene aggiunta alla lista delle regioni confinanti non allete.
-    //Poi viene presa la regione che confina a sinistra con questa regione "this" e viene messa
-    //dentro la variabile di tipo Regione chiamata four.
-    //Se la regione four esiste (perchÃƒÆ’Ã‚Â¨ puo' esserci il caso in cui la regione per la quale
-    //si vogliono vedere i confinanti sia una cella al bordo a sinistra e quindi una cella
-    //a sinistra non esisterebbe) si va a vedere se la regione confinante fa parte della stessa
-    //nazone per la quale stamo vedendo i confinanti, allora in tal caso viene aggiunta
-    //alla lista delle regioni confinanti allete, altrimenti se la regione confinante non fa
-    //parte della stessa nazone per la quale stamo vedendo i confinanti, allora in tal caso
-    //viene aggiunta alla lista delle regioni confinanti non allete
     public void refreshNeighboringRegions(){
         //PRENDE LA REGIONE CHE CONFINA IN ALTO CON QUESTA REGIONE "THIS"
         Regione one = (Regione)this.nazione.getGridController().getNodeFromGridPane(this.nazione.getGridController().getGridPane(), numColumn, numRow-1);
@@ -424,8 +286,6 @@ public class Regione extends Button{
 
 
     //METODO GET REGIONI CONFINANTI ALLEATE
-    //Restituisce la lista regioniConfinantiAlleate (che contiene le regioni
-    //confinanti e alleate con la regione)
     public ArrayList<Regione> getRegioniConfinantiAlleate(){
         return regioniConfinantiAlleate;
     }
@@ -433,8 +293,6 @@ public class Regione extends Button{
 
 
     //METODO GET REGIONI CONFINANTI SCONOSCIUTE
-    //Restituisce la lista regioniConfinantiSconosciute (che contiene le regioni
-    //confinanti e non alleate con la regione)
     public ArrayList<Regione> getRegioniConfinantiSconosciute(){
         return regioniConfinantiSconosciute;
     }
@@ -442,7 +300,6 @@ public class Regione extends Button{
 
 
     //METODO GET ALLEANZA
-    //Restituisce l'alleanza stretta sulla regione, ammesso che ne sia stata stretta una
     public Accordo getAlleanza(){
         return alleanza;
     }
@@ -450,7 +307,6 @@ public class Regione extends Button{
 
 
     //METODO ROMPI PATTO
-    //Permette di annullare un patto di alleanza stretto su una regione
     public void rompiPatto(){
         this.alleanza = null;
     }

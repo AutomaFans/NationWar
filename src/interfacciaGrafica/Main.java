@@ -8,18 +8,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static Boolean isShowed = false;			//Dichiara una variabile booleana chiamata isShowed e la imposta a false
+    //Dichiara una variabile booleana chiamata isShowed e la imposta a false
+    public static Boolean isShowed = false;
 
 
     //METODO START
-    //Crea un oggetto di tipo Parent chiamato rootP facendo riferimento e richiamando
-    //l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi rootP sara' l'interfaccia definita in FXMLmenu.fxml.
-    //Poi crea una Scene (contenitore piu'  interno) chiamata scene per il nodo radice
-    //specificato (rootP), specifica la scena da usare sullo Stage chiamato primaryStage
-    //(con il metodo setScene), poi imposta il titolo dello Stage primaryStage con la scritta
-    //"Progetto: NATION WAR", ed infine mostra la window impostando la visibilita' a true
-    //(con il metodo show)
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent rootP = FXMLLoader.load(getClass().getResource("FXMLmenu.fxml"));
@@ -30,8 +23,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
-    //VIENE SCRITTO AUTOMATICAMNETE
+    //MAIN
     public static void main(String[] args) {
         launch(args);
     }

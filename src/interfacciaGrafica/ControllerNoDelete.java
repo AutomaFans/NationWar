@@ -7,15 +7,12 @@ import javafx.stage.Stage;
 
 public class ControllerNoDelete {
 
+    //Bottone chiamato buttonClose, per chiudere la finestra di NoDelete
     @FXML
-    private Button buttonClose;			//Bottone chiamato buttonClose, per chiudere la finestra di aiuto
+    private Button buttonClose;
 
 
     //METODO CLICK CLOSE
-    //Quando viene premuto il bottone chiamato buttonClose, viene creato un nuovo stage chaimato stage
-    //e (con il metodo getWindow) viene preso il valore della finestra e viene messo dentro stage.
-    //Infine viene chiuso lo Stage chiamato stage, che conteneva il valore della finestra
-    //(con il metodo close) e cosi si chiude la finestra.
     @FXML
     void clickClose(ActionEvent event) {
         Stage stage = (Stage) buttonClose.getScene().getWindow();

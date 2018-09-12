@@ -1,22 +1,13 @@
 package interfacciaGrafica;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 
-public class ControllerTitolo implements Initializable {
+public class ControllerTitolo{
 
 
+    //StackPane chiamato root
     @FXML
-    private StackPane root;			//StackPane chiamato root
+    private StackPane root;
 
-
-    //METODO INITIALIZE
-    //Questo metodo e' vuoto
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 }
