@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2fb928f-6efc-419f-a686-fb1b8a1a2473" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,47 +14,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ControllerImpostazioniGriglia.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ControllerImpostazioniGriglia.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3379">
-              <caret line="669" column="128" selection-start-line="669" selection-start-column="128" selection-end-line="669" selection-end-column="128" />
+            <state relative-caret-position="-1180">
+              <caret line="682" column="125" selection-start-line="682" selection-start-column="125" selection-end-line="682" selection-end-column="125" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1579#1587#0" expanded="true" />
-                <element signature="e#51353#51361#0" expanded="true" />
+                <element signature="e#54203#54211#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Nation.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Nation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="1318" column="114" selection-start-line="1318" selection-start-column="114" selection-end-line="1318" selection-end-column="114" />
+            <state relative-caret-position="519">
+              <caret line="1339" column="114" selection-start-line="1339" selection-start-column="114" selection-end-line="1339" selection-end-column="114" />
               <folding>
                 <element signature="e#7792#7793#0" expanded="true" />
                 <element signature="e#7823#7824#0" expanded="true" />
-                <element signature="e#19909#19910#0" expanded="true" />
-                <element signature="e#19939#19940#0" expanded="true" />
-                <element signature="e#20133#20134#0" expanded="true" />
-                <element signature="e#20176#20177#0" expanded="true" />
-                <element signature="e#20349#20350#0" expanded="true" />
-                <element signature="e#20393#20394#0" expanded="true" />
-                <element signature="e#20864#20865#0" expanded="true" />
-                <element signature="e#20911#20912#0" expanded="true" />
-                <element signature="e#21387#21388#0" expanded="true" />
-                <element signature="e#21436#21437#0" expanded="true" />
-                <element signature="e#74073#74074#0" expanded="true" />
-                <element signature="e#74107#74108#0" expanded="true" />
-                <element signature="e#74553#74554#0" expanded="true" />
-                <element signature="e#74601#74602#0" expanded="true" />
-                <element signature="e#74771#74772#0" expanded="true" />
-                <element signature="e#74813#74814#0" expanded="true" />
-                <element signature="e#75077#75078#0" expanded="true" />
-                <element signature="e#75101#75102#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ControllerFineGioco.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerFineGioco.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="21" column="56" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ControllerAddNation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="157" column="13" selection-start-line="157" selection-start-column="13" selection-end-line="157" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -63,7 +63,7 @@
         <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Regione.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4267">
-              <caret line="277" column="26" selection-start-line="277" selection-start-column="26" selection-end-line="277" selection-end-column="26" />
+              <caret line="297" column="26" selection-start-line="297" selection-start-column="26" selection-end-line="297" selection-end-column="26" />
               <folding>
                 <element signature="e#11407#11408#0" expanded="true" />
                 <element signature="e#11441#11442#0" expanded="true" />
@@ -141,13 +141,13 @@
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerHelp.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerMenu.java" />
-        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerFineGioco.java" />
         <option value="$PROJECT_DIR$/src/ControllerFineGioco.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/FXMLfineGioco.fxml" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/CellThread.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/Regione.java" />
-        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" />
         <option value="$PROJECT_DIR$/src/interfacciaGrafica/Nation.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerFineGioco.java" />
+        <option value="$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java" />
       </list>
     </option>
   </component>
@@ -310,7 +310,7 @@
       <window_info anchor="right" id="Capture Analysis" order="7" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1891892" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2845787" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info id="Capture Tool" order="6" />
@@ -394,24 +394,6 @@
           <folding>
             <element signature="e#7792#7793#0" expanded="true" />
             <element signature="e#7823#7824#0" expanded="true" />
-            <element signature="e#19909#19910#0" expanded="true" />
-            <element signature="e#19939#19940#0" expanded="true" />
-            <element signature="e#20133#20134#0" expanded="true" />
-            <element signature="e#20176#20177#0" expanded="true" />
-            <element signature="e#20349#20350#0" expanded="true" />
-            <element signature="e#20393#20394#0" expanded="true" />
-            <element signature="e#20864#20865#0" expanded="true" />
-            <element signature="e#20911#20912#0" expanded="true" />
-            <element signature="e#21387#21388#0" expanded="true" />
-            <element signature="e#21436#21437#0" expanded="true" />
-            <element signature="e#74073#74074#0" expanded="true" />
-            <element signature="e#74107#74108#0" expanded="true" />
-            <element signature="e#74553#74554#0" expanded="true" />
-            <element signature="e#74601#74602#0" expanded="true" />
-            <element signature="e#74771#74772#0" expanded="true" />
-            <element signature="e#74813#74814#0" expanded="true" />
-            <element signature="e#75077#75078#0" expanded="true" />
-            <element signature="e#75101#75102#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -464,7 +446,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1579#1587#0" expanded="true" />
-            <element signature="e#51353#51361#0" expanded="true" />
+            <element signature="e#54203#54211#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -514,7 +496,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1579#1587#0" expanded="true" />
-            <element signature="e#51353#51361#0" expanded="true" />
+            <element signature="e#54203#54211#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -658,13 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2380">
-          <caret line="157" column="13" selection-start-line="157" selection-start-column="13" selection-end-line="157" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerHelp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -690,13 +665,6 @@
       <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerFineGioco.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/FXMLfineGioco.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -708,7 +676,7 @@
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Regione.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4267">
-          <caret line="277" column="26" selection-start-line="277" selection-start-column="26" selection-end-line="277" selection-end-column="26" />
+          <caret line="297" column="26" selection-start-line="297" selection-start-column="26" selection-end-line="297" selection-end-column="26" />
           <folding>
             <element signature="e#11407#11408#0" expanded="true" />
             <element signature="e#11441#11442#0" expanded="true" />
@@ -729,41 +697,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/Nation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="1318" column="114" selection-start-line="1318" selection-start-column="114" selection-end-line="1318" selection-end-column="114" />
+        <state relative-caret-position="519">
+          <caret line="1339" column="114" selection-start-line="1339" selection-start-column="114" selection-end-line="1339" selection-end-column="114" />
           <folding>
             <element signature="e#7792#7793#0" expanded="true" />
             <element signature="e#7823#7824#0" expanded="true" />
-            <element signature="e#19909#19910#0" expanded="true" />
-            <element signature="e#19939#19940#0" expanded="true" />
-            <element signature="e#20133#20134#0" expanded="true" />
-            <element signature="e#20176#20177#0" expanded="true" />
-            <element signature="e#20349#20350#0" expanded="true" />
-            <element signature="e#20393#20394#0" expanded="true" />
-            <element signature="e#20864#20865#0" expanded="true" />
-            <element signature="e#20911#20912#0" expanded="true" />
-            <element signature="e#21387#21388#0" expanded="true" />
-            <element signature="e#21436#21437#0" expanded="true" />
-            <element signature="e#74073#74074#0" expanded="true" />
-            <element signature="e#74107#74108#0" expanded="true" />
-            <element signature="e#74553#74554#0" expanded="true" />
-            <element signature="e#74601#74602#0" expanded="true" />
-            <element signature="e#74771#74772#0" expanded="true" />
-            <element signature="e#74813#74814#0" expanded="true" />
-            <element signature="e#75077#75078#0" expanded="true" />
-            <element signature="e#75101#75102#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerAddNation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="157" column="13" selection-start-line="157" selection-start-column="13" selection-end-line="157" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerFineGioco.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="21" column="56" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interfacciaGrafica/ControllerImpostazioniGriglia.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3379">
-          <caret line="669" column="128" selection-start-line="669" selection-start-column="128" selection-end-line="669" selection-end-column="128" />
+        <state relative-caret-position="-1180">
+          <caret line="682" column="125" selection-start-line="682" selection-start-column="125" selection-end-line="682" selection-end-column="125" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1579#1587#0" expanded="true" />
-            <element signature="e#51353#51361#0" expanded="true" />
+            <element signature="e#54203#54211#0" expanded="true" />
           </folding>
         </state>
       </provider>
