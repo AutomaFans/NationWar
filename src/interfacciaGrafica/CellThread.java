@@ -7,43 +7,21 @@ import java.util.Random;
 
 import static interfacciaGrafica.Regione.createPop;		//Importo il metodo createPop della classe Regione
 
-public class CellThread extends Thread{  //Tipo di thread che costituisce un legame con una cella della griglia
+//Tipo di thread che costituisce un legame con una cella della griglia
+public class CellThread extends Thread{
 
-    Regione region;           //Variabile di tipo Regione chiamata region che e' la regione (cella) su cui agisce il CellThread
+    /*Variabile di tipo Regione chiamata region
+    che e' la regione (cella) su cui agisce il CellThread*/
+    Regione region;
 
 
     //COSTRUTTORE CON UN PARAMETRO
-    //Prende come parametro la regione (cella) assegnata al thread e valorizza la regione del
-    //thread con quella passata da parametro
     public CellThread(Regione cella){
         this.region = cella;
     }
 
 
     //METODO RUN
-    //Il thread viene runnato solo nel caso in cui la regione appartiene ad una nazione.
-    //Se la griglia non e' stata tutta occupata dalla nazione significa che ci sono ancora regioni
-    //che non gli appartengono e che puo' quindi conquistare. La regione a quel punto controlla se si puo' conquistare
-    //una delle regioni che confinano con essa richiamando il metodo refreshNeighboringRegions della classe Regione.
-    //La regione da conquistare e' presa casualmente per cui, se si tratta di una regione che fa parte di un'altra
-    //nazione si vede se entrare in guerra o se si puo' stringere un patto economico, altrimenti se la regione non
-    //e' di nessuno si vede se si puo conquistare e cio' dipende se la nazione ha abbastanza denaro per comprare
-    //la regione, e se ne ha abbastanza la conquista richiamando il metodo "conquistaRegione" della classe Nation.
-
-    //Quando la regione da conquistare fa gia' parte di un'altra nazione allora: se quella regione non e' coinvolta in
-    //nessuna alleanza si vede se si puo' stringerne una o andare in guerra col metodo makePeaceOrWar di CellThread, se
-    //invece quella regione e' coinvolta in un'alleanza, quest'ultima viene sciolta e si vede se entrare in guerra o
-    // stringere un accordo con la nazione avversaria(sempre col metodo makePeaceOrWar di CellThread).
-    //Se la griglia e' stata invece tutta occupata non c'e' bisogno di conqusitare territori e quindi non si applicano
-    //le procedure di conquista.
-    // In ogni caso viene richiamato il metodo consumaRisorse della classe Regione (questo metodo consumera' ad ogni
-    // turno in cui viene scelta la regione le sue risorse inoltre una volta consumate le
-    //risorse in base alle risorse rimaste viene aggiornato il tipo di territorio (fertile o sterile)).
-    //In seguito, una volta che la regione ha svolto ed ha finito il proprio turno avvisa la nazione
-    //che e' che quindi giunta a fine turno.
-    //Quindi siccome la nazione e' in attesa che la regione finisca il proprio turno, quando la regione
-    //ha finito avvisa la nazione e per farlo viene utilizzato il metodo sveglia() che avvisa la nazione
-    //con una notify()
     public void run(){
         //SE LA GRIGLIA  NON E' STATA TUTTA OCCUPATA DALLA NAZIONE ALLORA VISOGNA CONTROLLARE
         //SE CI SONO TERRITORI CHE POSSONO ESSERE CONQUISTATI
@@ -96,9 +74,9 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
         this.region.getNazione().sveglia();
     }
 
+
+
     //METODO MAKE PEACE OR WAR
-    //Data una regione da conquistare da parametro sceglie in base a l'eta' della nazione conquistatrice ed altre caratteristiche,
-    // se la nazione stringera' un patto economico o se dovra' entrare in guerra con la nazione che possiede la regione da conquistare
     private void makePeaceOrWar(Regione regionToConquest){
         System.out.println(this.region.getNomeNazione() + " vuole conquistare " + regionToConquest.getId());
         //Se la nazione che tenta la conquista si torva nell'eta' antica
@@ -126,9 +104,9 @@ public class CellThread extends Thread{  //Tipo di thread che costituisce un leg
         }
     }
 
+
+
     //METODO SCIOGLI ACCORDI
-    //Scioglie tutti gli accordi tra la nazione passata da parametero(che difende il territorio) e quella che detiene
-    //la regione del CellThread this(quella che attacca)
     public void sciogliAccordi(Nation defender){
         //Le liste conterrano tutti gli accordi delle due nazioni(accettati e proposti) ma senza quelli stretti insieme
         ArrayList<Accordo> accordiPropostiDaChiPropone = new ArrayList<>();

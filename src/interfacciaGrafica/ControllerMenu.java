@@ -20,22 +20,20 @@ import javafx.util.Duration;
 
 public class ControllerMenu implements Initializable {
 
+    //AnchorPane chiamato rootPane
     @FXML
-    private AnchorPane rootPane;			//AnchorPane chiamato rootPane
+    private AnchorPane rootPane;
 
+    //Bottone chiamato buttonPlay
     @FXML
-    private Button buttonPlay;				//Bottone chiamato buttonPlay
+    private Button buttonPlay;
 
+    //Bottone chiamato buttonExit
     @FXML
-    private Button buttonExit;				//Bottone chiamato buttonPlay
+    private Button buttonExit;
 
 
     //METODO CLICK PLAY
-    //Crea un oggetto di tipo BorderPane chiamato impostazioniGriglia facendo riferimento e richiamando
-    //l'intefaccia definita in FXMLimpostazioniGriglia.fxml.
-    //Quindi impostazioniGriglia sara' l'interfaccia definita in FXMLimpostazioniGriglia.fxml.
-    //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
-    //precedentemente, ovvero con impostazioniGriglia.
     @FXML
     void clickPlay(ActionEvent event) {
         try {
@@ -47,10 +45,6 @@ public class ControllerMenu implements Initializable {
     }
 
     //METODO CLICK EXIT
-    //Quando viene premuto il bottone chiamato buttonExit, viene creato un nuovo stage chaimato stageExit
-    //e (con il metodo getWindow) viene preso il valore della finestra e viene messo dentro stageExit.
-    //Infine viene chiuso lo Stage chiamato stageExit, che conteneva il valore della finestra
-    //(con il metodo close) e cosi si chiude la finestra.
     @FXML
     void clickExit(ActionEvent event){
         Stage stageExit = (Stage) buttonExit.getScene().getWindow();
@@ -59,9 +53,6 @@ public class ControllerMenu implements Initializable {
 
 
     //METODO INITIALIZE
-    //Viene impostata la variabile useButton(creata dentro ControllerImpGriglia) a false.
-    //Se la negazione della variabile definita dentro il Main e' uguale a true (quindi se isShowed e' true)
-    //allora richiama il metodo loadTitle().
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ControllerImpostazioniGriglia.useButton = false;
@@ -72,23 +63,6 @@ public class ControllerMenu implements Initializable {
 
 
     //METODO LOAD TITLE
-    //Mette la variabile isShowe definita nel main a true.
-    //Poi crea un oggetto di tipo AnchorPane chiamato titolo facendo riferimento e richiamando
-    //l'intefaccia definita in FXMLtitolo.fxml.
-    //Quindi titolo sara' l'interfaccia definita in FXMLtitolo.fxml.
-    //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
-    //precedentemente, ovvero con titolo.
-    //Poi crea un oggetto di tipo FadeTransition, chiamato fadeIn, per la transazione sfumata in entrata
-    //per il titolo, della durata di 3 secondi.
-    //E allo stesso modo crea un oggetto di tipo FadeTransition, chiamato fadeOut, per la transazione
-    //sfumata in uscitaper il titolo, della durata di 3 secondi.
-    //In seguito avvia la transazione in entrata (con il metodo play) e quando questa e'
-    //finita inizia la transazione in uscita (con il metodo setOnFinished).
-    //Poi, quando anche la transazione in uscita e' finita, crea un oggetto di tipo AnchorPane
-    //chiamato menu facendo riferimento e richiamando l'intefaccia definita in FXMLmenu.fxml.
-    //Quindi menu sara' l'interfaccia definita in FXMLmenu.fxml.
-    //Poi prende il nodo principale, rootPane,  e sostituisce tutti i figli con l'oggetto creato
-    //precedentemente, ovvero con menu.
     private void loadTitle(){
         try {
             Main.isShowed = true;
@@ -128,8 +102,6 @@ public class ControllerMenu implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-
 }
 
