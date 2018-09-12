@@ -289,6 +289,7 @@ public class Nation extends Thread{
             //SE LA NAZIONE CHE HA APPENA PERSO LA REGIONE NON HA PIU' REGIONI
             if (nazione.getRegioni().size()==0){
                 nazione.setStato(false);
+                System.out.println("La nazione " + nazione.getName() + " e' morta perche' la sua ultima regione e' stata conquistata da " + this.getName());
                 //Scioglie tutti gli accordi che aveva stretto
                 for(int i=0; i<nazione.getAccordiProposti().size();i++){
                     nazione.getAccordiProposti().get(i).getNazioneCheAccetta().getAccordiAccettati().remove(nazione.getAccordiProposti().get(i));
@@ -872,7 +873,7 @@ public class Nation extends Thread{
     //conquistaRegione della classe Nation): in questo caso la nazione che difende paga di nuovo
     // un tributo di guerra con il metodo warPayment.
     public void guerra(Nation enemy, Regione region){
-        System.out.println(this.getName() + " E' entrata in guerra contro " + enemy.getName() + "!");
+        System.out.println(this.getName() + " e' entrata in guerra contro " + enemy.getName() + "!");
         warPayment(enemy);
         //SE LE DUE NAZIONI HANNO LA STESSA ETA'
         if(this.getAge() == enemy.getAge()){
@@ -1336,6 +1337,7 @@ public class Nation extends Thread{
             //SE LA NAZIONE PERDE TUTTE LE SUE REGIONI
             if(this.regioni.size() == 0){
                 this.vivo = false;
+                System.out.println("La nazione " + this.getName() + " e' morta perche' non ha piu' nessuna regione");
                 //Scioglie tutti gli accordi che aveva stretto
                 for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
                     //delle nazioni che l'hanno accettati
@@ -1398,6 +1400,7 @@ public class Nation extends Thread{
                 //SE IL NUMERO DI ABITANTI E' MINORE DI 10
                 if(this.getNumAbitanti() < 10){
                     vivo = false;
+                    System.out.println("La nazione " + this.getName() + " e' morta perche' il numero di abitanti era inferiore a 10");
                     //Scioglie tutti gli accordi che aveva stretto
                     for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
                         //delle nazioni che l'hanno accettati
