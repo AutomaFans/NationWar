@@ -710,6 +710,7 @@ public class Nation extends Thread{
             Regione num = i.next();
             num.resetRegion();      //Toglie dalla cella la nazione di appartenza e il colore della nazione
             i.remove();             //Toglie la cella dalla lista di quelle appartenenti alla nazione
+            num.setText("");
         }
         removeExecRegions();
     }
