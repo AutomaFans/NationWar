@@ -850,7 +850,7 @@ public class Nation extends Thread{
     //conquistaRegione della classe Nation): in questo caso la nazione che difende paga di nuovo
     // un tributo di guerra con il metodo warPayment.
     public void guerra(Nation enemy, Regione region){
-        System.out.println(this.getName() + " Ã¨ entrata in guerra contro " + enemy.getName() + "!");
+        System.out.println(this.getName() + " E' entrata in guerra contro " + enemy.getName() + "!");
         warPayment(enemy);
         //SE LE DUE NAZIONI HANNO LA STESSA ETA'
         if(this.getAge() == enemy.getAge()){
