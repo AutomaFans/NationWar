@@ -514,7 +514,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                 //Punto centrale della simulazione in cui viene fatto svolgere un turno per ogni nazione finche' e' possibile
                 //I turni vengono fatti svolgere in maniera progressiva dall'ultima alla prima nazione creata
                 for(int i=0; i < nationList.size(); i++){  				//Viene iterata nazione per nazione della lista nationList
-                    if(i == 0){
+                    if(i == 0 || nationList.size() == 0){
                         System.out.println("===== turno " + this.turni + " =====");
                     }
                     //SE LA NAZIONE ITERATA E' VIVA
