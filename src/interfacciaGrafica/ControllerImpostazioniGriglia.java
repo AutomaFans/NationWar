@@ -614,6 +614,16 @@ public class ControllerImpostazioniGriglia implements Initializable {
                         //ALTRIMENTI, SE CI SONO ANCORA NAZIONI VIVE DENTRO LA LISTA NATION LIST SI CONTINUA ITERANDO LA
                         //PROSSIMA NAZIONE
                         else {
+                            this.buttonHelp.setDisable(false);
+                            this.buttonMenu.setDisable(false);
+                            this.tabPopolazione.setDisable(false);
+                            this.tabDenaro.setDisable(false);
+                            this.tabRisorse.setDisable(false);
+                            this.tabInfoNazioni.setDisable(false);
+                            this.buttonStart.setDisable(false);
+                            this.txtTurniDaSvolgere.setDisable(false);
+                            this.msgError.setText("Inserire n. turni > 0"+" "+"("+turni+")");
+                            useButton= false;
                             continue;
                         }
                     }
