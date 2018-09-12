@@ -443,7 +443,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //Altrimenti se il metodo getStato restituisce false, e quindi se la nazione e' morta vengono aggiunti tutti i dati della nazione
     //alla lista informazioni (quindi viene richiamato il costruttore della classe Nation, passando il nome (metodo getName),
     //l'eta' (metodo getAge), numero di territori fertili (variabile numFertile), il numero di territori sterili (variabile numSterile), ma vicino al nome viene aggunta la scritta "(MORTA)".
-    //Altrimenti, se non siamo al primo turno e non e' stato svolto il numero di turni indicato bisogna riiniziare dalla prima nazione ma
+    //Altrimenti, se non siamo al primo turno e non e' stato svolto il numero di turni indicato: se sono morte tutte le nazioni
+    // si smette di svolgere i turni delle nazioni, altrimenti se ci sono ancora nazioni vive bisogna riiniziare dalla prima nazione, ma
     //siccome c'e' un problema con i Thread,  cioe' che una volta eseguito lo start di un thread non si puo' piu' rieseguire
     //lo start, almeno che non si crea una nuova istanza, allora vengono clonate le nazioni (i thread perche' Nation estende
     //Thread) e vengono sostituite a quelle vecchie, richiamando il metodo cloneNationThreadList, ottenendo cosi nuovi oggetti
@@ -583,7 +584,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                         barChartR.getData().addAll(risorse1); 		//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
 
                                     }
-                                    //ALTRIMENTI, SE LA NAZONE ITERATA E' MORTA
+                                    //ALTRIMENTI, SE LA NAZIONE ITERATA E' MORTA
                                     else {
                                         informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                         continue;
@@ -592,8 +593,24 @@ public class ControllerImpostazioniGriglia implements Initializable {
                             }
                             //ALTRIMENTI, SE NON SIAMO AL PRIMO TURNO O SE NON SONO STATI SVOLTI TUTTI I TURNI INDICATI
                             else{
-                                this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
-                                i=-1;                                          	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
+                                //SE NON CI SONO PIU' NAZIONI VIVE DENTRO LA LISTA NATION LIST E' INUTILE CONTINUARE AD
+                                //ITERARE NAZIONI
+                                boolean vive = false;                         //Booleano per verificare se ci sono ancora nazione vive
+                                for(int j=0;j<nationList.size();j++){         //Controlla per ogni nazione se e' viva, e se lo e' tiene
+                                    //conto che c'e' almento una nazione viva
+                                    if(nationList.get(j).getStato()==true){
+                                        vive = true;
+                                    }
+                                }
+                                if(vive = false) {                            //Se non c'e' nessuna nazione viva interrompe il for che fa
+                                    //eseguire i turni
+                                    this.turni ++;
+                                    break;
+                                }
+                                else{
+                                    this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
+                                    i=-1;
+                                }                                    	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
                             }
                         }
                     }
@@ -601,14 +618,14 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     else {
                         //SE NON CI SONO PIU' NAZIONI VIVE DENTRO LA LISTA NATION LIST E' INUTILE CONTINUARE AD
                         //ITERARE NAZIONI
-                        boolean vive = false;                         //Booleano per verificare se ci sono ancora nazione vive
+                        boolean vive2 = false;                         //Booleano per verificare se ci sono ancora nazione vive
                         for(int j=0;j<nationList.size();j++){         //Controlla per ogni nazione se e' viva, e se lo e' tiene
                             //conto che c'e' almento una nazione viva
                             if(nationList.get(j).getStato()==true){
-                                vive = true;
+                                vive2 = true;
                             }
                         }
-                        if(vive = false) {                            //Se non c'e' nessuna nazione viva interrompe il for che fa
+                        if(vive2 = false) {                            //Se non c'e' nessuna nazione viva interrompe il for che fa
                                                                       //eseguire i turni
                             this.turni ++;
                             break;
@@ -674,7 +691,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                             barChartR.getData().addAll(risorse1); 		//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
 
                                         }
-                                        //ALTRIMENTI, SE LA NAZONE ITERATA E' MORTA
+                                        //ALTRIMENTI, SE LA NAZIONE ITERATA E' MORTA
                                         else {
                                             informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
                                             continue;
@@ -683,11 +700,26 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                 }
                                 //ALTRIMENTI, SE NON SIAMO AL PRIMO TURNO O SE NON SONO STATI SVOLTI TUTTI I TURNI INDICATI
                                 else{
-                                    this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
-                                    i=-1;                                          	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
+                                    //SE NON CI SONO PIU' NAZIONI VIVE DENTRO LA LISTA NATION LIST E' INUTILE CONTINUARE AD
+                                    //ITERARE NAZIONI
+                                    boolean vive3 = false;                         //Booleano per verificare se ci sono ancora nazione vive
+                                    for(int j=0;j<nationList.size();j++){         //Controlla per ogni nazione se e' viva, e se lo e' tiene
+                                        //conto che c'e' almento una nazione viva
+                                        if(nationList.get(j).getStato()==true){
+                                            vive3 = true;
+                                        }
+                                    }
+                                    if(vive3 = false) {                            //Se non c'e' nessuna nazione viva interrompe il for che fa
+                                        //eseguire i turni
+                                        this.turni ++;
+                                        break;
+                                    }
+                                    else{
+                                        this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
+                                        i=-1;
+                                    }                                    	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo                                         	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
                                 }
                             }
-                            continue;
                         }
                     }
                 }
@@ -732,12 +764,24 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //richiamando i metodi getName e getColor della classe Nation) e si copiano le caratteristiche
     //della vecchia nazione incluse le regioni e gli accordi, richiamando il metodo cloneCharacters della
     //classe Nation ed infine si aggiunge il clone della vecchia nazione (quindi si aggiunge
-    //la nuova nazione) alla lista cloneList ed infine viene ritornata la lista cloneList
+    //la nuova nazione) alla lista cloneList ed infine viene ritornata la lista cloneList.
+    //Non tutte le nazioni vengono pero' trattate alla stessa maniera: per quelle morte vengono copiati
+    //soltanto il nome, colore, stato(viva o morta), e l'eta', tutto cio' per evitare eccezioni ma anche
+    //perche' le altre informazioni delle nazioni morte non sono utili allo svolgimento del gioco.
     private ArrayList<Nation> cloneNationThreadList(){
         ArrayList<Nation> cloneList = new ArrayList<Nation>();  										 //Crea la lista cloneList
         for(int i=0; i < nationList.size();i++){               											 //Si itera ogni vecchia nazione in nationList
             Nation cloneNazione = new Nation(nationList.get(i).getName(), nationList.get(i).getColor()); //Di ogni nazione iterata viene crata una nuova nazione con lo stesso nome e colore della nazione vecchia
-            cloneNazione.cloneCharacters(nationList.get(i));    										 //Si copiano le caratteristiche della vecchia nazione incluse le regioni
+            cloneNazione.setStato(nationList.get(i).getStato());                                         //Viene clonato lo stato della vecchia nazione(vivo
+                                                                                                         //o morto).
+            if (cloneNazione.getStato() == false) { //se la nazione e' morta oltre al nome, colore e stato viene copiata anche l'eta', ma non il resto:
+                                                    //non vengono copiate le altre caratteristiche per evitare errori, anche perche' per le nazioni morte
+                                                    //le altre caratteristiche non hanno alcuna utilita' nel proseguimento della simulazione
+                cloneNazione.setAge(nationList.get(i).getAge());
+            }
+            else{
+                cloneNazione.cloneCharacters(nationList.get(i));    										 //Si copiano le caratteristiche della vecchia nazione incluse le regioni
+            }
             cloneList.add(i, cloneNazione);                     										 //Si aggiunge la nuova nazione clonata alla lista cloneList
         }
         return cloneList;              																	//Ritorna la lista clonata
