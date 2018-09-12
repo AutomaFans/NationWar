@@ -19,6 +19,7 @@ public class ControllerFineGioco {
     //(con il metodo close) e cosi si chiude la finestra.
     @FXML
     void clickClose(ActionEvent event) {
+        ControllerImpostazioniGriglia.useButton = false;
         Stage stage = (Stage) buttonClose.getScene().getWindow();
         stage.close();
     }

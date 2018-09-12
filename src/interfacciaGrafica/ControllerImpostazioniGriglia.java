@@ -705,6 +705,7 @@ public class ControllerImpostazioniGriglia implements Initializable {
                     buttonMenu.setDisable(false);
                     buttonHelp.setDisable(false);
                     try {
+                        useButton = true;
                         AnchorPane fPane = FXMLLoader.load(getClass().getResource("FXMLfineGioco.fxml"));
                         Stage fStage = new Stage();
                         fStage.setScene(new Scene(fPane));
