@@ -457,7 +457,8 @@ public class ControllerImpostazioniGriglia implements Initializable {
     //turno della nazione successiva, per cui per svegliare il main c'e' il metodo sveglia che fa una notify.
     //Altrimenti, se la nazione e' morta, bisogna controllare se ci sono altre nazioni vive dentro
     //la lista nation list: se non ci sono piu' nazioni vive allora il gioco si interrompe.
-    //Altrimenti, se ci sono ancora nazioni vive  il gioco continua.
+    //Altrimenti, se ci sono ancora nazioni vive  il gioco continua: si controlla pero' se si e' arrivati a fine turno, e in quel caso
+    // vengono generate le statistiche per le nazioni ancora vive, ma solo se ci sono ancora turni da eseguire.
     //Infine una volta terminato il for nel quale vengono eseguiti i turni delle nazioni viene aggiornata la variabile
     //locale al metodo "nazioniMorte", e di seguito con questa variabile si controlla se tutte le nazioni sono morte: se
     //lo sono allora il gioco e' finito per cui viene abilitato il bottone Menu e il bottone Help e in seguito viene
@@ -608,22 +609,84 @@ public class ControllerImpostazioniGriglia implements Initializable {
                             }
                         }
                         if(vive = false) {                            //Se non c'e' nessuna nazione viva interrompe il for che fa
-                            //eseguire i turni
+                                                                      //eseguire i turni
+                            this.turni ++;
                             break;
                         }
                         //ALTRIMENTI, SE CI SONO ANCORA NAZIONI VIVE DENTRO LA LISTA NATION LIST SI CONTINUA ITERANDO LA
                         //PROSSIMA NAZIONE
                         else {
-                            this.buttonHelp.setDisable(false);
-                            this.buttonMenu.setDisable(false);
-                            this.tabPopolazione.setDisable(false);
-                            this.tabDenaro.setDisable(false);
-                            this.tabRisorse.setDisable(false);
-                            this.tabInfoNazioni.setDisable(false);
-                            this.buttonStart.setDisable(false);
-                            this.txtTurniDaSvolgere.setDisable(false);
-                            this.msgError.setText("Inserire n. turni > 0"+" "+"("+turni+")");
-                            useButton= false;
+                            if(i == nationList.size()-1){
+                                this.turni ++;                                    //Si tiene conto che si e' arrivati alla fine del turno per tutte le nazioni
+                                turniSvolti --;                                   //Un turno e' stato svolto e quindi aggiorno il numero di turni da svolgere rimanenti
+                                //SE SIAMO AL PRIMO TURNO O SE SONO STATI SVOLTI TUTTI I TURNI INDICATI
+                                if(this.turni == 1 || turniSvolti == 0){
+                                    this.buttonHelp.setDisable(false);
+                                    this.buttonMenu.setDisable(false);
+                                    this.tabPopolazione.setDisable(false);
+                                    this.tabDenaro.setDisable(false);
+                                    this.tabRisorse.setDisable(false);
+                                    this.tabInfoNazioni.setDisable(false);
+                                    this.buttonStart.setDisable(false);
+                                    this.txtTurniDaSvolgere.setDisable(false);
+                                    this.msgError.setText("Inserire n. turni > 0"+" "+"("+turni+")");
+                                    useButton= false;
+                                    //VENGONO ELIMINATE TUTTE LE STATISTICCHE FATTE FINO AD ORA
+                                    barChart.getData().clear();
+                                    barCharD.getData().clear();
+                                    barChartR.getData().clear();
+                                    //VIENE PULITA LA LISTA DELLE INFORMAZIONI SULLE NAZIONI
+                                    informazioni.clear();
+                                    //PER OGNI NAZIONE SI TIENE CONTO DEL NUMERO DI TERRENI FERTILI E DEL NUMERO DI TERRENI
+                                    //STERILI, CHE QUELLA NAZIONE HA
+                                    for (int k=0; k< nationList.size(); k++) {
+                                        int numSterile=0;
+                                        int numFertile=0;
+                                        for (int ind=0; ind< nationList.get(k).getRegioni().size();ind++){
+                                            //SE LA REGIONE E' STERILE INCREMENTA LA VARIABILE NUMSTERILE
+                                            if (nationList.get(k).getRegioni().get(ind).getTipo()=="sterile") {
+                                                numSterile++;
+                                                //ALTRIMENTI, SE LA REGIONE E' FERTILE INCREMENTA LA VARIABILE NUMFERTILE
+                                            }else{
+                                                numFertile++;
+                                            }
+                                        }
+                                        ColonnaNazioni.setCellValueFactory(new PropertyValueFactory<Nation,String>("nome")); 			//Assegno alla colonna ColonnaNazione il dato nome (nome della nazione)
+                                        ColonnaEta.setCellValueFactory(new PropertyValueFactory<Nation,Eta>("eta")); 					//Assegno alla colonnaEta il dato dell'eta
+                                        ColonnaFertili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numFertili")); 	//Assegno alla colonnaFertili il numFertili (numero terreni fertili)
+                                        ColonnaSterili.setCellValueFactory(new PropertyValueFactory<Nation,Integer>("numSterili")); 	//Assegno alla colonnaSterili il numSterili (numero terreni sterili)
+                                        InfoTable.setItems(informazioni); 																//Aggiungo il tutto nella tabella principale
+                                        //SE LA NAZIONE ITERATA E' VIVA
+                                        if (nationList.get(k).getStato() == true) {
+                                            informazioni.add(new Nation(nationList.get(k).getName(),nationList.get(k).getAge(),numSterile,numFertile)); //Aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                            XYChart.Series set1 = new XYChart.Series<>(); 			//Si crea il grafico degli Abitanti chiamato set (e' una base vuota su cui poi vva scostruito il grafico)
+                                            XYChart.Series risorse1 = new XYChart.Series<>();		//Si crea il grafico delle risorse chiamato risorse(e' una base vuota su cui poi vva scostruito il grafico)
+                                            XYChart.Series denaro1 = new XYChart.Series<>(); 		//Si crea il grafico del denaro chiamato denaro (e' una base vuota su cui poi vva scostruito il grafico)
+                                            //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
+                                            set1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), (nationList.get(k).getNumAbitanti())));
+                                            //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
+                                            risorse1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getRisorse()));
+                                            //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
+                                            denaro1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getDenaro()));
+                                            //Aggiungo i mattoni nei vari barChart
+                                            barCharD.getData().addAll(denaro1); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
+                                            barChart.getData().addAll(set1);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
+                                            barChartR.getData().addAll(risorse1); 		//Aggiungo il mattone dellerisosrse alla rispettiva barChart delle risorse, chiamato barChartR.
+
+                                        }
+                                        //ALTRIMENTI, SE LA NAZONE ITERATA E' MORTA
+                                        else {
+                                            informazioni.add(new Nation(nationList.get(k).getName()+"(MORTA)",nationList.get(k).getAge(),numSterile,numFertile)); //aggiungo i dati di ogni nazione sulla tabella delle info Nazioni
+                                            continue;
+                                        }
+                                    }
+                                }
+                                //ALTRIMENTI, SE NON SIAMO AL PRIMO TURNO O SE NON SONO STATI SVOLTI TUTTI I TURNI INDICATI
+                                else{
+                                    this.nationList = cloneNationThreadList();     	  //Vengono clonate le nazioni
+                                    i=-1;                                          	  //Infine porto l'indice del for a -1 per riniziare ad iterare da capo
+                                }
+                            }
                             continue;
                         }
                     }
