@@ -1,4 +1,5 @@
 package interfacciaGrafica;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -80,27 +81,42 @@ public class Regione extends Button{
 
     //METODO RESET REGION
     //Permette di resettare la regione.
-    //Ovvero ne aggiorna il valore, toglie il nome della nazione di appartenza e l'oggetto Nation su quella cella e
-    // imposta lo sfondo di default.
+    //Ovvero ne aggiorna il valore, in seguito se la regione faceva parte di una allenza, allora viene sciolta anche
+    // l'alleanza su quella regione. Successivamente toglie il nome della nazione di appartenza e l'oggetto Nation su
+    // quella cella e imposta lo sfondo di default.
     //Quindi aggiorna il tipo della regione, richiamando il metodo refreshType della classe
     //Regione.
     //In seguito se la regione e' di tipo fertile imposta lo sfondo con l'immagiine IMG-Fertile.jpg, mentre
     //se la regione e' di tipo sterile imposta lo sfondo della cella con l'immagione IMG-Sterile.
-    //inoltre se la regione faceva parte di una allenaza, allora viene sciolta ancjhe l'alleanza su quella
-    //regione per cui viene impostata la variabile booleana alleanza a null
+    //Se la regione aveva settato il testo a "p" perche' faceva parte di un'alleanza viene settato ora a "".
     public void resetRegion(){
         this.setValore(nazione.getGridController().getNumeroRighe(), nazione.getGridController().getNumeroColonne());
+        if(alleanza != null){
+            this.nazione.interrompiAlleanza(alleanza);
+        }
         this.nomeNazione = "";
         this.nazione = null;
         this.refreshType();
         //Resetta lo sfondo in base al suo tipo(sterile o fertile) e togliendo il colore della nazione
         if(tipo.equals("fertile")){
-            this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Fertile.jpg')");
+            Platform.runLater(
+                    () -> {
+                        this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Fertile.jpg')");
+                    }
+            );
         }
         else{
-            this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Sterile.jpg')");
+            Platform.runLater(
+                    () -> {
+                        this.setStyle("-fx-background-image: url('/interfacciaGrafica/IMG-Sterile.jpg')");
+                    }
+            );
         }
-        this.alleanza = null;    //Se la regione faceva parte di un'accordo quell'accordo viene sciolto
+        Platform.runLater(
+                () -> {
+                    this.setText("");
+                }
+        );
     }
 
 
@@ -169,7 +185,11 @@ public class Regione extends Button{
     //la griglia si tratta de colore dell'ultima nazione inserita nel sistema.
     public void setNazione(String nationName, String colore, Nation naz){
         this.nomeNazione = nationName;
-        this.setStyle("-fx-background-color: " + colore);
+        Platform.runLater(
+                () -> {
+                    this.setStyle("-fx-background-color: " + colore);
+                }
+        );
         this.nazione = naz;
     }
 

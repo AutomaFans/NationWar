@@ -183,6 +183,12 @@ public class Nation extends Thread{
         this.vivo=stato;
     }
 
+    //METODO SET AGE
+    //Permette di settare l'eta' di una nazione, usato quando viene clonato un thread
+    public void setAge(Eta eta){
+        this.age = eta;
+    }
+
 
 
     //METODO REFRESH AGE
@@ -287,10 +293,21 @@ public class Nation extends Thread{
                 for(int i=0; i<nazione.getAccordiProposti().size();i++){
                     nazione.getAccordiProposti().get(i).getNazioneCheAccetta().getAccordiAccettati().remove(nazione.getAccordiProposti().get(i));
                     nazione.getAccordiProposti().get(i).getRegionePatto().setText("");
+                    Accordo proposto = nazione.accordiProposti.get(i);
+                    Platform.runLater(
+                            () -> {
+                                proposto.getRegionePatto().setText("");
+                            }
+                    );
                 }
                 for(int i=0; i<nazione.getAccordiAccettati().size();i++){
                     nazione.getAccordiAccettati().get(i).getNazioneChePropone().getAccordiProposti().remove(nazione.getAccordiAccettati().get(i));
-                    nazione.getAccordiAccettati().get(i).getRegionePatto().setText("");
+                    Accordo accettato = nazione.accordiAccettati.get(i);
+                    Platform.runLater(
+                            () -> {
+                                accettato.getRegionePatto().setText("");
+                            }
+                    );
                 }
             }
 
@@ -710,7 +727,11 @@ public class Nation extends Thread{
             Regione num = i.next();
             num.resetRegion();      //Toglie dalla cella la nazione di appartenza e il colore della nazione
             i.remove();             //Toglie la cella dalla lista di quelle appartenenti alla nazione
-            num.setText("");
+            Platform.runLater(
+                    () -> {
+                        num.setText("");
+                    }
+            );
         }
         removeExecRegions();
     }
@@ -1152,7 +1173,7 @@ public class Nation extends Thread{
             //quindi bisogna crearne una nuova istanza
             nazioneDaClonare.getRegioni().get(i).setNewThread();
             //Infine viene aggiunta la regione alla nazione clonata(this.addRegion("regione");)
-            addRegion(nazioneDaClonare.getRegioni().get(i));
+            this.addRegion(nazioneDaClonare.getRegioni().get(i));
         }
         for(int i=0; i<nazioneDaClonare.getAccordiProposti().size();i++){
             nazioneDaClonare.getAccordiProposti().get(i).setNazioneChePropone(this);
@@ -1381,12 +1402,22 @@ public class Nation extends Thread{
                     for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
                         //delle nazioni che l'hanno accettati
                         accordiProposti.get(i).getNazioneCheAccetta().getAccordiAccettati().remove(accordiProposti.get(i));
-                        accordiProposti.get(i).getRegionePatto().setText("");
+                        Accordo proposto = accordiProposti.get(i);
+                        Platform.runLater(
+                                () -> {
+                                    proposto.getRegionePatto().setText("");
+                                }
+                        );
                     }
                     for(int i=0; i<accordiAccettati.size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli proposti
                         //delle nazioni che l'hanno proposti
                         accordiAccettati.get(i).getNazioneChePropone().getAccordiProposti().remove(accordiAccettati.get(i));
-                        accordiAccettati.get(i).getRegionePatto().setText("");
+                        Accordo accettato = accordiAccettati.get(i);
+                        Platform.runLater(
+                                () -> {
+                                    accettato.getRegionePatto().setText("");
+                                }
+                        );
                     }
                     this.removeAllRegions();
                 }
