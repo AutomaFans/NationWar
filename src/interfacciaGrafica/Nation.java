@@ -1207,8 +1207,8 @@ public class Nation extends Thread{
     //Compe prima cosa,siccome la nazione ha iniziato ad eseguire il codice del suo run()
     //allora viene settata la variabile active a true (perche' active serve a vedere se la
     //nazione ha finito di svolgere il suo turno o meno).
-    //Poi si perde un secondo di tempo in maniera da notare i cambiamenti tra un turno e l'altro
-    //(con il metodo sleep).
+    //C'e' una sleep commentata: se si decommenta si perde un secondo di tempo in maniera da notare i cambiamenti tra un
+    // turno e l'altro (con il metodo sleep).
     //In seguito si passa a controllare se la nazione ha occupato tutta la griglia, perchÃƒÆ’Ã‚Â¨
     //nel caso la nazione ha occupato tutta la griglia non ci sono regioni che confinano con regioni
     //non alleate, quindi si possono verificare direttamente le regole di transizione su una regione
@@ -1281,7 +1281,7 @@ public class Nation extends Thread{
     public synchronized void run() {
         try{
             this.active = true;
-            sleep(1000);
+            //sleep(1000);
             //Se la nazione ha occupato tutta la griglia non ci sono regioni che confinano con regioni non alleate,
             //quindi posso verificare direttamente le regole di transizione su una regione qualsiasi della griglia
             //che scelgo casualmente
@@ -1318,12 +1318,22 @@ public class Nation extends Thread{
                 for(int i=0; i<accordiProposti.size();i++){  //Scioglie gli accordi proposti rimuovendoli da quelli accettati
                     //delle nazioni che l'hanno accettati
                     accordiProposti.get(i).getNazioneCheAccetta().getAccordiAccettati().remove(accordiProposti.get(i));
-                    accordiProposti.get(i).getRegionePatto().setText("");
+                    Accordo proposto = accordiProposti.get(i);
+                    Platform.runLater(
+                            () -> {
+                                proposto.getRegionePatto().setText("");
+                            }
+                    );
                 }
                 for(int i=0; i<accordiAccettati.size();i++){  //Scioglie gli accordi accettati rimuovendoli da quelli proposti
                     //delle nazioni che l'hanno proposti
                     accordiAccettati.get(i).getNazioneChePropone().getAccordiProposti().remove(accordiAccettati.get(i));
-                    accordiAccettati.get(i).getRegionePatto().setText("");
+                    Accordo accettato = accordiAccettati.get(i);
+                    Platform.runLater(
+                            () -> {
+                                accettato.getRegionePatto().setText("");
+                            }
+                    );
                 }
                 this.active = false;
                 this.gridController.sveglia();
