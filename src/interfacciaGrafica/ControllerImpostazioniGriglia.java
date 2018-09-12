@@ -575,9 +575,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                         //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
                                         set1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), (nationList.get(k).getNumAbitanti())));
                                         //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
-                                        risorse1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getRisorse()));
+                                        risorse1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), (int)nationList.get(k).getRisorse()));
                                         //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                                        denaro1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getDenaro()));
+                                        denaro1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), (int)nationList.get(k).getDenaro()));
                                         //Aggiungo i mattoni nei vari barChart
                                         barCharD.getData().addAll(denaro1); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                                         barChart.getData().addAll(set1);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
@@ -682,9 +682,9 @@ public class ControllerImpostazioniGriglia implements Initializable {
                                             //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono gli abitanti di quella nazione
                                             set1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), (nationList.get(k).getNumAbitanti())));
                                             //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanti sono le risorse di quella nazione
-                                            risorse1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getRisorse()));
+                                            risorse1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(),(int) nationList.get(k).getRisorse()));
                                             //Viene creato un mattone per il grafico che ha sotto il sotto il nome della nazione ed e' alto quanto e' il denaro di quella nazione
-                                            denaro1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(), nationList.get(k).getDenaro()));
+                                            denaro1.getData().add(new XYChart.Data<String, Number>(nationList.get(k).getName(),(int) nationList.get(k).getDenaro()));
                                             //Aggiungo i mattoni nei vari barChart
                                             barCharD.getData().addAll(denaro1); 		//Aggiungo il mattone del denaro alla rispettiva barChart del denaro, chiamato barChartD.
                                             barChart.getData().addAll(set1);			//Aggiungo il mattone degli abitanti alla rispettiva barChart degli abitanti, chiamato barChart.
